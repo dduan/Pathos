@@ -1,0 +1,13 @@
+- [ ] implement copy
+- [ ] implement symbolicLink
+- [ ] design/implement temporay file/directory
+- [ ] implement globbing
+- [ ] implement makeDirectory (recursive)
+- [ ] test/update implementation on linux
+- [ ] add introductary material
+- [ ] add docstring
+- [ ] add tests
+- [ ] add podspec
+- [ ] run tests on CI
+- [ ] add SwiftLint
+- [ ] support Carthage?
