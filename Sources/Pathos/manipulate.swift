@@ -1,4 +1,8 @@
+#if os(Linux)
+import Glibc
+#else
 import Darwin
+#endif
 
 func deletePath(_ path: String, recursive: Bool = false) throws {
     let status = try _stat(at: path)

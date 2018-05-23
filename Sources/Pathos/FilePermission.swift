@@ -1,4 +1,8 @@
+#if os(Linux)
+import Glibc
+#else
 import Darwin
+#endif
 
 public struct FilePermission: OptionSet {
     public let rawValue: mode_t

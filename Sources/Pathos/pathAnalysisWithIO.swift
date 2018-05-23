@@ -1,4 +1,8 @@
+#if os(Linux)
+import Glibc
+#else
 import Darwin
+#endif
 
 func expandUserDirectory(inPath path: String) throws -> String {
     if !path.starts(with: "~") {

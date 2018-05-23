@@ -1,4 +1,8 @@
+#if os(Linux)
+import Glibc
+#else
 import Darwin
+#endif
 
 /// Whether file at path is a named pipe (FIFO).
 ///
@@ -92,7 +96,7 @@ func existsSymbolically(atPath path: String) -> Bool {
 /// - Returns: size of the file at path.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 func size(atPath path: String) throws -> Int64 {
-    return try _stat(at: path).st_size
+    return Int64(try _stat(at: path).st_size)
 }
 
 /// Return the time of last modification of path.
@@ -101,7 +105,11 @@ func size(atPath path: String) throws -> Int64 {
 /// - Returns: modification time in `FileTime`.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 func modificationTime(atPath path: String) throws -> FileTime {
+#if os(Linux)
+    return unsafeBitCast(try _stat(at: path).st_mtim, to: FileTime.self)
+#else
     return unsafeBitCast(try _stat(at: path).st_mtimespec, to: FileTime.self)
+#endif
 }
 
 /// Return the time of last access of path.
@@ -110,7 +118,11 @@ func modificationTime(atPath path: String) throws -> FileTime {
 /// - Returns: time of last access in `FileTime`.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 func accessTime(atPath path: String) throws -> FileTime {
+#if os(Linux)
+    return unsafeBitCast(try _stat(at: path).st_atim, to: FileTime.self)
+#else
     return unsafeBitCast(try _stat(at: path).st_atimespec, to: FileTime.self)
+#endif
 }
 
 /// Return the system’s ctime which, on some systems (like Unix) is the time of the last metadata change
@@ -119,7 +131,11 @@ func accessTime(atPath path: String) throws -> FileTime {
 /// - Returns: time of last metadata change in `FileTime`.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 func metadataChangeTime(atPath path: String) throws -> FileTime {
+#if os(Linux)
+    return unsafeBitCast(try _stat(at: path).st_ctim, to: FileTime.self)
+#else
     return unsafeBitCast(try _stat(at: path).st_ctimespec, to: FileTime.self)
+#endif
 }
 
 /// Return whether `path` points to the same file as `otherPath`.
@@ -221,7 +237,7 @@ extension PathRepresentable {
     /// - Parameter other: the other path in comparison.
     /// - Returns: whethec the 2 paths points to the same file.
     func isSame(as other: Self) -> Bool {
-        return (try? sameFile(atPath:andOtherPath:)(self.pathString, other.pathString)) ?? false
+        return (try? sameFile(atPath:otherPath:)(self.pathString, other.pathString)) ?? false
     }
 }
 

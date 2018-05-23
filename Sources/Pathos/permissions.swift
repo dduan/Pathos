@@ -1,4 +1,9 @@
+#if os(Linux)
+import Glibc
+#else
 import Darwin
+#endif
+
 func permissions(forPath path: String) throws -> FilePermission {
     var status = stat()
     if stat(path, &status) != 0 {

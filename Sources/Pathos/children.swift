@@ -1,9 +1,18 @@
+#if os(Linux)
+import Glibc
+#else
 import Darwin
+#endif
 
 func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = false) throws -> [String] {
     var result = [String]()
     let bufferPointer = UnsafeMutablePointer<UnsafeMutablePointer<UnsafeMutablePointer<dirent>?>?>.allocate(capacity: 0)
+#if os(Linux)
+    let sorting = alphasort as! @convention(c) (UnsafeMutablePointer<UnsafePointer<dirent>?>?, UnsafeMutablePointer<UnsafePointer<dirent>?>?) -> Int32
+    let count = Int(scandir(path, bufferPointer, nil, sorting))
+#else
     let count = Int(scandir(path, bufferPointer, nil, alphasort))
+#endif
     if count == -1 {
         throw SystemError.unknown(errorNumber: errno)
     }
@@ -11,6 +20,19 @@ func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = fals
     result.reserveCapacity(count)
     let buffer = UnsafeBufferPointer(start: bufferPointer.pointee, count: Int(count))
     for d in buffer {
+#if os(Linux)
+        guard var entry = d?.pointee,
+            case let pathType = Int32(entry.d_type),
+            type == nil || pathType == type,
+            case let nameLength = Int(entry.d_reclen + 1),
+            let nameBuffer = UnsafeBufferPointer(start: &entry.d_name.0, count: nameLength).baseAddress,
+            case let name = String(cString: nameBuffer),
+            name != ".." && name != "."
+            else
+        {
+            continue
+        }
+#else
         guard var entry = d?.pointee,
             case let pathType = Int32(entry.d_type),
             type == nil || pathType == type,
@@ -22,6 +44,7 @@ func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = fals
         {
             continue
         }
+#endif
 
         let fullName = join(path: path, withOtherPaths: name)
         result.append(fullName)
@@ -45,35 +68,35 @@ func children(inPath path: String, recursive: Bool = false) throws -> [String] {
 }
 
 func unknownTypeFiles(inPath path: String, recursive: Bool = false) throws -> [String] {
-    return try _typedChildrenInPath(path, DT_FIFO, recursive: recursive)
+    return try _typedChildrenInPath(path, Int32(DT_FIFO), recursive: recursive)
 }
 
 func pipes(inPath path: String, recursive: Bool = false) throws -> [String] {
-    return try _typedChildrenInPath(path, DT_UNKNOWN, recursive: recursive)
+    return try _typedChildrenInPath(path, Int32(DT_UNKNOWN), recursive: recursive)
 }
 
 func characterDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
-    return try _typedChildrenInPath(path, DT_CHR, recursive: recursive)
+    return try _typedChildrenInPath(path, Int32(DT_CHR), recursive: recursive)
 }
 
 func directories(inPath path: String, recursive: Bool = false) throws -> [String] {
-    return try _typedChildrenInPath(path, DT_DIR, recursive: recursive)
+    return try _typedChildrenInPath(path, Int32(DT_DIR), recursive: recursive)
 }
 
 func blockDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
-    return try _typedChildrenInPath(path, DT_BLK, recursive: recursive)
+    return try _typedChildrenInPath(path, Int32(DT_BLK), recursive: recursive)
 }
 
 func files(inPath path: String, recursive: Bool = false) throws -> [String] {
-    return try _typedChildrenInPath(path, DT_REG, recursive: recursive)
+    return try _typedChildrenInPath(path, Int32(DT_REG), recursive: recursive)
 }
 
 func symbolicLinks(inPath path: String, recursive: Bool = false) throws -> [String] {
-    return try _typedChildrenInPath(path, DT_LNK, recursive: recursive)
+    return try _typedChildrenInPath(path, Int32(DT_LNK), recursive: recursive)
 }
 
 func sockets(inPath path: String, recursive: Bool = false) throws -> [String] {
-    return try _typedChildrenInPath(path, DT_SOCK   , recursive: recursive)
+    return try _typedChildrenInPath(path, Int32(DT_SOCK), recursive: recursive)
 }
 
 extension PathRepresentable {

@@ -1,4 +1,8 @@
+#if os(Linux)
+import Glibc
+#else
 import Darwin
+#endif
 
 func getCurrentWorkingDirectory() throws -> String {
     if let buffer = getcwd(nil, 0) {

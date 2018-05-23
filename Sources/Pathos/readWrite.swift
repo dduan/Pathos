@@ -1,4 +1,8 @@
+#if os(Linux)
+import Glibc
+#else
 import Darwin
+#endif
 
 func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool, mode: FilePermission?) throws {
     let oflag = createIfNecessary ? O_WRONLY | O_CREAT : O_WRONLY
