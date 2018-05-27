@@ -30,9 +30,6 @@ func isAbsolutePath(_ path: String) -> Bool {
     return path.hasPrefix(kSeparator)
 }
 
-extension PathRepresentable {
-}
-
 func join(path: String, withOtherPaths otherPaths: [String]) -> String {
     var result = path
     for other in otherPaths {
