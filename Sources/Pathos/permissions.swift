@@ -19,14 +19,12 @@ func setPermissions(forPath path: String, _ mode: FilePermission) throws {
 }
 
 extension PathRepresentable {
-    var permissions: FilePermission? {
+    var permissions: FilePermission {
         get {
-            return try? permissions(forPath:)(self.pathString)
+            return (try? permissions(forPath:)(self.pathString)) ?? FilePermission(rawValue: 0)
         }
         set {
-            if let newPermissions = newValue {
-                try? setPermissions(forPath:_:)(self.pathString, newPermissions)
-            }
+            try? setPermissions(forPath:_:)(self.pathString, newValue)
         }
     }
 }
