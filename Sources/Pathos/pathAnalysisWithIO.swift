@@ -66,7 +66,7 @@ extension PathRepresentable {
         return Self(path: (try? expandUserDirectory(inPath:)(self.pathString)) ?? "/")
     }
 
-    func makeAbsolute() -> Self? {
-        return (try? makeAbsolute(path:)(self.pathString)).map(Self.init(path:))
+    func makeAbsolute() -> Self {
+        return (try? makeAbsolute(path:)(self.pathString)).map(Self.init(path:)) ?? self
     }
 }
