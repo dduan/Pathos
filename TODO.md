@@ -154,7 +154,6 @@
     - [ ] `PathRepresentable.currentWorkingDirectory: Self`
     - [ ] `PathRepresentable.delete(recursive: Bool = default) -> Bool`
     - [ ] `PathRepresentable.move(to destination: Self) -> Bool`
-    - [ ] `PathRepresentable.normalize() -> String`
     - [ ] `PathRepresentable.isAbsolute: Bool { get }`
     - [ ] `PathRepresentable.join(with otherPaths: [PathRepresentable]) -> Self`
     - [ ] `PathRepresentable.join(with otherPaths: PathRepresentable...) -> Self`
@@ -217,7 +216,6 @@
     - [ ] `metadataChangeTime(atPath path: String) throws -> Pathos.FileTime`
     - [ ] `modificationTime(atPath path: String) throws -> Pathos.FileTime`
     - [ ] `movePath(_ path: String, to other: String) throws`
-    - [ ] `normalizePath(_ path: String) -> String`
     - [ ] `permissions(forPath path: String) throws -> Pathos.FilePermission`
     - [ ] `pipes(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `readBytes(atPath path: String) throws -> [UInt8]`
@@ -234,6 +232,8 @@
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [x] `PathRepresentable.normalize() -> String`
+    - [x] `normalizePath(_ path: String) -> String`
 
 - [x] implement symbolicLink
 - [x] implement copy

@@ -118,8 +118,8 @@ public func directory(ofPath path: String) -> String {
 }
 
 extension PathRepresentable {
-    public func normalize() -> String {
-        return normalizePath(self.pathString)
+    public func normalize() -> Self {
+        return Self(path: normalizePath(self.pathString))
     }
 
     public var isAbsolute: Bool {
