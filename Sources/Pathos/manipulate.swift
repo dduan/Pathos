@@ -22,6 +22,13 @@ func deletePath(_ path: String, recursive: Bool = false) throws {
     }
 }
 
+func movePath(_ path: String, to other: String) throws {
+    if rename(path, other) != 0 {
+        throw SystemError(posixErrorCode: errno)
+    }
+}
+
+
 extension PathRepresentable {
     func delete(recursive: Bool = false) -> Bool {
         do {
@@ -31,15 +38,7 @@ extension PathRepresentable {
         }
         return true
     }
-}
 
-func movePath(_ path: String, to other: String) throws {
-    if rename(path, other) != 0 {
-        throw SystemError(posixErrorCode: errno)
-    }
-}
-
-extension PathRepresentable {
     func move(to destination: Self) -> Bool {
         do {
             try movePath(_:to:)(self.pathString, destination.pathString)

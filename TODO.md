@@ -1,5 +1,4 @@
 - [ ] implement copy
-- [ ] implement symbolicLink
 - [ ] design/implement temporay file/directory
 - [ ] implement globbing
 - [ ] implement makeDirectory (recursive)
@@ -11,3 +10,5 @@
 - [ ] run tests on CI
 - [ ] add SwiftLint
 - [ ] support Carthage?
+
+- [x] implement symbolicLink
