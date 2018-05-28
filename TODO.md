@@ -1,4 +1,3 @@
-- [ ] fix/implement children* on Linux, current implementation is broken
 - [ ] design/implement temporay file/directory
 - [ ] implement globbing
 - [ ] implement makeDirectory (recursive)
@@ -14,3 +13,4 @@
 - [x] implement symbolicLink
 - [x] implement copy
 - [x] test/update implementation on linux
+- [x] fix/implement children* on Linux, current implementation is broken
