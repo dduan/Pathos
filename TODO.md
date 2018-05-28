@@ -4,6 +4,10 @@
 - [ ] implement copy file status (stat)
 - [ ] implement common prefix for paths
 - [ ] add introductary material
+- [ ] add podspec
+- [ ] run tests on CI
+- [ ] add SwiftLint
+- [ ] support Carthage?
 - [ ] add docstring
     - [ ] `FilePermission.ownerAll`
     - [ ] `FilePermission.ownerRead`
@@ -230,10 +234,6 @@
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
-- [ ] add podspec
-- [ ] run tests on CI
-- [ ] add SwiftLint
-- [ ] support Carthage?
 
 - [x] implement symbolicLink
 - [x] implement copy
