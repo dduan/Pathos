@@ -2,6 +2,7 @@
 - [ ] implement globbing
 - [ ] implement makeDirectory (recursive)
 - [ ] implement copy file status (stat)
+- [ ] implement common prefix for paths
 - [ ] add introductary material
 - [ ] add docstring
 - [ ] add tests
