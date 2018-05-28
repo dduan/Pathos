@@ -1,6 +1,6 @@
 play:
-	swift run play
+	@swift run play
 build:
-	swift build
+	@swift build
 generate:
-	swift package generate-xcodeproj
+	@swift package generate-xcodeproj
