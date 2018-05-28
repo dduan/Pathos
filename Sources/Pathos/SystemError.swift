@@ -16,6 +16,7 @@ public enum SystemError: Error {
     case noSpaceLeftOnDevice
     case deviceOrRecourceIsBusy
     case readOnlyFileSystem
+    case invalidArgument
 
     public init(posixErrorCode: Int32) {
         switch posixErrorCode {
@@ -29,6 +30,7 @@ public enum SystemError: Error {
         case ENOSPC : self = .noSpaceLeftOnDevice
         case EBUSY  : self = .deviceOrRecourceIsBusy
         case EROFS  : self = .readOnlyFileSystem
+        case EINVAL : self = .invalidArgument
         default     : self = .unknown(errorNumber: posixErrorCode)
         }
     }
