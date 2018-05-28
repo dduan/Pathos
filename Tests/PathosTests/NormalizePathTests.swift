@@ -34,6 +34,16 @@ final class NormalizePathTests: XCTestCase {
         XCTAssertEqual(Path(string: "///..//./foo/.//bar").normalize().pathString, "/foo/bar")
     }
 
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+        let thisClass = type(of: self)
+        let linuxCount = thisClass.all.count
+        let darwinCount = Int(thisClass.defaultTestSuite.testCaseCount)
+        XCTAssertEqual(linuxCount, darwinCount,
+                       "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
+    }
+
     static let all = [
         ("testAssertEmptyPathBecomesCurrent", testAssertEmptyPathBecomesCurrent),
         ("testSlashPrefixes", testSlashPrefixes),
@@ -41,5 +51,6 @@ final class NormalizePathTests: XCTestCase {
         ("testPathRepresentableEmptyPathBecomesCurrent", testPathRepresentableEmptyPathBecomesCurrent),
         ("testPathRepresentableSlashPrefixes", testPathRepresentableSlashPrefixes),
         ("testPathRepresentableConanicalizePath", testPathRepresentableConanicalizePath),
+        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests),
     ]
 }
