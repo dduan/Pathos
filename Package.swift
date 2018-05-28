@@ -5,6 +5,9 @@ import PackageDescription
 let package = Package(
     name: "Pathos",
     products: [
+        .executable(
+            name: "play",
+            targets: ["play"]),
         .library(
             name: "Pathos",
             targets: ["Pathos"]),
@@ -12,7 +15,10 @@ let package = Package(
     dependencies: [
     ],
     targets: [
-       .target(
+        .target(
+            name: "play",
+            dependencies: ["Pathos"]),
+        .target(
             name: "Pathos",
             dependencies: []),
         .testTarget(
