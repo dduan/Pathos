@@ -1,8 +1,7 @@
-- [ ] implement copy
 - [ ] design/implement temporay file/directory
 - [ ] implement globbing
 - [ ] implement makeDirectory (recursive)
-- [ ] test/update implementation on linux
+- [ ] implement copy file status (stat)
 - [ ] add introductary material
 - [ ] add docstring
 - [ ] add tests
@@ -12,3 +11,5 @@
 - [ ] support Carthage?
 
 - [x] implement symbolicLink
+- [x] implement copy
+- [x] test/update implementation on linux
