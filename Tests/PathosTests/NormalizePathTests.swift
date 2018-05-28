@@ -33,4 +33,13 @@ final class NormalizePathTests: XCTestCase {
         XCTAssertEqual(Path(string: "///foo/.//bar//.//..//.//baz").normalize().pathString, "/foo/baz")
         XCTAssertEqual(Path(string: "///..//./foo/.//bar").normalize().pathString, "/foo/bar")
     }
+
+    static let all = [
+        ("testAssertEmptyPathBecomesCurrent", testAssertEmptyPathBecomesCurrent),
+        ("testSlashPrefixes", testSlashPrefixes),
+        ("testConanicalizePath", testConanicalizePath),
+        ("testPathRepresentableEmptyPathBecomesCurrent", testPathRepresentableEmptyPathBecomesCurrent),
+        ("testPathRepresentableSlashPrefixes", testPathRepresentableSlashPrefixes),
+        ("testPathRepresentableConanicalizePath", testPathRepresentableConanicalizePath),
+    ]
 }
