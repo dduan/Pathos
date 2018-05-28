@@ -4,7 +4,7 @@ import Glibc
 import Darwin
 #endif
 
-func permissions(forPath path: String) throws -> FilePermission {
+public func permissions(forPath path: String) throws -> FilePermission {
     var status = stat()
     if stat(path, &status) != 0 {
         throw SystemError(posixErrorCode: errno)
@@ -12,14 +12,14 @@ func permissions(forPath path: String) throws -> FilePermission {
     return FilePermission(rawValue: status.st_mode)
 }
 
-func setPermissions(forPath path: String, _ mode: FilePermission) throws {
+public func setPermissions(forPath path: String, _ mode: FilePermission) throws {
     if chmod(path, mode.rawValue) != 0 {
         throw SystemError(posixErrorCode: errno)
     }
 }
 
 extension PathRepresentable {
-    var permissions: FilePermission {
+    public var permissions: FilePermission {
         get {
             return (try? permissions(forPath:)(self.pathString)) ?? FilePermission(rawValue: 0)
         }

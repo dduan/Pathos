@@ -1,7 +1,7 @@
-struct Path: PathRepresentable {
-    let pathString: String
+public struct Path: PathRepresentable {
+    public let pathString: String
 
-    init(path: String) {
+    public init(path: String) {
         self.pathString = path
     }
 }

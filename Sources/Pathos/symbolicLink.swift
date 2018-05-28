@@ -4,13 +4,13 @@ import Glibc
 import Darwin
 #endif
 
-func makeSymbolicLink(fromPath source: String, toPath destination: String) throws {
+public func makeSymbolicLink(fromPath source: String, toPath destination: String) throws {
     if symlink(source, destination) != 0 {
         throw SystemError(posixErrorCode: errno)
     }
 }
 
-func readSymbolicLink(atPath path: String) throws -> String {
+public func readSymbolicLink(atPath path: String) throws -> String {
     let buffer = UnsafeMutableBufferPointer<Int8>.allocate(capacity: kMaxPathNameLength + 1)
     defer { buffer.deallocate() }
     let count = readlink(path, buffer.baseAddress!, kMaxPathNameLength)
@@ -22,11 +22,16 @@ func readSymbolicLink(atPath path: String) throws -> String {
 }
 
 extension PathRepresentable {
-    func makeSymbolicLink(to destination: Self) -> Bool {
-        return (try? makeSymbolicLink(fromPath:toPath:)(self.pathString, destination.pathString)) != nil
+    public func makeSymbolicLink(to destination: Self) -> Bool {
+        do {
+            try makeSymbolicLink(fromPath:toPath:)(self.pathString, destination.pathString)
+        } catch {
+            return false
+        }
+        return true
     }
 
-    var symbolicLinkValue: String? {
+    public var symbolicLinkValue: String? {
         return try? readSymbolicLink(atPath: self.pathString)
     }
 }

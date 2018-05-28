@@ -1,4 +1,4 @@
-protocol PathRepresentable {
+public protocol PathRepresentable {
     var pathString: String { get }
     init(path: String)
 }

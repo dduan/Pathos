@@ -4,7 +4,7 @@ import Glibc
 import Darwin
 #endif
 
-func deletePath(_ path: String, recursive: Bool = false) throws {
+public func deletePath(_ path: String, recursive: Bool = false) throws {
     let status = try _stat(at: path)
     if _ifmt(status) == S_IFDIR {
         if recursive {
@@ -22,7 +22,7 @@ func deletePath(_ path: String, recursive: Bool = false) throws {
     }
 }
 
-func movePath(_ path: String, to other: String) throws {
+public func movePath(_ path: String, to other: String) throws {
     if rename(path, other) != 0 {
         throw SystemError(posixErrorCode: errno)
     }
@@ -30,7 +30,7 @@ func movePath(_ path: String, to other: String) throws {
 
 
 extension PathRepresentable {
-    func delete(recursive: Bool = false) -> Bool {
+    public func delete(recursive: Bool = false) -> Bool {
         do {
             try deletePath(_:recursive:)(self.pathString, recursive)
         } catch {
@@ -39,7 +39,7 @@ extension PathRepresentable {
         return true
     }
 
-    func move(to destination: Self) -> Bool {
+    public func move(to destination: Self) -> Bool {
         do {
             try movePath(_:to:)(self.pathString, destination.pathString)
         } catch {

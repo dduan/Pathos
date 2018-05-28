@@ -1,4 +1,4 @@
-func normalizePath(_ path: String) -> String {
+public func normalizePath(_ path: String) -> String {
     if path.isEmpty {
         return "."
     }
@@ -26,11 +26,11 @@ func normalizePath(_ path: String) -> String {
     return newPath.isEmpty ? "." : newPath
 }
 
-func isAbsolutePath(_ path: String) -> Bool {
+public func isAbsolutePath(_ path: String) -> Bool {
     return path.hasPrefix(kSeparator)
 }
 
-func join(path: String, withOtherPaths otherPaths: [String]) -> String {
+public func join(path: String, withOtherPaths otherPaths: [String]) -> String {
     var result = path
     for other in otherPaths {
         if other.hasPrefix(kSeparator) {
@@ -45,11 +45,11 @@ func join(path: String, withOtherPaths otherPaths: [String]) -> String {
     return result
 }
 
-func join(path: String, withOtherPaths otherPaths: String...) -> String {
+public func join(path: String, withOtherPaths otherPaths: String...) -> String {
     return join(path: path, withOtherPaths: otherPaths)
 }
 
-func split(path: String) -> (String, String) {
+public func split(path: String) -> (String, String) {
     guard let index = path.lastIndex(of: kSeparatorCharacter) else {
         return ("", path)
     }
@@ -65,7 +65,7 @@ func split(path: String) -> (String, String) {
     return (String(head), String(tail))
 }
 
-func splitExtension(ofPath path: String) -> (String, String) {
+public func splitExtension(ofPath path: String) -> (String, String) {
     guard let dotIndex = path.lastIndex(of: ".") else {
         return (path, "")
     }
@@ -92,11 +92,11 @@ func splitExtension(ofPath path: String) -> (String, String) {
     return (path, "")
 }
 
-func fileExtension(ofPath path: String) -> String {
+public func fileExtension(ofPath path: String) -> String {
     return splitExtension(ofPath: path).1
 }
 
-func basename(ofPath path: String) -> String {
+public func basename(ofPath path: String) -> String {
     return path
         .lastIndex(of: kSeparatorCharacter)
         .map { path.suffix(from: path.index(after: $0)) }
@@ -104,7 +104,7 @@ func basename(ofPath path: String) -> String {
         ?? ""
 }
 
-func directory(ofPath path: String) -> String {
+public func directory(ofPath path: String) -> String {
     let head = path
         .lastIndex(of: kSeparatorCharacter)
         .map { path.prefix(upTo: path.index(after: $0)) }
@@ -118,42 +118,42 @@ func directory(ofPath path: String) -> String {
 }
 
 extension PathRepresentable {
-    func normalize() -> String {
+    public func normalize() -> String {
         return normalizePath(self.pathString)
     }
 
-    var isAbsolute: Bool {
+    public var isAbsolute: Bool {
         return isAbsolutePath(self.pathString)
     }
 
-    func join(with otherPaths: [PathRepresentable]) -> Self {
+    public func join(with otherPaths: [PathRepresentable]) -> Self {
         let newPathString = join(path:withOtherPaths:)(self.pathString, otherPaths.map { $0.pathString })
         return Self(path: newPathString)
     }
 
-    func join(with otherPaths: PathRepresentable...) -> Self {
+    public func join(with otherPaths: PathRepresentable...) -> Self {
         return self.join(with: otherPaths)
     }
 
-    func split() -> (Self, Self) {
+    public func split() -> (Self, Self) {
         let (p0, p1) = split(path:)(self.pathString)
         return (Self(path: p0), Self(path: p1))
     }
 
-    func splitExtension() -> (Self, String) {
+    public func splitExtension() -> (Self, String) {
         let splitResult = splitExtension(ofPath:)(self.pathString)
         return (Self(path: splitResult.0), splitResult.1)
     }
 
-    var directory: String {
+    public var directory: String {
         return directory(ofPath:)(self.pathString)
     }
 
-    var basename: String {
+    public var basename: String {
         return basename(ofPath:)(self.pathString)
     }
 
-    var `extension`: String {
+    public var `extension`: String {
         return fileExtension(ofPath:)(self.pathString)
     }
 }

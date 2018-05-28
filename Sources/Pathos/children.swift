@@ -63,76 +63,76 @@ func _children<T>(_ path: T, recursive: Bool, block: (String, Bool) throws -> [S
     return result ?? []
 }
 
-func children(inPath path: String, recursive: Bool = false) throws -> [String] {
+public func children(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, nil, recursive: recursive)
 }
 
-func unknownTypeFiles(inPath path: String, recursive: Bool = false) throws -> [String] {
+public func unknownTypeFiles(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_FIFO), recursive: recursive)
 }
 
-func pipes(inPath path: String, recursive: Bool = false) throws -> [String] {
+public func pipes(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_UNKNOWN), recursive: recursive)
 }
 
-func characterDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
+public func characterDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_CHR), recursive: recursive)
 }
 
-func directories(inPath path: String, recursive: Bool = false) throws -> [String] {
+public func directories(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_DIR), recursive: recursive)
 }
 
-func blockDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
+public func blockDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_BLK), recursive: recursive)
 }
 
-func files(inPath path: String, recursive: Bool = false) throws -> [String] {
+public func files(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_REG), recursive: recursive)
 }
 
-func symbolicLinks(inPath path: String, recursive: Bool = false) throws -> [String] {
+public func symbolicLinks(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_LNK), recursive: recursive)
 }
 
-func sockets(inPath path: String, recursive: Bool = false) throws -> [String] {
+public func sockets(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_SOCK), recursive: recursive)
 }
 
 extension PathRepresentable {
-    func children(recursive: Bool = false) -> [Self] {
+    public func children(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: children(inPath:recursive:))
     }
 
-    func unkownTypeFiles(recursive: Bool = false) -> [Self] {
+    public func unkownTypeFiles(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: unknownTypeFiles(inPath:recursive:))
     }
 
-    func pipes(recursive: Bool = false) -> [Self] {
+    public func pipes(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: pipes(inPath:recursive:))
     }
 
-    func characterDevices(recursive: Bool = false) -> [Self] {
+    public func characterDevices(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: characterDevices(inPath:recursive:))
     }
 
-    func directories(recursive: Bool = false) -> [Self] {
+    public func directories(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: directories(inPath:recursive:))
     }
 
-    func blockDevices(recursive: Bool = false) -> [Self] {
+    public func blockDevices(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: blockDevices(inPath:recursive:))
     }
 
-    func files(recursive: Bool = false) -> [Self] {
+    public func files(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: files(inPath:recursive:))
     }
 
-    func symbolicLinks(recursive: Bool = false) -> [Self] {
+    public func symbolicLinks(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: symbolicLinks(inPath:recursive:))
     }
 
-    func sockets(recursive: Bool = false) -> [Self] {
+    public func sockets(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: sockets(inPath:recursive:))
     }
 }
