@@ -18,15 +18,23 @@ public func setCurrentWorkingDirectory(to path: String) throws {
 }
 
 extension PathRepresentable {
-    public var currentWorkingDirectory: Self? {
+    public static var currentWorkingDirectory: Self {
         get {
-            return (try? getCurrentWorkingDirectory()).map(Self.init(path:))
+            return Self(path: (try? getCurrentWorkingDirectory()) ?? "")
         }
 
         set {
-            if let newWorkingDirectory = newValue {
-                try? setCurrentWorkingDirectory(to:)(newWorkingDirectory.pathString)
-            }
+            try? setCurrentWorkingDirectory(to:)(newValue.pathString)
+        }
+    }
+
+    public var currentWorkingDirectory: Self {
+        get {
+            return Self(path: (try? getCurrentWorkingDirectory()) ?? "")
+        }
+
+        set {
+            try? setCurrentWorkingDirectory(to:)(newValue.pathString)
         }
     }
 }
