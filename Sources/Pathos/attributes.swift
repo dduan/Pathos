@@ -56,7 +56,7 @@ func isFile(atPath path: String) throws -> Bool {
 /// - Parameter path: the path to be tested.
 /// - Returns: `true` if file at path is a symbolic link, `false` otherwise.
 /// - Throws: A `SystemError` originated from the OS.
-func isSymbolicLink(atPath path: String) throws -> Bool {
+public func isSymbolicLink(atPath path: String) throws -> Bool {
     return try _ifmt(_lstat(at: path)) == S_IFLNK
 }
 
