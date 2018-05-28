@@ -19,18 +19,18 @@ final class NormalizePathTests: XCTestCase {
     }
 
     func testPathRepresentableEmptyPathBecomesCurrent() {
-        XCTAssertEqual(Path(path: "").normalize().pathString, ".")
+        XCTAssertEqual(Path(string: "").normalize().pathString, ".")
     }
 
     func testPathRepresentableSlashPrefixes() {
-        XCTAssertEqual(Path(path: "/").normalize().pathString, "/")
-        XCTAssertEqual(Path(path: "//").normalize().pathString, "//")
-        XCTAssertEqual(Path(path: "///").normalize().pathString, "/")
+        XCTAssertEqual(Path(string: "/").normalize().pathString, "/")
+        XCTAssertEqual(Path(string: "//").normalize().pathString, "//")
+        XCTAssertEqual(Path(string: "///").normalize().pathString, "/")
     }
 
     func testPathRepresentableConanicalizePath() {
-        XCTAssertEqual(Path(path: "///foo/.//bar//").normalize().pathString, "/foo/bar")
-        XCTAssertEqual(Path(path: "///foo/.//bar//.//..//.//baz").normalize().pathString, "/foo/baz")
-        XCTAssertEqual(Path(path: "///..//./foo/.//bar").normalize().pathString, "/foo/bar")
+        XCTAssertEqual(Path(string: "///foo/.//bar//").normalize().pathString, "/foo/bar")
+        XCTAssertEqual(Path(string: "///foo/.//bar//.//..//.//baz").normalize().pathString, "/foo/baz")
+        XCTAssertEqual(Path(string: "///..//./foo/.//bar").normalize().pathString, "/foo/bar")
     }
 }

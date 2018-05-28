@@ -119,7 +119,7 @@ public func directory(ofPath path: String) -> String {
 
 extension PathRepresentable {
     public func normalize() -> Self {
-        return Self(path: normalizePath(self.pathString))
+        return Self(string: normalizePath(self.pathString))
     }
 
     public var isAbsolute: Bool {
@@ -128,7 +128,7 @@ extension PathRepresentable {
 
     public func join(with otherPaths: [PathRepresentable]) -> Self {
         let newPathString = join(path:withOtherPaths:)(self.pathString, otherPaths.map { $0.pathString })
-        return Self(path: newPathString)
+        return Self(string: newPathString)
     }
 
     public func join(with otherPaths: PathRepresentable...) -> Self {
@@ -137,12 +137,12 @@ extension PathRepresentable {
 
     public func split() -> (Self, Self) {
         let (p0, p1) = split(path:)(self.pathString)
-        return (Self(path: p0), Self(path: p1))
+        return (Self(string: p0), Self(string: p1))
     }
 
     public func splitExtension() -> (Self, String) {
         let splitResult = splitExtension(ofPath:)(self.pathString)
-        return (Self(path: splitResult.0), splitResult.1)
+        return (Self(string: splitResult.0), splitResult.1)
     }
 
     public var directory: String {

@@ -20,7 +20,7 @@ public func setCurrentWorkingDirectory(to path: String) throws {
 extension PathRepresentable {
     public static var currentWorkingDirectory: Self {
         get {
-            return Self(path: (try? getCurrentWorkingDirectory()) ?? "")
+            return Self(string: (try? getCurrentWorkingDirectory()) ?? "")
         }
 
         set {
@@ -30,7 +30,7 @@ extension PathRepresentable {
 
     public var currentWorkingDirectory: Self {
         get {
-            return Self(path: (try? getCurrentWorkingDirectory()) ?? "")
+            return Self(string: (try? getCurrentWorkingDirectory()) ?? "")
         }
 
         set {
