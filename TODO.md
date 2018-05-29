@@ -1,13 +1,16 @@
-- [ ] design/implement temporay file/directory
-- [ ] implement globbing
-- [ ] implement makeDirectory (recursive)
-- [ ] implement copy file status (stat)
-- [ ] implement common prefix for paths
-- [ ] add introductary material
-- [ ] add podspec
-- [ ] run tests on CI
-- [ ] add SwiftLint
-- [ ] support Carthage?
+- [ ] 1.0 project state
+    - [ ] add introductary material
+    - [ ] add podspec
+    - [ ] run tests on CI
+    - [ ] add SwiftLint
+    - [ ] generate reference (?). Should be part of the build step.
+    - [ ] support Carthage (?)
+- [ ] 1.0 features
+    - [ ] design/implement temporay file/directory
+    - [ ] implement globbing
+    - [ ] implement makeDirectory (recursive)
+    - [ ] implement copy file status (stat)
+    - [ ] implement common prefix for paths
 - [ ] add docstring
     - [ ] `FilePermission.ownerAll`
     - [ ] `FilePermission.ownerRead`
