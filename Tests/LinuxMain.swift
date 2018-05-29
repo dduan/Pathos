@@ -1,7 +1,20 @@
+// Generated using Sourcery 0.13.1 — https://github.com/krzysztofzablocki/Sourcery
+// DO NOT EDIT
+
 import XCTest
+@testable import PathosTests
 
-import PathosTests
+extension NormalizePathTests {
+    static var allTests = [
+        ("testAssertEmptyPathBecomesCurrent", testAssertEmptyPathBecomesCurrent),
+        ("testSlashPrefixes", testSlashPrefixes),
+        ("testConanicalizePath", testConanicalizePath),
+        ("testPathRepresentableEmptyPathBecomesCurrent", testPathRepresentableEmptyPathBecomesCurrent),
+        ("testPathRepresentableSlashPrefixes", testPathRepresentableSlashPrefixes),
+        ("testPathRepresentableConanicalizePath", testPathRepresentableConanicalizePath),
+    ]
+}
 
-var tests = [XCTestCaseEntry]()
-tests += PathosTests.allTests()
-XCTMain(tests)
+XCTMain([
+    testCase(NormalizePathTests.allTests),
+])
