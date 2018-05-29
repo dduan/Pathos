@@ -11,6 +11,8 @@ if [[ -n "$tests_changed" ]]; then
         echo "please update Linux test manifest on Darwin!"
         exit 0
     fi
-	echo "updating Linux test manifest"
-	cd Tests && ../tmp/sourcery --sources PathosTests/ --templates LinuxMain.stencil --args testimports="import PathosTests" > /dev/null
+
+    $(pwd)/ensure-sourcery.sh
+    echo "updating Linux test manifest"
+    cd Tests && ../tmp/sourcery --sources PathosTests/ --templates LinuxMain.stencil --args testimports="import PathosTests" > /dev/null
 fi
