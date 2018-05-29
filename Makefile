@@ -5,9 +5,9 @@ export LC_CTYPE     = en_US.UTF-8
 .DEFAULT_GOAL := build
 
 ensure-sourcery:
-	@scripts/ensure-sourcery.sh
+	@Scripts/ensure-sourcery.sh
 generate-linux-test-manifest: ensure-sourcery
-	@scripts/generate-linux-test-manifest.sh
+	@Scripts/generate-linux-test-manifest.sh
 play:
 	@swift run play
 test:

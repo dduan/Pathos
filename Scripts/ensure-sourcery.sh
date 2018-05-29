@@ -4,6 +4,11 @@ set -e
 set -o pipefail
 set -u
 
+if [ $(uname) != "Darwin" ]; then
+    exit 0
+fi
+
+
 current_path=$(PWD)
 target_path="./tmp/sourcery"
 source_path="./tmp/src/sourcery"
