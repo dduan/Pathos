@@ -11,24 +11,23 @@ fi
 
 current_path=$(PWD)
 target_path="./tmp/sourcery"
-source_path="./tmp/src/sourcery"
-download_path="./tmp/sourcery.tar.gz"
+unzip_path="./tmp/sourcery_unzipped"
+download_path="./tmp/sourcery.zip"
 expected_version="$(cat .sourcery-version)"
 
 install() {
-  rm -rf "$source_path" "$download_path"
-  mkdir -p ./tmp/src
+  rm -rf "$download_path" "$unzip_path"
+  mkdir -p ./tmp/
   curl --location --fail --retry 5 \
-    https://github.com/krzysztofzablocki/Sourcery/archive/"$expected_version".tar.gz \
+    "https://github.com/krzysztofzablocki/Sourcery/releases/download/${expected_version}/Sourcery-${expected_version}.zip" \
     --output "$download_path"
 
-  tar -zxvf "$download_path" -C ./tmp > /dev/null
-  mv ./tmp/Sourcery-"$expected_version" "$source_path"
-  rm -f "$download_path"
+  unzip -d "$unzip_path" "$download_path" > /dev/null
+  mv "${unzip_path}/bin/Sourcery.app" ./tmp
+  mv "${unzip_path}/bin/sourcery" ./tmp
+  rm -rf "$download_path" "$unzip_path"
 
-  cd "$source_path" && swift build -c release && cd "$current_path"
-  mv "${source_path}/.build/release/sourcery" "$target_path"
-  echo "Built Sourcery $expected_version"
+  echo "Downloaded Sourcery $expected_version"
 }
 
 if [ ! -x "$target_path" ]; then
