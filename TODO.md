@@ -158,8 +158,6 @@
     - [ ] `PathRepresentable.delete(recursive: Bool = default) -> Bool`
     - [ ] `PathRepresentable.move(to destination: Self) -> Bool`
     - [ ] `PathRepresentable.isAbsolute: Bool { get }`
-    - [ ] `PathRepresentable.join(with otherPaths: [PathRepresentable]) -> Self`
-    - [ ] `PathRepresentable.join(with otherPaths: PathRepresentable...) -> Self`
     - [ ] `PathRepresentable.split() -> (Self, Self)`
     - [ ] `PathRepresentable.splitExtension() -> (Self, String)`
     - [ ] `PathRepresentable.directory: String { get }`
@@ -212,8 +210,6 @@
     - [ ] `isPipe(atPath path: String) throws -> Bool`
     - [ ] `isSocket(atPath path: String) throws -> Bool`
     - [ ] `isSymbolicLink(atPath path: String) throws -> Bool`
-    - [ ] `join(path: String, withOtherPaths otherPaths: [String]) -> String`
-    - [ ] `join(path: String, withOtherPaths otherPaths: String...) -> String`
     - [ ] `makeAbsolute(path: String) throws -> String`
     - [ ] `makeSymbolicLink(fromPath source: String, toPath destination: String) throws`
     - [ ] `metadataChangeTime(atPath path: String) throws -> Pathos.FileTime`
@@ -235,6 +231,10 @@
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [x] `PathRepresentable.join(with otherPaths: [PathRepresentable]) -> Self`
+    - [x] `PathRepresentable.join(with otherPaths: PathRepresentable...) -> Self`
+    - [x] `join(path: String, withOtherPaths otherPaths: [String]) -> String`
+    - [x] `join(path: String, withOtherPaths otherPaths: String...) -> String`
     - [x] `PathRepresentable.normalize() -> String`
     - [x] `normalizePath(_ path: String) -> String`
 
