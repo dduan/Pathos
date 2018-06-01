@@ -1,4 +1,4 @@
-public func normalizePath(_ path: String) -> String {
+public func normalize(path: String) -> String {
     if path.isEmpty {
         return "."
     }
@@ -26,7 +26,7 @@ public func normalizePath(_ path: String) -> String {
     return newPath.isEmpty ? "." : newPath
 }
 
-public func isAbsolutePath(_ path: String) -> Bool {
+public func isAbsolute(path: String) -> Bool {
     return path.hasPrefix(kSeparator)
 }
 
@@ -119,11 +119,11 @@ public func directory(ofPath path: String) -> String {
 
 extension PathRepresentable {
     public func normalize() -> Self {
-        return Self(string: normalizePath(self.pathString))
+        return Self(string: normalize(path:)(self.pathString))
     }
 
     public var isAbsolute: Bool {
-        return isAbsolutePath(self.pathString)
+        return isAbsolute(path:)(self.pathString)
     }
 
     public func join(with otherPaths: [PathRepresentable]) -> Self {

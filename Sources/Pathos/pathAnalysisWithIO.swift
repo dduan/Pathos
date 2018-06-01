@@ -51,14 +51,14 @@ public func expandUserDirectory(inPath path: String) throws -> String {
 
 public func makeAbsolute(path: String) throws -> String {
     var path = path
-    if !isAbsolutePath(path) {
+    if !isAbsolute(path: path) {
         let buffer = getcwd(nil, 0)
         if buffer == nil {
             throw SystemError(posixErrorCode: errno)
         }
         path = join(path: String(cString: buffer!), withOtherPaths: path)
     }
-    return normalizePath(path)
+    return normalize(path: path)
 }
 
 extension PathRepresentable {

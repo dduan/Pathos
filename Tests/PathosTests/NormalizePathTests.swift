@@ -3,19 +3,19 @@ import XCTest
 
 final class NormalizePathTests: XCTestCase {
     func testAssertEmptyPathBecomesCurrent() {
-        XCTAssertEqual(normalizePath(""), ".")
+        XCTAssertEqual(normalize(path: ""), ".")
     }
 
     func testSlashPrefixes() {
-        XCTAssertEqual(normalizePath("/"), "/")
-        XCTAssertEqual(normalizePath("//"), "//")
-        XCTAssertEqual(normalizePath("///"), "/")
+        XCTAssertEqual(normalize(path: "/"), "/")
+        XCTAssertEqual(normalize(path: "//"), "//")
+        XCTAssertEqual(normalize(path: "///"), "/")
     }
 
     func testConanicalizePath() {
-        XCTAssertEqual(normalizePath("///foo/.//bar//"), "/foo/bar")
-        XCTAssertEqual(normalizePath("///foo/.//bar//.//..//.//baz"), "/foo/baz")
-        XCTAssertEqual(normalizePath("///..//./foo/.//bar"), "/foo/bar")
+        XCTAssertEqual(normalize(path: "///foo/.//bar//"), "/foo/bar")
+        XCTAssertEqual(normalize(path: "///foo/.//bar//.//..//.//baz"), "/foo/baz")
+        XCTAssertEqual(normalize(path: "///..//./foo/.//bar"), "/foo/bar")
     }
 
     func testPathRepresentableEmptyPathBecomesCurrent() {
