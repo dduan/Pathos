@@ -49,10 +49,10 @@ func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = fals
         }
 #endif
 
-        let fullName = join(path: path, withOtherPaths: name)
+        let fullName = join(path: path, withPaths: name)
         result.append(fullName)
         if recursive && pathType == DT_DIR {
-            result += try _typedChildrenInPath(join(path: path, withOtherPaths: fullName), type, recursive: true)
+            result += try _typedChildrenInPath(join(path: path, withPaths: fullName), type, recursive: true)
         }
     }
 

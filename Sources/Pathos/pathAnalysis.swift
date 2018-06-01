@@ -30,7 +30,7 @@ public func isAbsolute(path: String) -> Bool {
     return path.hasPrefix(kSeparator)
 }
 
-public func join(path: String, withOtherPaths otherPaths: [String]) -> String {
+public func join(path: String, withPaths otherPaths: [String]) -> String {
     var result = path
     for other in otherPaths {
         if other.hasPrefix(kSeparator) {
@@ -45,8 +45,16 @@ public func join(path: String, withOtherPaths otherPaths: [String]) -> String {
     return result
 }
 
-public func join(path: String, withOtherPaths otherPaths: String...) -> String {
-    return join(path: path, withOtherPaths: otherPaths)
+public func join(path: String, withPath otherPath: String) -> String {
+    return join(path: path, withPaths: [otherPath])
+}
+
+public func join(path: String, withPaths otherPaths: String...) -> String {
+    return join(path: path, withPaths: otherPaths)
+}
+
+public func join(paths path: String, _ otherPaths: String...) -> String {
+    return join(path: path, withPaths: otherPaths)
 }
 
 public func split(path: String) -> (String, String) {
@@ -127,7 +135,7 @@ extension PathRepresentable {
     }
 
     public func join(with otherPaths: [PathRepresentable]) -> Self {
-        let newPathString = join(path:withOtherPaths:)(self.pathString, otherPaths.map { $0.pathString })
+        let newPathString = join(path:withPaths:)(self.pathString, otherPaths.map { $0.pathString })
         return Self(string: newPathString)
     }
 
