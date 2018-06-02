@@ -9,7 +9,7 @@ func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = fals
     let bufferPointer = UnsafeMutablePointer<UnsafeMutablePointer<UnsafeMutablePointer<dirent>?>?>.allocate(capacity: 0)
 #if os(Linux)
     let sorting: @convention(c) (UnsafeMutablePointer<UnsafePointer<dirent>?>?, UnsafeMutablePointer<UnsafePointer<dirent>?>?) -> Int32 = { p0, p1 in
-	return alphasort(p0!, p1!)
+        return alphasort(p0!, p1!)
     }
 
     let count = Int(scandir(path, bufferPointer, nil, sorting))
