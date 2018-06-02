@@ -84,7 +84,6 @@
     - [ ] `copyFile(fromPath source: String, toPath destination: String, followSymbolicLink: Bool = default, chunkSize: Int = default) throws`
     - [ ] `deletePath(_ path: String, recursive: Bool = default) throws`
     - [ ] `directories(inPath path: String, recursive: Bool = default) throws -> [String]`
-    - [ ] `directory(ofPath path: String) -> String`
     - [ ] `expandUserDirectory(inPath path: String) throws -> String`
     - [ ] `fileExtension(ofPath path: String) -> String`
     - [ ] `files(inPath path: String, recursive: Bool = default) throws -> [String]`
@@ -142,7 +141,6 @@
     - [ ] `PathRepresentable.currentWorkingDirectory: Self`
     - [ ] `PathRepresentable.delete(recursive: Bool = default) -> Bool`
     - [ ] `PathRepresentable.move(to destination: Self) -> Bool`
-    - [ ] `PathRepresentable.directory: String { get }`
     - [ ] `PathRepresentable.basename: String { get }`
     - [ ] `PathRepresentable.extension: String { get }`
     - [ ] `PathRepresentable.expandUserDirectory: Self { get }`
@@ -195,6 +193,8 @@
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [x] `directory(ofPath path: String) -> String`
+    - [x] `PathRepresentable.directory: String { get }`
     - [x] `PathRepresentable.isAbsolute: Bool { get }`
     - [x] `makeAbsolute(path: String) throws -> String`
     - [x] `PathRepresentable.split() -> (Self, Self)`

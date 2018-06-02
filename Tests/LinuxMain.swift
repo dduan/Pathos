@@ -38,6 +38,12 @@ extension PathBaseNameTests {
         ("testPathRepresentableBaseNameOfPath", testPathRepresentableBaseNameOfPath),
     ]
 }
+extension PathDirectoryTests {
+    static var allTests = [
+        ("testPathDirectory", testPathDirectory),
+        ("testPathRepresentableDirectory", testPathRepresentableDirectory),
+    ]
+}
 extension SplitExtensionTests {
     static var allTests = [
         ("testSplitExtensionOnSimplePath", testSplitExtensionOnSimplePath),
@@ -82,6 +88,7 @@ XCTMain([
     testCase(JoinPathTests.allTests),
     testCase(NormalizePathTests.allTests),
     testCase(PathBaseNameTests.allTests),
+    testCase(PathDirectoryTests.allTests),
     testCase(SplitExtensionTests.allTests),
     testCase(SplitPathTests.allTests),
 ])
