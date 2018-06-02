@@ -141,7 +141,6 @@
     - [ ] `PathRepresentable.currentWorkingDirectory: Self`
     - [ ] `PathRepresentable.delete(recursive: Bool = default) -> Bool`
     - [ ] `PathRepresentable.move(to destination: Self) -> Bool`
-    - [ ] `PathRepresentable.expandUserDirectory: Self { get }`
     - [ ] `PathRepresentable.makeAbsolute() -> Self`
     - [ ] `PathRepresentable.permissions: Pathos.FilePermission`
     - [ ] `PathRepresentable.readBytes() -> [UInt8]`
@@ -160,7 +159,6 @@
     - [ ] `directory(ofPath path: String) -> String`
     - [ ] `exists(atPath path: String) -> Bool`
     - [ ] `existsSymbolically(atPath path: String) -> Bool`
-    - [ ] `expandUserDirectory(inPath path: String) throws -> String`
     - [ ] `files(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `getCurrentWorkingDirectory() throws -> String`
     - [ ] `isAbsolutePath(_ path: String) -> Bool`
@@ -189,6 +187,8 @@
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [x] `PathRepresentable.expandUserDirectory: Self { get }`
+    - [x] `expandUserDirectory(inPath path: String) throws -> String`
     - [x] `PathRepresentable.basename: String { get }`
     - [x] `basename(ofPath path: String) -> String`
     - [x] `PathRepresentable.extension: String { get }`

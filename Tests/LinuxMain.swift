@@ -4,6 +4,18 @@
 import XCTest
 @testable import PathosTests
 
+extension ExpandUserDirectoryTests {
+    static var allTests = [
+        ("testExpandPathWithNoUser", testExpandPathWithNoUser),
+        ("testUserDirectoryExpandsToHomeEnvironment", testUserDirectoryExpandsToHomeEnvironment),
+        ("testSpecialHomeValue", testSpecialHomeValue),
+        ("testFallbackToPasswdDatabase", testFallbackToPasswdDatabase),
+        ("testPathRepresentableExpandPathWithNoUser", testPathRepresentableExpandPathWithNoUser),
+        ("testPathRepresentableUserDirectoryExpandsToHomeEnvironment", testPathRepresentableUserDirectoryExpandsToHomeEnvironment),
+        ("testPathRepresentableSpecialHomeValue", testPathRepresentableSpecialHomeValue),
+        ("testPathRepresentableFallbackToPasswdDatabase", testPathRepresentableFallbackToPasswdDatabase),
+    ]
+}
 extension FileExtensionTests {
     static var allTests = [
         ("testFileExtensionOnSimplePath", testFileExtensionOnSimplePath),
@@ -108,6 +120,7 @@ extension SplitPathTests {
 }
 
 XCTMain([
+    testCase(ExpandUserDirectoryTests.allTests),
     testCase(FileExtensionTests.allTests),
     testCase(IsAbsoluteTests.allTests),
     testCase(JoinPathTests.allTests),
