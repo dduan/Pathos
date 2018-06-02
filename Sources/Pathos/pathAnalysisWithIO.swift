@@ -62,7 +62,7 @@ public func makeAbsolute(path: String) throws -> String {
 }
 
 extension PathRepresentable {
-    public var expandUserDirectory: Self {
+    public func expandUserDirectory() -> Self {
         return Self(string: (try? expandUserDirectory(inPath:)(self.pathString)) ?? "/")
     }
 
