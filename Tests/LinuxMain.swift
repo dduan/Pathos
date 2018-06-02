@@ -4,6 +4,30 @@
 import XCTest
 @testable import PathosTests
 
+extension FileExtensionTests {
+    static var allTests = [
+        ("testFileExtensionOnSimplePath", testFileExtensionOnSimplePath),
+        ("testFileExtensionOnPathWithMultipleDots", testFileExtensionOnPathWithMultipleDots),
+        ("testFileExtensionOnPathWithLeadingDot", testFileExtensionOnPathWithLeadingDot),
+        ("testFileExtensionOnPathWithNoDots", testFileExtensionOnPathWithNoDots),
+        ("testFileExtensionOnPathWithLeadingDotButNoExtension", testFileExtensionOnPathWithLeadingDotButNoExtension),
+        ("testFileExtensionOnPathWithManyLeadingDotsButNoExtension", testFileExtensionOnPathWithManyLeadingDotsButNoExtension),
+        ("testFileExtensionOnPathWithLeadingDotsButNoExtension", testFileExtensionOnPathWithLeadingDotsButNoExtension),
+        ("testFileExtensionOnPathWithLeadingDots", testFileExtensionOnPathWithLeadingDots),
+        ("testFileExtensionOnPathWithOnlyDots", testFileExtensionOnPathWithOnlyDots),
+        ("testFileExtensionOnEmptyPath", testFileExtensionOnEmptyPath),
+        ("testPathRepresentableFileExtensionOnSimplePath", testPathRepresentableFileExtensionOnSimplePath),
+        ("testPathRepresentableFileExtensionOnPathWithMultipleDots", testPathRepresentableFileExtensionOnPathWithMultipleDots),
+        ("testPathRepresentableFileExtensionOnPathWithLeadingDot", testPathRepresentableFileExtensionOnPathWithLeadingDot),
+        ("testPathRepresentableFileExtensionOnPathWithNoDots", testPathRepresentableFileExtensionOnPathWithNoDots),
+        ("testPathRepresentableFileExtensionOnPathWithLeadingDotButNoExtension", testPathRepresentableFileExtensionOnPathWithLeadingDotButNoExtension),
+        ("testPathRepresentableFileExtensionOnPathWithManyLeadingDotsButNoExtension", testPathRepresentableFileExtensionOnPathWithManyLeadingDotsButNoExtension),
+        ("testPathRepresentableFileExtensionOnPathWithLeadingDotsButNoExtension", testPathRepresentableFileExtensionOnPathWithLeadingDotsButNoExtension),
+        ("testPathRepresentableFileExtensionOnPathWithLeadingDots", testPathRepresentableFileExtensionOnPathWithLeadingDots),
+        ("testPathRepresentableFileExtensionOnPathWithOnlyDots", testPathRepresentableFileExtensionOnPathWithOnlyDots),
+        ("testPathRepresentableFileExtensionOnEmptyPath", testPathRepresentableFileExtensionOnEmptyPath),
+    ]
+}
 extension IsAbsoluteTests {
     static var allTests = [
         ("testIsAbsolutePath", testIsAbsolutePath),
@@ -84,6 +108,7 @@ extension SplitPathTests {
 }
 
 XCTMain([
+    testCase(FileExtensionTests.allTests),
     testCase(IsAbsoluteTests.allTests),
     testCase(JoinPathTests.allTests),
     testCase(NormalizePathTests.allTests),

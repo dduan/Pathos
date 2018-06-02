@@ -141,8 +141,6 @@
     - [ ] `PathRepresentable.currentWorkingDirectory: Self`
     - [ ] `PathRepresentable.delete(recursive: Bool = default) -> Bool`
     - [ ] `PathRepresentable.move(to destination: Self) -> Bool`
-    - [ ] `PathRepresentable.basename: String { get }`
-    - [ ] `PathRepresentable.extension: String { get }`
     - [ ] `PathRepresentable.expandUserDirectory: Self { get }`
     - [ ] `PathRepresentable.makeAbsolute() -> Self`
     - [ ] `PathRepresentable.permissions: Pathos.FilePermission`
@@ -153,7 +151,6 @@
     - [ ] `PathRepresentable.makeSymbolicLink(to destination: Self) -> Bool`
     - [ ] `PathRepresentable.symbolicLinkValue: String? { get }`
     - [ ] `accessTime(atPath path: String) throws -> Pathos.FileTime`
-    - [ ] `basename(ofPath path: String) -> String`
     - [ ] `blockDevices(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `characterDevices(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `children(inPath path: String, recursive: Bool = default) throws -> [String]`
@@ -164,7 +161,6 @@
     - [ ] `exists(atPath path: String) -> Bool`
     - [ ] `existsSymbolically(atPath path: String) -> Bool`
     - [ ] `expandUserDirectory(inPath path: String) throws -> String`
-    - [ ] `fileExtension(ofPath path: String) -> String`
     - [ ] `files(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `getCurrentWorkingDirectory() throws -> String`
     - [ ] `isAbsolutePath(_ path: String) -> Bool`
@@ -193,6 +189,10 @@
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [x] `PathRepresentable.basename: String { get }`
+    - [x] `basename(ofPath path: String) -> String`
+    - [x] `PathRepresentable.extension: String { get }`
+    - [x] `fileExtension(ofPath path: String) -> String`
     - [x] `directory(ofPath path: String) -> String`
     - [x] `PathRepresentable.directory: String { get }`
     - [x] `PathRepresentable.isAbsolute: Bool { get }`
