@@ -12,7 +12,7 @@ if [[ -n "$tests_changed" ]]; then
         exit 0
     fi
 
-    $(pwd)/ensure-sourcery.sh
+    $(dirname $0)/ensure-sourcery.sh
     echo "updating Linux test manifest"
     cd Tests && ../tmp/sourcery --sources PathosTests/ --templates LinuxMain.stencil --args testimports="import PathosTests" > /dev/null
 fi
