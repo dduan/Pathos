@@ -26,8 +26,23 @@ extension NormalizePathTests {
         ("testPathRepresentableConanicalizePath", testPathRepresentableConanicalizePath),
     ]
 }
+extension SplitPathTests {
+    static var allTests = [
+        ("testSplitSimplePath", testSplitSimplePath),
+        ("testSplitRootPath", testSplitRootPath),
+        ("testSplitSingleCompomentPath", testSplitSingleCompomentPath),
+        ("testSplitWithABunchOfPrefixSlashes", testSplitWithABunchOfPrefixSlashes),
+        ("testSplitWithRedundantSeparator", testSplitWithRedundantSeparator),
+        ("testPathRepresentableSplitSimplePath", testPathRepresentableSplitSimplePath),
+        ("testPathRepresentableSplitRootPath", testPathRepresentableSplitRootPath),
+        ("testPathRepresentableSplitSingleCompomentPath", testPathRepresentableSplitSingleCompomentPath),
+        ("testPathRepresentableSplitWithABunchOfPrefixSlashes", testPathRepresentableSplitWithABunchOfPrefixSlashes),
+        ("testPathRepresentableSplitWithRedundantSeparator", testPathRepresentableSplitWithRedundantSeparator),
+    ]
+}
 
 XCTMain([
     testCase(JoinPathTests.allTests),
     testCase(NormalizePathTests.allTests),
+    testCase(SplitPathTests.allTests),
 ])

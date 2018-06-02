@@ -158,8 +158,6 @@
     - [ ] `PathRepresentable.delete(recursive: Bool = default) -> Bool`
     - [ ] `PathRepresentable.move(to destination: Self) -> Bool`
     - [ ] `PathRepresentable.isAbsolute: Bool { get }`
-    - [ ] `PathRepresentable.split() -> (Self, Self)`
-    - [ ] `PathRepresentable.splitExtension() -> (Self, String)`
     - [ ] `PathRepresentable.directory: String { get }`
     - [ ] `PathRepresentable.basename: String { get }`
     - [ ] `PathRepresentable.extension: String { get }`
@@ -225,12 +223,14 @@
     - [ ] `setPermissions(forPath path: String, _ mode: Pathos.FilePermission) throws`
     - [ ] `size(atPath path: String) throws -> Int64`
     - [ ] `sockets(inPath path: String, recursive: Bool = default) throws -> [String]`
-    - [ ] `split(path: String) -> (String, String)`
-    - [ ] `splitExtension(ofPath path: String) -> (String, String)`
     - [ ] `symbolicLinks(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [x] `PathRepresentable.split() -> (Self, Self)`
+    - [x] `PathRepresentable.splitExtension() -> (Self, String)`
+    - [x] `split(path: String) -> (String, String)`
+    - [x] `splitExtension(ofPath path: String) -> (String, String)`
     - [x] `PathRepresentable.join(with otherPaths: [PathRepresentable]) -> Self`
     - [x] `PathRepresentable.join(with otherPaths: PathRepresentable...) -> Self`
     - [x] `join(path: String, withOtherPaths otherPaths: [String]) -> String`
