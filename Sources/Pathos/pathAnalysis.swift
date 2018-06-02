@@ -63,11 +63,13 @@ public func split(path: String) -> (String, String) {
     }
 
     let next = path.index(after: index)
-    var head = String(path.prefix(upTo: index))
+    var head = String(path.prefix(upTo: next))
     let tail = String(path.suffix(from: next))
 
-    while head.last == kSeparatorCharacter {
-        head.removeLast()
+    if !head.isEmpty && head != String(Array(repeating: kSeparatorCharacter, count: head.count)) {
+        while head.last == kSeparatorCharacter {
+            head.removeLast()
+        }
     }
 
     return (String(head), String(tail))
