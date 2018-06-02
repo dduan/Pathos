@@ -141,7 +141,6 @@
     - [ ] `PathRepresentable.currentWorkingDirectory: Self`
     - [ ] `PathRepresentable.delete(recursive: Bool = default) -> Bool`
     - [ ] `PathRepresentable.move(to destination: Self) -> Bool`
-    - [ ] `PathRepresentable.makeAbsolute() -> Self`
     - [ ] `PathRepresentable.permissions: Pathos.FilePermission`
     - [ ] `PathRepresentable.readBytes() -> [UInt8]`
     - [ ] `PathRepresentable.readString() -> String`
@@ -196,8 +195,9 @@
     - [x] `directory(ofPath path: String) -> String`
     - [x] `PathRepresentable.directory: String { get }`
     - [x] `PathRepresentable.isAbsolute: Bool { get }`
+    - [x] `PathRepresentable.makeAbsolute() -> Self`
     - [x] `makeAbsolute(path: String) throws -> String`
-    - [x] `PathRepresentable.split() -> (Self, Self)`
+    - x] `PathRepresentable.split() -> (Self, Self)`
     - [x] `PathRepresentable.splitExtension() -> (Self, String)`
     - [x] `split(path: String) -> (String, String)`
     - [x] `splitExtension(ofPath path: String) -> (String, String)`

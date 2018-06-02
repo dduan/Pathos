@@ -58,6 +58,12 @@ extension JoinPathTests {
         ("testPathRepresentableJoiningWithAbsolutePath", testPathRepresentableJoiningWithAbsolutePath),
     ]
 }
+extension MakeAbsoluteTests {
+    static var allTests = [
+        ("testMakeAbsolutePath", testMakeAbsolutePath),
+        ("testPathRepresentableMakeAbsolutePath", testPathRepresentableMakeAbsolutePath),
+    ]
+}
 extension NormalizePathTests {
     static var allTests = [
         ("testAssertEmptyPathBecomesCurrent", testAssertEmptyPathBecomesCurrent),
@@ -124,6 +130,7 @@ XCTMain([
     testCase(FileExtensionTests.allTests),
     testCase(IsAbsoluteTests.allTests),
     testCase(JoinPathTests.allTests),
+    testCase(MakeAbsoluteTests.allTests),
     testCase(NormalizePathTests.allTests),
     testCase(PathBaseNameTests.allTests),
     testCase(PathDirectoryTests.allTests),
