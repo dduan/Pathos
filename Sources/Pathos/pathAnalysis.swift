@@ -107,11 +107,11 @@ public func fileExtension(ofPath path: String) -> String {
 }
 
 public func basename(ofPath path: String) -> String {
-    return path
-        .lastIndex(of: kSeparatorCharacter)
-        .map { path.suffix(from: path.index(after: $0)) }
-        .map(String.init)
-        ?? ""
+    if let separatorIndex = path.lastIndex(of: kSeparatorCharacter) {
+        return String(path.suffix(from: path.index(after: separatorIndex)))
+    } else {
+        return path
+    }
 }
 
 public func directory(ofPath path: String) -> String {
