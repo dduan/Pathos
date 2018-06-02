@@ -4,7 +4,7 @@ import Glibc
 import Darwin
 #endif
 
-public func expandUserDirectory(inPath path: String) throws -> String {
+public func expandHomeDirectory(inPath path: String) throws -> String {
     if !path.starts(with: "~") {
         return path
     }
@@ -62,8 +62,8 @@ public func makeAbsolute(path: String) throws -> String {
 }
 
 extension PathRepresentable {
-    public var expandUserDirectory: Self {
-        return Self(string: (try? expandUserDirectory(inPath:)(self.pathString)) ?? "/")
+    public var expandHomeDirectory: Self {
+        return Self(string: (try? expandHomeDirectory(inPath:)(self.pathString)) ?? "/")
     }
 
     public func makeAbsolute() -> Self {
