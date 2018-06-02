@@ -157,7 +157,6 @@
     - [ ] `PathRepresentable.currentWorkingDirectory: Self`
     - [ ] `PathRepresentable.delete(recursive: Bool = default) -> Bool`
     - [ ] `PathRepresentable.move(to destination: Self) -> Bool`
-    - [ ] `PathRepresentable.isAbsolute: Bool { get }`
     - [ ] `PathRepresentable.directory: String { get }`
     - [ ] `PathRepresentable.basename: String { get }`
     - [ ] `PathRepresentable.extension: String { get }`
@@ -208,7 +207,6 @@
     - [ ] `isPipe(atPath path: String) throws -> Bool`
     - [ ] `isSocket(atPath path: String) throws -> Bool`
     - [ ] `isSymbolicLink(atPath path: String) throws -> Bool`
-    - [ ] `makeAbsolute(path: String) throws -> String`
     - [ ] `makeSymbolicLink(fromPath source: String, toPath destination: String) throws`
     - [ ] `metadataChangeTime(atPath path: String) throws -> Pathos.FileTime`
     - [ ] `modificationTime(atPath path: String) throws -> Pathos.FileTime`
@@ -227,6 +225,8 @@
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [x] `PathRepresentable.isAbsolute: Bool { get }`
+    - [x] `makeAbsolute(path: String) throws -> String`
     - [x] `PathRepresentable.split() -> (Self, Self)`
     - [x] `PathRepresentable.splitExtension() -> (Self, String)`
     - [x] `split(path: String) -> (String, String)`

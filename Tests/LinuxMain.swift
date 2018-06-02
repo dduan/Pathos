@@ -4,6 +4,12 @@
 import XCTest
 @testable import PathosTests
 
+extension IsAbsoluteTests {
+    static var allTests = [
+        ("testIsAbsolutePath", testIsAbsolutePath),
+        ("testPathRepresentableIsAbsolute", testPathRepresentableIsAbsolute),
+    ]
+}
 extension JoinPathTests {
     static var allTests = [
         ("testSimpleSingleJoining", testSimpleSingleJoining),
@@ -26,6 +32,30 @@ extension NormalizePathTests {
         ("testPathRepresentableConanicalizePath", testPathRepresentableConanicalizePath),
     ]
 }
+extension SplitExtensionTests {
+    static var allTests = [
+        ("testSplitExtensionOnSimplePath", testSplitExtensionOnSimplePath),
+        ("testSplitExtensionOnPathWithMultipleDots", testSplitExtensionOnPathWithMultipleDots),
+        ("testSplitExtensionOnPathWithLeadingDot", testSplitExtensionOnPathWithLeadingDot),
+        ("testSplitExtensionOnPathWithNoDots", testSplitExtensionOnPathWithNoDots),
+        ("testSplitExtensionOnPathWithLeadingDotButNoExtension", testSplitExtensionOnPathWithLeadingDotButNoExtension),
+        ("testSplitExtensionOnPathWithManyLeadingDotsButNoExtension", testSplitExtensionOnPathWithManyLeadingDotsButNoExtension),
+        ("testSplitExtensionOnPathWithLeadingDotsButNoExtension", testSplitExtensionOnPathWithLeadingDotsButNoExtension),
+        ("testSplitExtensionOnPathWithLeadingDots", testSplitExtensionOnPathWithLeadingDots),
+        ("testSplitExtensionOnPathWithOnlyDots", testSplitExtensionOnPathWithOnlyDots),
+        ("testSplitExtensionOnEmptyPath", testSplitExtensionOnEmptyPath),
+        ("testPathRepresentableSplitExtensionOnSimplePath", testPathRepresentableSplitExtensionOnSimplePath),
+        ("testPathRepresentableSplitExtensionOnPathWithMultipleDots", testPathRepresentableSplitExtensionOnPathWithMultipleDots),
+        ("testPathRepresentableSplitExtensionOnPathWithLeadingDot", testPathRepresentableSplitExtensionOnPathWithLeadingDot),
+        ("testPathRepresentableSplitExtensionOnPathWithNoDots", testPathRepresentableSplitExtensionOnPathWithNoDots),
+        ("testPathRepresentableSplitExtensionOnPathWithLeadingDotButNoExtension", testPathRepresentableSplitExtensionOnPathWithLeadingDotButNoExtension),
+        ("testPathRepresentableSplitExtensionOnPathWithManyLeadingDotsButNoExtension", testPathRepresentableSplitExtensionOnPathWithManyLeadingDotsButNoExtension),
+        ("testPathRepresentableSplitExtensionOnPathWithLeadingDotsButNoExtension", testPathRepresentableSplitExtensionOnPathWithLeadingDotsButNoExtension),
+        ("testPathRepresentableSplitExtensionOnPathWithLeadingDots", testPathRepresentableSplitExtensionOnPathWithLeadingDots),
+        ("testPathRepresentableSplitExtensionOnPathWithOnlyDots", testPathRepresentableSplitExtensionOnPathWithOnlyDots),
+        ("testPathRepresentableSplitExtensionOnEmptyPath", testPathRepresentableSplitExtensionOnEmptyPath),
+    ]
+}
 extension SplitPathTests {
     static var allTests = [
         ("testSplitSimplePath", testSplitSimplePath),
@@ -42,7 +72,9 @@ extension SplitPathTests {
 }
 
 XCTMain([
+    testCase(IsAbsoluteTests.allTests),
     testCase(JoinPathTests.allTests),
     testCase(NormalizePathTests.allTests),
+    testCase(SplitExtensionTests.allTests),
     testCase(SplitPathTests.allTests),
 ])
