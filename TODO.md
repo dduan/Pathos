@@ -53,7 +53,7 @@
     - [ ] `PathRepresentable.directory: String { get }`
     - [ ] `PathRepresentable.basename: String { get }`
     - [ ] `PathRepresentable.extension: String { get }`
-    - [ ] `PathRepresentable.expandHomeDirectory: Self { get }`
+    - [ ] `PathRepresentable.expandUserDirectory: Self { get }`
     - [ ] `PathRepresentable.makeAbsolute() -> Self`
     - [ ] `PathRepresentable.permissions: Pathos.FilePermission`
     - [ ] `PathRepresentable.readBytes() -> [UInt8]`
@@ -84,7 +84,7 @@
     - [ ] `copyFile(fromPath source: String, toPath destination: String, followSymbolicLink: Bool = default, chunkSize: Int = default) throws`
     - [ ] `deletePath(_ path: String, recursive: Bool = default) throws`
     - [ ] `directories(inPath path: String, recursive: Bool = default) throws -> [String]`
-    - [ ] `expandHomeDirectory(inPath path: String) throws -> String`
+    - [ ] `expandUserDirectory(inPath path: String) throws -> String`
     - [ ] `fileExtension(ofPath path: String) -> String`
     - [ ] `files(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `getCurrentWorkingDirectory() throws -> String`
@@ -141,7 +141,7 @@
     - [ ] `PathRepresentable.currentWorkingDirectory: Self`
     - [ ] `PathRepresentable.delete(recursive: Bool = default) -> Bool`
     - [ ] `PathRepresentable.move(to destination: Self) -> Bool`
-    - [ ] `PathRepresentable.expandHomeDirectory: Self { get }`
+    - [ ] `PathRepresentable.expandUserDirectory: Self { get }`
     - [ ] `PathRepresentable.makeAbsolute() -> Self`
     - [ ] `PathRepresentable.permissions: Pathos.FilePermission`
     - [ ] `PathRepresentable.readBytes() -> [UInt8]`
@@ -160,7 +160,7 @@
     - [ ] `directory(ofPath path: String) -> String`
     - [ ] `exists(atPath path: String) -> Bool`
     - [ ] `existsSymbolically(atPath path: String) -> Bool`
-    - [ ] `expandHomeDirectory(inPath path: String) throws -> String`
+    - [ ] `expandUserDirectory(inPath path: String) throws -> String`
     - [ ] `files(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `getCurrentWorkingDirectory() throws -> String`
     - [ ] `isAbsolutePath(_ path: String) -> Bool`
