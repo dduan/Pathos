@@ -32,6 +32,12 @@ extension NormalizePathTests {
         ("testPathRepresentableConanicalizePath", testPathRepresentableConanicalizePath),
     ]
 }
+extension PathBaseNameTests {
+    static var allTests = [
+        ("testBaseNameOfPath", testBaseNameOfPath),
+        ("testPathRepresentableBaseNameOfPath", testPathRepresentableBaseNameOfPath),
+    ]
+}
 extension SplitExtensionTests {
     static var allTests = [
         ("testSplitExtensionOnSimplePath", testSplitExtensionOnSimplePath),
@@ -75,6 +81,7 @@ XCTMain([
     testCase(IsAbsoluteTests.allTests),
     testCase(JoinPathTests.allTests),
     testCase(NormalizePathTests.allTests),
+    testCase(PathBaseNameTests.allTests),
     testCase(SplitExtensionTests.allTests),
     testCase(SplitPathTests.allTests),
 ])
