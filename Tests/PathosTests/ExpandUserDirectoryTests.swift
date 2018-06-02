@@ -1,4 +1,8 @@
+#if os(Linux)
+import Glibc
+#else
 import Darwin
+#endif
 import Pathos
 import XCTest
 
@@ -10,7 +14,9 @@ final class ExpandUserDirectoryTests: XCTestCase {
     }
 
     override func tearDown() {
-        setenv("HOME", self.originalHome, 1)
+        if let home = self.originalHome {
+	    setenv("HOME", home, 1)
+        }
     }
 
     func testExpandPathWithNoUser() {
