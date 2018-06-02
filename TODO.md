@@ -11,6 +11,8 @@
     - [ ] implement makeDirectory (recursive)
     - [ ] implement copy file status (stat)
     - [ ] implement common prefix for paths
+    - [ ] implement relativePath(toPath:startingPath:)
+    - [ ] implement realPath(ofPath:)
 - [ ] add docstring
     - [ ] `FilePermission.ownerAll`
     - [ ] `FilePermission.ownerRead`
@@ -197,7 +199,7 @@
     - [x] `PathRepresentable.isAbsolute: Bool { get }`
     - [x] `PathRepresentable.makeAbsolute() -> Self`
     - [x] `makeAbsolute(path: String) throws -> String`
-    - x] `PathRepresentable.split() -> (Self, Self)`
+    - [x] `PathRepresentable.split() -> (Self, Self)`
     - [x] `PathRepresentable.splitExtension() -> (Self, String)`
     - [x] `split(path: String) -> (String, String)`
     - [x] `splitExtension(ofPath path: String) -> (String, String)`
