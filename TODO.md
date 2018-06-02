@@ -162,7 +162,6 @@
     - [ ] `existsSymbolically(atPath path: String) -> Bool`
     - [ ] `files(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `getCurrentWorkingDirectory() throws -> String`
-    - [ ] `isAbsolutePath(_ path: String) -> Bool`
     - [ ] `isBlockDevice(atPath path: String) throws -> Bool`
     - [ ] `isCharacterDevice(atPath path: String) throws -> Bool`
     - [ ] `isDirectory(atPath path: String) throws -> Bool`
@@ -197,6 +196,7 @@
     - [x] `directory(ofPath path: String) -> String`
     - [x] `PathRepresentable.directory: String { get }`
     - [x] `PathRepresentable.isAbsolute: Bool { get }`
+    - [x] `isAbsolutePath(_ path: String) -> Bool`
     - [x] `PathRepresentable.makeAbsolute() -> Self`
     - [x] `makeAbsolute(path: String) throws -> String`
     - [x] `PathRepresentable.split() -> (Self, Self)`
