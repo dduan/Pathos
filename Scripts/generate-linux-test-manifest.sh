@@ -5,14 +5,14 @@ set -o pipefail
 set -u
 
 platform=$(uname)
-tests_changed=$(git status -s Tests/PathosTests)
-if [[ -n "$tests_changed" ]]; then
-    if [ "$platform" != "Darwin" ]; then
-        echo "please update Linux test manifest on Darwin!"
-        exit 0
-    fi
-
-    $(dirname $0)/ensure-sourcery.sh
-    echo "updating Linux test manifest"
-    cd Tests && ../tmp/sourcery --sources PathosTests/ --templates LinuxMain.stencil --args testimports="import PathosTests" > /dev/null
+if [ "$platform" != "Darwin" ]; then
+    echo "please update Linux test manifest on Darwin!"
+    exit 0
 fi
+
+$(dirname $0)/ensure-sourcery.sh
+echo "updating Linux test manifest"
+# Sourcery doesn't like broken symbolic links -_-
+mv Tests/PathosTests/Fixtures tmp
+cd Tests && ../tmp/sourcery --sources PathosTests/ --templates LinuxMain.stencil --args testimports="import PathosTests" && cd ..
+mv tmp/Fixtures Tests/PathosTests/
