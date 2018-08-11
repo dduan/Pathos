@@ -4,6 +4,30 @@
 import XCTest
 @testable import PathosTests
 
+extension ExistsTest {
+    static var allTests = [
+        ("testExistingFiles", testExistingFiles),
+        ("testNonExistingFiles", testNonExistingFiles),
+        ("testExistingFilesFollowingSymbol", testExistingFilesFollowingSymbol),
+        ("testExistingFilesNotFollowingSymbol", testExistingFilesNotFollowingSymbol),
+        ("testGoodSymbolicLink", testGoodSymbolicLink),
+        ("testBadSymbolicLink", testBadSymbolicLink),
+        ("testGoodSymbolicLinkFollowingSymbol", testGoodSymbolicLinkFollowingSymbol),
+        ("testBadSymbolicLinkFollowingSymbol", testBadSymbolicLinkFollowingSymbol),
+        ("testGoodSymbolicLinkNotFollowingSymbol", testGoodSymbolicLinkNotFollowingSymbol),
+        ("testBadSymbolicLinkNotFollowingSymbol", testBadSymbolicLinkNotFollowingSymbol),
+        ("testPathRepresentableExistingFiles", testPathRepresentableExistingFiles),
+        ("testPathRepresentableNonExistingFiles", testPathRepresentableNonExistingFiles),
+        ("testPathRepresentableExistingFileFollowingSymbol", testPathRepresentableExistingFileFollowingSymbol),
+        ("testPathRepresentableExistingFileNotFollowingSymbol", testPathRepresentableExistingFileNotFollowingSymbol),
+        ("testPathRepresentableGoodSymbolicLink", testPathRepresentableGoodSymbolicLink),
+        ("testPathRepresentableBadSymbolicLink", testPathRepresentableBadSymbolicLink),
+        ("testPathRepresentableGoodSymbolicLinkFollowingSymbol", testPathRepresentableGoodSymbolicLinkFollowingSymbol),
+        ("testPathRepresentableBadSymbolicLinkFollowingSymbol", testPathRepresentableBadSymbolicLinkFollowingSymbol),
+        ("testPathRepresentableGoodSymbolicLinkNotFollowingSymbol", testPathRepresentableGoodSymbolicLinkNotFollowingSymbol),
+        ("testPathRepresentableBadSymbolicLinkNotFollowingSymbol", testPathRepresentableBadSymbolicLinkNotFollowingSymbol),
+    ]
+}
 extension ExpandUserDirectoryTests {
     static var allTests = [
         ("testExpandPathWithNoUser", testExpandPathWithNoUser),
@@ -38,6 +62,10 @@ extension FileExtensionTests {
         ("testPathRepresentableFileExtensionOnPathWithLeadingDots", testPathRepresentableFileExtensionOnPathWithLeadingDots),
         ("testPathRepresentableFileExtensionOnPathWithOnlyDots", testPathRepresentableFileExtensionOnPathWithOnlyDots),
         ("testPathRepresentableFileExtensionOnEmptyPath", testPathRepresentableFileExtensionOnEmptyPath),
+    ]
+}
+extension FixtureTestCase {
+    static var allTests = [
     ]
 }
 extension IsAbsoluteTests {
@@ -126,8 +154,10 @@ extension SplitPathTests {
 }
 
 XCTMain([
+    testCase(ExistsTest.allTests),
     testCase(ExpandUserDirectoryTests.allTests),
     testCase(FileExtensionTests.allTests),
+    testCase(FixtureTestCase.allTests),
     testCase(IsAbsoluteTests.allTests),
     testCase(JoinPathTests.allTests),
     testCase(MakeAbsoluteTests.allTests),
