@@ -122,7 +122,6 @@
     - [ ] `PathRepresentable.isFile: Bool { get }`
     - [ ] `PathRepresentable.isSymbolicLink: Bool { get }`
     - [ ] `PathRepresentable.isSocket: Bool { get }`
-    - [ ] `PathRepresentable.existsSymbolically: Bool { get }`
     - [ ] `PathRepresentable.size: Int64 { get }`
     - [ ] `PathRepresentable.modificationTime: Pathos.FileTime? { get }`
     - [ ] `PathRepresentable.accessTime: Pathos.FileTime? { get }`
@@ -157,7 +156,6 @@
     - [ ] `deletePath(_ path: String, recursive: Bool = default) throws`
     - [ ] `directories(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `directory(ofPath path: String) -> String`
-    - [ ] `existsSymbolically(atPath path: String) -> Bool`
     - [ ] `files(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `getCurrentWorkingDirectory() throws -> String`
     - [ ] `isBlockDevice(atPath path: String) throws -> Bool`
@@ -185,8 +183,8 @@
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
-    - [x] `PathRepresentable.exists: Bool { get }`
-    - [x] `exists(atPath path: String) -> Bool`
+    - [ ] `PathRepresentable.exists(followSymbol: Bool) -> Bool`
+    - [ ] `exists(atPath path: String, followSymbol: Bool) -> Bool`
     - [x] `PathRepresentable.expandUserDirectory: Self { get }`
     - [x] `expandUserDirectory(inPath path: String) throws -> String`
     - [x] `PathRepresentable.basename: String { get }`

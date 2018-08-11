@@ -69,25 +69,17 @@ public func isSocket(atPath path: String) throws -> Bool {
     return try _ifmt(_stat(at: path)) == S_IFSOCK
 }
 
-/// Return `true` if path refers to an existing path or an open file descriptor. Returns `false` for
-/// broken symbolic links. On some platforms, this function may return `false` if permission is not
+/// Return `true` if path refers to an existing path or an open file descriptor.
+/// On some platforms, this function may return `false` if permission is not
 /// granted to execute `stat` on the requested file, even if the path physically exists.
 ///
-/// - Parameter path: the path to be tested.
+/// - Parameters:
+///   - path: the path to be tested.
+///   - followSymbol: whether to follow symbolic links. If `true`, return `false` for broken symbolic links.
 /// - Returns: whether path refers to an existing path or an open file descriptor.
-public func exists(atPath path: String) -> Bool {
+public func exists(atPath path: String, followSymbol: Bool = true) -> Bool {
     var status = stat()
-    return stat(path, &status) == 0
-}
-
-/// Return `true` if path refers to an existing path. Returns `true` for broken symbolic links.
-/// Equivalent to exists() on platforms lacking `lstat`.
-///
-/// - Parameter path: the path to be tested.
-/// - Returns: whether path refers to an existing path or an open file descriptor. `true` for broken links.
-public func existsSymbolically(atPath path: String) -> Bool {
-    var status = stat()
-    return lstat(path, &status) == 0
+    return followSymbol ? stat(path, &status) == 0 : lstat(path, &status) == 0
 }
 
 /// Return the size in bytes of path.
@@ -194,17 +186,16 @@ extension PathRepresentable {
         return (try? isSocket(atPath:)(self.pathString)) ?? false
     }
 
+
     /// Return `true` if path refers to an existing path or an open file descriptor. Returns `false` for
     /// broken symbolic links. On some platforms, this function may return `false` if permission is not
     /// granted to execute `stat` on the requested file, even if the path physically exists.
-    public var exists: Bool {
-        return exists(atPath:)(self.pathString)
-    }
-
-    /// Return `true` if path refers to an existing path. Returns `true` for broken symbolic links.
-    /// Equivalent to exists() on platforms lacking `lstat`.
-    public var existsSymbolically: Bool {
-        return existsSymbolically(atPath:)(self.pathString)
+    ///
+    /// - Parameter followSymbol: whether to follow symbolic links. If `true`, return `false` for broken
+    ///                           symbolic links.
+    /// - Returns: whether path refers to an existing path or an open file descriptor.
+    public func exists(followSymbol: Bool = true) -> Bool {
+        return exists(atPath:followSymbol:)(self.pathString, followSymbol)
     }
 
     /// Return the size in bytes of path. Returns `false` if the path does not exist or is

@@ -15,11 +15,11 @@ final class ExistsTest: FixtureTestCase {
 
     func testPathRepresentableExistingFiles() {
         let path = self.fixtureRootPath.join(with: Path(string: kPathThatExists))
-        XCTAssertTrue(path.exists)
+        XCTAssertTrue(path.exists())
     }
 
     func testPathRepresentableNonExistingFiles() {
         let path = self.fixtureRootPath.join(with: Path(string: kPathThatExistsNot))
-        XCTAssertFalse(path.exists)
+        XCTAssertFalse(path.exists())
     }
 }
