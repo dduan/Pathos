@@ -183,8 +183,8 @@
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
-    - [ ] `PathRepresentable.exists(followSymbol: Bool) -> Bool`
-    - [ ] `exists(atPath path: String, followSymbol: Bool) -> Bool`
+    - [x] `PathRepresentable.exists(followSymbol: Bool) -> Bool`
+    - [x] `exists(atPath path: String, followSymbol: Bool) -> Bool`
     - [x] `PathRepresentable.expandUserDirectory: Self { get }`
     - [x] `expandUserDirectory(inPath path: String) throws -> String`
     - [x] `PathRepresentable.basename: String { get }`
