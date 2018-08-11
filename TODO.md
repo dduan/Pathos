@@ -1,5 +1,5 @@
 - [ ] 1.0 project state
-    - [ ] add introductary material
+    - [ ] add introductory material
     - [ ] add podspec
     - [ ] run tests on CI
     - [ ] add SwiftLint
