@@ -117,7 +117,6 @@
     - [ ] `PathRepresentable`
     - [ ] `PathRepresentable.isPipe: Bool { get }`
     - [ ] `PathRepresentable.isCharacterDevice: Bool { get }`
-    - [ ] `PathRepresentable.isDirectory: Bool { get }`
     - [ ] `PathRepresentable.isBlockDevice: Bool { get }`
     - [ ] `PathRepresentable.isSymbolicLink: Bool { get }`
     - [ ] `PathRepresentable.isSocket: Bool { get }`
@@ -159,7 +158,6 @@
     - [ ] `getCurrentWorkingDirectory() throws -> String`
     - [ ] `isBlockDevice(atPath path: String) throws -> Bool`
     - [ ] `isCharacterDevice(atPath path: String) throws -> Bool`
-    - [ ] `isDirectory(atPath path: String) throws -> Bool`
     - [ ] `isPipe(atPath path: String) throws -> Bool`
     - [ ] `isSocket(atPath path: String) throws -> Bool`
     - [ ] `isSymbolicLink(atPath path: String) throws -> Bool`
@@ -181,6 +179,8 @@
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [x] `isDirectory(atPath path: String) throws -> Bool`
+    - [x] `PathRepresentable.isDirectory: Bool { get }`
     - [x] `PathRepresentable.isFile: Bool { get }`
     - [x] `isFile(atPath path: String) throws -> Bool`
     - [x] `PathRepresentable.exists(followSymbol: Bool) -> Bool`
