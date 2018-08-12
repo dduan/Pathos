@@ -3,7 +3,7 @@ import XCTest
 
 enum FixturePath: String {
     case fileThatExists = "hello"
-    case nonExistence = "hello_not"
+    case noneExistence = "hello_not"
     case directoryThatExists = "world"
     case goodSymbol = "hello_symbol"
     case badSymbol = "broken_symbol"

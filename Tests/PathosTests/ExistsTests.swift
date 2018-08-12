@@ -7,7 +7,7 @@ final class ExistsTest: FixtureTestCase {
     }
 
     func testNonExistingFiles() {
-        XCTAssertFalse(exists(atPath: self.fixture(.nonExistence)))
+        XCTAssertFalse(exists(atPath: self.fixture(.noneExistence)))
     }
 
     func testExistingFilesFollowingSymbol() {
@@ -47,7 +47,7 @@ final class ExistsTest: FixtureTestCase {
     }
 
     func testPathRepresentableNonExistingFiles() {
-        XCTAssertFalse(self.fixturePath(.nonExistence).exists())
+        XCTAssertFalse(self.fixturePath(.noneExistence).exists())
     }
 
     func testPathRepresentableExistingFileFollowingSymbol() {
