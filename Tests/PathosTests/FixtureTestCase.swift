@@ -5,7 +5,8 @@ enum FixturePath: String {
     case fileThatExists = "hello"
     case noneExistence = "hello_not"
     case directoryThatExists = "world"
-    case goodSymbol = "hello_symbol"
+    case goodFileSymbol = "hello_symbol"
+    case goodDirectorySymbol = "world_symbol"
     case badSymbol = "broken_symbol"
 }
 

@@ -19,7 +19,11 @@ final class ExistsTest: FixtureTestCase {
     }
 
     func testGoodSymbolicLink() {
-        XCTAssertTrue(exists(atPath: self.fixture(.goodSymbol)))
+        XCTAssertTrue(exists(atPath: self.fixture(.goodFileSymbol)))
+    }
+
+    func testGoodSymbolicDirectoryLink() {
+        XCTAssertTrue(exists(atPath: self.fixture(.goodDirectorySymbol)))
     }
 
     func testBadSymbolicLink() {
@@ -27,7 +31,11 @@ final class ExistsTest: FixtureTestCase {
     }
 
     func testGoodSymbolicLinkFollowingSymbol() {
-        XCTAssertTrue(exists(atPath: self.fixture(.goodSymbol), followSymbol: true))
+        XCTAssertTrue(exists(atPath: self.fixture(.goodFileSymbol), followSymbol: true))
+    }
+
+    func testGoodSymbolicDirectoryLinkFollowingSymbol() {
+        XCTAssertTrue(exists(atPath: self.fixture(.goodDirectorySymbol), followSymbol: true))
     }
 
     func testBadSymbolicLinkFollowingSymbol() {
@@ -35,7 +43,11 @@ final class ExistsTest: FixtureTestCase {
     }
 
     func testGoodSymbolicLinkNotFollowingSymbol() {
-        XCTAssertTrue(exists(atPath: self.fixture(.goodSymbol), followSymbol: false))
+        XCTAssertTrue(exists(atPath: self.fixture(.goodFileSymbol), followSymbol: false))
+    }
+
+    func testGoodSymbolicDirectoryLinkNotFollowingSymbol() {
+        XCTAssertTrue(exists(atPath: self.fixture(.goodDirectorySymbol), followSymbol: false))
     }
 
     func testBadSymbolicLinkNotFollowingSymbol() {
@@ -59,7 +71,11 @@ final class ExistsTest: FixtureTestCase {
     }
 
     func testPathRepresentableGoodSymbolicLink() {
-        XCTAssertTrue(self.fixturePath(.goodSymbol).exists())
+        XCTAssertTrue(self.fixturePath(.goodFileSymbol).exists())
+    }
+
+    func testPathRepresentableGoodSymbolicDirectoryLink() {
+        XCTAssertTrue(self.fixturePath(.goodDirectorySymbol).exists())
     }
 
     func testPathRepresentableBadSymbolicLink() {
@@ -67,7 +83,11 @@ final class ExistsTest: FixtureTestCase {
     }
 
     func testPathRepresentableGoodSymbolicLinkFollowingSymbol() {
-        XCTAssertTrue(self.fixturePath(.goodSymbol).exists(followSymbol: true))
+        XCTAssertTrue(self.fixturePath(.goodFileSymbol).exists(followSymbol: true))
+    }
+
+    func testPathRepresentableGoodSymbolicDirectorcyLinkFollowingSymbol() {
+        XCTAssertTrue(self.fixturePath(.goodDirectorySymbol).exists(followSymbol: true))
     }
 
     func testPathRepresentableBadSymbolicLinkFollowingSymbol() {
@@ -75,7 +95,11 @@ final class ExistsTest: FixtureTestCase {
     }
 
     func testPathRepresentableGoodSymbolicLinkNotFollowingSymbol() {
-        XCTAssertTrue(self.fixturePath(.goodSymbol).exists(followSymbol: false))
+        XCTAssertTrue(self.fixturePath(.goodFileSymbol).exists(followSymbol: false))
+    }
+
+    func testPathRepresentableGoodDirectorySymbolicLinkNotFollowingSymbol() {
+        XCTAssertTrue(self.fixturePath(.goodDirectorySymbol).exists(followSymbol: false))
     }
 
     func testPathRepresentableBadSymbolicLinkNotFollowingSymbol() {
