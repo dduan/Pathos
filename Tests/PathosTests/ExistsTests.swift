@@ -1,100 +1,84 @@
 import Pathos
 import XCTest
 
-let kPathThatExists = "hello"
-let kPathThatExistsNot = "hello_not"
-let kGoodSymbol = "hello_symbol"
-let kBadSymbol = "broken_symbol"
-
 final class ExistsTest: FixtureTestCase {
     func testExistingFiles() {
-        XCTAssertTrue(exists(atPath: self.fixture(kPathThatExists)))
+        XCTAssertTrue(exists(atPath: self.fixture(.pathThatExists)))
     }
 
     func testNonExistingFiles() {
-        XCTAssertFalse(exists(atPath: self.fixture(kPathThatExistsNot)))
+        XCTAssertFalse(exists(atPath: self.fixture(.pathThatExistsNot)))
     }
 
     func testExistingFilesFollowingSymbol() {
-        XCTAssertTrue(exists(atPath: self.fixture(kPathThatExists), followSymbol: true))
+        XCTAssertTrue(exists(atPath: self.fixture(.pathThatExists), followSymbol: true))
     }
 
     func testExistingFilesNotFollowingSymbol() {
-        XCTAssertTrue(exists(atPath: self.fixture(kPathThatExists), followSymbol: false))
+        XCTAssertTrue(exists(atPath: self.fixture(.pathThatExists), followSymbol: false))
     }
 
     func testGoodSymbolicLink() {
-        XCTAssertTrue(exists(atPath: self.fixture(kGoodSymbol)))
+        XCTAssertTrue(exists(atPath: self.fixture(.goodSymbol)))
     }
 
     func testBadSymbolicLink() {
-        XCTAssertFalse(exists(atPath: self.fixture(kBadSymbol)))
+        XCTAssertFalse(exists(atPath: self.fixture(.badSymbol)))
     }
 
     func testGoodSymbolicLinkFollowingSymbol() {
-        XCTAssertTrue(exists(atPath: self.fixture(kGoodSymbol), followSymbol: true))
+        XCTAssertTrue(exists(atPath: self.fixture(.goodSymbol), followSymbol: true))
     }
 
     func testBadSymbolicLinkFollowingSymbol() {
-        XCTAssertFalse(exists(atPath: self.fixture(kBadSymbol), followSymbol: true))
+        XCTAssertFalse(exists(atPath: self.fixture(.badSymbol), followSymbol: true))
     }
 
     func testGoodSymbolicLinkNotFollowingSymbol() {
-        XCTAssertTrue(exists(atPath: self.fixture(kGoodSymbol), followSymbol: false))
+        XCTAssertTrue(exists(atPath: self.fixture(.goodSymbol), followSymbol: false))
     }
 
     func testBadSymbolicLinkNotFollowingSymbol() {
-        XCTAssertTrue(exists(atPath: self.fixture(kBadSymbol), followSymbol: false))
+        XCTAssertTrue(exists(atPath: self.fixture(.badSymbol), followSymbol: false))
     }
 
     func testPathRepresentableExistingFiles() {
-        let path = self.fixtureRootPath.join(with: Path(string: kPathThatExists))
-        XCTAssertTrue(path.exists())
+        XCTAssertTrue(self.fixturePath(.pathThatExists).exists())
     }
 
-    
     func testPathRepresentableNonExistingFiles() {
-        let path = self.fixtureRootPath.join(with: Path(string: kPathThatExistsNot))
-        XCTAssertFalse(path.exists())
+        XCTAssertFalse(self.fixturePath(.pathThatExistsNot).exists())
     }
 
     func testPathRepresentableExistingFileFollowingSymbol() {
-        let path = self.fixtureRootPath.join(with: Path(string: kPathThatExists))
-        XCTAssertTrue(path.exists())
+        XCTAssertTrue(self.fixturePath(.pathThatExists).exists(followSymbol: true))
     }
 
     func testPathRepresentableExistingFileNotFollowingSymbol() {
-        let path = self.fixtureRootPath.join(with: Path(string: kPathThatExists))
-        XCTAssertTrue(path.exists())
+        XCTAssertTrue(self.fixturePath(.pathThatExists).exists(followSymbol: false))
     }
 
     func testPathRepresentableGoodSymbolicLink() {
-        let path = self.fixtureRootPath.join(with: Path(string: kGoodSymbol))
-        XCTAssertTrue(path.exists())
+        XCTAssertTrue(self.fixturePath(.goodSymbol).exists())
     }
 
     func testPathRepresentableBadSymbolicLink() {
-        let path = self.fixtureRootPath.join(with: Path(string: kBadSymbol))
-        XCTAssertFalse(path.exists())
+        XCTAssertFalse(self.fixturePath(.badSymbol).exists())
     }
 
     func testPathRepresentableGoodSymbolicLinkFollowingSymbol() {
-        let path = self.fixtureRootPath.join(with: Path(string: kGoodSymbol))
-        XCTAssertTrue(path.exists(followSymbol: true))
+        XCTAssertTrue(self.fixturePath(.goodSymbol).exists(followSymbol: true))
     }
 
     func testPathRepresentableBadSymbolicLinkFollowingSymbol() {
-        let path = self.fixtureRootPath.join(with: Path(string: kBadSymbol))
-        XCTAssertFalse(path.exists(followSymbol: true))
+        XCTAssertFalse(self.fixturePath(.badSymbol).exists(followSymbol: true))
     }
 
     func testPathRepresentableGoodSymbolicLinkNotFollowingSymbol() {
-        let path = self.fixtureRootPath.join(with: Path(string: kGoodSymbol))
-        XCTAssertTrue(path.exists(followSymbol: false))
+        XCTAssertTrue(self.fixturePath(.goodSymbol).exists(followSymbol: false))
     }
 
     func testPathRepresentableBadSymbolicLinkNotFollowingSymbol() {
-        let path = self.fixtureRootPath.join(with: Path(string: kBadSymbol))
-        XCTAssertTrue(path.exists(followSymbol: false))
+        XCTAssertTrue(self.fixturePath(.badSymbol).exists(followSymbol: false))
     }
 }
