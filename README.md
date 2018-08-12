@@ -9,21 +9,21 @@ A file management library for Swift.
 
 ## Design
 
-Pathos is designed with the following phylosophy in mind.
+Pathos is designed with the following philosophy in mind.
 
 1. **Provide as few abstraction atop POSIX file API as possible, but no fewer.**
-   Make conventional APIs Swift-y, but avoid over-abstration -- use string for
+   Make conventional APIs Swift-y, but avoid over-abstraction -- use string for
    path values for efficiency and simplicity, User can trivially and
    incrementally add on abstractions for their needs.
 2. **Battery included**. Include a well-rounded set of convenience for file
-   menipulations. (Python users, for example, should feel right at home).
+   manipulations. (Python users, for example, should feel right at home).
 3. **An object-oriented secondary layer hides system errors**. In production
    systems, specific POSIX error code is not more actionable than _some_
    indication that things went wrong. A _super_ simple protocol,
    `PathRepresentable`, paired with a equally simple `Path` type, serve as
    bridge to the OO world. This additional layer also hides most original system
    error. For example, instead of throwing out errors such as lack of
-   prermission, `PathRepresentable.delete()` simply returns `false` to
+   permission, `PathRepresentable.delete()` simply returns `false` to
    indication the operation failure.
 
 ## Development
