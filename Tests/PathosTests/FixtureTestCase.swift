@@ -2,8 +2,9 @@ import Pathos
 import XCTest
 
 enum FixturePath: String {
-    case pathThatExists = "hello"
-    case pathThatExistsNot = "hello_not"
+    case fileThatExists = "hello"
+    case nonExistence = "hello_not"
+    case directoryThatExists = "world"
     case goodSymbol = "hello_symbol"
     case badSymbol = "broken_symbol"
 }

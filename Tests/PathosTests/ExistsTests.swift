@@ -3,19 +3,19 @@ import XCTest
 
 final class ExistsTest: FixtureTestCase {
     func testExistingFiles() {
-        XCTAssertTrue(exists(atPath: self.fixture(.pathThatExists)))
+        XCTAssertTrue(exists(atPath: self.fixture(.fileThatExists)))
     }
 
     func testNonExistingFiles() {
-        XCTAssertFalse(exists(atPath: self.fixture(.pathThatExistsNot)))
+        XCTAssertFalse(exists(atPath: self.fixture(.nonExistence)))
     }
 
     func testExistingFilesFollowingSymbol() {
-        XCTAssertTrue(exists(atPath: self.fixture(.pathThatExists), followSymbol: true))
+        XCTAssertTrue(exists(atPath: self.fixture(.fileThatExists), followSymbol: true))
     }
 
     func testExistingFilesNotFollowingSymbol() {
-        XCTAssertTrue(exists(atPath: self.fixture(.pathThatExists), followSymbol: false))
+        XCTAssertTrue(exists(atPath: self.fixture(.fileThatExists), followSymbol: false))
     }
 
     func testGoodSymbolicLink() {
@@ -43,19 +43,19 @@ final class ExistsTest: FixtureTestCase {
     }
 
     func testPathRepresentableExistingFiles() {
-        XCTAssertTrue(self.fixturePath(.pathThatExists).exists())
+        XCTAssertTrue(self.fixturePath(.fileThatExists).exists())
     }
 
     func testPathRepresentableNonExistingFiles() {
-        XCTAssertFalse(self.fixturePath(.pathThatExistsNot).exists())
+        XCTAssertFalse(self.fixturePath(.nonExistence).exists())
     }
 
     func testPathRepresentableExistingFileFollowingSymbol() {
-        XCTAssertTrue(self.fixturePath(.pathThatExists).exists(followSymbol: true))
+        XCTAssertTrue(self.fixturePath(.fileThatExists).exists(followSymbol: true))
     }
 
     func testPathRepresentableExistingFileNotFollowingSymbol() {
-        XCTAssertTrue(self.fixturePath(.pathThatExists).exists(followSymbol: false))
+        XCTAssertTrue(self.fixturePath(.fileThatExists).exists(followSymbol: false))
     }
 
     func testPathRepresentableGoodSymbolicLink() {
