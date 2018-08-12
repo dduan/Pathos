@@ -11,9 +11,9 @@ A file management library for Swift.
 
 Pathos is designed with the following philosophy in mind.
 
-1. **Provide as few abstraction atop POSIX file API as possible, but no fewer.**
-   Make conventional C APIs Swift-y, but avoid over-abstraction. Use string for
-   path values for efficiency and simplicity. User can trivially and
+1. **Provide as few abstractions atop POSIX file API as possible, but no
+   fewer.** Make conventional C APIs Swift-y, but avoid over-abstraction. Use
+   string for path values for efficiency and simplicity. User can trivially and
    incrementally add on abstractions for their needs. A _super_ simple protocol,
    `PathRepresentable`, paired with a equally simple `Path` type, serve as
    bridge to the OO world.
