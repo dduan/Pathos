@@ -115,7 +115,6 @@
     - [ ] `FileTime`
     - [ ] `Path`
     - [ ] `PathRepresentable`
-    - [ ] `PathRepresentable.size: Int64 { get }`
     - [ ] `PathRepresentable.modificationTime: Pathos.FileTime? { get }`
     - [ ] `PathRepresentable.accessTime: Pathos.FileTime? { get }`
     - [ ] `PathRepresentable.metadataChangeTime: Pathos.FileTime? { get }`
@@ -163,12 +162,13 @@
     - [ ] `sameFile(atPath path: String, otherPath: String) throws -> Bool`
     - [ ] `setCurrentWorkingDirectory(to path: String) throws`
     - [ ] `setPermissions(forPath path: String, _ mode: Pathos.FilePermission) throws`
-    - [ ] `size(atPath path: String) throws -> Int64`
     - [ ] `sockets(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `symbolicLinks(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [x] `PathRepresentable.size: Int64 { get }`
+    - [x] `size(atPath path: String) throws -> Int64`
     - [x] `isSymbolicLink(atPath path: String) throws -> Bool`
     - [x] `PathRepresentable.isSymbolicLink: Bool { get }`
     - [x] `PathRepresentable.isPipe: Bool { get }`
