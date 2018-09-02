@@ -13,6 +13,7 @@
     - [ ] implement common prefix for paths
     - [ ] implement relativePath(toPath:startingPath:)
     - [ ] implement realPath(ofPath:)
+    - [ ] implement touch(atPath:)
 - [ ] add docstring
     - [ ] `FilePermission.ownerAll`
     - [ ] `FilePermission.ownerRead`
