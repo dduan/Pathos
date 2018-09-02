@@ -31,7 +31,7 @@ extension PathRepresentable {
         return true
     }
 
-    public var symbolicLinkValue: String? {
-        return try? readSymbolicLink(atPath: self.pathString)
+    public func readSymbolicLink() -> String? {
+        return try? readSymbolicLink(atPath:)(self.pathString)
     }
 }
