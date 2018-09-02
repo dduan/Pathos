@@ -272,6 +272,14 @@ extension PathDirectoryTests {
         ("testPathRepresentableDirectory", testPathRepresentableDirectory),
     ]
 }
+extension SameFileTests {
+    static var allTests = [
+        ("testSameFileAsSymbolicLink", testSameFileAsSymbolicLink),
+        ("testNotSameFile", testNotSameFile),
+        ("testPathRepresentableSameFileAsSymbolicLink", testPathRepresentableSameFileAsSymbolicLink),
+        ("testPathRepresentableNotSameFile", testPathRepresentableNotSameFile),
+    ]
+}
 extension SizeTests {
     static var allTests = [
         ("testSizeOfRegularFile", testSizeOfRegularFile),
@@ -344,6 +352,7 @@ XCTMain([
     testCase(NormalizePathTests.allTests),
     testCase(PathBaseNameTests.allTests),
     testCase(PathDirectoryTests.allTests),
+    testCase(SameFileTests.allTests),
     testCase(SizeTests.allTests),
     testCase(SplitExtensionTests.allTests),
     testCase(SplitPathTests.allTests),

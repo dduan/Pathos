@@ -118,7 +118,7 @@
     - [ ] `PathRepresentable.modificationTime: Pathos.FileTime? { get }`
     - [ ] `PathRepresentable.accessTime: Pathos.FileTime? { get }`
     - [ ] `PathRepresentable.metadataChangeTime: Pathos.FileTime? { get }`
-    - [ ] `PathRepresentable.isSame(as other: Self) -> Bool`
+    - [ ] `setCurrentWorkingDirectory(to path: String) throws`
     - [ ] `PathRepresentable.copy(to destination: Self, followSymbolicLink: Bool = default, chunkSize: Int = default) -> Bool`
     - [ ] `static PathRepresentable.currentWorkingDirectory: Self`
     - [ ] `PathRepresentable.currentWorkingDirectory: Self`
@@ -144,11 +144,11 @@
     - [ ] `readBytes(atPath path: String) throws -> [UInt8]`
     - [ ] `readString(atPath path: String) throws -> String`
     - [ ] `readSymbolicLink(atPath path: String) throws -> String`
-    - [ ] `sameFile(atPath path: String, otherPath: String) throws -> Bool`
-    - [ ] `setCurrentWorkingDirectory(to path: String) throws`
     - [ ] `setPermissions(forPath path: String, _ mode: Pathos.FilePermission) throws`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [x] `PathRepresentable.isSame(as other: Self) -> Bool`
+    - [x] `sameFile(atPath path: String, otherPath: String) throws -> Bool`
     - [x] `PathRepresentable.unkownTypeFiles(recursive: Bool = default) -> [Self]`
     - [x] `PathRepresentable.pipes(recursive: Bool = default) -> [Self]`
     - [x] `PathRepresentable.characterDevices(recursive: Bool = default) -> [Self]`
