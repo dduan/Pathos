@@ -8,9 +8,11 @@ enum FixturePath: String {
     case goodFileSymbol = "hello_symbol"
     case goodDirectorySymbol = "world_symbol"
     case badSymbol = "broken_symbol"
+    case fileInDirectory = "world/world_hello"
+    case symbolInDirectory = "world/world_symbol"
+    case directoryInDirectory = "world/world_world"
+    case fileInNestedDirecory = "world/world_world/hello"
 }
-
-
 
 class FixtureTestCase: XCTestCase {
     let fixtureRoot = normalize(path: "\(#file)/../Fixtures")
@@ -30,9 +32,9 @@ class FixtureTestCase: XCTestCase {
         case .goodFileSymbol:
             return 6
         case .directoryThatExists:
-            return 96
+            return 160
         case .goodDirectorySymbol:
-            return 96
+            return 160
         default:
             return -1
         }
