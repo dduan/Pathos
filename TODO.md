@@ -111,14 +111,14 @@
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [ ] `PathRepresentable.isSame(as other: Self) -> Bool`
+    - [ ] `sameFile(atPath path: String, otherPath: String) throws -> Bool`
+    - [ ] `directory(ofPath path: String) -> String`
 - [ ] add tests
     - [ ] `FileTime`
-    - [ ] `Path`
-    - [ ] `PathRepresentable`
     - [ ] `PathRepresentable.modificationTime: Pathos.FileTime? { get }`
     - [ ] `PathRepresentable.accessTime: Pathos.FileTime? { get }`
     - [ ] `PathRepresentable.metadataChangeTime: Pathos.FileTime? { get }`
-    - [ ] `PathRepresentable.isSame(as other: Self) -> Bool`
     - [ ] `PathRepresentable.copy(to destination: Self, followSymbolicLink: Bool = default, chunkSize: Int = default) -> Bool`
     - [ ] `static PathRepresentable.currentWorkingDirectory: Self`
     - [ ] `PathRepresentable.currentWorkingDirectory: Self`
@@ -131,18 +131,17 @@
     - [ ] `accessTime(atPath path: String) throws -> Pathos.FileTime`
     - [ ] `copyFile(fromPath source: String, toPath destination: String, followSymbolicLink: Bool = default, chunkSize: Int = default) throws`
     - [ ] `deletePath(_ path: String, recursive: Bool = default) throws`
-    - [ ] `directory(ofPath path: String) -> String`
     - [ ] `getCurrentWorkingDirectory() throws -> String`
     - [ ] `makeSymbolicLink(fromPath source: String, toPath destination: String) throws`
     - [ ] `metadataChangeTime(atPath path: String) throws -> Pathos.FileTime`
     - [ ] `modificationTime(atPath path: String) throws -> Pathos.FileTime`
     - [ ] `movePath(_ path: String, to other: String) throws`
     - [ ] `permissions(forPath path: String) throws -> Pathos.FilePermission`
-    - [ ] `sameFile(atPath path: String, otherPath: String) throws -> Bool`
     - [ ] `setCurrentWorkingDirectory(to path: String) throws`
     - [ ] `setPermissions(forPath path: String, _ mode: Pathos.FilePermission) throws`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [x] `Path`
     - [x] `PathRepresentable.readBytes() -> [UInt8]`
     - [x] `PathRepresentable.readString() -> String`
     - [x] `PathRepresentable.symbolicLinkValue: String? { get }`

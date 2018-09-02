@@ -272,6 +272,11 @@ extension PathDirectoryTests {
         ("testPathRepresentableDirectory", testPathRepresentableDirectory),
     ]
 }
+extension PathTests {
+    static var allTests = [
+        ("testPathValueDoesNotChange", testPathValueDoesNotChange),
+    ]
+}
 extension ReadingTests {
     static var allTests = [
         ("testReadString", testReadString),
@@ -366,6 +371,7 @@ XCTMain([
     testCase(NormalizePathTests.allTests),
     testCase(PathBaseNameTests.allTests),
     testCase(PathDirectoryTests.allTests),
+    testCase(PathTests.allTests),
     testCase(ReadingTests.allTests),
     testCase(SameFileTests.allTests),
     testCase(SizeTests.allTests),
