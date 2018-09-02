@@ -272,6 +272,20 @@ extension PathDirectoryTests {
         ("testPathRepresentableDirectory", testPathRepresentableDirectory),
     ]
 }
+extension ReadingTests {
+    static var allTests = [
+        ("testReadString", testReadString),
+        ("testReadBytes", testReadBytes),
+        ("testReadStringFromDirectory", testReadStringFromDirectory),
+        ("testReadStringFromNoWhere", testReadStringFromNoWhere),
+        ("testReadSymbolicLink", testReadSymbolicLink),
+        ("testPathRepresentableReadString", testPathRepresentableReadString),
+        ("testPathRepresentableReadBytes", testPathRepresentableReadBytes),
+        ("testPathRepresentableReadStringFromDirectory", testPathRepresentableReadStringFromDirectory),
+        ("testPathRepresentableReadStringFromNoWhere", testPathRepresentableReadStringFromNoWhere),
+        ("testPathRepresentableReadSymbolicLink", testPathRepresentableReadSymbolicLink),
+    ]
+}
 extension SameFileTests {
     static var allTests = [
         ("testSameFileAsSymbolicLink", testSameFileAsSymbolicLink),
@@ -352,6 +366,7 @@ XCTMain([
     testCase(NormalizePathTests.allTests),
     testCase(PathBaseNameTests.allTests),
     testCase(PathDirectoryTests.allTests),
+    testCase(ReadingTests.allTests),
     testCase(SameFileTests.allTests),
     testCase(SizeTests.allTests),
     testCase(SplitExtensionTests.allTests),
