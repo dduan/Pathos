@@ -110,7 +110,7 @@ extension PathRepresentable {
         return _children(self, recursive: recursive, block: children(inPath:recursive:))
     }
 
-    public func unkownTypeFiles(recursive: Bool = false) -> [Self] {
+    public func unknownTypeFiles(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: unknownTypeFiles(inPath:recursive:))
     }
 
