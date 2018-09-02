@@ -39,4 +39,44 @@ class FixtureTestCase: XCTestCase {
             return -1
         }
     }
+
+    var childFiles: Set<String> {
+        return [self.fixture(.fileThatExists)]
+    }
+
+    var childDirectories: Set<String> {
+        return [self.fixture(.directoryThatExists)]
+    }
+
+    var childSymbolicLinks: Set<String> {
+        return [
+            self.fixture(.goodFileSymbol),
+            self.fixture(.goodDirectorySymbol),
+            self.fixture(.badSymbol),
+        ]
+    }
+
+    var childFilesRecursive: Set<String> {
+        return [
+            self.fixture(.fileThatExists),
+            self.fixture(.fileInDirectory),
+            self.fixture(.fileInNestedDirecory),
+        ]
+    }
+
+    var childDirectoriesRecursive: Set<String> {
+        return [
+            self.fixture(.directoryThatExists),
+            self.fixture(.directoryInDirectory),
+        ]
+    }
+
+    var childSymbolicLinksRecursive: Set<String> {
+        return [
+            self.fixture(.goodFileSymbol),
+            self.fixture(.goodDirectorySymbol),
+            self.fixture(.badSymbol),
+            self.fixture(.symbolInDirectory),
+        ]
+    }
 }

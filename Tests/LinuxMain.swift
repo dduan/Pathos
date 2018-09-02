@@ -4,6 +4,26 @@
 import XCTest
 @testable import PathosTests
 
+extension ChildrenTests {
+    static var allTests = [
+        ("testChildrenInPath", testChildrenInPath),
+        ("testChildrenRecursiveInPath", testChildrenRecursiveInPath),
+        ("testFilesInPath", testFilesInPath),
+        ("testFilesRecursiveInPath", testFilesRecursiveInPath),
+        ("testDirectoriesInPath", testDirectoriesInPath),
+        ("testDirectoriesRecursiveInPath", testDirectoriesRecursiveInPath),
+        ("testSymbolicLinksInPath", testSymbolicLinksInPath),
+        ("testSymbolicLinksRecursiveInPath", testSymbolicLinksRecursiveInPath),
+        ("testPathRepresentableChildrenInPath", testPathRepresentableChildrenInPath),
+        ("testPathRepresentableChildrenRecursiveInPath", testPathRepresentableChildrenRecursiveInPath),
+        ("testPathRepresentableFilesInPath", testPathRepresentableFilesInPath),
+        ("testPathRepresentableFilesRecursiveInPath", testPathRepresentableFilesRecursiveInPath),
+        ("testPathRepresentableDirectoriesInPath", testPathRepresentableDirectoriesInPath),
+        ("testPathRepresentableDirectoriesRecursiveInPath", testPathRepresentableDirectoriesRecursiveInPath),
+        ("testPathRepresentableSymbolicLinksInPath", testPathRepresentableSymbolicLinksInPath),
+        ("testPathRepresentableSymbolicLinksRecursiveInPath", testPathRepresentableSymbolicLinksRecursiveInPath),
+    ]
+}
 extension ExistsTest {
     static var allTests = [
         ("testExistingFiles", testExistingFiles),
@@ -232,6 +252,20 @@ extension PathDirectoryTests {
         ("testPathRepresentableDirectory", testPathRepresentableDirectory),
     ]
 }
+extension SizeTests {
+    static var allTests = [
+        ("testSizeOfRegularFile", testSizeOfRegularFile),
+        ("testSizeOfSymbolToRegularFile", testSizeOfSymbolToRegularFile),
+        ("testSizeOfDirectory", testSizeOfDirectory),
+        ("testSizeOfSymbolToDirectory", testSizeOfSymbolToDirectory),
+        ("testSizeOfNonExistingPath", testSizeOfNonExistingPath),
+        ("testPathRepresentableSizeOfRegularFile", testPathRepresentableSizeOfRegularFile),
+        ("testPathRepresentableSizeOfSymbolToRegularFile", testPathRepresentableSizeOfSymbolToRegularFile),
+        ("testPathRepresentableSizeOfDirectory", testPathRepresentableSizeOfDirectory),
+        ("testPathRepresentableSizeOfSymbolToDirectory", testPathRepresentableSizeOfSymbolToDirectory),
+        ("testPathRepresentableSizeOfNonExistingPath", testPathRepresentableSizeOfNonExistingPath),
+    ]
+}
 extension SplitExtensionTests {
     static var allTests = [
         ("testSplitExtensionOnSimplePath", testSplitExtensionOnSimplePath),
@@ -272,6 +306,7 @@ extension SplitPathTests {
 }
 
 XCTMain([
+    testCase(ChildrenTests.allTests),
     testCase(ExistsTest.allTests),
     testCase(ExpandUserDirectoryTests.allTests),
     testCase(FileExtensionTests.allTests),
@@ -289,6 +324,7 @@ XCTMain([
     testCase(NormalizePathTests.allTests),
     testCase(PathBaseNameTests.allTests),
     testCase(PathDirectoryTests.allTests),
+    testCase(SizeTests.allTests),
     testCase(SplitExtensionTests.allTests),
     testCase(SplitPathTests.allTests),
 ])

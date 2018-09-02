@@ -119,14 +119,10 @@
     - [ ] `PathRepresentable.accessTime: Pathos.FileTime? { get }`
     - [ ] `PathRepresentable.metadataChangeTime: Pathos.FileTime? { get }`
     - [ ] `PathRepresentable.isSame(as other: Self) -> Bool`
-    - [ ] `PathRepresentable.children(recursive: Bool = default) -> [Self]`
     - [ ] `PathRepresentable.unkownTypeFiles(recursive: Bool = default) -> [Self]`
     - [ ] `PathRepresentable.pipes(recursive: Bool = default) -> [Self]`
     - [ ] `PathRepresentable.characterDevices(recursive: Bool = default) -> [Self]`
-    - [ ] `PathRepresentable.directories(recursive: Bool = default) -> [Self]`
     - [ ] `PathRepresentable.blockDevices(recursive: Bool = default) -> [Self]`
-    - [ ] `PathRepresentable.files(recursive: Bool = default) -> [Self]`
-    - [ ] `PathRepresentable.symbolicLinks(recursive: Bool = default) -> [Self]`
     - [ ] `PathRepresentable.sockets(recursive: Bool = default) -> [Self]`
     - [ ] `PathRepresentable.copy(to destination: Self, followSymbolicLink: Bool = default, chunkSize: Int = default) -> Bool`
     - [ ] `static PathRepresentable.currentWorkingDirectory: Self`
@@ -143,12 +139,9 @@
     - [ ] `accessTime(atPath path: String) throws -> Pathos.FileTime`
     - [ ] `blockDevices(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `characterDevices(inPath path: String, recursive: Bool = default) throws -> [String]`
-    - [ ] `children(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `copyFile(fromPath source: String, toPath destination: String, followSymbolicLink: Bool = default, chunkSize: Int = default) throws`
     - [ ] `deletePath(_ path: String, recursive: Bool = default) throws`
-    - [ ] `directories(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `directory(ofPath path: String) -> String`
-    - [ ] `files(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `getCurrentWorkingDirectory() throws -> String`
     - [ ] `makeSymbolicLink(fromPath source: String, toPath destination: String) throws`
     - [ ] `metadataChangeTime(atPath path: String) throws -> Pathos.FileTime`
@@ -163,10 +156,17 @@
     - [ ] `setCurrentWorkingDirectory(to path: String) throws`
     - [ ] `setPermissions(forPath path: String, _ mode: Pathos.FilePermission) throws`
     - [ ] `sockets(inPath path: String, recursive: Bool = default) throws -> [String]`
-    - [ ] `symbolicLinks(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `unknownTypeFiles(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [ ] `writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws where Bytes : Collection, Bytes.Element == UInt8`
     - [ ] `writeString(atPath path: String, _ string: String, createIfNecessary: Bool = default, mode: Pathos.FilePermission? = default) throws`
+    - [x] `PathRepresentable.files(recursive: Bool = default) -> [Self]`
+    - [x] `PathRepresentable.children(recursive: Bool = default) -> [Self]`
+    - [x] `PathRepresentable.directories(recursive: Bool = default) -> [Self]`
+    - [x] `PathRepresentable.symbolicLinks(recursive: Bool = default) -> [Self]`
+    - [x] `children(inPath path: String, recursive: Bool = default) throws -> [String]`
+    - [x] `files(inPath path: String, recursive: Bool = default) throws -> [String]`
+    - [x] `directories(inPath path: String, recursive: Bool = default) throws -> [String]`
+    - [x] `symbolicLinks(inPath path: String, recursive: Bool = default) throws -> [String]`
     - [x] `PathRepresentable.size: Int64 { get }`
     - [x] `size(atPath path: String) throws -> Int64`
     - [x] `isSymbolicLink(atPath path: String) throws -> Bool`
