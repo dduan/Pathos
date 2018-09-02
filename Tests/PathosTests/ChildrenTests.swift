@@ -121,4 +121,122 @@ final class ChildrenTests: FixtureTestCase {
             self.childSymbolicLinksRecursive
         )
     }
+
+    /// Negative tests: can't positively prove these are working, but at least make sure they don't return
+    /// things they aren't supposed to.
+
+    // unknownTypeFiles
+    func testUnknownTypeFilesInPath() {
+        XCTAssertEqual(Set(try unknownTypeFiles(inPath: self.fixtureRoot)), [])
+    }
+
+    func testUnknownTypeFilesRecursiveInPath() {
+        XCTAssertEqual(Set(try unknownTypeFiles(inPath: self.fixtureRoot, recursive: true)), [])
+    }
+
+    func testPathRepresentableUnknownTypeFilesInPath() {
+        XCTAssertEqual(
+            Set(Path(string: self.fixtureRoot).unknownTypeFiles().map { $0.pathString }), 
+            []
+        )
+    }
+
+    func testPathRepresentableUnknownTypeFilesRecursiveInPath() {
+        XCTAssertEqual(
+            Set(Path(string: self.fixtureRoot).unknownTypeFiles(recursive: true).map { $0.pathString }), 
+            []
+        )
+    }
+
+    // pipes
+    func testPipesInPath() {
+        XCTAssertEqual(Set(try pipes(inPath: self.fixtureRoot)), [])
+    }
+
+    func testPipesRecursiveInPath() {
+        XCTAssertEqual(Set(try pipes(inPath: self.fixtureRoot, recursive: true)), [])
+    }
+
+    func testPathRepresentablePipesInPath() {
+        XCTAssertEqual(
+            Set(Path(string: self.fixtureRoot).pipes().map { $0.pathString }), 
+            []
+        )
+    }
+
+    func testPathRepresentablePipesRecursiveInPath() {
+        XCTAssertEqual(
+            Set(Path(string: self.fixtureRoot).pipes(recursive: true).map { $0.pathString }), 
+            []
+        )
+    }
+
+    // characterDevices
+    func testCharacterDevicesInPath() {
+        XCTAssertEqual(Set(try characterDevices(inPath: self.fixtureRoot)), [])
+    }
+
+    func testCharacterDevicesRecursiveInPath() {
+        XCTAssertEqual(Set(try characterDevices(inPath: self.fixtureRoot, recursive: true)), [])
+    }
+
+    func testPathRepresentableCharacterDevicesInPath() {
+        XCTAssertEqual(
+            Set(Path(string: self.fixtureRoot).characterDevices().map { $0.pathString }), 
+            []
+        )
+    }
+
+    func testPathRepresentableCharacterDevicesRecursiveInPath() {
+        XCTAssertEqual(
+            Set(Path(string: self.fixtureRoot).characterDevices(recursive: true).map { $0.pathString }), 
+            []
+        )
+    }
+
+    // blockDevices
+    func testBlockDevicesInPath() {
+        XCTAssertEqual(Set(try blockDevices(inPath: self.fixtureRoot)), [])
+    }
+
+    func testBlockDevicesRecursiveInPath() {
+        XCTAssertEqual(Set(try blockDevices(inPath: self.fixtureRoot, recursive: true)), [])
+    }
+
+    func testPathRepresentableBlockDevicesInPath() {
+        XCTAssertEqual(
+            Set(Path(string: self.fixtureRoot).blockDevices().map { $0.pathString }), 
+            []
+        )
+    }
+
+    func testPathRepresentableBlockDevicesRecursiveInPath() {
+        XCTAssertEqual(
+            Set(Path(string: self.fixtureRoot).blockDevices(recursive: true).map { $0.pathString }), 
+            []
+        )
+    }
+
+    // sockets
+    func testSocketsInPath() {
+        XCTAssertEqual(Set(try sockets(inPath: self.fixtureRoot)), [])
+    }
+
+    func testSocketsRecursiveInPath() {
+        XCTAssertEqual(Set(try sockets(inPath: self.fixtureRoot, recursive: true)), [])
+    }
+
+    func testPathRepresentableSocketsInPath() {
+        XCTAssertEqual(
+            Set(Path(string: self.fixtureRoot).sockets().map { $0.pathString }), 
+            []
+        )
+    }
+
+    func testPathRepresentableSocketsRecursiveInPath() {
+        XCTAssertEqual(
+            Set(Path(string: self.fixtureRoot).sockets(recursive: true).map { $0.pathString }), 
+            []
+        )
+    }
 }
