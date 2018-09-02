@@ -26,7 +26,7 @@ func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = fals
 #if os(Linux)
         guard var entry = d?.pointee,
             case let pathType = Int32(entry.d_type),
-            type == nil || pathType == type,
+            type == nil || pathType == type || pathType == DT_DIR,
             case let nameLength = Int(entry.d_reclen + 1),
             let nameBuffer = UnsafeBufferPointer(start: &entry.d_name.0, count: nameLength).baseAddress,
             case let name = String(cString: nameBuffer),
@@ -38,7 +38,7 @@ func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = fals
 #else
         guard var entry = d?.pointee,
             case let pathType = Int32(entry.d_type),
-            type == nil || pathType == type,
+            type == nil || pathType == type || pathType == DT_DIR,
             case let nameLength = Int(entry.d_namlen + 1),
             let nameBuffer = UnsafeBufferPointer(start: &entry.d_name.0, count: nameLength).baseAddress,
             case let name = String(cString: nameBuffer),
@@ -50,7 +50,10 @@ func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = fals
 #endif
 
         let fullName = join(path: path, withPaths: name)
-        result.append(fullName)
+        if type == nil || pathType == type {
+            result.append(fullName)
+        }
+
         if recursive && pathType == DT_DIR {
             result += try _typedChildrenInPath(join(path: path, withPaths: fullName), type, recursive: true)
         }
