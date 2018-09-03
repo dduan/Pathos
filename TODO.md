@@ -5,6 +5,7 @@
     - [ ] add SwiftLint
     - [ ] generate reference (?). Should be part of the build step.
     - [ ] support Carthage (?)
+    - [x] run tests on CI for linux
 - [ ] 1.0 features
     - [ ] design/implement temporay file/directory
     - [ ] implement globbing
