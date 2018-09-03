@@ -5,7 +5,7 @@ import XCTest
 @testable import PathosTests
 
 extension ChildrenTests {
-    static var allx: [(String, (ChildrenTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testChildrenInPath", testChildrenInPath),
             ("testChildrenRecursiveInPath", testChildrenRecursiveInPath),
@@ -47,7 +47,7 @@ extension ChildrenTests {
     }
 }
 extension ExistsTest {
-    static var allx: [(String, (ExistsTest) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testExistingFiles", testExistingFiles),
             ("testNonExistingFiles", testNonExistingFiles),
@@ -79,7 +79,7 @@ extension ExistsTest {
     }
 }
 extension ExpandUserDirectoryTests {
-    static var allx: [(String, (ExpandUserDirectoryTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testExpandPathWithNoUser", testExpandPathWithNoUser),
             ("testUserDirectoryExpandsToHomeEnvironment", testUserDirectoryExpandsToHomeEnvironment),
@@ -93,7 +93,7 @@ extension ExpandUserDirectoryTests {
     }
 }
 extension FileExtensionTests {
-    static var allx: [(String, (FileExtensionTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testFileExtensionOnSimplePath", testFileExtensionOnSimplePath),
             ("testFileExtensionOnPathWithMultipleDots", testFileExtensionOnPathWithMultipleDots),
@@ -119,13 +119,13 @@ extension FileExtensionTests {
     }
 }
 extension FixtureTestCase {
-    static var allx: [(String, (FixtureTestCase) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
         ]
     }
 }
 extension IsAbsoluteTests {
-    static var allx: [(String, (IsAbsoluteTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testIsAbsolutePath", testIsAbsolutePath),
             ("testPathRepresentableIsAbsolute", testPathRepresentableIsAbsolute),
@@ -133,7 +133,7 @@ extension IsAbsoluteTests {
     }
 }
 extension IsBlockDeviceTests {
-    static var allx: [(String, (IsBlockDeviceTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testIsBlockDeviceOnExistingFile", testIsBlockDeviceOnExistingFile),
             ("testIsBlockDeviceOnExistingDirectory", testIsBlockDeviceOnExistingDirectory),
@@ -151,7 +151,7 @@ extension IsBlockDeviceTests {
     }
 }
 extension IsCharacterDeviceTests {
-    static var allx: [(String, (IsCharacterDeviceTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testIsCharacterDeviceOnExistingFile", testIsCharacterDeviceOnExistingFile),
             ("testIsCharacterDeviceOnExistingDirectory", testIsCharacterDeviceOnExistingDirectory),
@@ -169,7 +169,7 @@ extension IsCharacterDeviceTests {
     }
 }
 extension IsDirectoryTests {
-    static var allx: [(String, (IsDirectoryTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testIsDirectoryOnExistingFile", testIsDirectoryOnExistingFile),
             ("testIsDirectoryOnExistingDirectory", testIsDirectoryOnExistingDirectory),
@@ -187,7 +187,7 @@ extension IsDirectoryTests {
     }
 }
 extension IsFileTests {
-    static var allx: [(String, (IsFileTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testIsFileOnExistingFile", testIsFileOnExistingFile),
             ("testIsFileOnExistingDirectory", testIsFileOnExistingDirectory),
@@ -205,7 +205,7 @@ extension IsFileTests {
     }
 }
 extension IsPipeTests {
-    static var allx: [(String, (IsPipeTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testIsPipeOnExistingFile", testIsPipeOnExistingFile),
             ("testIsPipeOnExistingDirectory", testIsPipeOnExistingDirectory),
@@ -223,7 +223,7 @@ extension IsPipeTests {
     }
 }
 extension IsSocketTests {
-    static var allx: [(String, (IsSocketTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testIsSocketOnExistingFile", testIsSocketOnExistingFile),
             ("testIsSocketOnExistingDirectory", testIsSocketOnExistingDirectory),
@@ -241,7 +241,7 @@ extension IsSocketTests {
     }
 }
 extension IsSymbolicLinkTests {
-    static var allx: [(String, (IsSymbolicLinkTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testIsSymbolicLinkOnFile", testIsSymbolicLinkOnFile),
             ("testIsSymbolicLinkOnDirectory", testIsSymbolicLinkOnDirectory),
@@ -259,7 +259,7 @@ extension IsSymbolicLinkTests {
     }
 }
 extension JoinPathTests {
-    static var allx: [(String, (JoinPathTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testSimpleSingleJoining", testSimpleSingleJoining),
             ("testMultipleJoining", testMultipleJoining),
@@ -273,7 +273,7 @@ extension JoinPathTests {
     }
 }
 extension MakeAbsoluteTests {
-    static var allx: [(String, (MakeAbsoluteTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testMakeAbsolutePath", testMakeAbsolutePath),
             ("testPathRepresentableMakeAbsolutePath", testPathRepresentableMakeAbsolutePath),
@@ -281,7 +281,7 @@ extension MakeAbsoluteTests {
     }
 }
 extension NormalizePathTests {
-    static var allx: [(String, (NormalizePathTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testAssertEmptyPathBecomesCurrent", testAssertEmptyPathBecomesCurrent),
             ("testSlashPrefixes", testSlashPrefixes),
@@ -293,7 +293,7 @@ extension NormalizePathTests {
     }
 }
 extension PathBaseNameTests {
-    static var allx: [(String, (PathBaseNameTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testBaseNameOfPath", testBaseNameOfPath),
             ("testPathRepresentableBaseNameOfPath", testPathRepresentableBaseNameOfPath),
@@ -301,7 +301,7 @@ extension PathBaseNameTests {
     }
 }
 extension PathDirectoryTests {
-    static var allx: [(String, (PathDirectoryTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testPathDirectory", testPathDirectory),
             ("testPathRepresentableDirectory", testPathRepresentableDirectory),
@@ -309,14 +309,14 @@ extension PathDirectoryTests {
     }
 }
 extension PathTests {
-    static var allx: [(String, (PathTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testPathValueDoesNotChange", testPathValueDoesNotChange),
         ]
     }
 }
 extension ReadingTests {
-    static var allx: [(String, (ReadingTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testReadString", testReadString),
             ("testReadBytes", testReadBytes),
@@ -332,7 +332,7 @@ extension ReadingTests {
     }
 }
 extension SameFileTests {
-    static var allx: [(String, (SameFileTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testSameFileAsSymbolicLink", testSameFileAsSymbolicLink),
             ("testNotSameFile", testNotSameFile),
@@ -342,7 +342,7 @@ extension SameFileTests {
     }
 }
 extension SizeTests {
-    static var allx: [(String, (SizeTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testSizeOfRegularFile", testSizeOfRegularFile),
             ("testSizeOfSymbolToRegularFile", testSizeOfSymbolToRegularFile),
@@ -358,7 +358,7 @@ extension SizeTests {
     }
 }
 extension SplitExtensionTests {
-    static var allx: [(String, (SplitExtensionTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testSplitExtensionOnSimplePath", testSplitExtensionOnSimplePath),
             ("testSplitExtensionOnPathWithMultipleDots", testSplitExtensionOnPathWithMultipleDots),
@@ -384,7 +384,7 @@ extension SplitExtensionTests {
     }
 }
 extension SplitPathTests {
-    static var allx: [(String, (SplitPathTests) -> () -> Void)] {
+    static var allx: [(String, (XCTestCase) -> () -> Void)] {
         return [
             ("testSplitSimplePath", testSplitSimplePath),
             ("testSplitRootPath", testSplitRootPath),
