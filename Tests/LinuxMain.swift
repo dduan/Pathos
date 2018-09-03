@@ -44,6 +44,7 @@ extension ChildrenTests {
             ("testPathRepresentableSocketsInPath", testPathRepresentableSocketsInPath),
             ("testPathRepresentableSocketsRecursiveInPath", testPathRepresentableSocketsRecursiveInPath),
         ]
+    }
 }
 extension ExistsTest {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -75,6 +76,7 @@ extension ExistsTest {
             ("testPathRepresentableGoodDirectorySymbolicLinkNotFollowingSymbol", testPathRepresentableGoodDirectorySymbolicLinkNotFollowingSymbol),
             ("testPathRepresentableBadSymbolicLinkNotFollowingSymbol", testPathRepresentableBadSymbolicLinkNotFollowingSymbol),
         ]
+    }
 }
 extension ExpandUserDirectoryTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -88,6 +90,7 @@ extension ExpandUserDirectoryTests {
             ("testPathRepresentableSpecialHomeValue", testPathRepresentableSpecialHomeValue),
             ("testPathRepresentableFallbackToPasswdDatabase", testPathRepresentableFallbackToPasswdDatabase),
         ]
+    }
 }
 extension FileExtensionTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -113,11 +116,13 @@ extension FileExtensionTests {
             ("testPathRepresentableFileExtensionOnPathWithOnlyDots", testPathRepresentableFileExtensionOnPathWithOnlyDots),
             ("testPathRepresentableFileExtensionOnEmptyPath", testPathRepresentableFileExtensionOnEmptyPath),
         ]
+    }
 }
 extension FixtureTestCase {
     static var allTests: [(String, XCTestCaseClosure)] {
         return [
         ]
+    }
 }
 extension IsAbsoluteTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -125,6 +130,7 @@ extension IsAbsoluteTests {
             ("testIsAbsolutePath", testIsAbsolutePath),
             ("testPathRepresentableIsAbsolute", testPathRepresentableIsAbsolute),
         ]
+    }
 }
 extension IsBlockDeviceTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -142,6 +148,7 @@ extension IsBlockDeviceTests {
             ("testPathRepresentableIsBlockDeviceOnSymbolicDirectoryLink", testPathRepresentableIsBlockDeviceOnSymbolicDirectoryLink),
             ("testPathRerpesentableIsBlockDeviceOnBadSymbolicLink", testPathRerpesentableIsBlockDeviceOnBadSymbolicLink),
         ]
+    }
 }
 extension IsCharacterDeviceTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -159,6 +166,7 @@ extension IsCharacterDeviceTests {
             ("testPathRepresentableIsCharacterDeviceOnSymbolicDirectoryLink", testPathRepresentableIsCharacterDeviceOnSymbolicDirectoryLink),
             ("testPathRerpesentableIsCharacterDeviceOnBadSymbolicLink", testPathRerpesentableIsCharacterDeviceOnBadSymbolicLink),
         ]
+    }
 }
 extension IsDirectoryTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -176,6 +184,7 @@ extension IsDirectoryTests {
             ("testPathRepresentableIsDirectoryOnSymbolicDirectoryLink", testPathRepresentableIsDirectoryOnSymbolicDirectoryLink),
             ("testPathRepresentableIsDirectoryOnBadSymbolicLink", testPathRepresentableIsDirectoryOnBadSymbolicLink),
         ]
+    }
 }
 extension IsFileTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -193,6 +202,7 @@ extension IsFileTests {
             ("testPathRepresentableIsFileOnSymbolicDirectoryLink", testPathRepresentableIsFileOnSymbolicDirectoryLink),
             ("testPathRerpesentableIsFileOnBadSymbolicLink", testPathRerpesentableIsFileOnBadSymbolicLink),
         ]
+    }
 }
 extension IsPipeTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -210,6 +220,7 @@ extension IsPipeTests {
             ("testPathRepresentableIsPipeOnSymbolicDirectoryLink", testPathRepresentableIsPipeOnSymbolicDirectoryLink),
             ("testPathRerpesentableIsPipeOnBadSymbolicLink", testPathRerpesentableIsPipeOnBadSymbolicLink),
         ]
+    }
 }
 extension IsSocketTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -227,6 +238,7 @@ extension IsSocketTests {
             ("testPathRepresentableIsSocketOnSymbolicDirectoryLink", testPathRepresentableIsSocketOnSymbolicDirectoryLink),
             ("testPathRerpesentableIsSocketOnBadSymbolicLink", testPathRerpesentableIsSocketOnBadSymbolicLink),
         ]
+    }
 }
 extension IsSymbolicLinkTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -244,6 +256,7 @@ extension IsSymbolicLinkTests {
             ("testPathRepresentableIsSymbolicLinkOnGoodDirectorySymbol", testPathRepresentableIsSymbolicLinkOnGoodDirectorySymbol),
             ("testPathRepresentableIsSymbolicLinkOnBadSymbol", testPathRepresentableIsSymbolicLinkOnBadSymbol),
         ]
+    }
 }
 extension JoinPathTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -257,6 +270,7 @@ extension JoinPathTests {
             ("testPathRepresentableMultipleJoiningWithTrailingSeparators", testPathRepresentableMultipleJoiningWithTrailingSeparators),
             ("testPathRepresentableJoiningWithAbsolutePath", testPathRepresentableJoiningWithAbsolutePath),
         ]
+    }
 }
 extension MakeAbsoluteTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -264,6 +278,7 @@ extension MakeAbsoluteTests {
             ("testMakeAbsolutePath", testMakeAbsolutePath),
             ("testPathRepresentableMakeAbsolutePath", testPathRepresentableMakeAbsolutePath),
         ]
+    }
 }
 extension NormalizePathTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -275,6 +290,7 @@ extension NormalizePathTests {
             ("testPathRepresentableSlashPrefixes", testPathRepresentableSlashPrefixes),
             ("testPathRepresentableConanicalizePath", testPathRepresentableConanicalizePath),
         ]
+    }
 }
 extension PathBaseNameTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -282,6 +298,7 @@ extension PathBaseNameTests {
             ("testBaseNameOfPath", testBaseNameOfPath),
             ("testPathRepresentableBaseNameOfPath", testPathRepresentableBaseNameOfPath),
         ]
+    }
 }
 extension PathDirectoryTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -289,12 +306,14 @@ extension PathDirectoryTests {
             ("testPathDirectory", testPathDirectory),
             ("testPathRepresentableDirectory", testPathRepresentableDirectory),
         ]
+    }
 }
 extension PathTests {
     static var allTests: [(String, XCTestCaseClosure)] {
         return [
             ("testPathValueDoesNotChange", testPathValueDoesNotChange),
         ]
+    }
 }
 extension ReadingTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -310,6 +329,7 @@ extension ReadingTests {
             ("testPathRepresentableReadStringFromNoWhere", testPathRepresentableReadStringFromNoWhere),
             ("testPathRepresentableReadSymbolicLink", testPathRepresentableReadSymbolicLink),
         ]
+    }
 }
 extension SameFileTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -319,6 +339,7 @@ extension SameFileTests {
             ("testPathRepresentableSameFileAsSymbolicLink", testPathRepresentableSameFileAsSymbolicLink),
             ("testPathRepresentableNotSameFile", testPathRepresentableNotSameFile),
         ]
+    }
 }
 extension SizeTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -334,6 +355,7 @@ extension SizeTests {
             ("testPathRepresentableSizeOfSymbolToDirectory", testPathRepresentableSizeOfSymbolToDirectory),
             ("testPathRepresentableSizeOfNonExistingPath", testPathRepresentableSizeOfNonExistingPath),
         ]
+    }
 }
 extension SplitExtensionTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -359,6 +381,7 @@ extension SplitExtensionTests {
             ("testPathRepresentableSplitExtensionOnPathWithOnlyDots", testPathRepresentableSplitExtensionOnPathWithOnlyDots),
             ("testPathRepresentableSplitExtensionOnEmptyPath", testPathRepresentableSplitExtensionOnEmptyPath),
         ]
+    }
 }
 extension SplitPathTests {
     static var allTests: [(String, XCTestCaseClosure)] {
@@ -374,6 +397,7 @@ extension SplitPathTests {
             ("testPathRepresentableSplitWithABunchOfPrefixSlashes", testPathRepresentableSplitWithABunchOfPrefixSlashes),
             ("testPathRepresentableSplitWithRedundantSeparator", testPathRepresentableSplitWithRedundantSeparator),
         ]
+    }
 }
 
 XCTMain([
