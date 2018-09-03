@@ -11,7 +11,11 @@ play:
 test:
 	@swift test
 test-linux-docker:
-	 @Scripts/run-tests-linux-docker.sh
+	@Scripts/run-tests-linux-docker.sh
+develop-linux-docker:
+	@Scripts/develop-linux-docker.sh
+develop-linux-docker-rebuild:
+	@Scripts/develop-linux-docker.sh rebuild
 generate:
 	@swift package generate-xcodeproj
 build: generate-linux-test-manifest
