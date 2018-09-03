@@ -8,6 +8,7 @@ import XCTest
         return [
     {% for method in type.methods %}{% if method.parameters.count == 0 and method.shortName|hasPrefix:"test" %}        ("{{ method.shortName }}", {{ method.shortName }}),
     {% endif %}{% endfor %}    ]
+    }
 }
 {% endif %}{% endfor %}
 
