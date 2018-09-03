@@ -32,9 +32,17 @@ class FixtureTestCase: XCTestCase {
         case .goodFileSymbol:
             return 6
         case .directoryThatExists:
+#if os(Linux)
+            return 4096
+#else
             return 160
+#endif
         case .goodDirectorySymbol:
+#if os(Linux)
+            return 4096
+#else
             return 160
+#endif
         default:
             return -1
         }
