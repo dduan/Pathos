@@ -275,14 +275,10 @@ extension PathTests {
 }
 extension ReadingTests {
     static var allTests = [
-        ("testReadString", testReadString),
         ("testReadBytes", testReadBytes),
-        ("testReadStringFromDirectory", testReadStringFromDirectory),
         ("testReadStringFromNoWhere", testReadStringFromNoWhere),
         ("testReadSymbolicLink", testReadSymbolicLink),
-        ("testPathRepresentableReadString", testPathRepresentableReadString),
         ("testPathRepresentableReadBytes", testPathRepresentableReadBytes),
-        ("testPathRepresentableReadStringFromDirectory", testPathRepresentableReadStringFromDirectory),
         ("testPathRepresentableReadStringFromNoWhere", testPathRepresentableReadStringFromNoWhere),
         ("testPathRepresentableReadSymbolicLink", testPathRepresentableReadSymbolicLink),
     ]
