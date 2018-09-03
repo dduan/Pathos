@@ -1,0 +1,10 @@
+matrix:
+  include:
+    - os: linux
+      language: generic
+      dist: trusty
+      sudo: required
+      services:
+        - docker
+      script:
+        - make test-linux-docker
