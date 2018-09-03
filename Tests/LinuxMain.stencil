@@ -6,7 +6,7 @@ import XCTest
 {% if not type.annotations.disableTests %}extension {{ type.name }} {
     static var allx: [(String, XCTestCaseClosure)] {
         return [
-    {% for method in type.methods %}{% if method.parameters.count == 0 and method.shortName|hasPrefix:"test" %}        ("{{ method.shortName }}", {{ method.shortName }}),
+    {% for method in type.methods %}{% if method.parameters.count == 0 and method.shortName|hasPrefix:"test" %}        ("{{ method.shortName }}", {{ type.name }}.{{ method.shortName }}),
     {% endif %}{% endfor %}    ]
     }
 }
