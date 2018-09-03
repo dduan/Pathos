@@ -13,6 +13,8 @@ fi
 $(dirname $0)/ensure-sourcery.sh
 echo "updating Linux test manifest"
 # Sourcery doesn't like broken symbolic links -_-
+rm -rf tmp/Fixtures
 mv Tests/PathosTests/Fixtures tmp
+
 cd Tests && ../tmp/sourcery --sources PathosTests/ --templates LinuxMain.stencil --args testimports="import PathosTests" && cd ..
 mv tmp/Fixtures Tests/PathosTests/
