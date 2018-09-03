@@ -5,7 +5,7 @@ import XCTest
 @testable import PathosTests
 
 extension ChildrenTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testChildrenInPath", testChildrenInPath),
         ("testChildrenRecursiveInPath", testChildrenRecursiveInPath),
         ("testFilesInPath", testFilesInPath),
@@ -45,7 +45,7 @@ extension ChildrenTests {
     ]
 }
 extension ExistsTest {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testExistingFiles", testExistingFiles),
         ("testNonExistingFiles", testNonExistingFiles),
         ("testExistingFilesFollowingSymbol", testExistingFilesFollowingSymbol),
@@ -75,7 +75,7 @@ extension ExistsTest {
     ]
 }
 extension ExpandUserDirectoryTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testExpandPathWithNoUser", testExpandPathWithNoUser),
         ("testUserDirectoryExpandsToHomeEnvironment", testUserDirectoryExpandsToHomeEnvironment),
         ("testSpecialHomeValue", testSpecialHomeValue),
@@ -87,7 +87,7 @@ extension ExpandUserDirectoryTests {
     ]
 }
 extension FileExtensionTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testFileExtensionOnSimplePath", testFileExtensionOnSimplePath),
         ("testFileExtensionOnPathWithMultipleDots", testFileExtensionOnPathWithMultipleDots),
         ("testFileExtensionOnPathWithLeadingDot", testFileExtensionOnPathWithLeadingDot),
@@ -111,17 +111,17 @@ extension FileExtensionTests {
     ]
 }
 extension FixtureTestCase {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
     ]
 }
 extension IsAbsoluteTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testIsAbsolutePath", testIsAbsolutePath),
         ("testPathRepresentableIsAbsolute", testPathRepresentableIsAbsolute),
     ]
 }
 extension IsBlockDeviceTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testIsBlockDeviceOnExistingFile", testIsBlockDeviceOnExistingFile),
         ("testIsBlockDeviceOnExistingDirectory", testIsBlockDeviceOnExistingDirectory),
         ("testIsBlockDeviceOnNonExistingPath", testIsBlockDeviceOnNonExistingPath),
@@ -137,7 +137,7 @@ extension IsBlockDeviceTests {
     ]
 }
 extension IsCharacterDeviceTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testIsCharacterDeviceOnExistingFile", testIsCharacterDeviceOnExistingFile),
         ("testIsCharacterDeviceOnExistingDirectory", testIsCharacterDeviceOnExistingDirectory),
         ("testIsCharacterDeviceOnNonExistingPath", testIsCharacterDeviceOnNonExistingPath),
@@ -153,7 +153,7 @@ extension IsCharacterDeviceTests {
     ]
 }
 extension IsDirectoryTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testIsDirectoryOnExistingFile", testIsDirectoryOnExistingFile),
         ("testIsDirectoryOnExistingDirectory", testIsDirectoryOnExistingDirectory),
         ("testIsDirectoryOnNonExistingPath", testIsDirectoryOnNonExistingPath),
@@ -169,7 +169,7 @@ extension IsDirectoryTests {
     ]
 }
 extension IsFileTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testIsFileOnExistingFile", testIsFileOnExistingFile),
         ("testIsFileOnExistingDirectory", testIsFileOnExistingDirectory),
         ("testIsFileOnNonExistingPath", testIsFileOnNonExistingPath),
@@ -185,7 +185,7 @@ extension IsFileTests {
     ]
 }
 extension IsPipeTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testIsPipeOnExistingFile", testIsPipeOnExistingFile),
         ("testIsPipeOnExistingDirectory", testIsPipeOnExistingDirectory),
         ("testIsPipeOnNonExistingPath", testIsPipeOnNonExistingPath),
@@ -201,7 +201,7 @@ extension IsPipeTests {
     ]
 }
 extension IsSocketTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testIsSocketOnExistingFile", testIsSocketOnExistingFile),
         ("testIsSocketOnExistingDirectory", testIsSocketOnExistingDirectory),
         ("testIsSocketOnNonExistingPath", testIsSocketOnNonExistingPath),
@@ -217,7 +217,7 @@ extension IsSocketTests {
     ]
 }
 extension IsSymbolicLinkTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testIsSymbolicLinkOnFile", testIsSymbolicLinkOnFile),
         ("testIsSymbolicLinkOnDirectory", testIsSymbolicLinkOnDirectory),
         ("testIsSymbolicLinkOnNonExistingPath", testIsSymbolicLinkOnNonExistingPath),
@@ -233,7 +233,7 @@ extension IsSymbolicLinkTests {
     ]
 }
 extension JoinPathTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testSimpleSingleJoining", testSimpleSingleJoining),
         ("testMultipleJoining", testMultipleJoining),
         ("testMultipleJoiningWithTrailingSeparators", testMultipleJoiningWithTrailingSeparators),
@@ -245,13 +245,13 @@ extension JoinPathTests {
     ]
 }
 extension MakeAbsoluteTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testMakeAbsolutePath", testMakeAbsolutePath),
         ("testPathRepresentableMakeAbsolutePath", testPathRepresentableMakeAbsolutePath),
     ]
 }
 extension NormalizePathTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testAssertEmptyPathBecomesCurrent", testAssertEmptyPathBecomesCurrent),
         ("testSlashPrefixes", testSlashPrefixes),
         ("testConanicalizePath", testConanicalizePath),
@@ -261,24 +261,24 @@ extension NormalizePathTests {
     ]
 }
 extension PathBaseNameTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testBaseNameOfPath", testBaseNameOfPath),
         ("testPathRepresentableBaseNameOfPath", testPathRepresentableBaseNameOfPath),
     ]
 }
 extension PathDirectoryTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testPathDirectory", testPathDirectory),
         ("testPathRepresentableDirectory", testPathRepresentableDirectory),
     ]
 }
 extension PathTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testPathValueDoesNotChange", testPathValueDoesNotChange),
     ]
 }
 extension ReadingTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testReadString", testReadString),
         ("testReadBytes", testReadBytes),
         ("testReadStringFromDirectory", testReadStringFromDirectory),
@@ -292,7 +292,7 @@ extension ReadingTests {
     ]
 }
 extension SameFileTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testSameFileAsSymbolicLink", testSameFileAsSymbolicLink),
         ("testNotSameFile", testNotSameFile),
         ("testPathRepresentableSameFileAsSymbolicLink", testPathRepresentableSameFileAsSymbolicLink),
@@ -300,7 +300,7 @@ extension SameFileTests {
     ]
 }
 extension SizeTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testSizeOfRegularFile", testSizeOfRegularFile),
         ("testSizeOfSymbolToRegularFile", testSizeOfSymbolToRegularFile),
         ("testSizeOfDirectory", testSizeOfDirectory),
@@ -314,7 +314,7 @@ extension SizeTests {
     ]
 }
 extension SplitExtensionTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testSplitExtensionOnSimplePath", testSplitExtensionOnSimplePath),
         ("testSplitExtensionOnPathWithMultipleDots", testSplitExtensionOnPathWithMultipleDots),
         ("testSplitExtensionOnPathWithLeadingDot", testSplitExtensionOnPathWithLeadingDot),
@@ -338,7 +338,7 @@ extension SplitExtensionTests {
     ]
 }
 extension SplitPathTests {
-    static var allTests = [
+    static var allTests: [XCTestCaseEntry] = [
         ("testSplitSimplePath", testSplitSimplePath),
         ("testSplitRootPath", testSplitRootPath),
         ("testSplitSingleCompomentPath", testSplitSingleCompomentPath),
