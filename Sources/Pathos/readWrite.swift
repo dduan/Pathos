@@ -29,17 +29,20 @@ public func readBytes(atPath path: String) throws -> [UInt8] {
     defer { close(fd) }
     var status = stat()
     fstat(fd, &status)
+    if _ifmt(status) == S_IFDIR {
+        return []
+    }
+
     let fileSize = Int(status.st_size)
-    var buffer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: fileSize + 1)
+    var buffer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: fileSize)
     defer { buffer.deallocate() }
     pread(fd, buffer.baseAddress!, fileSize, 0)
-    let end = buffer.endIndex.advanced(by: -1)
-    buffer[end] = 0
-    return [UInt8](buffer[..<end])
+    return [UInt8](buffer)
 }
 
 public func readString(atPath path: String) throws -> String {
     var content = try readBytes(atPath: path)
+    content.append(0)
     return String(cString: &content)
 }
 
