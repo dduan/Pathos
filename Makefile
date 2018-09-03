@@ -10,6 +10,8 @@ play:
 	@swift run play
 test:
 	@swift test
+test-linux-docker:
+	 @Scripts/run-tests-linux-docker.sh
 generate:
 	@swift package generate-xcodeproj
 build: generate-linux-test-manifest
