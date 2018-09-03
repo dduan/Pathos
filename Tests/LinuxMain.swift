@@ -5,7 +5,7 @@ import XCTest
 @testable import PathosTests
 
 extension ChildrenTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testChildrenInPath", testChildrenInPath),
             ("testChildrenRecursiveInPath", testChildrenRecursiveInPath),
@@ -47,7 +47,7 @@ extension ChildrenTests {
     }
 }
 extension ExistsTest {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testExistingFiles", testExistingFiles),
             ("testNonExistingFiles", testNonExistingFiles),
@@ -79,7 +79,7 @@ extension ExistsTest {
     }
 }
 extension ExpandUserDirectoryTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testExpandPathWithNoUser", testExpandPathWithNoUser),
             ("testUserDirectoryExpandsToHomeEnvironment", testUserDirectoryExpandsToHomeEnvironment),
@@ -93,7 +93,7 @@ extension ExpandUserDirectoryTests {
     }
 }
 extension FileExtensionTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testFileExtensionOnSimplePath", testFileExtensionOnSimplePath),
             ("testFileExtensionOnPathWithMultipleDots", testFileExtensionOnPathWithMultipleDots),
@@ -119,13 +119,13 @@ extension FileExtensionTests {
     }
 }
 extension FixtureTestCase {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
         ]
     }
 }
 extension IsAbsoluteTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testIsAbsolutePath", testIsAbsolutePath),
             ("testPathRepresentableIsAbsolute", testPathRepresentableIsAbsolute),
@@ -133,7 +133,7 @@ extension IsAbsoluteTests {
     }
 }
 extension IsBlockDeviceTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testIsBlockDeviceOnExistingFile", testIsBlockDeviceOnExistingFile),
             ("testIsBlockDeviceOnExistingDirectory", testIsBlockDeviceOnExistingDirectory),
@@ -151,7 +151,7 @@ extension IsBlockDeviceTests {
     }
 }
 extension IsCharacterDeviceTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testIsCharacterDeviceOnExistingFile", testIsCharacterDeviceOnExistingFile),
             ("testIsCharacterDeviceOnExistingDirectory", testIsCharacterDeviceOnExistingDirectory),
@@ -169,7 +169,7 @@ extension IsCharacterDeviceTests {
     }
 }
 extension IsDirectoryTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testIsDirectoryOnExistingFile", testIsDirectoryOnExistingFile),
             ("testIsDirectoryOnExistingDirectory", testIsDirectoryOnExistingDirectory),
@@ -187,7 +187,7 @@ extension IsDirectoryTests {
     }
 }
 extension IsFileTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testIsFileOnExistingFile", testIsFileOnExistingFile),
             ("testIsFileOnExistingDirectory", testIsFileOnExistingDirectory),
@@ -205,7 +205,7 @@ extension IsFileTests {
     }
 }
 extension IsPipeTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testIsPipeOnExistingFile", testIsPipeOnExistingFile),
             ("testIsPipeOnExistingDirectory", testIsPipeOnExistingDirectory),
@@ -223,7 +223,7 @@ extension IsPipeTests {
     }
 }
 extension IsSocketTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testIsSocketOnExistingFile", testIsSocketOnExistingFile),
             ("testIsSocketOnExistingDirectory", testIsSocketOnExistingDirectory),
@@ -241,7 +241,7 @@ extension IsSocketTests {
     }
 }
 extension IsSymbolicLinkTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testIsSymbolicLinkOnFile", testIsSymbolicLinkOnFile),
             ("testIsSymbolicLinkOnDirectory", testIsSymbolicLinkOnDirectory),
@@ -259,7 +259,7 @@ extension IsSymbolicLinkTests {
     }
 }
 extension JoinPathTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testSimpleSingleJoining", testSimpleSingleJoining),
             ("testMultipleJoining", testMultipleJoining),
@@ -273,7 +273,7 @@ extension JoinPathTests {
     }
 }
 extension MakeAbsoluteTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testMakeAbsolutePath", testMakeAbsolutePath),
             ("testPathRepresentableMakeAbsolutePath", testPathRepresentableMakeAbsolutePath),
@@ -281,7 +281,7 @@ extension MakeAbsoluteTests {
     }
 }
 extension NormalizePathTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testAssertEmptyPathBecomesCurrent", testAssertEmptyPathBecomesCurrent),
             ("testSlashPrefixes", testSlashPrefixes),
@@ -293,7 +293,7 @@ extension NormalizePathTests {
     }
 }
 extension PathBaseNameTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testBaseNameOfPath", testBaseNameOfPath),
             ("testPathRepresentableBaseNameOfPath", testPathRepresentableBaseNameOfPath),
@@ -301,7 +301,7 @@ extension PathBaseNameTests {
     }
 }
 extension PathDirectoryTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testPathDirectory", testPathDirectory),
             ("testPathRepresentableDirectory", testPathRepresentableDirectory),
@@ -309,14 +309,14 @@ extension PathDirectoryTests {
     }
 }
 extension PathTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testPathValueDoesNotChange", testPathValueDoesNotChange),
         ]
     }
 }
 extension ReadingTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testReadString", testReadString),
             ("testReadBytes", testReadBytes),
@@ -332,7 +332,7 @@ extension ReadingTests {
     }
 }
 extension SameFileTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testSameFileAsSymbolicLink", testSameFileAsSymbolicLink),
             ("testNotSameFile", testNotSameFile),
@@ -342,7 +342,7 @@ extension SameFileTests {
     }
 }
 extension SizeTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testSizeOfRegularFile", testSizeOfRegularFile),
             ("testSizeOfSymbolToRegularFile", testSizeOfSymbolToRegularFile),
@@ -358,7 +358,7 @@ extension SizeTests {
     }
 }
 extension SplitExtensionTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testSplitExtensionOnSimplePath", testSplitExtensionOnSimplePath),
             ("testSplitExtensionOnPathWithMultipleDots", testSplitExtensionOnPathWithMultipleDots),
@@ -384,7 +384,7 @@ extension SplitExtensionTests {
     }
 }
 extension SplitPathTests {
-    static var allTests: [(String, XCTestCaseClosure)] {
+    static var allx: [(String, XCTestCaseClosure)] {
         return [
             ("testSplitSimplePath", testSplitSimplePath),
             ("testSplitRootPath", testSplitRootPath),
@@ -401,28 +401,28 @@ extension SplitPathTests {
 }
 
 XCTMain([
-    testCase(ChildrenTests.allTests),
-    testCase(ExistsTest.allTests),
-    testCase(ExpandUserDirectoryTests.allTests),
-    testCase(FileExtensionTests.allTests),
-    testCase(FixtureTestCase.allTests),
-    testCase(IsAbsoluteTests.allTests),
-    testCase(IsBlockDeviceTests.allTests),
-    testCase(IsCharacterDeviceTests.allTests),
-    testCase(IsDirectoryTests.allTests),
-    testCase(IsFileTests.allTests),
-    testCase(IsPipeTests.allTests),
-    testCase(IsSocketTests.allTests),
-    testCase(IsSymbolicLinkTests.allTests),
-    testCase(JoinPathTests.allTests),
-    testCase(MakeAbsoluteTests.allTests),
-    testCase(NormalizePathTests.allTests),
-    testCase(PathBaseNameTests.allTests),
-    testCase(PathDirectoryTests.allTests),
-    testCase(PathTests.allTests),
-    testCase(ReadingTests.allTests),
-    testCase(SameFileTests.allTests),
-    testCase(SizeTests.allTests),
-    testCase(SplitExtensionTests.allTests),
-    testCase(SplitPathTests.allTests),
+    testCase(ChildrenTests.allx),
+    testCase(ExistsTest.allx),
+    testCase(ExpandUserDirectoryTests.allx),
+    testCase(FileExtensionTests.allx),
+    testCase(FixtureTestCase.allx),
+    testCase(IsAbsoluteTests.allx),
+    testCase(IsBlockDeviceTests.allx),
+    testCase(IsCharacterDeviceTests.allx),
+    testCase(IsDirectoryTests.allx),
+    testCase(IsFileTests.allx),
+    testCase(IsPipeTests.allx),
+    testCase(IsSocketTests.allx),
+    testCase(IsSymbolicLinkTests.allx),
+    testCase(JoinPathTests.allx),
+    testCase(MakeAbsoluteTests.allx),
+    testCase(NormalizePathTests.allx),
+    testCase(PathBaseNameTests.allx),
+    testCase(PathDirectoryTests.allx),
+    testCase(PathTests.allx),
+    testCase(ReadingTests.allx),
+    testCase(SameFileTests.allx),
+    testCase(SizeTests.allx),
+    testCase(SplitExtensionTests.allx),
+    testCase(SplitPathTests.allx),
 ])
