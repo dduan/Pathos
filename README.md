@@ -31,10 +31,15 @@ Pathos is designed with the following philosophy in mind.
 Use `make` targets for development.
 
 - `make build` builds the library in release configuration. This command also
-    checks whether there's any test changes and update the Linux test manifest
-    on macOS (or remind you to do so on Linux).
+  checks whether there's any test changes and update the Linux test manifest
+  on macOS (or remind you to do so on Linux).
 - `make clean` deletes build artifacts including SPM build folders and other
-    artifacts.
+  artifacts.
+- `develop-linux-docker` launches a docker container with Swift. The project is
+  mirrored at `/Pathos`. You can edit from the host and run/test in the
+  container.
+- `develop-linux-docker-rebuild` is the same as `develop-linux-docker` except it
+  forces a rebuild of the container.
 
 Also, see "Testing".
 
@@ -44,7 +49,9 @@ Also, see "Testing".
 
 - `make test` runs all tests.
 - `make generate-linux-test-manifest` updates the test manifest for Linux. This
-    downloads [Sourcery](https://github.com/krzysztofzablocki/Sourcery) version
-    specified in `.sourcery-version` if necessary. This command is ran on macOS
-    during `make build`. For a test case to be included, its name must be
-    suffixed with `Tests`.
+  downloads [Sourcery](https://github.com/krzysztofzablocki/Sourcery) version
+  specified in `.sourcery-version` if necessary. This command is ran on macOS
+  during `make build`. For a test case to be included, its name must be
+  suffixed with `Tests`.
+- `make test-linux-docker` runs tests in Linux docker container (you'll need
+  Docker installed in your host).
