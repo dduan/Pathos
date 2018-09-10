@@ -17,6 +17,7 @@ public enum SystemError: Error {
     case deviceOrRecourceIsBusy
     case readOnlyFileSystem
     case invalidArgument
+    case fileExists
 
     public init(posixErrorCode: Int32) {
         switch posixErrorCode {
@@ -31,6 +32,7 @@ public enum SystemError: Error {
         case EBUSY  : self = .deviceOrRecourceIsBusy
         case EROFS  : self = .readOnlyFileSystem
         case EINVAL : self = .invalidArgument
+        case EEXIST : self = .fileExists
         default     : self = .unknown(errorNumber: posixErrorCode)
         }
     }
