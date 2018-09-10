@@ -48,10 +48,7 @@ Also, see "Testing".
 `XCTest` is used for testing.
 
 - `make test` runs all tests.
-- `make generate-linux-test-manifest` updates the test manifest for Linux. This
-  downloads [Sourcery](https://github.com/krzysztofzablocki/Sourcery) version
-  specified in `.sourcery-version` if necessary. This command is ran on macOS
-  during `make build`. For a test case to be included, its name must be
-  suffixed with `Tests`.
+- `make generate-linux-test-manifest` updates the test manifest for Linux, this
+  only works on macOS.
 - `make test-linux-docker` runs tests in Linux docker container (you'll need
   Docker installed in your host).
