@@ -9,12 +9,12 @@
 - [ ] 1.0 features
     - [ ] design/implement temporay file/directory
     - [ ] implement globbing
-    - [ ] implement makeDirectory (recursive)
     - [ ] implement copy file status (stat)
     - [ ] implement common prefix for paths
     - [ ] implement relativePath(toPath:startingPath:)
     - [ ] implement realPath(ofPath:)
     - [ ] implement touch(atPath:)
+    - [x] implement makeDirectory (recursive)
 - [ ] add docstring
     - [ ] `FilePermission.ownerAll`
     - [ ] `FilePermission.ownerRead`
@@ -117,6 +117,8 @@
     - [ ] `sameFile(atPath path: String, otherPath: String) throws -> Bool`
     - [ ] `directory(ofPath path: String) -> String`
 - [ ] add tests
+    - [ ]  `func makeDirectory(atPath path: String, mode: FilePermission = 0o0755, createParents: Bool = false, existOkay: Bool = false) throws`
+    - [ ]  `PathRepresentable.makeDirectory(createParents: Bool = false, mode: FilePermission = 0o0755, existOkay: Bool = false) -> Bool`
     - [ ] `FileTime`
     - [ ] `PathRepresentable.modificationTime: Pathos.FileTime? { get }`
     - [ ] `PathRepresentable.accessTime: Pathos.FileTime? { get }`
