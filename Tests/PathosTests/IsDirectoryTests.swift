@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class IsDirectoryTests: FixtureTestCase {
+final class IsDirectoryTests: XCTestCase {
     func testIsDirectoryOnExistingFile() {
         XCTAssertFalse(try isDirectory(atPath: self.fixture(.fileThatExists)))
     }

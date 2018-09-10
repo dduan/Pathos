@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class SizeTests: FixtureTestCase {
+final class SizeTests: XCTestCase {
     func testSizeOfRegularFile() {
         XCTAssertEqual(try size(atPath: self.fixture(.fileThatExists)),
                        self.expectedSize(of: .fileThatExists))

@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class IsPipeTests: FixtureTestCase {
+final class IsPipeTests: XCTestCase {
     func testIsPipeOnExistingFile() {
         XCTAssertFalse(try isPipe(atPath: self.fixture(.fileThatExists)))
     }

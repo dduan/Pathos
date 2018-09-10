@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class IsFileTests: FixtureTestCase {
+final class IsFileTests: XCTestCase {
     func testIsFileOnExistingFile() {
         XCTAssertTrue(try isFile(atPath: self.fixture(.fileThatExists)))
     }

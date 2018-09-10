@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class ReadingTests: FixtureTestCase {
+final class ReadingTests: XCTestCase {
     func testReadString() {
         XCTAssertEqual(try readString(atPath: self.fixture(.fileThatExists)), "hello\n")
     }
