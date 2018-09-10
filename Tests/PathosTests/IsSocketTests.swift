@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class IsSocketTests: FixtureTestCase {
+final class IsSocketTests: XCTestCase {
     func testIsSocketOnExistingFile() {
         XCTAssertFalse(try isSocket(atPath: self.fixture(.fileThatExists)))
     }

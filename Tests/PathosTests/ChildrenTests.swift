@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class ChildrenTests: FixtureTestCase {
+final class ChildrenTests: XCTestCase {
     func testChildrenInPath() {
         XCTAssertEqual(
             Set(try children(inPath: self.fixtureRoot)),

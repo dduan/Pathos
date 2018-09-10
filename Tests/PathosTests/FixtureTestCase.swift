@@ -14,8 +14,10 @@ enum FixturePath: String {
     case fileInNestedDirecory = "world/world_world/hello"
 }
 
-class FixtureTestCase: XCTestCase {
-    let fixtureRoot = normalize(path: "\(#file)/../Fixtures")
+extension XCTestCase {
+    var fixtureRoot: String {
+        return normalize(path: "\(#file)/../Fixtures")
+    }
 
     func fixture(_ path: FixturePath) -> String {
         return join(path: self.fixtureRoot, withPath: path.rawValue)

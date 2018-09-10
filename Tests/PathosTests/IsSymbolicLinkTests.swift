@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class IsSymbolicLinkTests: FixtureTestCase {
+final class IsSymbolicLinkTests: XCTestCase {
     func testIsSymbolicLinkOnFile() {
         XCTAssertFalse(try isSymbolicLink(atPath: self.fixture(.fileThatExists)))
     }

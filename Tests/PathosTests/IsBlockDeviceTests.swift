@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class IsBlockDeviceTests: FixtureTestCase {
+final class IsBlockDeviceTests: XCTestCase {
     func testIsBlockDeviceOnExistingFile() {
         XCTAssertFalse(try isBlockDevice(atPath: self.fixture(.fileThatExists)))
     }

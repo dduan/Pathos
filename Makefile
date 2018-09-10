@@ -5,7 +5,7 @@ export LC_CTYPE     = en_US.UTF-8
 .DEFAULT_GOAL := build
 
 generate-linux-test-manifest:
-	@Scripts/generate-linux-test-manifest.sh
+	@swift test --generate-linuxmain
 play:
 	@swift run play
 test:

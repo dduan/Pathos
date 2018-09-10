@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class IsCharacterDeviceTests: FixtureTestCase {
+final class IsCharacterDeviceTests: XCTestCase {
     func testIsCharacterDeviceOnExistingFile() {
         XCTAssertFalse(try isCharacterDevice(atPath: self.fixture(.fileThatExists)))
     }

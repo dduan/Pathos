@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class SameFileTests: FixtureTestCase {
+final class SameFileTests: XCTestCase {
     func testSameFileAsSymbolicLink() {
         XCTAssertTrue(try sameFile(
             atPath: self.fixture(.fileThatExists),
