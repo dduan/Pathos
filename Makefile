@@ -9,7 +9,7 @@ generate-linux-test-manifest:
 play:
 	@swift run play
 test:
-	@swift test
+	@swift test -Xswiftc -warnings-as-errors
 test-linux-docker:
 	@Scripts/run-tests-linux-docker.sh
 develop-linux-docker:
@@ -20,6 +20,6 @@ generate:
 	@swift package generate-xcodeproj
 build: generate-linux-test-manifest
 	@echo "building Pathos"
-	@swift build -c release > /dev/null
+	@swift build -c release -Xswiftc -warnings-as-errors > /dev/null
 clean:
 	rm -rf .build tmp
