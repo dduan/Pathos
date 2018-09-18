@@ -27,26 +27,27 @@ extension XCTestCase {
         return Path(string: self.fixture(path))
     }
 
-    func expectedSize(of fixture: FixturePath) -> Int64 {
+    // note: directory sizes are different on HFS+ vs APFS
+    func expectedSize(of fixture: FixturePath) -> Set<Int64> {
         switch fixture {
         case .fileThatExists:
-            return 6
+            return [6]
         case .goodFileSymbol:
-            return 6
+            return [6]
         case .directoryThatExists:
 #if os(Linux)
-            return 4096
+            return [4096]
 #else
-            return 160
+            return [160, 170]
 #endif
         case .goodDirectorySymbol:
 #if os(Linux)
-            return 4096
+            return [4096]
 #else
-            return 160
+            return [160, 170]
 #endif
         default:
-            return -1
+            return []
         }
     }
 
