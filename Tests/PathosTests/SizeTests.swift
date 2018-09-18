@@ -3,23 +3,29 @@ import XCTest
 
 final class SizeTests: XCTestCase {
     func testSizeOfRegularFile() {
-        XCTAssertEqual(try size(atPath: self.fixture(.fileThatExists)),
-                       self.expectedSize(of: .fileThatExists))
+        XCTAssertTrue(
+            self.expectedSize(of: .fileThatExists).contains(try size(atPath: self.fixture(.fileThatExists)))
+        )
     }
 
     func testSizeOfSymbolToRegularFile() {
-        XCTAssertEqual(try size(atPath: self.fixture(.goodFileSymbol)),
-                       self.expectedSize(of: .goodFileSymbol))
+        XCTAssertTrue(
+            self.expectedSize(of: .goodFileSymbol).contains(try size(atPath: self.fixture(.goodFileSymbol)))
+        )
     }
 
     func testSizeOfDirectory() {
-        XCTAssertEqual(try size(atPath: self.fixture(.directoryThatExists)),
-                       self.expectedSize(of: .directoryThatExists))
+        XCTAssertTrue(
+            self.expectedSize(of: .directoryThatExists)
+                .contains(try size(atPath: self.fixture(.directoryThatExists)))
+        )
     }
 
     func testSizeOfSymbolToDirectory() {
-        XCTAssertEqual(try size(atPath: self.fixture(.goodDirectorySymbol)),
-                       self.expectedSize(of: .goodDirectorySymbol))
+        XCTAssertTrue(
+            self.expectedSize(of: .goodDirectorySymbol)
+                .contains(try size(atPath: self.fixture(.goodDirectorySymbol)))
+        )
     }
 
     func testSizeOfNonExistingPath() {
@@ -32,23 +38,23 @@ final class SizeTests: XCTestCase {
     }
 
     func testPathRepresentableSizeOfRegularFile() {
-        XCTAssertEqual(self.fixturePath(.fileThatExists).size,
-                       self.expectedSize(of: .fileThatExists))
+        XCTAssertTrue(self.expectedSize(of: .fileThatExists).contains(self.fixturePath(.fileThatExists).size))
     }
 
     func testPathRepresentableSizeOfSymbolToRegularFile() {
-        XCTAssertEqual(self.fixturePath(.goodFileSymbol).size,
-                       self.expectedSize(of: .goodFileSymbol))
+        XCTAssertTrue(self.expectedSize(of: .goodFileSymbol).contains(self.fixturePath(.goodFileSymbol).size))
     }
 
     func testPathRepresentableSizeOfDirectory() {
-        XCTAssertEqual(self.fixturePath(.directoryThatExists).size,
-                       self.expectedSize(of: .directoryThatExists))
+        XCTAssertTrue(
+            self.expectedSize(of: .directoryThatExists).contains(self.fixturePath(.directoryThatExists).size)
+        )
     }
 
     func testPathRepresentableSizeOfSymbolToDirectory() {
-        XCTAssertEqual(self.fixturePath(.goodDirectorySymbol).size,
-                       self.expectedSize(of: .goodDirectorySymbol))
+        XCTAssertTrue(
+            self.expectedSize(of: .goodDirectorySymbol).contains(self.fixturePath(.goodDirectorySymbol).size)
+        )
     }
 
     func testPathRepresentableSizeOfNonExistingPath() {
