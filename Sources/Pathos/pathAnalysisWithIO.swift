@@ -4,6 +4,7 @@ import Glibc
 import Darwin
 #endif
 
+// TODO: missing docstring.
 public func expandUserDirectory(inPath path: String) throws -> String {
     if !path.starts(with: "~") {
         return path
@@ -49,6 +50,7 @@ public func expandUserDirectory(inPath path: String) throws -> String {
     return result.isEmpty ? "/" : result
 }
 
+// TODO: missing docstring.
 public func makeAbsolute(path: String) throws -> String {
     var path = path
     if !isAbsolute(path: path) {
@@ -62,10 +64,12 @@ public func makeAbsolute(path: String) throws -> String {
 }
 
 extension PathRepresentable {
+    // TODO: missing docstring.
     public func expandUserDirectory() -> Self {
         return Self(string: (try? expandUserDirectory(inPath:)(self.pathString)) ?? "/")
     }
 
+    // TODO: missing docstring.
     public func makeAbsolute() -> Self {
         return (try? makeAbsolute(path:)(self.pathString)).map(Self.init(string:)) ?? self
     }

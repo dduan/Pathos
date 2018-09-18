@@ -21,6 +21,7 @@ func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, creat
     }
 }
 
+// TODO: missing docstring.
 public func readBytes(atPath path: String) throws -> [UInt8] {
     guard case let fd = open(path, O_RDONLY), fd != -1 else {
         throw SystemError(posixErrorCode: errno)
@@ -40,17 +41,20 @@ public func readBytes(atPath path: String) throws -> [UInt8] {
     return [UInt8](buffer)
 }
 
+// TODO: missing docstring.
 public func readString(atPath path: String) throws -> String {
     var content = try readBytes(atPath: path)
     content.append(0)
     return String(cString: &content)
 }
 
+// TODO: missing docstring.
 public func writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = true, mode: FilePermission? = nil) throws where Bytes: Collection, Bytes.Element == UInt8 {
     let buffer = [UInt8](bytes)
     try _writeAtPath(path, bytes: buffer, byteCount: buffer.count, createIfNecessary: createIfNecessary, mode: mode)
 }
 
+// TODO: missing docstring.
 public func writeString(atPath path: String, _ string: String, createIfNecessary: Bool = true, mode: FilePermission? = nil) throws {
     try string.utf8CString.withUnsafeBytes { bytes in
         try _writeAtPath(path, bytes: bytes.baseAddress!, byteCount: bytes.count, createIfNecessary: createIfNecessary, mode: mode)
@@ -58,14 +62,17 @@ public func writeString(atPath path: String, _ string: String, createIfNecessary
 }
 
 extension PathRepresentable {
+    // TODO: missing docstring.
     public func readBytes() -> [UInt8] {
         return (try? readBytes(atPath:)(self.pathString)) ?? []
     }
 
+    // TODO: missing docstring.
     public func readString() -> String {
         return (try? readString(atPath:)(self.pathString)) ?? ""
     }
 
+    // TODO: missing docstring.
     public func writeBytes<Bytes>(bytes: Bytes, createIfNecessary: Bool = true, mode: FilePermission? = nil) -> Bool where Bytes: Collection, Bytes.Element == UInt8 {
         do {
             try writeBytes(atPath:_:createIfNecessary:mode:)(self.pathString, bytes, createIfNecessary, mode)
@@ -75,6 +82,7 @@ extension PathRepresentable {
         return true
     }
 
+    // TODO: missing docstring.
     public func writeString(string: String, createIfNecessary: Bool = true, mode: FilePermission? = nil) -> Bool {
         do {
             try writeString(atPath:_:createIfNecessary:mode:)(self.pathString, string, createIfNecessary, mode)

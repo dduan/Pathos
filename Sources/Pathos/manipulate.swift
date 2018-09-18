@@ -48,6 +48,7 @@ public func makeDirectory(atPath path: String, mode: FilePermission = 0o0755, cr
     try _makeDirectory()
 }
 
+// TODO: missing docstring.
 public func deletePath(_ path: String, recursive: Bool = false) throws {
     let status = try _stat(at: path)
     if _ifmt(status) == S_IFDIR {
@@ -66,6 +67,7 @@ public func deletePath(_ path: String, recursive: Bool = false) throws {
     }
 }
 
+// TODO: missing docstring.
 public func movePath(_ path: String, to other: String) throws {
     if rename(path, other) != 0 {
         throw SystemError(posixErrorCode: errno)
@@ -95,6 +97,7 @@ extension PathRepresentable {
         return true
     }
 
+    // TODO: missing docstring.
     public func delete(recursive: Bool = false) -> Bool {
         do {
             try deletePath(_:recursive:)(self.pathString, recursive)
@@ -104,6 +107,7 @@ extension PathRepresentable {
         return true
     }
 
+    // TODO: missing docstring.
     public func move(to destination: Self) -> Bool {
         do {
             try movePath(_:to:)(self.pathString, destination.pathString)

@@ -1,3 +1,4 @@
+// TODO: missing docstring.
 public func normalize(path: String) -> String {
     if path.isEmpty {
         return "."
@@ -26,10 +27,12 @@ public func normalize(path: String) -> String {
     return newPath.isEmpty ? "." : newPath
 }
 
+// TODO: missing docstring.
 public func isAbsolute(path: String) -> Bool {
     return path.hasPrefix(kSeparator)
 }
 
+// TODO: missing docstring.
 public func join(path: String, withPaths otherPaths: [String]) -> String {
     var result = path
     for other in otherPaths {
@@ -45,18 +48,22 @@ public func join(path: String, withPaths otherPaths: [String]) -> String {
     return result
 }
 
+// TODO: missing docstring.
 public func join(path: String, withPath otherPath: String) -> String {
     return join(path: path, withPaths: [otherPath])
 }
 
+// TODO: missing docstring.
 public func join(path: String, withPaths otherPaths: String...) -> String {
     return join(path: path, withPaths: otherPaths)
 }
 
+// TODO: missing docstring.
 public func join(paths path: String, _ otherPaths: String...) -> String {
     return join(path: path, withPaths: otherPaths)
 }
 
+// TODO: missing docstring.
 public func split(path: String) -> (String, String) {
     guard let index = path.lastIndex(of: kSeparatorCharacter) else {
         return ("", path)
@@ -75,6 +82,7 @@ public func split(path: String) -> (String, String) {
     return (String(head), String(tail))
 }
 
+// TODO: missing docstring.
 public func splitExtension(ofPath path: String) -> (String, String) {
     guard let dotIndex = path.lastIndex(of: ".") else {
         return (path, "")
@@ -102,10 +110,12 @@ public func splitExtension(ofPath path: String) -> (String, String) {
     return (path, "")
 }
 
+// TODO: missing docstring.
 public func fileExtension(ofPath path: String) -> String {
     return splitExtension(ofPath: path).1
 }
 
+// TODO: missing docstring.
 public func basename(ofPath path: String) -> String {
     if let separatorIndex = path.lastIndex(of: kSeparatorCharacter) {
         return String(path.suffix(from: path.index(after: separatorIndex)))
@@ -114,6 +124,7 @@ public func basename(ofPath path: String) -> String {
     }
 }
 
+// TODO: missing docstring.
 public func directory(ofPath path: String) -> String {
     let head = path
         .lastIndex(of: kSeparatorCharacter)
@@ -128,41 +139,50 @@ public func directory(ofPath path: String) -> String {
 }
 
 extension PathRepresentable {
+    // TODO: missing docstring.
     public func normalize() -> Self {
         return Self(string: normalize(path:)(self.pathString))
     }
 
+    // TODO: missing docstring.
     public var isAbsolute: Bool {
         return isAbsolute(path:)(self.pathString)
     }
 
+    // TODO: missing docstring.
     public func join(with otherPaths: [PathRepresentable]) -> Self {
         let newPathString = join(path:withPaths:)(self.pathString, otherPaths.map { $0.pathString })
         return Self(string: newPathString)
     }
 
+    // TODO: missing docstring.
     public func join(with otherPaths: PathRepresentable...) -> Self {
         return self.join(with: otherPaths)
     }
 
+    // TODO: missing docstring.
     public func split() -> (Self, Self) {
         let (p0, p1) = split(path:)(self.pathString)
         return (Self(string: p0), Self(string: p1))
     }
 
+    // TODO: missing docstring.
     public func splitExtension() -> (Self, String) {
         let splitResult = splitExtension(ofPath:)(self.pathString)
         return (Self(string: splitResult.0), splitResult.1)
     }
 
+    // TODO: missing docstring.
     public var directory: String {
         return directory(ofPath:)(self.pathString)
     }
 
+    // TODO: missing docstring.
     public var basename: String {
         return basename(ofPath:)(self.pathString)
     }
 
+    // TODO: missing docstring.
     public var `extension`: String {
         return fileExtension(ofPath:)(self.pathString)
     }

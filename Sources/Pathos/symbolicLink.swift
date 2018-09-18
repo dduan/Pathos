@@ -4,12 +4,14 @@ import Glibc
 import Darwin
 #endif
 
+// TODO: missing docstring.
 public func makeSymbolicLink(fromPath source: String, toPath destination: String) throws {
     if symlink(source, destination) != 0 {
         throw SystemError(posixErrorCode: errno)
     }
 }
 
+// TODO: missing docstring.
 public func readSymbolicLink(atPath path: String) throws -> String {
     let buffer = UnsafeMutableBufferPointer<Int8>.allocate(capacity: kMaxPathNameLength + 1)
     defer { buffer.deallocate() }
@@ -22,6 +24,7 @@ public func readSymbolicLink(atPath path: String) throws -> String {
 }
 
 extension PathRepresentable {
+    // TODO: missing docstring.
     public func makeSymbolicLink(to destination: Self) -> Bool {
         do {
             try makeSymbolicLink(fromPath:toPath:)(self.pathString, destination.pathString)
@@ -31,6 +34,7 @@ extension PathRepresentable {
         return true
     }
 
+    // TODO: missing docstring.
     public func readSymbolicLink() -> String? {
         return try? readSymbolicLink(atPath:)(self.pathString)
     }

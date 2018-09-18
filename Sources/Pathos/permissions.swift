@@ -4,6 +4,7 @@ import Glibc
 import Darwin
 #endif
 
+// TODO: missing docstring.
 public func permissions(forPath path: String) throws -> FilePermission {
     var status = stat()
     if stat(path, &status) != 0 {
@@ -12,6 +13,7 @@ public func permissions(forPath path: String) throws -> FilePermission {
     return FilePermission(rawValue: status.st_mode)
 }
 
+// TODO: missing docstring.
 public func setPermissions(forPath path: String, _ mode: FilePermission) throws {
     if chmod(path, mode.rawValue) != 0 {
         throw SystemError(posixErrorCode: errno)
@@ -19,6 +21,7 @@ public func setPermissions(forPath path: String, _ mode: FilePermission) throws 
 }
 
 extension PathRepresentable {
+    // TODO: missing docstring.
     public var permissions: FilePermission {
         get {
             return (try? permissions(forPath:)(self.pathString)) ?? FilePermission(rawValue: 0)

@@ -69,75 +69,93 @@ func _children<T>(_ path: T, recursive: Bool, block: (String, Bool) throws -> [S
     return result ?? []
 }
 
+// TODO: missing docstring.
 public func children(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, nil, recursive: recursive)
 }
 
+// TODO: missing docstring.
 public func unknownTypeFiles(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_FIFO), recursive: recursive)
 }
 
+// TODO: missing docstring.
 public func pipes(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_UNKNOWN), recursive: recursive)
 }
 
+// TODO: missing docstring.
 public func characterDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_CHR), recursive: recursive)
 }
 
+// TODO: missing docstring.
 public func directories(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_DIR), recursive: recursive)
 }
 
+// TODO: missing docstring.
 public func blockDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_BLK), recursive: recursive)
 }
 
+// TODO: missing docstring.
 public func files(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_REG), recursive: recursive)
 }
 
+// TODO: missing docstring.
 public func symbolicLinks(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_LNK), recursive: recursive)
 }
 
+// TODO: missing docstring.
 public func sockets(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_SOCK), recursive: recursive)
 }
 
 extension PathRepresentable {
+    // TODO: missing docstring.
     public func children(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: children(inPath:recursive:))
     }
 
+    // TODO: missing docstring.
     public func unknownTypeFiles(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: unknownTypeFiles(inPath:recursive:))
     }
 
+    // TODO: missing docstring.
     public func pipes(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: pipes(inPath:recursive:))
     }
 
+    // TODO: missing docstring.
     public func characterDevices(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: characterDevices(inPath:recursive:))
     }
 
+    // TODO: missing docstring.
     public func directories(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: directories(inPath:recursive:))
     }
 
+    // TODO: missing docstring.
     public func blockDevices(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: blockDevices(inPath:recursive:))
     }
 
+    // TODO: missing docstring.
     public func files(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: files(inPath:recursive:))
     }
 
+    // TODO: missing docstring.
     public func symbolicLinks(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: symbolicLinks(inPath:recursive:))
     }
 
+    // TODO: missing docstring.
     public func sockets(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: sockets(inPath:recursive:))
     }
