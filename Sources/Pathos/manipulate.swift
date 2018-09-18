@@ -4,6 +4,7 @@ import Glibc
 import Darwin
 #endif
 
+// TODO: missing unit tests.
 /// Create directory at given path.
 ///
 /// - Parameters:
@@ -48,6 +49,7 @@ public func makeDirectory(atPath path: String, mode: FilePermission = 0o0755, cr
     try _makeDirectory()
 }
 
+// TODO: missing unit tests.
 // TODO: missing docstring.
 public func deletePath(_ path: String, recursive: Bool = false) throws {
     let status = try _stat(at: path)
@@ -67,6 +69,7 @@ public func deletePath(_ path: String, recursive: Bool = false) throws {
     }
 }
 
+// TODO: missing unit tests.
 // TODO: missing docstring.
 public func movePath(_ path: String, to other: String) throws {
     if rename(path, other) != 0 {
@@ -76,6 +79,7 @@ public func movePath(_ path: String, to other: String) throws {
 
 
 extension PathRepresentable {
+    // TODO: missing unit tests.
     /// Create a directory at `pathString`.
     ///
     /// - Parameters:
@@ -97,6 +101,7 @@ extension PathRepresentable {
         return true
     }
 
+    // TODO: missing unit tests.
     // TODO: missing docstring.
     public func delete(recursive: Bool = false) -> Bool {
         do {
@@ -107,6 +112,7 @@ extension PathRepresentable {
         return true
     }
 
+    // TODO: missing unit tests.
     // TODO: missing docstring.
     public func move(to destination: Self) -> Bool {
         do {

@@ -91,6 +91,7 @@ public func size(atPath path: String) throws -> Int64 {
     return Int64(try _stat(at: path).st_size)
 }
 
+// TODO: missing unit tests.
 /// Return the time of last modification of path.
 ///
 /// - Parameter path: path to be queried.
@@ -104,6 +105,7 @@ public func modificationTime(atPath path: String) throws -> FileTime {
 #endif
 }
 
+// TODO: missing unit tests.
 /// Return the time of last access of path.
 ///
 /// - Parameter path: path to be queried.
@@ -117,6 +119,7 @@ public func accessTime(atPath path: String) throws -> FileTime {
 #endif
 }
 
+// TODO: missing unit tests.
 /// Return the system’s ctime which, on some systems (like Unix) is the time of the last metadata change
 ///
 /// - Parameter path: path to be queried.
@@ -204,18 +207,21 @@ extension PathRepresentable {
         return (try? size(atPath:)(self.pathString)) ?? 0
     }
 
+    // TODO: missing unit tests.
     /// Return the time of last modification. Returns `nil` if the path does not exist or is
     /// not accessible.
     public var modificationTime: FileTime? {
         return try? modificationTime(atPath:)(self.pathString)
     }
 
+    // TODO: missing unit tests.
     /// Return the time of last access. Returns `nil` if the path does not exist or is
     /// not accessible.
     public var accessTime: FileTime? {
         return try? accessTime(atPath:)(self.pathString)
     }
 
+    // TODO: missing unit tests.
     /// Return the system’s ctime which, on some systems (like Unix) is the time of the last metadata change,
     /// Returns `nil` if the path does not exist or is not accessible.
     public var metadataChangeTime: FileTime? {

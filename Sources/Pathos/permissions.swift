@@ -4,6 +4,7 @@ import Glibc
 import Darwin
 #endif
 
+// TODO: missing unit tests.
 // TODO: missing docstring.
 public func permissions(forPath path: String) throws -> FilePermission {
     var status = stat()
@@ -13,6 +14,7 @@ public func permissions(forPath path: String) throws -> FilePermission {
     return FilePermission(rawValue: status.st_mode)
 }
 
+// TODO: missing unit tests.
 // TODO: missing docstring.
 public func setPermissions(forPath path: String, _ mode: FilePermission) throws {
     if chmod(path, mode.rawValue) != 0 {
@@ -21,6 +23,7 @@ public func setPermissions(forPath path: String, _ mode: FilePermission) throws 
 }
 
 extension PathRepresentable {
+    // TODO: missing unit tests.
     // TODO: missing docstring.
     public var permissions: FilePermission {
         get {

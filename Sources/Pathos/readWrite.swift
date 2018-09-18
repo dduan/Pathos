@@ -48,12 +48,14 @@ public func readString(atPath path: String) throws -> String {
     return String(cString: &content)
 }
 
+// TODO: missing unit tests.
 // TODO: missing docstring.
 public func writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = true, mode: FilePermission? = nil) throws where Bytes: Collection, Bytes.Element == UInt8 {
     let buffer = [UInt8](bytes)
     try _writeAtPath(path, bytes: buffer, byteCount: buffer.count, createIfNecessary: createIfNecessary, mode: mode)
 }
 
+// TODO: missing unit tests.
 // TODO: missing docstring.
 public func writeString(atPath path: String, _ string: String, createIfNecessary: Bool = true, mode: FilePermission? = nil) throws {
     try string.utf8CString.withUnsafeBytes { bytes in
@@ -72,6 +74,7 @@ extension PathRepresentable {
         return (try? readString(atPath:)(self.pathString)) ?? ""
     }
 
+    // TODO: missing unit tests.
     // TODO: missing docstring.
     public func writeBytes<Bytes>(bytes: Bytes, createIfNecessary: Bool = true, mode: FilePermission? = nil) -> Bool where Bytes: Collection, Bytes.Element == UInt8 {
         do {
@@ -82,6 +85,7 @@ extension PathRepresentable {
         return true
     }
 
+    // TODO: missing unit tests.
     // TODO: missing docstring.
     public func writeString(string: String, createIfNecessary: Bool = true, mode: FilePermission? = nil) -> Bool {
         do {

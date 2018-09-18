@@ -4,6 +4,7 @@ import Glibc
 import Darwin
 #endif
 
+// TODO: missing unit tests.
 // TODO: missing docstring.
 public func copyFile(fromPath source: String, toPath destination: String, followSymbolicLink: Bool = true, chunkSize: Int = 1024 * 16) throws {
     let sourceStatus = try _lstat(at: source)
@@ -57,6 +58,7 @@ public func copyFile(fromPath source: String, toPath destination: String, follow
 }
 
 extension PathRepresentable {
+    // TODO: missing unit tests.
     // TODO: missing docstring.
     public func copy(to destination: Self, followSymbolicLink: Bool = true, chunkSize: Int = 1024 * 16) -> Bool {
         do {
