@@ -8,3 +8,8 @@ matrix:
         - docker
       script:
         - make test-linux-docker
+    - os: osx
+      language: objective-c
+      osx_image: xcode10
+      script:
+        - make test
