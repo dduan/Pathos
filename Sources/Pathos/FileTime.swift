@@ -1,8 +1,7 @@
-// TODO: missing unit tests.
-// TODO: missing docstring.
+/// A time interval broken down into seconds and nanoseconds.
 public struct FileTime {
-    // TODO: missing docstring.
+    /// The second component of the interval.
     public var second: Int
-    // TODO: missing docstring.
+    /// The nanosecond component of the interval.
     public var nanosecond: Int
 }
