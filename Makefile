@@ -8,14 +8,12 @@ generate-linux-test-manifest:
 	@swift test --generate-linuxmain
 play:
 	@swift run play
-test:
+test: clean
 	@swift test -Xswiftc -warnings-as-errors
-test-linux-docker: clean
+test-linux-docker:
 	@Scripts/run-tests-linux-docker.sh
 develop-linux-docker:
 	@Scripts/develop-linux-docker.sh
-develop-linux-docker-rebuild:
-	@Scripts/develop-linux-docker.sh rebuild
 generate:
 	@swift package generate-xcodeproj
 build: generate-linux-test-manifest

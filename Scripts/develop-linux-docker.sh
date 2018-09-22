@@ -2,11 +2,6 @@
 
 command -v docker &> /dev/null || { echo >&2 "Install docker https://www.docker.com"; exit 1; }
 
-IMAGE=pathosdev
-
-if [ "$1" == 'rebuild' ]; then
-docker image rm -f "$IMAGE" &> /dev/null
-docker build -t "$IMAGE" -f Scripts/Dockerfile-develop-linux .
-fi
-
-docker run -it -v "$PWD":/Pathos --rm "$IMAGE"
+IMAGE=swift@sha256:642beec6d119c3f2e22740bf91f6ca383727237794db8980d5d00ea71d117394
+NAME=pathosdev
+docker run -it -v "$PWD":/Pathos --name "$NAME" --rm "$IMAGE"

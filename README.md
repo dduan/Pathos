@@ -38,8 +38,6 @@ Use `make` targets for development.
 - `develop-linux-docker` launches a docker container with Swift. The project is
   mirrored at `/Pathos`. You can edit from the host and run/test in the
   container.
-- `develop-linux-docker-rebuild` is the same as `develop-linux-docker` except it
-  forces a rebuild of the container.
 
 Also, see "Testing".
 
