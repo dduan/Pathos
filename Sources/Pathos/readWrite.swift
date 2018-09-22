@@ -4,7 +4,7 @@ import Glibc
 import Darwin
 #endif
 
-func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool, mode: FilePermission?) throws {
+func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool, mode: FileMode?) throws {
     let oflag = createIfNecessary ? O_WRONLY | O_CREAT : O_WRONLY
     let fd: Int32
     if let mode = mode {
@@ -50,14 +50,14 @@ public func readString(atPath path: String) throws -> String {
 
 // TODO: missing unit tests.
 // TODO: missing docstring.
-public func writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = true, mode: FilePermission? = nil) throws where Bytes: Collection, Bytes.Element == UInt8 {
+public func writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = true, mode: FileMode? = nil) throws where Bytes: Collection, Bytes.Element == UInt8 {
     let buffer = [UInt8](bytes)
     try _writeAtPath(path, bytes: buffer, byteCount: buffer.count, createIfNecessary: createIfNecessary, mode: mode)
 }
 
 // TODO: missing unit tests.
 // TODO: missing docstring.
-public func writeString(atPath path: String, _ string: String, createIfNecessary: Bool = true, mode: FilePermission? = nil) throws {
+public func writeString(atPath path: String, _ string: String, createIfNecessary: Bool = true, mode: FileMode? = nil) throws {
     try string.utf8CString.withUnsafeBytes { bytes in
         try _writeAtPath(path, bytes: bytes.baseAddress!, byteCount: bytes.count, createIfNecessary: createIfNecessary, mode: mode)
     }
@@ -76,7 +76,7 @@ extension PathRepresentable {
 
     // TODO: missing unit tests.
     // TODO: missing docstring.
-    public func writeBytes<Bytes>(bytes: Bytes, createIfNecessary: Bool = true, mode: FilePermission? = nil) -> Bool where Bytes: Collection, Bytes.Element == UInt8 {
+    public func writeBytes<Bytes>(bytes: Bytes, createIfNecessary: Bool = true, mode: FileMode? = nil) -> Bool where Bytes: Collection, Bytes.Element == UInt8 {
         do {
             try writeBytes(atPath:_:createIfNecessary:mode:)(self.pathString, bytes, createIfNecessary, mode)
         } catch {
@@ -87,7 +87,7 @@ extension PathRepresentable {
 
     // TODO: missing unit tests.
     // TODO: missing docstring.
-    public func writeString(string: String, createIfNecessary: Bool = true, mode: FilePermission? = nil) -> Bool {
+    public func writeString(string: String, createIfNecessary: Bool = true, mode: FileMode? = nil) -> Bool {
         do {
             try writeString(atPath:_:createIfNecessary:mode:)(self.pathString, string, createIfNecessary, mode)
         } catch {

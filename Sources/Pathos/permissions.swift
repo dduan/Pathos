@@ -6,17 +6,17 @@ import Darwin
 
 // TODO: missing unit tests.
 // TODO: missing docstring.
-public func permissions(forPath path: String) throws -> FilePermission {
+public func permissions(forPath path: String) throws -> FileMode {
     var status = stat()
     if stat(path, &status) != 0 {
         throw SystemError(posixErrorCode: errno)
     }
-    return FilePermission(rawValue: status.st_mode)
+    return FileMode(rawValue: status.st_mode)
 }
 
 // TODO: missing unit tests.
 // TODO: missing docstring.
-public func setPermissions(forPath path: String, _ mode: FilePermission) throws {
+public func setPermissions(forPath path: String, _ mode: FileMode) throws {
     if chmod(path, mode.rawValue) != 0 {
         throw SystemError(posixErrorCode: errno)
     }
@@ -25,9 +25,9 @@ public func setPermissions(forPath path: String, _ mode: FilePermission) throws 
 extension PathRepresentable {
     // TODO: missing unit tests.
     // TODO: missing docstring.
-    public var permissions: FilePermission {
+    public var permissions: FileMode {
         get {
-            return (try? permissions(forPath:)(self.pathString)) ?? FilePermission(rawValue: 0)
+            return (try? permissions(forPath:)(self.pathString)) ?? FileMode(rawValue: 0)
         }
         set {
             try? setPermissions(forPath:_:)(self.pathString, newValue)

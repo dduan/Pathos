@@ -17,7 +17,7 @@ import Darwin
 ///   - existOkay: If `false`, a `SystemError` is thrown if the target directory (or any of it's parent, if it
 ///                needs creation) already exists.
 /// - Throws: A `SystemError`.
-public func makeDirectory(atPath path: String, mode: FilePermission = 0o0755, createParents: Bool = false, existOkay: Bool = false) throws {
+public func makeDirectory(atPath path: String, mode: FileMode = 0o0755, createParents: Bool = false, existOkay: Bool = false) throws {
     func _makeDirectory() throws {
         if mkdir(path, mode.rawValue) != 0 {
             // Cannot rely on checking for EEXIST, since the operating system
@@ -92,7 +92,7 @@ extension PathRepresentable {
     ///                if it needs creation) already exists.
     /// - Returns: `true` if a directory is created, `false` if an error occured and the directory was not
     ///            created.
-    public func makeDirectory(createParents: Bool = false, mode: FilePermission = 0o0755, existOkay: Bool = false) -> Bool {
+    public func makeDirectory(createParents: Bool = false, mode: FileMode = 0o0755, existOkay: Bool = false) -> Bool {
         do {
             try makeDirectory(atPath:mode:createParents:existOkay:)(self.pathString, mode, createParents, existOkay)
         } catch {
