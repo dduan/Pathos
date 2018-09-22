@@ -57,7 +57,7 @@ public func writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNeces
 
 // TODO: missing unit tests.
 // TODO: missing docstring.
-public func writeString(atPath path: String, _ string: String, createIfNecessary: Bool = true, mode: FilePermission? = nil) throws {
+public func writeString(atPath path: String, _ string: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws {
     try string.utf8CString.withUnsafeBytes { bytes in
         try _writeAtPath(path, bytes: bytes.baseAddress!, byteCount: bytes.count, createIfNecessary: createIfNecessary, permission: permission)
     }
@@ -87,9 +87,9 @@ extension PathRepresentable {
 
     // TODO: missing unit tests.
     // TODO: missing docstring.
-    public func writeString(string: String, createIfNecessary: Bool = true, mode: FilePermission? = nil) -> Bool {
+    public func writeString(string: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) -> Bool {
         do {
-            try writeString(atPath:_:createIfNecessary:mode:)(self.pathString, string, createIfNecessary, mode)
+            try writeString(atPath:_:createIfNecessary:permission:)(self.pathString, string, createIfNecessary, permission)
         } catch {
             return false
         }
