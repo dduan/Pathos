@@ -10,7 +10,7 @@ play:
 	@swift run play
 test:
 	@swift test -Xswiftc -warnings-as-errors
-test-linux-docker:
+test-linux-docker: clean
 	@Scripts/run-tests-linux-docker.sh
 develop-linux-docker:
 	@Scripts/develop-linux-docker.sh
