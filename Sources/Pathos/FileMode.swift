@@ -51,6 +51,6 @@ public struct FileMode: OptionSet {
 
 extension FileMode: ExpressibleByIntegerLiteral {
     public init(integerLiteral: UInt16) {
-        self.rawValue = integerLiteral
+        self.rawValue = mode_t(integerLiteral)
     }
 }
