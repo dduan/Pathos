@@ -31,6 +31,7 @@ public func makeDirectory(atPath path: String, permission: FilePermission = 0o07
 
     if !createParents {
         try _makeDirectory()
+        return
     }
 
     var (head, tail) = split(path: path)
