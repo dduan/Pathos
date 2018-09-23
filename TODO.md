@@ -1,7 +1,4 @@
 - [ ] 1.0 project state
     - [ ] add introductory material
-    - [ ] add podspec
-    - [ ] run tests on CI
     - [ ] add SwiftLint
     - [ ] generate reference (?). Should be part of the build step.
-    - [ ] support Carthage (?)
