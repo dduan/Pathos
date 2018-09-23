@@ -6,6 +6,5 @@
     - [ ] generate reference (?). Should be part of the build step.
     - [ ] support Carthage (?)
 - [ ] 1.0 features
-    - [ ] design/implement temporay file/directory
     - [ ] implement relativePath(toPath:startingPath:)
     - [ ] implement realPath(ofPath:)
