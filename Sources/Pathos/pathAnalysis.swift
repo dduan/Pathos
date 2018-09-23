@@ -209,7 +209,7 @@ extension PathRepresentable {
     // TODO: Missing docstring.
     public func commonPath(with paths: [PathRepresentable]) -> Self {
         let pathStrings = [self.pathString] + paths.map { $0.pathString }
-        return Self.init(string: _commonPath(amongPaths:)(pathStrings))
+        return Self(string: _commonPath(amongPaths:)(pathStrings))
     }
 }
 
