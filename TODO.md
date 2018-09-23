@@ -7,7 +7,6 @@
     - [ ] support Carthage (?)
 - [ ] 1.0 features
     - [ ] design/implement temporay file/directory
-    - [ ] implement copy file status (stat)
     - [ ] implement relativePath(toPath:startingPath:)
     - [ ] implement realPath(ofPath:)
     - [ ] implement touch(atPath:)
