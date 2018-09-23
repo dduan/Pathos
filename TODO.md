@@ -5,5 +5,3 @@
     - [ ] add SwiftLint
     - [ ] generate reference (?). Should be part of the build step.
     - [ ] support Carthage (?)
-- [ ] 1.0 features
-    - [ ] implement realPath(ofPath:)
