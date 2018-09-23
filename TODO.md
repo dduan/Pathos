@@ -9,4 +9,3 @@
     - [ ] design/implement temporay file/directory
     - [ ] implement relativePath(toPath:startingPath:)
     - [ ] implement realPath(ofPath:)
-    - [ ] implement touch(atPath:)

@@ -77,6 +77,12 @@ public func movePath(_ path: String, to other: String) throws {
     }
 }
 
+// TODO: missing implementation.
+// TODO: missing unit tests.
+// TODO: missing docstring.
+public func touchPath(_ path: String, permission: FilePermission = 0x0666, existOkay: Bool = true) throws {
+    fatalError("unimplemented")
+}
 
 extension PathRepresentable {
     // TODO: missing unit tests.
@@ -117,6 +123,17 @@ extension PathRepresentable {
     public func move(to destination: Self) -> Bool {
         do {
             try movePath(_:to:)(self.pathString, destination.pathString)
+        } catch {
+            return false
+        }
+        return true
+    }
+
+    // TODO: missing unit tests.
+    // TODO: missing docstring.
+    public func touch(permission: FilePermission = 0x0666, existOkay: Bool = true) -> Bool {
+        do {
+            try touchPath(_:permission:existOkay:)(self.pathString, permission, existOkay)
         } catch {
             return false
         }
