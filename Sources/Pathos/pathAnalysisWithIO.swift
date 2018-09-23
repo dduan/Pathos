@@ -81,7 +81,7 @@ extension PathRepresentable {
 
     // TODO: missing docstring.
     public func makeAbsolute() -> Self {
-        return (try? makeAbsolute(path:)(self.pathString)).map(Self.init(string:)) ?? self
+        return (try? makeAbsolute(path:)(self.pathString)).map(Self.init) ?? self
     }
 
     // TODO: Missing unit tests.
