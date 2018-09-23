@@ -4,7 +4,6 @@ import Glibc
 import Darwin
 #endif
 
-// TODO: missing unit tests.
 /// Create directory at given path.
 ///
 /// - Parameters:
@@ -86,7 +85,6 @@ public func touchPath(_ path: String, permission: FilePermission = 0x0666, exist
 }
 
 extension PathRepresentable {
-    // TODO: missing unit tests.
     /// Create a directory at `pathString`.
     ///
     /// - Parameters:
