@@ -143,13 +143,13 @@ func _commonPath(amongPaths paths: [String]) -> String {
     fatalError("unimplemented")
 }
 
-// TODO: Missing tests.
+// TODO: Missing unit tests.
 // TODO: Missing docstring.
 public func commonPath(amongPaths paths: String...) -> String {
     return _commonPath(amongPaths: paths)
 }
 
-// TODO: Missing tests.
+// TODO: Missing unit tests.
 // TODO: Missing docstring.
 public func commonPath(betweenPath path: String, andPath otherPath: String) -> String {
     return _commonPath(amongPaths: [path, otherPath])
@@ -205,7 +205,7 @@ extension PathRepresentable {
         return fileExtension(ofPath:)(self.pathString)
     }
 
-    // TODO: Missing tests.
+    // TODO: Missing unit tests.
     // TODO: Missing docstring.
     public func commonPath(with paths: [PathRepresentable]) -> Self {
         let pathStrings = [self.pathString] + paths.map { $0.pathString }
