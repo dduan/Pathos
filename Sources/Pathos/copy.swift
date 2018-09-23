@@ -57,12 +57,30 @@ public func copyFile(fromPath source: String, toPath destination: String, follow
     }
 }
 
+// TODO: Missing implementation.
+// TODO: Missing unit tests.
+// TODO: Missing docstring.
+public func copyFileStatus(fromPath source: String, toPath destination: String, followSymbolicLink: Bool = true) throws {
+    fatalError("unimplemented")
+}
+
 extension PathRepresentable {
     // TODO: missing unit tests.
     // TODO: missing docstring.
-    public func copy(to destination: Self, followSymbolicLink: Bool = true, chunkSize: Int = 1024 * 16) -> Bool {
+    public func copy(to destination: PathRepresentable, followSymbolicLink: Bool = true, chunkSize: Int = 1024 * 16) -> Bool {
         do {
             try copyFile(fromPath: self.pathString, toPath: destination.pathString, followSymbolicLink: followSymbolicLink, chunkSize: chunkSize)
+        } catch {
+            return false
+        }
+        return true
+    }
+
+    // TODO: missing unit tests.
+    // TODO: missing docstring.
+    public func copyFileStatus(to destination: PathRepresentable, followSymbolicLink: Bool = true) -> Bool {
+        do {
+            try Pathos.copyFileStatus(fromPath:toPath:followSymbolicLink:)(self.pathString, destination.pathString, followSymbolicLink)
         } catch {
             return false
         }

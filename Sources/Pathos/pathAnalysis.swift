@@ -138,6 +138,36 @@ public func directory(ofPath path: String) -> String {
     return head
 }
 
+// TODO: Missing implementation.
+func _commonPath(amongPaths paths: [String]) -> String {
+    fatalError("unimplemented")
+}
+
+// TODO: Missing unit tests.
+// TODO: Missing docstring.
+public func commonPath(amongPaths paths: String...) -> String {
+    return _commonPath(amongPaths: paths)
+}
+
+// TODO: Missing unit tests.
+// TODO: Missing docstring.
+public func commonPath(betweenPath path: String, andPath otherPath: String) -> String {
+    return _commonPath(amongPaths: [path, otherPath])
+}
+
+// TODO: Missing implementation.
+// TODO: Missing unit tests.
+/// Return a relative file path to `path` either from the current directory or from an optional starting
+/// directory. This is a path computation: the filesystem is not accessed to confirm the existence or
+/// nature of `path` or `startingPath`.
+/// - Parameters:
+///   - path: the path the result is relative to.
+///   - startingPath: starting path of the relativity.
+/// - Returns: a relative file path to `path`.
+public func relativePath(toPath path: String, startingFromPath startingPath: String = kCurrentDirectory) -> String {
+    fatalError("unimplemented")
+}
+
 extension PathRepresentable {
     // TODO: missing docstring.
     public func normalize() -> Self {
@@ -185,6 +215,20 @@ extension PathRepresentable {
     // TODO: missing docstring.
     public var `extension`: String {
         return fileExtension(ofPath:)(self.pathString)
+    }
+
+    // TODO: Missing unit tests.
+    // TODO: Missing docstring.
+    public func commonPath(with paths: [PathRepresentable]) -> Self {
+        let pathStrings = [self.pathString] + paths.map { $0.pathString }
+        return Self(string: _commonPath(amongPaths:)(pathStrings))
+    }
+
+    // TODO: Missing unit tests.
+    // TODO: Missing docstring.
+    // TODO: Missing default value for `startingPath`.
+    public func relative(to other: PathRepresentable, startingFrom startingPath: PathRepresentable) -> Self {
+        return Self(string: relativePath(toPath:startingFromPath:)(other.pathString, startingPath.pathString))
     }
 }
 

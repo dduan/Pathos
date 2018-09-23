@@ -63,6 +63,16 @@ public func makeAbsolute(path: String) throws -> String {
     return normalize(path: path)
 }
 
+// TODO: Missing implementation.
+// TODO: Missing unit tests.
+/// Return the canonical path of the specified filename, eliminating any symbolic links encountered in the
+/// path (if they are supported by the operating system).
+///
+/// - parameter ofPath: the path to look up for.
+public func realPath(ofPath: String) throws -> String {
+    fatalError("unimplemented")
+}
+
 extension PathRepresentable {
     // TODO: missing docstring.
     public func expandUserDirectory() -> Self {
@@ -71,6 +81,13 @@ extension PathRepresentable {
 
     // TODO: missing docstring.
     public func makeAbsolute() -> Self {
-        return (try? makeAbsolute(path:)(self.pathString)).map(Self.init(string:)) ?? self
+        return (try? makeAbsolute(path:)(self.pathString)).map(Self.init) ?? self
+    }
+
+    // TODO: Missing unit tests.
+    /// Return the canonical path of self, eliminating any symbolic links encountered in the
+    /// path (if they are supported by the operating system).
+    public var realPath: Self {
+        return (try? realPath(ofPath:)(self.pathString)).map(Self.init) ?? self
     }
 }
