@@ -138,6 +138,24 @@ public func directory(ofPath path: String) -> String {
     return head
 }
 
+// TODO: Missing implementation.
+func _commonPath(amongPaths paths: [String]) -> String {
+    fatalError("unimplemented")
+}
+
+// TODO: Missing tests.
+// TODO: Missing docstring.
+public func commonPath(amongPaths paths: String...) -> String {
+    return _commonPath(amongPaths: paths)
+}
+
+// TODO: Missing tests.
+// TODO: Missing docstring.
+public func commonPath(betweenPath path: String, andPath otherPath: String) -> String {
+    return _commonPath(amongPaths: [path, otherPath])
+}
+
+
 extension PathRepresentable {
     // TODO: missing docstring.
     public func normalize() -> Self {
@@ -185,6 +203,13 @@ extension PathRepresentable {
     // TODO: missing docstring.
     public var `extension`: String {
         return fileExtension(ofPath:)(self.pathString)
+    }
+
+    // TODO: Missing tests.
+    // TODO: Missing docstring.
+    public func commonPath(with paths: [PathRepresentable]) -> Self {
+        let pathStrings = [self.pathString] + paths.map { $0.pathString }
+        return Self.init(string: _commonPath(amongPaths:)(pathStrings))
     }
 }
 

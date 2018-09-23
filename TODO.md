@@ -8,7 +8,6 @@
 - [ ] 1.0 features
     - [ ] design/implement temporay file/directory
     - [ ] implement copy file status (stat)
-    - [ ] implement common prefix for paths
     - [ ] implement relativePath(toPath:startingPath:)
     - [ ] implement realPath(ofPath:)
     - [ ] implement touch(atPath:)
