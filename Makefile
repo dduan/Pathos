@@ -38,6 +38,7 @@ clean-xcodeproj-gen:
 clean-carthage: clean-xcodeproj-gen
 	@echo "Deleting Carthage artifacts…"
 	@rm -rf Carthage
+	@rm -rf Pathos.framework.zip
 
 clean: clean-carthage
 	@echo "Deleting build artifacts…"
