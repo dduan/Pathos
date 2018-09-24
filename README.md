@@ -53,3 +53,11 @@ Also, see "Testing".
   only works on macOS.
 - `make test-linux-docker` runs tests in Linux docker container (you'll need
   Docker installed in your host).
+
+### Releasing
+
+See `RELEASING.md`.
+
+### License
+
+MIT. See `LICENSE.md`.
