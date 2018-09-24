@@ -256,6 +256,23 @@ extension MakeAbsoluteTests {
     ]
 }
 
+extension MakeDirectoryTests {
+    static let __allTests = [
+        ("testMakeDirectoryWithCreateParent", testMakeDirectoryWithCreateParent),
+        ("testMakeDirectoryWithNonExistParentShouldFail", testMakeDirectoryWithNonExistParentShouldFail),
+        ("testMakeDirectoryWithSpecificPermission", testMakeDirectoryWithSpecificPermission),
+        ("testMakeDiroctory", testMakeDiroctory),
+        ("testMakeExistingDirectory", testMakeExistingDirectory),
+        ("testMakeExistingDirectoryExistOkay", testMakeExistingDirectoryExistOkay),
+        ("testPathRepresentableMakeDirectoryWithCreateParent", testPathRepresentableMakeDirectoryWithCreateParent),
+        ("testPathRepresentableMakeDirectoryWithNonExistParentShouldFail", testPathRepresentableMakeDirectoryWithNonExistParentShouldFail),
+        ("testPathRepresentableMakeDirectoryWithSpecificPermission", testPathRepresentableMakeDirectoryWithSpecificPermission),
+        ("testPathRepresentableMakeDiroctory", testPathRepresentableMakeDiroctory),
+        ("testPathRepresentableMakeExistingDirectory", testPathRepresentableMakeExistingDirectory),
+        ("testPathRepresentableMakeExistingDirectoryExistOkay", testPathRepresentableMakeExistingDirectoryExistOkay),
+    ]
+}
+
 extension NormalizePathTests {
     static let __allTests = [
         ("testAssertEmptyPathBecomesCurrent", testAssertEmptyPathBecomesCurrent),
@@ -383,6 +400,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(IsSymbolicLinkTests.__allTests),
         testCase(JoinPathTests.__allTests),
         testCase(MakeAbsoluteTests.__allTests),
+        testCase(MakeDirectoryTests.__allTests),
         testCase(NormalizePathTests.__allTests),
         testCase(PathBaseNameTests.__allTests),
         testCase(PathDirectoryTests.__allTests),
