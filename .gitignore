@@ -3,3 +3,5 @@
 /Packages
 /*.xcodeproj
 tmp
+Carthage/
+Pathos.framework.zip
