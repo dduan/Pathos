@@ -7,9 +7,6 @@ export LC_CTYPE     = en_US.UTF-8
 update-linux-test-manifest:
 	@swift test --generate-linuxmain
 
-play:
-	@swift run play
-
 test: clean
 	@swift test -Xswiftc -warnings-as-errors
 
