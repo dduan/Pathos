@@ -4,7 +4,7 @@ export LC_CTYPE     = en_US.UTF-8
 
 .DEFAULT_GOAL := build
 
-generate-linux-test-manifest:
+update-linux-test-manifest:
 	@swift test --generate-linuxmain
 play:
 	@swift run play
@@ -14,10 +14,15 @@ test-linux-docker:
 	@Scripts/run-tests-linux-docker.sh
 develop-linux-docker:
 	@Scripts/develop-linux-docker.sh
-generate:
-	@swift package generate-xcodeproj
-build: generate-linux-test-manifest
-	@echo "building Pathos"
+generate: clean-xcodegen
+	@bin/xcodegen-darwin
+carthage-archive: clean-carthage generate
+	@bin/carthage-darwin build --archive
+build: update-linux-test-manifest
 	@swift build -c release -Xswiftc -warnings-as-errors > /dev/null
-clean:
-	rm -rf .build tmp
+clean-xcodegen:
+	@rm -rf Pathos.xcodeproj
+clean-carthage: clean-xcodegen
+	@rm -rf Carthage
+clean: clean-carthage
+	rm -rf .build tmp build
