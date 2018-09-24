@@ -1,4 +1,0 @@
-- [ ] 1.0 project state
-    - [ ] add introductory material
-    - [ ] add SwiftLint
-    - [ ] generate reference (?). Should be part of the build step.
