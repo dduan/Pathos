@@ -21,8 +21,12 @@ carthage-archive: clean-carthage generate
 build: update-linux-test-manifest
 	@swift build -c release -Xswiftc -warnings-as-errors > /dev/null
 clean-xcodegen:
+	@echo "Deleting generated Xcode project…"
 	@rm -rf Pathos.xcodeproj
 clean-carthage: clean-xcodegen
+	@echo "Deleting Carthage artifacts…"
 	@rm -rf Carthage
 clean: clean-carthage
-	rm -rf .build tmp build
+	@echo "Deleting build artifacts…"
+	@rm -rf .build tmp build
+	@echo "Done!"
