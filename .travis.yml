@@ -12,4 +12,4 @@ matrix:
       language: objective-c
       osx_image: xcode10
       script:
-        - make test
+        - make test-all

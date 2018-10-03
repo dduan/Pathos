@@ -4,6 +4,8 @@ export LC_CTYPE     = en_US.UTF-8
 
 .DEFAULT_GOAL := build
 
+test-all: test test-carthage test-cocoapods
+
 update-linux-test-manifest:
 	@swift test --generate-linuxmain
 
@@ -21,6 +23,17 @@ generate: clean-xcodeproj-gen
 	@swift package generate-xcodeproj --xcconfig-overrides Resources/release.xcconfig
 	@cp Resources/Info.plist Pathos.xcodeproj/Pathos_info.plist
 	@echo "Done."
+
+test-carthage: clean-carthage generate
+	set -o pipefail && \
+		carthage build \
+		--no-skip-current \
+		--configuration Release \
+		--verbose
+	ls Carthage/build/Mac/Pathos.framework
+
+test-cocoapods:
+	pod lib lint
 
 carthage-archive: clean-carthage generate
 	@bin/carthage-darwin build --archive
