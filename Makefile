@@ -4,7 +4,7 @@ export LC_CTYPE     = en_US.UTF-8
 
 .DEFAULT_GOAL := build
 
-test-all: test test-carthage test-cocoapods
+test-all: test test-carthage
 
 update-linux-test-manifest:
 	@swift test --generate-linuxmain
