@@ -1,7 +1,9 @@
-// TODO: missing docstring.
+/// A type that represents a path. All Pathos methods is available to the conforming type.
 public protocol PathRepresentable {
-    // TODO: missing docstring.
+    /// A string value that is the path.
     var pathString: String { get }
-    // TODO: missing docstring.
+    /// Initialize the type providing a string as path.
+    ///
+    /// - Parameter string: string value for the path.
     init(string: String)
 }
