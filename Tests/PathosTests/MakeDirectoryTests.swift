@@ -6,7 +6,7 @@ final class MakeDirectoryTests: XCTestCase {
         return join(path: "/tmp", withPath: String(UInt64.random(in: .min ... .max)))
     }
 
-    func testMakeDiroctory() throws {
+    func testMakeDirectory() throws {
         let directory = self.randomTmpDirectoryPath
         try makeDirectory(atPath: directory)
         XCTAssertTrue(try isDirectory(atPath: directory))
@@ -17,23 +17,23 @@ final class MakeDirectoryTests: XCTestCase {
     }
 
     func testMakeExistingDirectory() throws {
-        let exstingDirectory = self.randomTmpDirectoryPath
-        try makeDirectory(atPath: exstingDirectory)
-        XCTAssertThrowsError(try makeDirectory(atPath: exstingDirectory)) { error in
+        let existingDirectory = self.randomTmpDirectoryPath
+        try makeDirectory(atPath: existingDirectory)
+        XCTAssertThrowsError(try makeDirectory(atPath: existingDirectory)) { error in
             guard case SystemError.fileExists = error else {
                 XCTFail("unexpected error thrown by makeDirectory")
                 return
             }
         }
-        rmdir(exstingDirectory)
+        rmdir(existingDirectory)
     }
 
     func testMakeExistingDirectoryExistOkay() throws {
-        let exstingDirectory = self.randomTmpDirectoryPath
-        try makeDirectory(atPath: exstingDirectory)
-        try makeDirectory(atPath: exstingDirectory, existOkay: true)
-        XCTAssertTrue(try isDirectory(atPath: exstingDirectory))
-        rmdir(exstingDirectory)
+        let existingDirectory = self.randomTmpDirectoryPath
+        try makeDirectory(atPath: existingDirectory)
+        try makeDirectory(atPath: existingDirectory, existOkay: true)
+        XCTAssertTrue(try isDirectory(atPath: existingDirectory))
+        rmdir(existingDirectory)
     }
 
     func testMakeDirectoryWithNonExistParentShouldFail() {
@@ -71,18 +71,18 @@ final class MakeDirectoryTests: XCTestCase {
     }
 
     func testPathRepresentableMakeExistingDirectory() throws {
-        let exstingDirectory = self.randomTmpDirectoryPath
-        try makeDirectory(atPath: exstingDirectory)
-        XCTAssertFalse(Path(string: exstingDirectory).makeDirectory())
-        rmdir(exstingDirectory)
+        let existingDirectory = self.randomTmpDirectoryPath
+        try makeDirectory(atPath: existingDirectory)
+        XCTAssertFalse(Path(string: existingDirectory).makeDirectory())
+        rmdir(existingDirectory)
     }
 
     func testPathRepresentableMakeExistingDirectoryExistOkay() throws {
-        let exstingDirectory = self.randomTmpDirectoryPath
-        try makeDirectory(atPath: exstingDirectory)
-        XCTAssertTrue(Path(string: exstingDirectory).makeDirectory(existOkay: true))
-        XCTAssertTrue(try isDirectory(atPath: exstingDirectory))
-        rmdir(exstingDirectory)
+        let existingDirectory = self.randomTmpDirectoryPath
+        try makeDirectory(atPath: existingDirectory)
+        XCTAssertTrue(Path(string: existingDirectory).makeDirectory(existOkay: true))
+        XCTAssertTrue(try isDirectory(atPath: existingDirectory))
+        rmdir(existingDirectory)
     }
 
     func testPathRepresentableMakeDirectoryWithNonExistParentShouldFail() {

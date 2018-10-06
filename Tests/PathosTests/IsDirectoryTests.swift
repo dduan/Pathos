@@ -27,7 +27,7 @@ final class IsDirectoryTests: XCTestCase {
         XCTAssertTrue(try isDirectory(atPath: self.fixture(.goodDirectorySymbol)))
     }
 
-    func testIsDirectoryOnBadSymbolicLink() {
+    func testIsDirectoryOnBadSymbolicLink() throws {
         XCTAssertThrowsError(try isDirectory(atPath: self.fixture(.badSymbol))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")

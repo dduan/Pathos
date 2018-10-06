@@ -8,7 +8,7 @@ import Darwin
 ///
 /// - Parameters:
 ///   - path: The path at witch the directory is to be created.
-///   - permissions: Access flags (combined with the proccess's `umask`) for the directory to be created.
+///   - permissions: Access flags (combined with the process's `umask`) for the directory to be created.
 ///   - createParents: If `true`, any missing parents of this path are created as needed; they are created
 ///                    with the default permissions without taking mode into account (mimicking the POSIX
 ///                    `mkdir -p` command). If `false`, a missing parent will cause a `SystemError`. Defaults
@@ -88,14 +88,14 @@ extension PathRepresentable {
     /// Create a directory at `pathString`.
     ///
     /// - Parameters:
-    ///   - permission: Access flags (combined with the proccess's `umask`) for the directory to be created.
+    ///   - permission: Access flags (combined with the process's `umask`) for the directory to be created.
     ///   - createParents: If `true`, any missing parents of this path are created as needed; they are created
     ///                    with the default permissions without taking mode into account (mimicking the POSIX
     ///                    `mkdir -p` command). If `false`, a missing parent will cause a `SystemError`.
     ///                    Defaults to `false`
     ///   - existOkay: If `false`, a `SystemError` is thrown if the target directory (or any of it's parent,
     ///                if it needs creation) already exists.
-    /// - Returns: `true` if a directory is created, `false` if an error occured and the directory was not
+    /// - Returns: `true` if a directory is created, `false` if an error occurred and the directory was not
     ///            created.
     public func makeDirectory(createParents: Bool = false, permission: FilePermission = 0o0755, existOkay: Bool = false) -> Bool {
         do {

@@ -86,7 +86,7 @@ final class ExistsTests: XCTestCase {
         XCTAssertTrue(self.fixturePath(.goodFileSymbol).exists(followSymbol: true))
     }
 
-    func testPathRepresentableGoodSymbolicDirectorcyLinkFollowingSymbol() {
+    func testPathRepresentableGoodSymbolicDirectoryLinkFollowingSymbol() {
         XCTAssertTrue(self.fixturePath(.goodDirectorySymbol).exists(followSymbol: true))
     }
 

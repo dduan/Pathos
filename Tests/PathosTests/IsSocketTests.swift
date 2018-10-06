@@ -10,7 +10,7 @@ final class IsSocketTests: XCTestCase {
         XCTAssertFalse(try isSocket(atPath: self.fixture(.directoryThatExists)))
     }
 
-    func testIsSocketOnNonExistingPath() {
+    func testIsSocketOnNonExistingPath() throws {
         XCTAssertThrowsError(try isSocket(atPath: self.fixture(.noneExistence))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")
@@ -27,7 +27,7 @@ final class IsSocketTests: XCTestCase {
         XCTAssertFalse(try isSocket(atPath: self.fixture(.goodDirectorySymbol)))
     }
 
-    func testIsSocketOnBadSymbolicLink() {
+    func testIsSocketOnBadSymbolicLink() throws {
         XCTAssertThrowsError(try isSocket(atPath: self.fixture(.badSymbol))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")
@@ -48,7 +48,7 @@ final class IsSocketTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.noneExistence).isSocket)
     }
 
-    func testPathRerpesentableIsSocketOnSymbolicLink() {
+    func testPathRepresentableIsSocketOnSymbolicLink() {
         XCTAssertFalse(self.fixturePath(.goodFileSymbol).isSocket)
     }
 
@@ -56,7 +56,7 @@ final class IsSocketTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.goodDirectorySymbol).isSocket)
     }
 
-    func testPathRerpesentableIsSocketOnBadSymbolicLink() {
+    func testPathRepresentableIsSocketOnBadSymbolicLink() {
         XCTAssertFalse(self.fixturePath(.badSymbol).isSocket)
     }
 }

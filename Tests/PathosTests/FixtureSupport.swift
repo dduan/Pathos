@@ -11,7 +11,7 @@ enum FixturePath: String {
     case fileInDirectory = "world/world_hello"
     case symbolInDirectory = "world/world_symbol"
     case directoryInDirectory = "world/world_world"
-    case fileInNestedDirecory = "world/world_world/hello"
+    case fileInNestedDirectory = "world/world_world/hello"
 }
 
 extension XCTestCase {
@@ -71,7 +71,7 @@ extension XCTestCase {
         return [
             self.fixture(.fileThatExists),
             self.fixture(.fileInDirectory),
-            self.fixture(.fileInNestedDirecory),
+            self.fixture(.fileInNestedDirectory),
         ]
     }
 

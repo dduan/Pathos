@@ -10,7 +10,7 @@ final class IsSymbolicLinkTests: XCTestCase {
         XCTAssertFalse(try isSymbolicLink(atPath: self.fixture(.directoryThatExists)))
     }
 
-    func testIsSymbolicLinkOnNonExistingPath() {
+    func testIsSymbolicLinkOnNonExistingPath() throws {
         XCTAssertThrowsError(try isSymbolicLink(atPath: self.fixture(.noneExistence))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")

@@ -12,7 +12,7 @@ final class NormalizePathTests: XCTestCase {
         XCTAssertEqual(normalize(path: "///"), "/")
     }
 
-    func testConanicalizePath() {
+    func testCanonicalizePath() {
         XCTAssertEqual(normalize(path: "///foo/.//bar//"), "/foo/bar")
         XCTAssertEqual(normalize(path: "///foo/.//bar//.//..//.//baz"), "/foo/baz")
         XCTAssertEqual(normalize(path: "///..//./foo/.//bar"), "/foo/bar")
@@ -28,7 +28,7 @@ final class NormalizePathTests: XCTestCase {
         XCTAssertEqual(Path(string: "///").normalize().pathString, "/")
     }
 
-    func testPathRepresentableConanicalizePath() {
+    func testPathRepresentableCanonicalizePath() {
         XCTAssertEqual(Path(string: "///foo/.//bar//").normalize().pathString, "/foo/bar")
         XCTAssertEqual(Path(string: "///foo/.//bar//.//..//.//baz").normalize().pathString, "/foo/baz")
         XCTAssertEqual(Path(string: "///..//./foo/.//bar").normalize().pathString, "/foo/bar")

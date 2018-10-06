@@ -48,7 +48,7 @@ final class IsCharacterDeviceTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.noneExistence).isCharacterDevice)
     }
 
-    func testPathRerpesentableIsCharacterDeviceOnSymbolicLink() {
+    func testPathRepresentableIsCharacterDeviceOnSymbolicLink() {
         XCTAssertFalse(self.fixturePath(.goodFileSymbol).isCharacterDevice)
     }
 
@@ -56,7 +56,7 @@ final class IsCharacterDeviceTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.goodDirectorySymbol).isCharacterDevice)
     }
 
-    func testPathRerpesentableIsCharacterDeviceOnBadSymbolicLink() {
+    func testPathRepresentableIsCharacterDeviceOnBadSymbolicLink() {
         XCTAssertFalse(self.fixturePath(.badSymbol).isCharacterDevice)
     }
 }

@@ -47,7 +47,7 @@ final class SplitPathTests: XCTestCase {
         _testPathRepresentableSplit("/", ("/", ""))
     }
 
-    func testPathRepresentableSplitSingleCompomentPath() {
+    func testPathRepresentableSplitSingleComponentPath() {
         _testPathRepresentableSplit("foo", ("", "foo"))
     }
 

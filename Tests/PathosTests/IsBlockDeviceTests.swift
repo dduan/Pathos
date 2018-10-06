@@ -10,7 +10,7 @@ final class IsBlockDeviceTests: XCTestCase {
         XCTAssertFalse(try isBlockDevice(atPath: self.fixture(.directoryThatExists)))
     }
 
-    func testIsBlockDeviceOnNonExistingPath() {
+    func testIsBlockDeviceOnNonExistingPath() throws {
         XCTAssertThrowsError(try isBlockDevice(atPath: self.fixture(.noneExistence))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")
@@ -56,7 +56,7 @@ final class IsBlockDeviceTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.goodDirectorySymbol).isBlockDevice)
     }
 
-    func testPathRerpesentableIsBlockDeviceOnBadSymbolicLink() {
+    func testPathRepresentableIsBlockDeviceOnBadSymbolicLink() {
         XCTAssertFalse(self.fixturePath(.badSymbol).isBlockDevice)
     }
 }

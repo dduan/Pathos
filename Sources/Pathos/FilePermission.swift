@@ -4,8 +4,8 @@ import Glibc
 import Darwin
 #endif
 
-/// Represents the POSIX file permisssion bits. These bits determines read/write/execution access to a file as
-/// well as some miscelleneous information.
+/// Represents the POSIX file permission bits. These bits determines read/write/execution access to a file as
+/// well as some miscellaneous information.
 public struct FilePermission: OptionSet {
     /// The file permission as the native `mode_t` type. A de-abstraction to help interact with POSIX APIs directly.
     public let rawValue: mode_t

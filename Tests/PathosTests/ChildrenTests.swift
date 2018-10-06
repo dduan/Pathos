@@ -2,7 +2,7 @@ import Pathos
 import XCTest
 
 final class ChildrenTests: XCTestCase {
-    func testChildrenInPath() {
+    func testChildrenInPath() throws {
         XCTAssertEqual(
             Set(try children(inPath: self.fixtureRoot)),
             self.childFiles
@@ -20,42 +20,42 @@ final class ChildrenTests: XCTestCase {
         )
     }
 
-    func testFilesInPath() {
+    func testFilesInPath() throws {
         XCTAssertEqual(
             Set(try files(inPath: self.fixtureRoot)),
             self.childFiles
         )
     }
 
-    func testFilesRecursiveInPath() {
+    func testFilesRecursiveInPath() throws {
         XCTAssertEqual(
             Set(try files(inPath: self.fixtureRoot, recursive: true)),
             self.childFilesRecursive
         )
     }
 
-    func testDirectoriesInPath() {
+    func testDirectoriesInPath() throws {
         XCTAssertEqual(
             Set(try directories(inPath: self.fixtureRoot)),
             self.childDirectories
         )
     }
 
-    func testDirectoriesRecursiveInPath() {
+    func testDirectoriesRecursiveInPath() throws {
         XCTAssertEqual(
             Set(try directories(inPath: self.fixtureRoot, recursive: true)),
             self.childDirectoriesRecursive
         )
     }
 
-    func testSymbolicLinksInPath() {
+    func testSymbolicLinksInPath() throws {
         XCTAssertEqual(
             Set(try symbolicLinks(inPath: self.fixtureRoot)),
             self.childSymbolicLinks
         )
     }
 
-    func testSymbolicLinksRecursiveInPath() {
+    func testSymbolicLinksRecursiveInPath() throws {
         XCTAssertEqual(
             Set(try symbolicLinks(inPath: self.fixtureRoot, recursive: true)),
             self.childSymbolicLinksRecursive
@@ -126,11 +126,11 @@ final class ChildrenTests: XCTestCase {
     /// things they aren't supposed to.
 
     // unknownTypeFiles
-    func testUnknownTypeFilesInPath() {
+    func testUnknownTypeFilesInPath() throws {
         XCTAssertEqual(Set(try unknownTypeFiles(inPath: self.fixtureRoot)), [])
     }
 
-    func testUnknownTypeFilesRecursiveInPath() {
+    func testUnknownTypeFilesRecursiveInPath() throws {
         XCTAssertEqual(Set(try unknownTypeFiles(inPath: self.fixtureRoot, recursive: true)), [])
     }
 
@@ -149,11 +149,11 @@ final class ChildrenTests: XCTestCase {
     }
 
     // pipes
-    func testPipesInPath() {
+    func testPipesInPath() throws {
         XCTAssertEqual(Set(try pipes(inPath: self.fixtureRoot)), [])
     }
 
-    func testPipesRecursiveInPath() {
+    func testPipesRecursiveInPath() throws {
         XCTAssertEqual(Set(try pipes(inPath: self.fixtureRoot, recursive: true)), [])
     }
 
@@ -172,11 +172,11 @@ final class ChildrenTests: XCTestCase {
     }
 
     // characterDevices
-    func testCharacterDevicesInPath() {
+    func testCharacterDevicesInPath() throws {
         XCTAssertEqual(Set(try characterDevices(inPath: self.fixtureRoot)), [])
     }
 
-    func testCharacterDevicesRecursiveInPath() {
+    func testCharacterDevicesRecursiveInPath() throws {
         XCTAssertEqual(Set(try characterDevices(inPath: self.fixtureRoot, recursive: true)), [])
     }
 
@@ -195,11 +195,11 @@ final class ChildrenTests: XCTestCase {
     }
 
     // blockDevices
-    func testBlockDevicesInPath() {
+    func testBlockDevicesInPath() throws {
         XCTAssertEqual(Set(try blockDevices(inPath: self.fixtureRoot)), [])
     }
 
-    func testBlockDevicesRecursiveInPath() {
+    func testBlockDevicesRecursiveInPath() throws {
         XCTAssertEqual(Set(try blockDevices(inPath: self.fixtureRoot, recursive: true)), [])
     }
 
@@ -218,11 +218,11 @@ final class ChildrenTests: XCTestCase {
     }
 
     // sockets
-    func testSocketsInPath() {
+    func testSocketsInPath() throws {
         XCTAssertEqual(Set(try sockets(inPath: self.fixtureRoot)), [])
     }
 
-    func testSocketsRecursiveInPath() {
+    func testSocketsRecursiveInPath() throws {
         XCTAssertEqual(Set(try sockets(inPath: self.fixtureRoot, recursive: true)), [])
     }
 

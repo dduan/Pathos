@@ -10,7 +10,7 @@ public func copyFile(fromPath source: String, toPath destination: String, follow
     let sourceStatus = try _lstat(at: source)
     let destinationStatus = try? _stat(at: destination)
     if _ifmt(sourceStatus) != S_IFREG && _ifmt(sourceStatus) != S_IFLNK {
-        throw PathosError.copyingNeitherFileNorSymblink(path: source)
+        throw PathosError.copyingNeitherFileNorSymlink(path: source)
     }
 
     if (destinationStatus.map { _ifmt($0) }) == S_IFIFO {

@@ -28,7 +28,7 @@ final class SizeTests: XCTestCase {
         )
     }
 
-    func testSizeOfNonExistingPath() {
+    func testSizeOfNonExistingPath() throws {
         XCTAssertThrowsError(try size(atPath: self.fixture(.noneExistence))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")

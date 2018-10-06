@@ -138,7 +138,7 @@ public func metadataChangeTime(atPath path: String) throws -> FileTime {
 /// - Parameters:
 ///   - path: the first path in comparison.
 ///   - otherPath: the other path in comparison.
-/// - Returns: whethec the 2 paths points to the same file.
+/// - Returns: whether the 2 paths points to the same file.
 /// - Throws: A `SystemError` if either path cannot be accessed for some reason.
 public func sameFile(atPath path: String, otherPath: String) throws -> Bool {
     return try _sameStat(_stat(at: path), _stat(at: otherPath))
@@ -232,7 +232,7 @@ extension PathRepresentable {
     /// be accessed for some reason.
     ///
     /// - Parameter other: the other path in comparison.
-    /// - Returns: whethec the 2 paths points to the same file.
+    /// - Returns: whether the 2 paths points to the same file.
     public func isSame(as other: Self) -> Bool {
         return (try? sameFile(atPath:otherPath:)(self.pathString, other.pathString)) ?? false
     }

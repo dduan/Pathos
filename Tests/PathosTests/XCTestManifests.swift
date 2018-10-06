@@ -63,8 +63,8 @@ extension ExistsTests {
         ("testPathRepresentableExistingFileNotFollowingSymbol", testPathRepresentableExistingFileNotFollowingSymbol),
         ("testPathRepresentableExistingFiles", testPathRepresentableExistingFiles),
         ("testPathRepresentableGoodDirectorySymbolicLinkNotFollowingSymbol", testPathRepresentableGoodDirectorySymbolicLinkNotFollowingSymbol),
-        ("testPathRepresentableGoodSymbolicDirectorcyLinkFollowingSymbol", testPathRepresentableGoodSymbolicDirectorcyLinkFollowingSymbol),
         ("testPathRepresentableGoodSymbolicDirectoryLink", testPathRepresentableGoodSymbolicDirectoryLink),
+        ("testPathRepresentableGoodSymbolicDirectoryLinkFollowingSymbol", testPathRepresentableGoodSymbolicDirectoryLinkFollowingSymbol),
         ("testPathRepresentableGoodSymbolicLink", testPathRepresentableGoodSymbolicLink),
         ("testPathRepresentableGoodSymbolicLinkFollowingSymbol", testPathRepresentableGoodSymbolicLinkFollowingSymbol),
         ("testPathRepresentableGoodSymbolicLinkNotFollowingSymbol", testPathRepresentableGoodSymbolicLinkNotFollowingSymbol),
@@ -128,8 +128,8 @@ extension IsBlockDeviceTests {
         ("testIsBlockDeviceOnNonExistingPath", testIsBlockDeviceOnNonExistingPath),
         ("testIsBlockDeviceOnSymbolicDirectoryLink", testIsBlockDeviceOnSymbolicDirectoryLink),
         ("testIsBlockDeviceOnSymbolicLink", testIsBlockDeviceOnSymbolicLink),
+        ("testPathRepresentableIsBlockDeviceOnBadSymbolicLink", testPathRepresentableIsBlockDeviceOnBadSymbolicLink),
         ("testPathRepresentableIsBlockDeviceOnSymbolicDirectoryLink", testPathRepresentableIsBlockDeviceOnSymbolicDirectoryLink),
-        ("testPathRerpesentableIsBlockDeviceOnBadSymbolicLink", testPathRerpesentableIsBlockDeviceOnBadSymbolicLink),
         ("testPathRerpesentableIsBlockDeviceOnSymbolicLink", testPathRerpesentableIsBlockDeviceOnSymbolicLink),
     ]
 }
@@ -145,9 +145,9 @@ extension IsCharacterDeviceTests {
         ("testIsCharacterDeviceOnNonExistingPath", testIsCharacterDeviceOnNonExistingPath),
         ("testIsCharacterDeviceOnSymbolicDirectoryLink", testIsCharacterDeviceOnSymbolicDirectoryLink),
         ("testIsCharacterDeviceOnSymbolicLink", testIsCharacterDeviceOnSymbolicLink),
+        ("testPathRepresentableIsCharacterDeviceOnBadSymbolicLink", testPathRepresentableIsCharacterDeviceOnBadSymbolicLink),
         ("testPathRepresentableIsCharacterDeviceOnSymbolicDirectoryLink", testPathRepresentableIsCharacterDeviceOnSymbolicDirectoryLink),
-        ("testPathRerpesentableIsCharacterDeviceOnBadSymbolicLink", testPathRerpesentableIsCharacterDeviceOnBadSymbolicLink),
-        ("testPathRerpesentableIsCharacterDeviceOnSymbolicLink", testPathRerpesentableIsCharacterDeviceOnSymbolicLink),
+        ("testPathRepresentableIsCharacterDeviceOnSymbolicLink", testPathRepresentableIsCharacterDeviceOnSymbolicLink),
     ]
 }
 
@@ -196,9 +196,9 @@ extension IsPipeTests {
         ("testIsPipeOnNonExistingPath", testIsPipeOnNonExistingPath),
         ("testIsPipeOnSymbolicDirectoryLink", testIsPipeOnSymbolicDirectoryLink),
         ("testIsPipeOnSymbolicLink", testIsPipeOnSymbolicLink),
+        ("testPathRepresentableIsPipeOnBadSymbolicLink", testPathRepresentableIsPipeOnBadSymbolicLink),
         ("testPathRepresentableIsPipeOnSymbolicDirectoryLink", testPathRepresentableIsPipeOnSymbolicDirectoryLink),
-        ("testPathRerpesentableIsPipeOnBadSymbolicLink", testPathRerpesentableIsPipeOnBadSymbolicLink),
-        ("testPathRerpesentableIsPipeOnSymbolicLink", testPathRerpesentableIsPipeOnSymbolicLink),
+        ("testPathRepresentableIsPipeOnSymbolicLink", testPathRepresentableIsPipeOnSymbolicLink),
     ]
 }
 
@@ -213,9 +213,9 @@ extension IsSocketTests {
         ("testIsSocketOnNonExistingPath", testIsSocketOnNonExistingPath),
         ("testIsSocketOnSymbolicDirectoryLink", testIsSocketOnSymbolicDirectoryLink),
         ("testIsSocketOnSymbolicLink", testIsSocketOnSymbolicLink),
+        ("testPathRepresentableIsSocketOnBadSymbolicLink", testPathRepresentableIsSocketOnBadSymbolicLink),
         ("testPathRepresentableIsSocketOnSymbolicDirectoryLink", testPathRepresentableIsSocketOnSymbolicDirectoryLink),
-        ("testPathRerpesentableIsSocketOnBadSymbolicLink", testPathRerpesentableIsSocketOnBadSymbolicLink),
-        ("testPathRerpesentableIsSocketOnSymbolicLink", testPathRerpesentableIsSocketOnSymbolicLink),
+        ("testPathRepresentableIsSocketOnSymbolicLink", testPathRepresentableIsSocketOnSymbolicLink),
     ]
 }
 
@@ -258,10 +258,10 @@ extension MakeAbsoluteTests {
 
 extension MakeDirectoryTests {
     static let __allTests = [
+        ("testMakeDirectory", testMakeDirectory),
         ("testMakeDirectoryWithCreateParent", testMakeDirectoryWithCreateParent),
         ("testMakeDirectoryWithNonExistParentShouldFail", testMakeDirectoryWithNonExistParentShouldFail),
         ("testMakeDirectoryWithSpecificPermission", testMakeDirectoryWithSpecificPermission),
-        ("testMakeDiroctory", testMakeDiroctory),
         ("testMakeExistingDirectory", testMakeExistingDirectory),
         ("testMakeExistingDirectoryExistOkay", testMakeExistingDirectoryExistOkay),
         ("testPathRepresentableMakeDirectoryWithCreateParent", testPathRepresentableMakeDirectoryWithCreateParent),
@@ -276,8 +276,8 @@ extension MakeDirectoryTests {
 extension NormalizePathTests {
     static let __allTests = [
         ("testAssertEmptyPathBecomesCurrent", testAssertEmptyPathBecomesCurrent),
-        ("testConanicalizePath", testConanicalizePath),
-        ("testPathRepresentableConanicalizePath", testPathRepresentableConanicalizePath),
+        ("testCanonicalizePath", testCanonicalizePath),
+        ("testPathRepresentableCanonicalizePath", testPathRepresentableCanonicalizePath),
         ("testPathRepresentableEmptyPathBecomesCurrent", testPathRepresentableEmptyPathBecomesCurrent),
         ("testPathRepresentableSlashPrefixes", testPathRepresentableSlashPrefixes),
         ("testSlashPrefixes", testSlashPrefixes),
@@ -372,7 +372,7 @@ extension SplitPathTests {
     static let __allTests = [
         ("testPathRepresentableSplitRootPath", testPathRepresentableSplitRootPath),
         ("testPathRepresentableSplitSimplePath", testPathRepresentableSplitSimplePath),
-        ("testPathRepresentableSplitSingleCompomentPath", testPathRepresentableSplitSingleCompomentPath),
+        ("testPathRepresentableSplitSingleComponentPath", testPathRepresentableSplitSingleComponentPath),
         ("testPathRepresentableSplitWithABunchOfPrefixSlashes", testPathRepresentableSplitWithABunchOfPrefixSlashes),
         ("testPathRepresentableSplitWithRedundantSeparator", testPathRepresentableSplitWithRedundantSeparator),
         ("testSplitRootPath", testSplitRootPath),
