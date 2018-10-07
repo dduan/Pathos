@@ -13,8 +13,7 @@ public func isPipe(atPath path: String) throws -> Bool {
     return try _ifmt(_stat(at: path)) == S_IFIFO
 }
 
-// TODO: can this be described better? macOS headers refers to this as "character special"
-/// Whether file at path is a character device.
+/// Whether file at path is a character device (also known as "raw device" or "character special files").
 ///
 /// - Parameter path: the path to be tested.
 /// - Returns: `true` if file at path is a character device, `false` otherwise.
@@ -32,8 +31,7 @@ public func isDirectory(atPath path: String) throws -> Bool {
     return try _ifmt(_stat(at: path)) == S_IFDIR
 }
 
-// TODO: can this be described better? macOS headers refers to this as "block special"
-/// Whether file at path is a block device.
+/// Whether file at path is a block device (also know as "block special files").
 ///
 /// - Parameter path: the path to be tested.
 /// - Returns: `true` if file at path is a block device, `false` otherwise.
@@ -151,9 +149,10 @@ extension PathRepresentable {
         return (try? isPipe(atPath:)(self.pathString)) ?? false
     }
 
-    // TODO: can this be described better? macOS headers refers to this as "character special"
     /// Whether file at path is a character device. Returns `false` if the path does not exist or is
     /// not accessible.
+    ///
+    /// Character device is also known as "character special file" or "raw device".
     public var isCharacterDevice: Bool {
         return (try? isCharacterDevice(atPath:)(self.pathString)) ?? false
     }
@@ -164,9 +163,10 @@ extension PathRepresentable {
         return (try? isDirectory(atPath:)(self.pathString)) ?? false
     }
 
-    // TODO: can this be described better? macOS headers refers to this as "block special"
     /// Whether file at path is a block device. Returns `false` if the path does not exist or is
     /// not accessible.
+    ///
+    /// Block device is also known as "block special file".
     public var isBlockDevice: Bool {
         return (try? isBlockDevice(atPath:)(self.pathString)) ?? false
     }
