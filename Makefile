@@ -7,6 +7,7 @@ export LC_CTYPE     = en_US.UTF-8
 test-all: test test-carthage
 
 update-linux-test-manifest:
+	@rm Tests/PathosTests/XCTestManifests.swift
 	@swift test --generate-linuxmain
 
 test: clean

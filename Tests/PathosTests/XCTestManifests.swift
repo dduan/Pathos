@@ -41,6 +41,24 @@ extension ChildrenTests {
     ]
 }
 
+extension DefaultTemporaryDirectorySearchingTests {
+    static let __allTests = [
+        ("testPathRepresentableSearchingTemporaryDirectoryFromTEMP", testPathRepresentableSearchingTemporaryDirectoryFromTEMP),
+        ("testPathRepresentableSearchingTemporaryDirectoryFromTMP", testPathRepresentableSearchingTemporaryDirectoryFromTMP),
+        ("testPathRepresentableSearchingTemporaryDirectoryFromTMPDIR", testPathRepresentableSearchingTemporaryDirectoryFromTMPDIR),
+        ("testSearchingTemporaryDirectoryFromTEMP", testSearchingTemporaryDirectoryFromTEMP),
+        ("testSearchingTemporaryDirectoryFromTMP", testSearchingTemporaryDirectoryFromTMP),
+        ("testSearchingTemporaryDirectoryFromTMPDIR", testSearchingTemporaryDirectoryFromTMPDIR),
+    ]
+}
+
+extension DefaultTemporaryDirectoryTests {
+    static let __allTests = [
+        ("testDefaultsTemporaryDirectory", testDefaultsTemporaryDirectory),
+        ("testPathRepresentableDefaultsTemporaryDirectory", testPathRepresentableDefaultsTemporaryDirectory),
+    ]
+}
+
 extension ExistsTests {
     static let __allTests = [
         ("testBadSymbolicLink", testBadSymbolicLink),
@@ -387,6 +405,8 @@ extension SplitPathTests {
 public func __allTests() -> [XCTestCaseEntry] {
     return [
         testCase(ChildrenTests.__allTests),
+        testCase(DefaultTemporaryDirectorySearchingTests.__allTests),
+        testCase(DefaultTemporaryDirectoryTests.__allTests),
         testCase(ExistsTests.__allTests),
         testCase(ExpandUserDirectoryTests.__allTests),
         testCase(FileExtensionTests.__allTests),
