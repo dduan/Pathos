@@ -1,9 +1,7 @@
-// TODO: missing docstring.
+// Default conformation to `PathRepresentable`. See `PathRepresentable` for more.
 public struct Path: PathRepresentable {
-    // TODO: missing docstring.
     public let pathString: String
 
-    // TODO: missing docstring.
     public init(string: String) {
         self.pathString = string
     }
