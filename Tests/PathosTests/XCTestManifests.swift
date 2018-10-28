@@ -401,6 +401,17 @@ extension SplitPathTests {
     ]
 }
 
+extension TimeTests {
+    static let __allTests = [
+        ("testAccessTime", testAccessTime),
+        ("testMetadataChangeTime", testMetadataChangeTime),
+        ("testModificationTime", testModificationTime),
+        ("testPathRepresentableAccessTime", testPathRepresentableAccessTime),
+        ("testPathRepresentableMetadataChangeTime", testPathRepresentableMetadataChangeTime),
+        ("testPathRepresentableModificationTime", testPathRepresentableModificationTime),
+    ]
+}
+
 #if !os(macOS)
 public func __allTests() -> [XCTestCaseEntry] {
     return [
@@ -430,6 +441,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(SizeTests.__allTests),
         testCase(SplitExtensionTests.__allTests),
         testCase(SplitPathTests.__allTests),
+        testCase(TimeTests.__allTests),
     ]
 }
 #endif
