@@ -4,36 +4,36 @@ import Glibc
 import Darwin
 #endif
 
-// TODO: missing docstring.
+/// POSIX errors.
 public enum SystemError: Error {
-    // TODO: missing docstring.
+    /// A raw, uncategorized POSIX error. `SystemError` includes some but not all POSIX errors.
     case unknown(errorNumber: Int32)
-    // TODO: missing docstring.
+    /// Input/output error (POSIX `EIO`).
     case ioError
-    // TODO: missing docstring.
+    /// Operation not permitted (POSIX `EPERM`).
     case operationNotPermitted
-    // TODO: missing docstring.
+    /// Permission denied (POSIX `EACCES`).
     case permissionDenied
-    // TODO: missing docstring.
+    /// No such file or directory (POSIX `ENOENT`).
     case noSuchFileOrDirectory
-    // TODO: missing docstring.
+    /// Not a directory (POSIX `ENOTDIR`).
     case notADirectory
-    // TODO: missing docstring.
+    /// Bad address (POSIX `EFAULT`).
     case badAddress
-    // TODO: missing docstring.
+    /// Interrupted system call (POSIX `EINTR`).
     case interuptedSystemCall
-    // TODO: missing docstring.
+    /// No space left on device (POSIX `ENOSPC`).
     case noSpaceLeftOnDevice
-    // TODO: missing docstring.
+    /// Device or resource is busy (POSIX `EBUSY`).
     case deviceOrRecourceIsBusy
-    // TODO: missing docstring.
+    /// Read-only file system (POSIX `EROFS`).
     case readOnlyFileSystem
-    // TODO: missing docstring.
+    /// Invalid argument (POSIX `EINVAL`).
     case invalidArgument
-    // TODO: missing docstring.
+    /// File exists (POSIX `EEXIST`).
     case fileExists
 
-    // TODO: missing docstring.
+    /// Create a `SystemError` from a code that corresponds to a POSIX error.
     public init(posixErrorCode: Int32) {
         switch posixErrorCode {
         case EPERM  : self = .operationNotPermitted
