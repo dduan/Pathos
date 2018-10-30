@@ -25,7 +25,7 @@ generate: clean-xcodeproj-gen
 	@cp Resources/Info.plist Pathos.xcodeproj/Pathos_info.plist
 	@echo "Done."
 
-test-carthage: clean-carthage generate
+test-carthage: clean-carthage generate ensure-carthage
 	set -o pipefail && \
 		carthage build \
 		--no-skip-current \
@@ -36,8 +36,12 @@ test-carthage: clean-carthage generate
 test-cocoapods:
 	pod lib lint
 
-carthage-archive: clean-carthage generate
-	@bin/carthage-darwin build --archive
+carthage-archive: clean-carthage generate ensure-carthage
+	@carthage build --archive
+
+ensure-carthage:
+	@brew update
+	@brew outdated carthage || brew upgrade carthage
 
 build: update-linux-test-manifest
 	@swift build -c release -Xswiftc -warnings-as-errors > /dev/null
