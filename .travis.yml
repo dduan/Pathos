@@ -10,6 +10,6 @@ matrix:
         - make test-linux-docker
     - os: osx
       language: objective-c
-      osx_image: xcode10
+      osx_image: xcode10.1
       script:
         - make test-all
