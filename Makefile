@@ -19,7 +19,7 @@ test-linux-docker:
 develop-linux-docker:
 	@Scripts/develop-linux-docker.sh
 
-generate: clean-xcodeproj-gen
+xcode: clean-xcodeproj-gen
 	@echo "Generating Xcode project…"
 	@swift package generate-xcodeproj --xcconfig-overrides Resources/release.xcconfig
 	@cp Resources/Info.plist Pathos.xcodeproj/Pathos_info.plist
