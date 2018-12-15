@@ -54,12 +54,12 @@ public struct FilePermission: OptionSet {
     /// This is the set-user-ID on execute bit.
     /// See [Process Persona](http://www.gnu.org/software/libc/manual/html_node/Process-Persona.html#Process-Persona)
     /// to learm more.
-    public static let setUserIDOnExecution     = FilePermission(rawValue: S_ISUID) /* set user id on execution */
+    public static let setUserIDOnExecution     = FilePermission(rawValue: S_ISUID)
 
     /// This is the set-group-ID on execute bit
     /// See [Process Persona](http://www.gnu.org/software/libc/manual/html_node/Process-Persona.html#Process-Persona)
     /// to learm more.
-    public static let setGroupIDOnExecution    = FilePermission(rawValue: S_ISGID) /* set group id on execution */
+    public static let setGroupIDOnExecution    = FilePermission(rawValue: S_ISGID)
 
     /// This is the sticky bit.
     ///
@@ -70,7 +70,7 @@ public struct FilePermission: OptionSet {
     /// the owner of the directory can delete any file in the directory, no matter who owns it (provided the
     /// owner has given himself write permission for the directory). This is commonly used for the /tmp
     /// directory, where anyone may create files but not delete files created by other users.
-    public static let saveSwappedTextAfterUser = FilePermission(rawValue: S_ISVTX) /* save swapped text even after use */
+    public static let saveSwappedTextAfterUser = FilePermission(rawValue: S_ISVTX)
 }
 
 extension FilePermission: ExpressibleByIntegerLiteral {
