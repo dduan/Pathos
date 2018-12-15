@@ -25,7 +25,7 @@ xcode: clean-xcodeproj-gen
 	@cp Resources/Info.plist Pathos.xcodeproj/Pathos_info.plist
 	@echo "Done."
 
-test-carthage: clean-carthage generate ensure-carthage
+test-carthage: clean-carthage xcode ensure-carthage
 	set -o pipefail && \
 		carthage build \
 		--no-skip-current \
@@ -36,7 +36,7 @@ test-carthage: clean-carthage generate ensure-carthage
 test-cocoapods:
 	pod lib lint
 
-carthage-archive: clean-carthage generate ensure-carthage
+carthage-archive: clean-carthage xcode ensure-carthage
 	@carthage build --archive
 
 ensure-carthage:
