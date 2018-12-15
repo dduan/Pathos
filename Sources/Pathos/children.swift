@@ -77,6 +77,9 @@ func _children<T>(_ path: T, recursive: Bool, block: (String, Bool) throws -> [S
 ///                Defaults to `false`.
 ///
 /// - Returns: path to directories and files of all types in `path`.
+/// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
+///           data for the results.
+
 public func children(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, nil, recursive: recursive)
 }
@@ -90,6 +93,8 @@ public func children(inPath path: String, recursive: Bool = false) throws -> [St
 ///                Defaults to `false`.
 ///
 /// - Returns: paths to files with unknown types in `path`.
+/// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
+///           data for the results.
 public func unknownTypeFiles(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_FIFO), recursive: recursive)
 }
@@ -102,6 +107,8 @@ public func unknownTypeFiles(inPath path: String, recursive: Bool = false) throw
 ///                Defaults to `false`.
 ///
 /// - Returns: path to all pipes in `path`.
+/// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
+///           data for the results.
 public func pipes(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_UNKNOWN), recursive: recursive)
 }
@@ -114,6 +121,8 @@ public func pipes(inPath path: String, recursive: Bool = false) throws -> [Strin
 ///                Defaults to `false`.
 ///
 /// - Returns: path to all character device files in `path`.
+/// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
+///           data for the results.
 public func characterDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_CHR), recursive: recursive)
 }
@@ -126,6 +135,8 @@ public func characterDevices(inPath path: String, recursive: Bool = false) throw
 ///                Defaults to `false`.
 ///
 /// - Returns: path to directories in `path`.
+/// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
+///           data for the results.
 public func directories(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_DIR), recursive: recursive)
 }
@@ -138,6 +149,8 @@ public func directories(inPath path: String, recursive: Bool = false) throws -> 
 ///                Defaults to `false`.
 ///
 /// - Returns: path to block device files in `path`.
+/// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
+///           data for the results.
 public func blockDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_BLK), recursive: recursive)
 }
@@ -150,6 +163,8 @@ public func blockDevices(inPath path: String, recursive: Bool = false) throws ->
 ///                Defaults to `false`.
 ///
 /// - Returns: path to normal files in `path`.
+/// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
+///           data for the results.
 public func files(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_REG), recursive: recursive)
 }
@@ -162,6 +177,8 @@ public func files(inPath path: String, recursive: Bool = false) throws -> [Strin
 ///                Defaults to `false`.
 ///
 /// - Returns: path to symbolic links in `path`.
+/// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
+///           data for the results.
 public func symbolicLinks(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_LNK), recursive: recursive)
 }
@@ -174,6 +191,8 @@ public func symbolicLinks(inPath path: String, recursive: Bool = false) throws -
 ///                Defaults to `false`.
 ///
 /// - Returns: path to sockets in `path`.
+/// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
+///           data for the results.
 public func sockets(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_SOCK), recursive: recursive)
 }
@@ -181,8 +200,11 @@ public func sockets(inPath path: String, recursive: Bool = false) throws -> [Str
 extension PathRepresentable {
     /// Find paths to child directories and files of all types.
     ///
+    /// Result will be empty if this path cannot be opened or there's not enough memory to hold all data for
+    /// the results.
+    ///
     /// - Parameter recursive: set to `true` to include results from child directories in addition to that
-    ///                        from `path`. Defaults to `false`.
+    ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to directories and files of all types in `path`.
     public func children(recursive: Bool = false) -> [Self] {
@@ -192,8 +214,11 @@ extension PathRepresentable {
     /// Find paths to files with unknown types in `self`. Known types are: pipes, character devices,
     /// directories, block devices, files, symbolic links and sockets.
     ///
+    /// Result will be empty if this path cannot be opened or there's not enough memory to hold all data for
+    /// the results.
+    ///
     /// - Parameter recursive: set to `true` to include results from child directories in addition to that
-    ///                        from `path`. Defaults to `false`.
+    ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to files with unknown types in `self`.
     public func unknownTypeFiles(recursive: Bool = false) -> [Self] {
@@ -202,8 +227,11 @@ extension PathRepresentable {
 
     /// Find paths to pipes in `self`.
     ///
+    /// Result will be empty if this path cannot be opened or there's not enough memory to hold all data for
+    /// the results.
+    ///
     /// - Parameter recursive: set to `true` to include results from child directories in addition to that
-    ///                        from `path`. Defaults to `false`.
+    ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to pipes in `self`.
     public func pipes(recursive: Bool = false) -> [Self] {
@@ -212,8 +240,11 @@ extension PathRepresentable {
 
     /// Find paths to character devices in `self`.
     ///
+    /// Result will be empty if this path cannot be opened or there's not enough memory to hold all data for
+    /// the results.
+    ///
     /// - Parameter recursive: set to `true` to include results from child directories in addition to that
-    ///                        from `path`. Defaults to `false`.
+    ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to character devices in `self`.
     public func characterDevices(recursive: Bool = false) -> [Self] {
@@ -222,8 +253,11 @@ extension PathRepresentable {
 
     /// Find paths to directories in `self`.
     ///
+    /// Result will be empty if this path cannot be opened or there's not enough memory to hold all data for
+    /// the results.
+    ///
     /// - Parameter recursive: set to `true` to include results from child directories in addition to that
-    ///                        from `path`. Defaults to `false`.
+    ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to character devices in `self`.
     public func directories(recursive: Bool = false) -> [Self] {
@@ -232,8 +266,11 @@ extension PathRepresentable {
 
     /// Find paths to block devices in `self`.
     ///
+    /// Result will be empty if this path cannot be opened or there's not enough memory to hold all data for
+    /// the results.
+    ///
     /// - Parameter recursive: set to `true` to include results from child directories in addition to that
-    ///                        from `path`. Defaults to `false`.
+    ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to block devices in `self`.
     public func blockDevices(recursive: Bool = false) -> [Self] {
@@ -242,8 +279,11 @@ extension PathRepresentable {
 
     /// Find paths to normal files in `self`.
     ///
+    /// Result will be empty if this path cannot be opened or there's not enough memory to hold all data for
+    /// the results.
+    ///
     /// - Parameter recursive: set to `true` to include results from child directories in addition to that
-    ///                        from `path`. Defaults to `false`.
+    ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to normal files in `self`.
     public func files(recursive: Bool = false) -> [Self] {
@@ -252,8 +292,11 @@ extension PathRepresentable {
 
     /// Find paths to symbolic links (also known as symlinks or soft links) in `self`.
     ///
+    /// Result will be empty if this path cannot be opened or there's not enough memory to hold all data for
+    /// the results.
+    ///
     /// - Parameter recursive: set to `true` to include results from child directories in addition to that
-    ///                        from `path`. Defaults to `false`.
+    ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to symbolic links in `self`.
     public func symbolicLinks(recursive: Bool = false) -> [Self] {
@@ -262,8 +305,11 @@ extension PathRepresentable {
 
     /// Find paths to sockets in `self`.
     ///
+    /// Result will be empty if this path cannot be opened or there's not enough memory to hold all data for
+    /// the results.
+    ///
     /// - Parameter recursive: set to `true` to include results from child directories in addition to that
-    ///                        from `path`. Defaults to `false`.
+    ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to sockets in `self`.
     public func sockets(recursive: Bool = false) -> [Self] {
