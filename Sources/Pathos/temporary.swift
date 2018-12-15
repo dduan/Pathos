@@ -24,11 +24,11 @@ private func candidateTemporaryDirectories() -> [String] {
 /// Searches a standard list of directories to find one which the calling user can create files in.
 /// The list is:
 ///
-/// - The directory named by the TMPDIR environment variable.
-/// - The directory named by the TEMP environment variable.
-/// - The directory named by the TMP environment variable.
-/// - The directories `/tmp`, `/var/tmp`, and `/usr/tmp`, in that order.
-/// - As a last resort, the current working directory.
+/// * The directory named by the TMPDIR environment variable.
+/// * The directory named by the TEMP environment variable.
+/// * The directory named by the TMP environment variable.
+/// * The directories `/tmp`, `/var/tmp`, and `/usr/tmp`, in that order.
+/// * As a last resort, the current working directory.
 ///
 /// - Returns: result of the search.
 public func searchForDefaultTemporaryDirectory() -> String {

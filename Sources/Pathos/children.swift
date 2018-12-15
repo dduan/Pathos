@@ -71,101 +71,109 @@ func _children<T>(_ path: T, recursive: Bool, block: (String, Bool) throws -> [S
 
 /// Find paths to directories and files of all types in `path`.
 ///
-/// - parameter path:      the path whose children will be returned.
-/// - parameter recursive: set to `true` to include results from child directories in addition to that
-///                        from `path`. Defaults to `false`.
+/// - Parameters:
+///   - path: the path whose children will be returned.
+///   - recursive: set to `true` to include results from child directories in addition to that from `path`.
+///                Defaults to `false`.
 ///
-/// - returns: path to directories and files of all types in `path`.
+/// - Returns: path to directories and files of all types in `path`.
 public func children(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, nil, recursive: recursive)
 }
 
-/// Find paths to files with unknown types in `path`.
+/// Find paths to files with unknown types in `path`. Known types are: pipes, character devices,
+/// directories, block devices, files, symbolic links and sockets.
 ///
-/// Known types are: pipes, character devices, directories, block devices, files, symbolic links and sockets.
+/// - Parameters:
+///   - path: the path whose children will be returned.
+///   - recursive: set to `true` to include results from child directories in addition to that from `path`.
+///                Defaults to `false`.
 ///
-/// - parameter path:      the path whose children will be returned.
-/// - parameter recursive: set to `true` to include results from child directories in addition to that
-///                        from `path`. Defaults to `false`.
-///
-/// - returns: paths to files with unknown types in `path`.
+/// - Returns: paths to files with unknown types in `path`.
 public func unknownTypeFiles(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_FIFO), recursive: recursive)
 }
 
 /// Find paths to pipes in `path`.
 ///
-/// - parameter path:      the path whose children will be returned.
-/// - parameter recursive: set to `true` to include results from child directories in addition to that
-///                        from `path`. Defaults to `false`.
+/// - Parameters:
+///   - path: the path whose children will be returned.
+///   - recursive: set to `true` to include results from child directories in addition to that from `path`.
+///                Defaults to `false`.
 ///
-/// - returns: path to all pipes in `path`.
+/// - Returns: path to all pipes in `path`.
 public func pipes(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_UNKNOWN), recursive: recursive)
 }
 
 /// Find paths to character device files in `path`.
 ///
-/// - parameter path:      the path whose children will be returned.
-/// - parameter recursive: set to `true` to include results from child directories in addition to that
-///                        from `path`. Defaults to `false`.
+/// - Parameters:
+///   - path: the path whose children will be returned.
+///   - recursive: set to `true` to include results from child directories in addition to that from `path`.
+///                Defaults to `false`.
 ///
-/// - returns: path to all character device files in `path`.
+/// - Returns: path to all character device files in `path`.
 public func characterDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_CHR), recursive: recursive)
 }
 
 /// Find paths to directories in `path`.
 ///
-/// - parameter path:      the path whose children will be returned.
-/// - parameter recursive: set to `true` to include results from child directories in addition to that
-///                        from `path`. Defaults to `false`.
+/// - Parameters:
+///   - path: the path whose children will be returned.
+///   - recursive: set to `true` to include results from child directories in addition to that from `path`.
+///                Defaults to `false`.
 ///
-/// - returns: path to directories in `path`.
+/// - Returns: path to directories in `path`.
 public func directories(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_DIR), recursive: recursive)
 }
 
 /// Find paths to block device files in `path`.
 ///
-/// - parameter path:      the path whose children will be returned.
-/// - parameter recursive: set to `true` to include results from child directories in addition to that
-///                        from `path`. Defaults to `false`.
+/// - Parameters:
+///   - path: the path whose children will be returned.
+///   - recursive: set to `true` to include results from child directories in addition to that from `path`.
+///                Defaults to `false`.
 ///
-/// - returns: path to block device files in `path`.
+/// - Returns: path to block device files in `path`.
 public func blockDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_BLK), recursive: recursive)
 }
 
 /// Find paths to normal files in `path`.
 ///
-/// - parameter path:      the path whose children will be returned.
-/// - parameter recursive: set to `true` to include results from child directories in addition to that
-///                        from `path`. Defaults to `false`.
+/// - Parameters:
+///   - path: the path whose children will be returned.
+///   - recursive: set to `true` to include results from child directories in addition to that from `path`.
+///                Defaults to `false`.
 ///
-/// - returns: path to normal files in `path`.
+/// - Returns: path to normal files in `path`.
 public func files(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_REG), recursive: recursive)
 }
 
 /// Find paths to symbolic links (also known as symlinks or soft links) in `path`.
 ///
-/// - parameter path:      the path whose children will be returned.
-/// - parameter recursive: set to `true` to include results from child directories in addition to that
-///                        from `path`. Defaults to `false`.
+/// - Parameters:
+///   - path: the path whose children will be returned.
+///   - recursive: set to `true` to include results from child directories in addition to that from `path`.
+///                Defaults to `false`.
 ///
-/// - returns: path to symbolic links in `path`.
+/// - Returns: path to symbolic links in `path`.
 public func symbolicLinks(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_LNK), recursive: recursive)
 }
 
 /// Find paths to sockets in `path`.
 ///
-/// - parameter path:      the path whose children will be returned.
-/// - parameter recursive: set to `true` to include results from child directories in addition to that
-///                        from `path`. Defaults to `false`.
+/// - Parameters:
+///   - path: the path whose children will be returned.
+///   - recursive: set to `true` to include results from child directories in addition to that from `path`.
+///                Defaults to `false`.
 ///
-/// - returns: path to sockets in `path`.
+/// - Returns: path to sockets in `path`.
 public func sockets(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_SOCK), recursive: recursive)
 }
@@ -173,94 +181,91 @@ public func sockets(inPath path: String, recursive: Bool = false) throws -> [Str
 extension PathRepresentable {
     /// Find paths to child directories and files of all types.
     ///
-    /// - parameter path:      the path whose children will be returned.
-    /// - parameter recursive: set to `true` to include results from child directories in addition to that
+    /// - Parameter recursive: set to `true` to include results from child directories in addition to that
     ///                        from `path`. Defaults to `false`.
     ///
-    /// - returns: paths to directories and files of all types in `path`.
+    /// - Returns: paths to directories and files of all types in `path`.
     public func children(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: children(inPath:recursive:))
     }
 
-    /// Find paths to files with unknown types in `self`.
+    /// Find paths to files with unknown types in `self`. Known types are: pipes, character devices,
+    /// directories, block devices, files, symbolic links and sockets.
     ///
-    /// Known types are: pipes, character devices, directories, block devices, files, symbolic links and
-    /// sockets.
-    ///
-    /// - parameter recursive: set to `true` to include results from child directories in addition to that
+    /// - Parameter recursive: set to `true` to include results from child directories in addition to that
     ///                        from `path`. Defaults to `false`.
     ///
-    /// - returns: paths to files with unknown types in `self`.
+    /// - Returns: paths to files with unknown types in `self`.
     public func unknownTypeFiles(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: unknownTypeFiles(inPath:recursive:))
     }
 
     /// Find paths to pipes in `self`.
     ///
-    /// - parameter recursive: set to `true` to include results from child directories in addition to that
+    /// - Parameter recursive: set to `true` to include results from child directories in addition to that
     ///                        from `path`. Defaults to `false`.
     ///
-    /// - returns: paths to pipes in `self`.
+    /// - Returns: paths to pipes in `self`.
     public func pipes(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: pipes(inPath:recursive:))
     }
 
     /// Find paths to character devices in `self`.
     ///
-    /// - parameter recursive: set to `true` to include results from child directories in addition to that
+    /// - Parameter recursive: set to `true` to include results from child directories in addition to that
     ///                        from `path`. Defaults to `false`.
     ///
-    /// - returns: paths to character devices in `self`.
+    /// - Returns: paths to character devices in `self`.
     public func characterDevices(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: characterDevices(inPath:recursive:))
     }
 
     /// Find paths to directories in `self`.
     ///
-    /// - parameter recursive: set to `true` to include results from child directories in addition to that
+    /// - Parameter recursive: set to `true` to include results from child directories in addition to that
     ///                        from `path`. Defaults to `false`.
     ///
-    /// - returns: paths to character devices in `self`.
+    /// - Returns: paths to character devices in `self`.
     public func directories(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: directories(inPath:recursive:))
     }
 
     /// Find paths to block devices in `self`.
     ///
-    /// - parameter recursive: set to `true` to include results from child directories in addition to that
+    /// - Parameter recursive: set to `true` to include results from child directories in addition to that
     ///                        from `path`. Defaults to `false`.
     ///
-    /// - returns: paths to block devices in `self`.
+    /// - Returns: paths to block devices in `self`.
     public func blockDevices(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: blockDevices(inPath:recursive:))
     }
 
     /// Find paths to normal files in `self`.
     ///
-    /// - parameter recursive: set to `true` to include results from child directories in addition to that
+    /// - Parameter recursive: set to `true` to include results from child directories in addition to that
     ///                        from `path`. Defaults to `false`.
     ///
-    /// - returns: paths to normal files in `self`.
+    /// - Returns: paths to normal files in `self`.
     public func files(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: files(inPath:recursive:))
     }
 
     /// Find paths to symbolic links (also known as symlinks or soft links) in `self`.
     ///
-    /// - parameter recursive: set to `true` to include results from child directories in addition to that
+    /// - Parameter recursive: set to `true` to include results from child directories in addition to that
     ///                        from `path`. Defaults to `false`.
     ///
-    /// - returns: paths to symbolic links in `self`.
+    /// - Returns: paths to symbolic links in `self`.
     public func symbolicLinks(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: symbolicLinks(inPath:recursive:))
     }
 
     /// Find paths to sockets in `self`.
     ///
-    /// - parameter recursive: set to `true` to include results from child directories in addition to that
+    /// - Parameter recursive: set to `true` to include results from child directories in addition to that
     ///                        from `path`. Defaults to `false`.
     ///
-    /// - returns: paths to sockets in `self`.
+    /// - Returns: paths to sockets in `self`.
     public func sockets(recursive: Bool = false) -> [Self] {
         return _children(self, recursive: recursive, block: sockets(inPath:recursive:))
     }
