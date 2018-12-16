@@ -33,17 +33,5 @@ extension PathRepresentable {
             try? setCurrentWorkingDirectory(to:)(newValue.pathString)
         }
     }
-
-    // TODO: missing unit tests.
-    // TODO: missing docstring.
-    public var currentWorkingDirectory: Self {
-        get {
-            return Self(string: (try? getCurrentWorkingDirectory()) ?? "")
-        }
-
-        set {
-            try? setCurrentWorkingDirectory(to:)(newValue.pathString)
-        }
-    }
 }
 

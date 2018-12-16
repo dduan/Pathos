@@ -11,10 +11,4 @@ extension PathRepresentable {
     public static func glob(_ pattern: String) -> [Self] {
         return Pathos.glob(_:)(pattern).map(Self.init)
     }
-
-    // TODO: Missing unit tests.
-    // TODO: Missing docstring.
-    public func glob(_ pattern: String) -> [Self] {
-        return Self.glob(_: self.join(with: Self(string: pattern)).pathString)
-    }
 }
