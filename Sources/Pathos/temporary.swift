@@ -68,18 +68,36 @@ public var defaultTemporaryDirectory: String {
     }
 }
 
-// TODO: Missing implementation.
-// TODO: Missing unit tests.
+func _makeTemporaryPath(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) throws -> String
+{
+    let location = directory ?? defaultTemporaryDirectory
+    func makePath() -> String {
+        return join(path: location, withPath: prefix + String(Int64.random(in: .min ... .max)) + suffix)
+    }
+
+    var fileLocation = makePath()
+    for _ in 0 ..< 63 {
+        if exists(atPath: fileLocation) {
+            fileLocation = makePath()
+        } else {
+            break
+        }
+    }
+
+    return fileLocation
+}
 // TODO: Missing docstring.
-public func makeTemporaryFile(withSuffix suffix: String? = nil, prefix: String? = nil, inDirectory directory: String? = nil) throws -> String {
-    fatalError("unimplemented")
+public func makeTemporaryFile(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) throws -> String {
+    let fileLocation = try _makeTemporaryPath()
+    try writeString(atPath: fileLocation, "")
+    return fileLocation
 }
 
-// TODO: Missing implementation.
-// TODO: Missing unit tests.
 // TODO: Missing docstring.
-public func makeTemporaryDirectory(withSuffix suffix: String? = nil, prefix: String? = nil, inDirectory directory: String? = nil) throws -> String {
-    fatalError("unimplemented")
+public func makeTemporaryDirectory(suffix: String? = nil, prefix: String? = nil, inDirectory directory: String? = nil) throws -> String {
+    let fileLocation = try _makeTemporaryPath()
+    try makeDirectory(atPath: fileLocation)
+    return fileLocation
 }
 
 extension PathRepresentable {
@@ -112,21 +130,19 @@ extension PathRepresentable {
         return Pathos.searchForDefaultTemporaryDirectory()
     }
 
-    // TODO: Missing unit tests.
     // TODO: Missing docstring.
-    public static func makeTemporaryFile(withSuffix suffix: String? = nil, prefix: String? = nil, inDirectory directory: String? = nil) -> Self? {
+    public static func makeTemporaryFile(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) -> Self? {
         do {
-            return Self(string: try Pathos.makeTemporaryFile(withSuffix:prefix:inDirectory:)(suffix, prefix, directory))
+            return Self(string: try Pathos.makeTemporaryFile(suffix:prefix:inDirectory:)(suffix, prefix, directory))
         } catch {
             return nil
         }
     }
 
-    // TODO: Missing unit tests.
     // TODO: Missing docstring.
-    public static func makeTemporaryDirectory(withSuffix suffix: String? = nil, prefix: String? = nil, inDirectory directory: String? = nil) -> Self? {
+    public static func makeTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) -> Self? {
         do {
-            return Self(string: try Pathos.makeTemporaryDirectory(withSuffix:prefix:inDirectory:)(suffix, prefix, directory))
+            return Self(string: try Pathos.makeTemporaryDirectory(suffix:prefix:inDirectory:)(suffix, prefix, directory))
         } catch {
             return nil
         }
