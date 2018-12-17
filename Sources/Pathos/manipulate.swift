@@ -120,15 +120,4 @@ extension PathRepresentable {
         }
         return true
     }
-
-    // TODO: missing unit tests.
-    // TODO: missing docstring.
-    public func touch(permission: FilePermission = 0x0666, existOkay: Bool = true) -> Bool {
-        do {
-            try touchPath(_:permission:existOkay:)(self.pathString, permission, existOkay)
-        } catch {
-            return false
-        }
-        return true
-    }
 }
