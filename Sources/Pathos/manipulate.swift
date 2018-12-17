@@ -77,13 +77,6 @@ public func movePath(_ path: String, to other: String) throws {
     }
 }
 
-// TODO: missing implementation.
-// TODO: missing unit tests.
-// TODO: missing docstring.
-public func touchPath(_ path: String, permission: FilePermission = 0x0666, existOkay: Bool = true) throws {
-    fatalError("unimplemented")
-}
-
 extension PathRepresentable {
     /// Create a directory at `pathString`.
     ///
