@@ -68,8 +68,8 @@ public func makeAbsolute(path: String) throws -> String {
 /// Return the canonical path of the specified filename, eliminating any symbolic links encountered in the
 /// path (if they are supported by the operating system).
 ///
-/// - parameter ofPath: the path to look up for.
-public func realPath(ofPath: String) throws -> String {
+/// - Parameter path: the path to look up for.
+public func realPath(ofPath path: String) throws -> String {
     fatalError("unimplemented")
 }
 
