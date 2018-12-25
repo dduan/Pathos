@@ -54,12 +54,13 @@ public func expandUserDirectory(inPath path: String) throws -> String {
 public func makeAbsolute(path: String) throws -> String {
     var path = path
     if !isAbsolute(path: path) {
-        let buffer = getcwd(nil, 0)
-        if buffer == nil {
+        guard let buffer = getcwd(nil, 0) else {
             throw SystemError(posixErrorCode: errno)
         }
-        path = join(path: String(cString: buffer!), withPaths: path)
+
+        path = join(path: String(cString: buffer), withPaths: path)
     }
+
     return normalize(path: path)
 }
 
