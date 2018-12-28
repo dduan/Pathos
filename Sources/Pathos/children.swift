@@ -17,7 +17,7 @@ private func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Boo
     let count = Int(scandir(path, bufferPointer, nil, alphasort))
 #endif
     if count == -1 {
-        throw SystemError.init(posixErrorCode: errno)
+        throw SystemError(posixErrorCode: errno)
     }
 
     result.reserveCapacity(count)
