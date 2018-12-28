@@ -138,21 +138,46 @@ public func directory(ofPath path: String) -> String {
     return head
 }
 
-// TODO: Missing implementation.
 func _commonPath(amongPaths paths: [String]) -> String {
-    fatalError("unimplemented")
+    assert(paths.count > 1)
+    let firstPathIsAbsolute = isAbsolute(path: paths[0])
+    if !(paths[1...].allSatisfy { isAbsolute(path: $0) == firstPathIsAbsolute }) {
+        return ""
+    }
+
+    let splitPaths = paths
+        .map { $0.split(separator: kSeparatorCharacter) }
+        .map { $0.filter { $0 != kCurrentDirectory } }
+        .sorted { $0.count < $1.count }
+    let shortest = splitPaths.first!
+    let longest = splitPaths.last!
+
+    var progress: Int?
+    for (i, segment) in shortest.enumerated() {
+        if longest[i] == segment {
+            progress = i
+        } else {
+            break
+        }
+    }
+
+    let joint = progress.map { longest[0...$0].joined(separator: kSeparator) }
+    let prefix = paths[0].hasPrefix(kSeparator) ? "/" : ""
+    return prefix + (joint ?? "")
 }
 
-// TODO: Missing unit tests.
-// TODO: Missing docstring.
-public func commonPath(amongPaths paths: String...) -> String {
-    return _commonPath(amongPaths: paths)
-}
-
-// TODO: Missing unit tests.
-// TODO: Missing docstring.
-public func commonPath(betweenPath path: String, andPath otherPath: String) -> String {
-    return _commonPath(amongPaths: [path, otherPath])
+/// Return the longest common sub-path of each given argument. Segment of sub-path is the smallest unit of
+/// commonality, meaning this is different from common string prefix: `/usr/lib` and `/usr/lib64`'s common
+/// path is `/usr` as opposed to `/usr/lib`.
+///
+/// - Parameters:
+///   - firstPath: First path. This parameter ensures there are at least 2 paths to compare.
+///   - secondPath: Second path. This parameter ensures there are at least 2 paths to compare.
+///   - otherPaths: Other, optional paths.
+/// - Returns: The longest common sub-path of each given argument.
+public func commonPath(amongPaths firstPath: String, _ secondPath: String, _ otherPaths: String...) -> String
+{
+    return _commonPath(amongPaths: [firstPath, secondPath] + otherPaths)
 }
 
 // TODO: Missing implementation.
@@ -217,11 +242,18 @@ extension PathRepresentable {
         return fileExtension(ofPath:)(self.pathString)
     }
 
-    // TODO: Missing unit tests.
-    // TODO: Missing docstring.
-    public func commonPath(with paths: [PathRepresentable]) -> Self {
-        let pathStrings = [self.pathString] + paths.map { $0.pathString }
-        return Self(string: _commonPath(amongPaths:)(pathStrings))
+    /// Return the longest common sub-path among self and each given argument. Segment of sub-path is the
+    /// smallest unit of commonality, meaning this is different from common string prefix: `/usr/lib` and
+    /// `/usr/lib64`'s common path is `/usr` as opposed to `/usr/lib`.
+    ///
+    /// - Parameters:
+    ///   - second: The second path to compare. This ensures there's at least a path to compare to.
+    ///   - others: Other, optional paths.
+    /// - Returns: The longest common sub-path of each given argument.
+    public func commonPath(with second: PathRepresentable, _ others: PathRepresentable...) -> Self? {
+        let pathStrings = [self.pathString, second.pathString] + others.map { $0.pathString }
+        let commonString = _commonPath(amongPaths:)(pathStrings)
+        return commonString.isEmpty ? nil : Self(string: commonString)
     }
 
     // TODO: Missing unit tests.

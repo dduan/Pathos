@@ -42,6 +42,33 @@ extension ChildrenTests {
     ]
 }
 
+extension CommonPathTests {
+    static let __allTests = [
+        ("testAbsolutePath", testAbsolutePath),
+        ("testAbsolutePathWithCurrentDirectorySegements", testAbsolutePathWithCurrentDirectorySegements),
+        ("testAbsolutePathWithMixedExtraStartingSeparator", testAbsolutePathWithMixedExtraStartingSeparator),
+        ("testAbsolutePathWithMixedTrailingSeparator", testAbsolutePathWithMixedTrailingSeparator),
+        ("testAbsolutePathWithoutTrailingSeparator", testAbsolutePathWithoutTrailingSeparator),
+        ("testAbsolutePathWithTrailingSeparator", testAbsolutePathWithTrailingSeparator),
+        ("testMixedTrailingSeparatorInMixedOrders", testMixedTrailingSeparatorInMixedOrders),
+        ("testMixingAbsoluteAndRelativePaths", testMixingAbsoluteAndRelativePaths),
+        ("testPathRepresentableAbsolutePath", testPathRepresentableAbsolutePath),
+        ("testPathRepresentableAbsolutePathWithCurrentDirectorySegements", testPathRepresentableAbsolutePathWithCurrentDirectorySegements),
+        ("testPathRepresentableAbsolutePathWithMixedExtraStartingSeparator", testPathRepresentableAbsolutePathWithMixedExtraStartingSeparator),
+        ("testPathRepresentableAbsolutePathWithMixedTrailingSeparator", testPathRepresentableAbsolutePathWithMixedTrailingSeparator),
+        ("testPathRepresentableAbsolutePathWithoutTrailingSeparator", testPathRepresentableAbsolutePathWithoutTrailingSeparator),
+        ("testPathRepresentableAbsolutePathWithTrailingSeparator", testPathRepresentableAbsolutePathWithTrailingSeparator),
+        ("testPathRepresentableMixedTrailingSeparatorInMixedOrders", testPathRepresentableMixedTrailingSeparatorInMixedOrders),
+        ("testPathRepresentableMixingAbsoluteAndRelativePaths", testPathRepresentableMixingAbsoluteAndRelativePaths),
+        ("testPathRepresentableRelativePath", testPathRepresentableRelativePath),
+        ("testPathRepresentableRelativePathWithExtraSeparators", testPathRepresentableRelativePathWithExtraSeparators),
+        ("testPathRepresentableSegmentWithCommonPrefix", testPathRepresentableSegmentWithCommonPrefix),
+        ("testRelativePath", testRelativePath),
+        ("testRelativePathWithExtraSeparators", testRelativePathWithExtraSeparators),
+        ("testSegmentWithCommonPrefix", testSegmentWithCommonPrefix),
+    ]
+}
+
 extension DefaultTemporaryDirectorySearchingTests {
     static let __allTests = [
         ("testPathRepresentableSearchingTemporaryDirectoryFromTEMP", testPathRepresentableSearchingTemporaryDirectoryFromTEMP),
@@ -428,6 +455,7 @@ extension TimeTests {
 public func __allTests() -> [XCTestCaseEntry] {
     return [
         testCase(ChildrenTests.__allTests),
+        testCase(CommonPathTests.__allTests),
         testCase(DefaultTemporaryDirectorySearchingTests.__allTests),
         testCase(DefaultTemporaryDirectoryTests.__allTests),
         testCase(ExistsTests.__allTests),
