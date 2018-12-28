@@ -14,17 +14,12 @@ private func _glob(_ pattern: String) -> [String] {
         globfree(&gt)
     }
 
-    let flags = GLOB_TILDE | GLOB_BRACE | GLOB_MARK
-    if systemGlob(pattern, flags, nil, &gt) == 0 {
-        #if os(Linux)
-        let matchCount = Int(gt.gl_pathc)
-        #else
-        let matchCount = Int(gt.gl_matchc)
-        #endif
-        return (0 ..< matchCount).compactMap { String(validatingUTF8: gt.gl_pathv[$0]!) }
+    let flags =  GLOB_TILDE | GLOB_BRACE
+    guard systemGlob(pattern, flags, nil, &gt) == 0 else {
+        return []
     }
 
-    return []
+    return (0 ..< Int(gt.gl_pathc)).compactMap { String(validatingUTF8: gt.gl_pathv[$0]!) }
 }
 
 // TODO: Missing docstring.
