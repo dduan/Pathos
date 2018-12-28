@@ -40,6 +40,9 @@ private func _glob(_ pattern: String) -> [String] {
 ///   - perform an `fnmatch` (per POSIX/libc) with the *full* pattern with each child, return the ones that
 ///     match.
 ///
+/// ² due to libc implementation, there are subtle behaviral differences among platforms. Specifically, broken
+/// symbolic links will not be found on Linux, but it will be included on Darwin.
+///
 /// - Parameter pattern: a pattern according to rules of Unix shells.
 /// - Returns: paths in current working directory that matches the pattern.
 /// - Throws: A `SystemError` if any sub-directory cannot be opened or there's not enough memory to hold all
@@ -76,6 +79,9 @@ extension PathRepresentable {
     ///   - for each result from previous glob that is a directory, recursively find all of its children.
     ///   - perform an `fnmatch` (per POSIX/libc) with the *full* pattern with each child, return the ones that
     ///     match.
+    ///
+    /// ² due to libc implementation, there are subtle behaviral differences among platforms. Specifically, broken
+    /// symbolic links will not be found on Linux, but it will be included on Darwin.
     ///
     /// - Parameter pattern: a pattern according to rules of Unix shells.
     /// - Returns: paths in current working directory that matches the pattern.
