@@ -32,6 +32,7 @@ extension ChildrenTests {
         ("testPathRepresentableUnknownTypeFilesRecursiveInPath", testPathRepresentableUnknownTypeFilesRecursiveInPath),
         ("testPipesInPath", testPipesInPath),
         ("testPipesRecursiveInPath", testPipesRecursiveInPath),
+        ("testRelativeDirectoryRecursive", testRelativeDirectoryRecursive),
         ("testSocketsInPath", testSocketsInPath),
         ("testSocketsRecursiveInPath", testSocketsRecursiveInPath),
         ("testSymbolicLinksInPath", testSymbolicLinksInPath),
