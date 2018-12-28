@@ -129,6 +129,17 @@ extension FileExtensionTests {
     ]
 }
 
+extension GlobTests {
+    static let __allTests = [
+        ("testGlobWithoutResult", testGlobWithoutResult),
+        ("testGlobWithRecursivePattern", testGlobWithRecursivePattern),
+        ("testGlobWithResult", testGlobWithResult),
+        ("testPathRepresentableGlobWithoutResult", testPathRepresentableGlobWithoutResult),
+        ("testPathRepresentableGlobWithRecursivePattern", testPathRepresentableGlobWithRecursivePattern),
+        ("testPathRepresentableGlobWithResult", testPathRepresentableGlobWithResult),
+    ]
+}
+
 extension IsAbsoluteTests {
     static let __allTests = [
         ("testIsAbsolutePath", testIsAbsolutePath),
@@ -422,6 +433,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(ExistsTests.__allTests),
         testCase(ExpandUserDirectoryTests.__allTests),
         testCase(FileExtensionTests.__allTests),
+        testCase(GlobTests.__allTests),
         testCase(IsAbsoluteTests.__allTests),
         testCase(IsBlockDeviceTests.__allTests),
         testCase(IsCharacterDeviceTests.__allTests),
