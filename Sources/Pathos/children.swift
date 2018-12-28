@@ -4,7 +4,7 @@ import Glibc
 import Darwin
 #endif
 
-func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = false) throws -> [String] {
+private func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = false) throws -> [String] {
     var result = [String]()
     let bufferPointer = UnsafeMutablePointer<UnsafeMutablePointer<UnsafeMutablePointer<dirent>?>?>.allocate(capacity: 0)
 #if os(Linux)
@@ -17,7 +17,7 @@ func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = fals
     let count = Int(scandir(path, bufferPointer, nil, alphasort))
 #endif
     if count == -1 {
-        throw SystemError.unknown(errorNumber: errno)
+        throw SystemError(posixErrorCode: errno)
     }
 
     result.reserveCapacity(count)
@@ -55,7 +55,7 @@ func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = fals
         }
 
         if recursive && pathType == DT_DIR {
-            result += try _typedChildrenInPath(join(path: path, withPaths: fullName), type, recursive: true)
+            result += try _typedChildrenInPath(fullName, type, recursive: true)
         }
     }
 
@@ -63,7 +63,7 @@ func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Bool = fals
     return result
 }
 
-func _children<T>(_ path: T, recursive: Bool, block: (String, Bool) throws -> [String]) -> [T] where T: PathRepresentable {
+private func _children<T>(_ path: T, recursive: Bool, block: (String, Bool) throws -> [String]) -> [T] where T: PathRepresentable {
     let result = try? block(path.pathString, recursive)
         .map(T.init(string:))
     return result ?? []

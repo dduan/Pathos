@@ -2,6 +2,28 @@ import Pathos
 import XCTest
 
 final class ChildrenTests: XCTestCase {
+    var originalWorkingDirectory: String = (try? getCurrentWorkingDirectory()) ?? "."
+    override func setUp() {
+        _ = try? setCurrentWorkingDirectory(to: self.fixtureRoot)
+    }
+
+    override func tearDown() {
+        _ = try? setCurrentWorkingDirectory(to: self.originalWorkingDirectory)
+    }
+
+    func testRelativeDirectoryRecursive() throws {
+        // regression test!
+        XCTAssertEqual(
+            Set(try children(inPath: FixturePath.directoryThatExists.rawValue, recursive: true)),
+            Set([
+                FixturePath.fileInDirectory.rawValue,
+                FixturePath.symbolInDirectory.rawValue,
+                FixturePath.directoryInDirectory.rawValue,
+                FixturePath.fileInNestedDirectory.rawValue,
+            ])
+        )
+    }
+
     func testChildrenInPath() throws {
         XCTAssertEqual(
             Set(try children(inPath: self.fixtureRoot)),
