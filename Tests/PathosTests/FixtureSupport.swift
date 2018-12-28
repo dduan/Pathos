@@ -12,6 +12,7 @@ enum FixturePath: String {
     case symbolInDirectory = "world/world_symbol"
     case directoryInDirectory = "world/world_world"
     case fileInNestedDirectory = "world/world_world/hello"
+    case fileInNestedDirectoryViaDirectorySymbol = "world_symbol/world_world/hello"
 }
 
 extension XCTestCase {
@@ -90,4 +91,8 @@ extension XCTestCase {
             self.fixture(.symbolInDirectory),
         ]
     }
+}
+
+func makeTemporaryRoot() -> String {
+    return (try? makeTemporaryDirectory()) ?? "/tmp"
 }
