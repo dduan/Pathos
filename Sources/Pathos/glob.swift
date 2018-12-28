@@ -19,7 +19,10 @@ private func _glob(_ pattern: String) -> [String] {
         return []
     }
 
-    return (0 ..< Int(gt.gl_pathc)).compactMap { String(validatingUTF8: gt.gl_pathv[$0]!) }
+    let count = Int(gt.gl_pathc)
+    return (0 ..< count)
+        .compactMap { gt.gl_pathv[$0] }
+        .compactMap { String(validatingUTF8: $0) }
 }
 
 // TODO: Missing docstring.
