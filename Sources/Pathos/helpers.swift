@@ -23,3 +23,15 @@ extension BidirectionalCollection where Element: Equatable {
         return start
     }
 }
+
+extension Collection where Element: Equatable {
+    func commonPrefix(with other: Self) -> Self.SubSequence {
+        let limit = Swift.min(self.endIndex, other.endIndex)
+        var end = self.startIndex
+        while end < limit && self[end] == other[end] {
+            end = self.index(after: end)
+        }
+
+        return self[self.startIndex ..< end]
+    }
+}
