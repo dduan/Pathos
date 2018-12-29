@@ -8,19 +8,18 @@ func _stripFromRight(_ path: String, _ c: Character) -> String {
         ?? ""
 }
 
-extension BidirectionalCollection where SubSequence: Equatable, Element: Equatable {
+extension BidirectionalCollection where Element: Equatable {
     func firstIndex(of other: Self) -> Index? {
-        guard let start = other.first.flatMap(self.firstIndex(of:)),
-            self[start...].count >= other.count else
+        guard
+            let start = other.first.flatMap(self.firstIndex(of:)),
+            self[start...].count >= other.count,
+            case let end = self.index(start, offsetBy: other.count),
+            zip(self[start ..< end], other).allSatisfy(==)
+        else
         {
             return nil
         }
 
-        let end = self.index(start, offsetBy: other.count)
-        if self[start ..< end] == other[...] {
-            return start
-        }
-
-        return nil
+        return start
     }
 }
