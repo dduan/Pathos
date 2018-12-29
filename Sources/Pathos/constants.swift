@@ -4,7 +4,7 @@ import Glibc
 import Darwin
 #endif
 
-public let kCurrentDirectory = "."
+let kCurrentDirectory = "."
 let kParentDirectory = ".."
 let kSeparatorCharacter: Character = "/"
 let kSeparator = String(kSeparatorCharacter)

@@ -64,6 +64,17 @@ public func makeAbsolute(path: String) throws -> String {
     return normalize(path: path)
 }
 
+/// Return the relative location of `path` from the current working directory.
+/// Example: starting from `/Users/dan`, the relative path of `/` would be `../..`.
+/// - Parameter path: the path the result is relative to.
+/// - Returns: a relative file path to current working directory.
+/// - Throws: system error resulted from trying to access current working directory.
+public func relativePath(ofPath path: String) throws -> String {
+    let startingPath = try makeAbsolute(path: kCurrentDirectory)
+    let path = try makeAbsolute(path: path)
+    return relativePath(ofPath: path, startingFromPath: startingPath)
+}
+
 // TODO: Missing implementation.
 // TODO: Missing unit tests.
 /// Return the canonical path of the specified filename, eliminating any symbolic links encountered in the
@@ -83,6 +94,15 @@ extension PathRepresentable {
     // TODO: missing docstring.
     public func makeAbsolute() -> Self {
         return (try? makeAbsolute(path:)(self.pathString)).map(Self.init) ?? self
+    }
+
+    /// Return the relative location from the current working directory. The original value is returned if an
+    /// error was encountered while trying to access current working directory.
+    /// Example: starting from `/Users/dan`, the relative path of `/` would be `../..`.
+    /// - Returns: a relative file path to current working directory.
+    public func relativePath() -> Self {
+        let result = try? relativePath(ofPath:)(self.pathString)
+        return result.map(Self.init(string:)) ?? self
     }
 
     // TODO: Missing unit tests.

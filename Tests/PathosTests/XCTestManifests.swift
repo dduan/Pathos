@@ -376,6 +376,36 @@ extension ReadingTests {
     ]
 }
 
+extension RelativePathInferringCurrentDirectoryTests {
+    static let __allTests = [
+        ("testAbsoluteChild", testAbsoluteChild),
+        ("testAbsoluteParent", testAbsoluteParent),
+        ("testPathRepresentableAbsoluteChild", testPathRepresentableAbsoluteChild),
+        ("testPathRepresentableAbsoluteParent", testPathRepresentableAbsoluteParent),
+        ("testPathRepresentableRelativeChild", testPathRepresentableRelativeChild),
+        ("testPathRepresentableRelativeParent", testPathRepresentableRelativeParent),
+        ("testRelativeChild", testRelativeChild),
+        ("testRelativeParent", testRelativeParent),
+    ]
+}
+
+extension RelativePathTests {
+    static let __allTests = [
+        ("testAbsoluteChild", testAbsoluteChild),
+        ("testAbsoluteParent", testAbsoluteParent),
+        ("testAbsoluteRoot", testAbsoluteRoot),
+        ("testAbsoluteSiblings", testAbsoluteSiblings),
+        ("testPathRepresentableAbsoluteChild", testPathRepresentableAbsoluteChild),
+        ("testPathRepresentableAbsoluteParent", testPathRepresentableAbsoluteParent),
+        ("testPathRepresentableAbsoluteRoot", testPathRepresentableAbsoluteRoot),
+        ("testPathRepresentableAbsoluteSiblings", testPathRepresentableAbsoluteSiblings),
+        ("testPathRepresentableRelativeParentSibling", testPathRepresentableRelativeParentSibling),
+        ("testPathRepresentableRelativeSelf", testPathRepresentableRelativeSelf),
+        ("testRelativeParentSibling", testRelativeParentSibling),
+        ("testRelativeSelf", testRelativeSelf),
+    ]
+}
+
 extension SameFileTests {
     static let __allTests = [
         ("testNotSameFile", testNotSameFile),
@@ -478,6 +508,8 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(PathDirectoryTests.__allTests),
         testCase(PathTests.__allTests),
         testCase(ReadingTests.__allTests),
+        testCase(RelativePathInferringCurrentDirectoryTests.__allTests),
+        testCase(RelativePathTests.__allTests),
         testCase(SameFileTests.__allTests),
         testCase(SizeTests.__allTests),
         testCase(SplitExtensionTests.__allTests),

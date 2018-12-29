@@ -180,17 +180,27 @@ public func commonPath(amongPaths firstPath: String, _ secondPath: String, _ oth
     return _commonPath(amongPaths: [firstPath, secondPath] + otherPaths)
 }
 
-// TODO: Missing implementation.
-// TODO: Missing unit tests.
-/// Return a relative file path to `path` either from the current directory or from an optional starting
-/// directory. This is a path computation: the filesystem is not accessed to confirm the existence or
-/// nature of `path` or `startingPath`.
+/// Return relative location of `path` from from an another location.
+/// This is a pure computation: the filesystem is not accessed to confirm the existence or nature of `path` or
+/// `startingPath`.
+/// Example: starting from `/Users/dan`, the relative path of `/` would be `../..`.
+///
 /// - Parameters:
 ///   - path: the path the result is relative to.
 ///   - startingPath: starting path of the relativity.
 /// - Returns: a relative file path to `path`.
-public func relativePath(toPath path: String, startingFromPath startingPath: String = kCurrentDirectory) -> String {
-    fatalError("unimplemented")
+public func relativePath(ofPath path: String, startingFromPath startingPath: String) -> String {
+    let startSegments = startingPath.split(separator: kSeparatorCharacter)
+    let pathSegements = path.split(separator: kSeparatorCharacter)
+    let sharedCount = pathSegements.commonPrefix(with: startSegments).count
+    let parentSegments = Array(repeating: kParentDirectory, count: max(startSegments.count - sharedCount, 0))
+    let remainingSegments = pathSegements[sharedCount...].map(String.init)
+    let allSegments = parentSegments + remainingSegments
+    if allSegments.isEmpty {
+        return kCurrentDirectory
+    } else {
+        return allSegments.joined(separator: kSeparator)
+    }
 }
 
 extension PathRepresentable {
@@ -256,11 +266,15 @@ extension PathRepresentable {
         return commonString.isEmpty ? nil : Self(string: commonString)
     }
 
-    // TODO: Missing unit tests.
-    // TODO: Missing docstring.
-    // TODO: Missing default value for `startingPath`.
-    public func relative(to other: PathRepresentable, startingFrom startingPath: PathRepresentable) -> Self {
-        return Self(string: relativePath(toPath:startingFromPath:)(other.pathString, startingPath.pathString))
+    /// Return a relative path to `startingPath`.
+    /// This is a pure computation: the filesystem is not accessed to confirm the existence or nature of `path` or
+    /// `startingPath`.
+    /// Example: starting from `/Users/dan`, the relative path of `/` would be `../..`.
+    ///
+    /// - Parameter startingPath: starting path of the relativity.
+    /// - Returns: a relative file path to `path`.
+    public func relativePath(to startingPath: PathRepresentable) -> Self {
+        return Self(string: relativePath(ofPath:startingFromPath:)(self.pathString, startingPath.pathString))
     }
 }
 
