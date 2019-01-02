@@ -75,14 +75,78 @@ public func relativePath(ofPath path: String) throws -> String {
     return relativePath(ofPath: path, startingFromPath: startingPath)
 }
 
-// TODO: Missing implementation.
-// TODO: Missing unit tests.
 /// Return the canonical path of the specified filename, eliminating any symbolic links encountered in the
-/// path (if they are supported by the operating system).
+/// path (if they are supported by the operating system). The result is alway an absolute path.
 ///
 /// - Parameter path: the path to look up for.
+/// - Throws: System error encountered while reading link content or converting relative path to absolute
+///           path.
 public func realPath(ofPath path: String) throws -> String {
-    fatalError("unimplemented")
+    func _join(_ path: String, _ rest: String, seen: inout [String: String]) throws -> (String, Bool) {
+        var path = path
+        var rest = rest
+        if isAbsolute(path: rest) {
+            rest = String(rest.dropFirst())
+            path = kSeparator
+        }
+
+        while !rest.isEmpty {
+            var parts = rest.split(separator: kSeparatorCharacter, maxSplits: 1,
+                                   omittingEmptySubsequences: false)
+            if parts.count < 2 {
+                parts.append("")
+            }
+
+            var name = String(parts[0])
+            if name.isEmpty || name == kCurrentDirectory {
+                continue
+            }
+
+            rest = String(parts[1])
+
+            if name == kParentDirectory {
+                if !path.isEmpty {
+                    (path, name) = split(path: path)
+                    if name == kParentDirectory {
+                        path = join(paths: path, kParentDirectory, kParentDirectory)
+                    }
+                } else {
+                    path = join(paths: path, name)
+                }
+
+                continue
+            }
+
+            let newPath = join(paths: path, name)
+            if !((try? isSymbolicLink(atPath: newPath)) ?? false) {
+                path = newPath
+                continue
+            }
+
+            if let cachedPath = seen[newPath] {
+                path = cachedPath
+                if !path.isEmpty {
+                    continue
+                }
+                return try (join(paths: path, readSymbolicLink(atPath: newPath)), false)
+            }
+
+            seen[newPath] = ""
+            var success = false
+            (path, success) = try _join(path, readSymbolicLink(atPath: newPath), seen: &seen)
+            if !success {
+                return (join(paths: path, rest), false)
+            }
+
+            seen[newPath] = path
+        }
+
+        return (path, true)
+    }
+
+    var cache = [String: String]()
+    let (result, _) = try _join("", path, seen: &cache)
+    return try makeAbsolute(path: result)
 }
 
 extension PathRepresentable {
@@ -105,9 +169,9 @@ extension PathRepresentable {
         return result.map(Self.init(string:)) ?? self
     }
 
-    // TODO: Missing unit tests.
     /// Return the canonical path of self, eliminating any symbolic links encountered in the
-    /// path (if they are supported by the operating system).
+    /// path (if they are supported by the operating system). The original path is returned if any error
+    /// occurs (see documentation for `realPath(ofPath:)` for errors that could occur).
     public var realPath: Self {
         return (try? realPath(ofPath:)(self.pathString)).map(Self.init) ?? self
     }

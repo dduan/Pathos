@@ -376,6 +376,21 @@ extension ReadingTests {
     ]
 }
 
+extension RealPathTests {
+    static let __allTests = [
+        ("testEmpty", testEmpty),
+        ("testIntermediatSymbols", testIntermediatSymbols),
+        ("testPathRepresentableEmpty", testPathRepresentableEmpty),
+        ("testPathRepresentableIntermediatSymbols", testPathRepresentableIntermediatSymbols),
+        ("testPathRepresentablePathThatDoesNotExist", testPathRepresentablePathThatDoesNotExist),
+        ("testPathRepresentableRoot", testPathRepresentableRoot),
+        ("testPathRepresentableTerminalSymbolIsResolved", testPathRepresentableTerminalSymbolIsResolved),
+        ("testPathThatDoesNotExist", testPathThatDoesNotExist),
+        ("testRoot", testRoot),
+        ("testTerminalSymbolIsResolved", testTerminalSymbolIsResolved),
+    ]
+}
+
 extension RelativePathInferringCurrentDirectoryTests {
     static let __allTests = [
         ("testAbsoluteChild", testAbsoluteChild),
@@ -508,6 +523,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(PathDirectoryTests.__allTests),
         testCase(PathTests.__allTests),
         testCase(ReadingTests.__allTests),
+        testCase(RealPathTests.__allTests),
         testCase(RelativePathInferringCurrentDirectoryTests.__allTests),
         testCase(RelativePathTests.__allTests),
         testCase(SameFileTests.__allTests),
