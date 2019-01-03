@@ -3,7 +3,7 @@ import XCTest
 
 final class MakeDirectoryTests: XCTestCase {
     private var randomTmpDirectoryPath: String {
-        return join(path: "/tmp", withPath: String(UInt64.random(in: .min ... .max)))
+        return join(paths: "/tmp", String(UInt64.random(in: .min ... .max)))
     }
 
     func testMakeDirectory() throws {
@@ -37,13 +37,13 @@ final class MakeDirectoryTests: XCTestCase {
     }
 
     func testMakeDirectoryWithNonExistParentShouldFail() {
-        let path = join(path: self.randomTmpDirectoryPath, withPath: "a/b/c")
+        let path = join(paths: self.randomTmpDirectoryPath, "a/b/c")
         XCTAssertThrowsError(try makeDirectory(atPath: path))
         XCTAssertFalse(exists(atPath: path))
     }
 
     func testMakeDirectoryWithCreateParent() throws {
-        let path = join(path: self.randomTmpDirectoryPath, withPath: "a/b/c")
+        let path = join(paths: self.randomTmpDirectoryPath, "a/b/c")
         try makeDirectory(atPath: path, createParents: true)
         XCTAssertTrue(try isDirectory(atPath: path))
         rmdir(path)
@@ -86,13 +86,13 @@ final class MakeDirectoryTests: XCTestCase {
     }
 
     func testPathRepresentableMakeDirectoryWithNonExistParentShouldFail() {
-        let path = join(path: self.randomTmpDirectoryPath, withPath: "a/b/c")
+        let path = join(paths: self.randomTmpDirectoryPath, "a/b/c")
         XCTAssertFalse(Path(string: path).makeDirectory())
         XCTAssertFalse(exists(atPath: path))
     }
 
     func testPathRepresentableMakeDirectoryWithCreateParent() {
-        let path = join(path: self.randomTmpDirectoryPath, withPath: "a/b/c")
+        let path = join(paths: self.randomTmpDirectoryPath, "a/b/c")
         XCTAssertTrue(Path(string: path).makeDirectory(createParents: true))
         XCTAssertTrue(try isDirectory(atPath: path))
         rmdir(path)

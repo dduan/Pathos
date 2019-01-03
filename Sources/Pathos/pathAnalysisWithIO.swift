@@ -58,7 +58,7 @@ public func makeAbsolute(path: String) throws -> String {
             throw SystemError(posixErrorCode: errno)
         }
 
-        path = join(path: String(cString: buffer), withPaths: path)
+        path = join(paths: String(cString: buffer), path)
     }
 
     return normalize(path: path)

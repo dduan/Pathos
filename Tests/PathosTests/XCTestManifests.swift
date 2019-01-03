@@ -302,7 +302,7 @@ extension JoinPathTests {
         ("testPathRepresentableMultipleJoining", testPathRepresentableMultipleJoining),
         ("testPathRepresentableMultipleJoiningWithTrailingSeparators", testPathRepresentableMultipleJoiningWithTrailingSeparators),
         ("testPathRepresentableSimpleSingleJoining", testPathRepresentableSimpleSingleJoining),
-        ("testSimpleSingleJoining", testSimpleSingleJoining),
+        ("testSimpleSingleJoinings", testSimpleSingleJoinings),
     ]
 }
 

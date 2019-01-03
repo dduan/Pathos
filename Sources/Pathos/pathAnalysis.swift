@@ -32,10 +32,9 @@ public func isAbsolute(path: String) -> Bool {
     return path.hasPrefix(kSeparator)
 }
 
-// TODO: missing docstring.
-public func join(path: String, withPaths otherPaths: [String]) -> String {
-    var result = path
-    for other in otherPaths {
+public func join(paths: [String]) -> String {
+    var result = ""
+    for other in paths {
         if other.hasPrefix(kSeparator) {
             result = other
         } else if result.isEmpty || result.hasSuffix(kSeparator) {
@@ -49,18 +48,8 @@ public func join(path: String, withPaths otherPaths: [String]) -> String {
 }
 
 // TODO: missing docstring.
-public func join(path: String, withPath otherPath: String) -> String {
-    return join(path: path, withPaths: [otherPath])
-}
-
-// TODO: missing docstring.
-public func join(path: String, withPaths otherPaths: String...) -> String {
-    return join(path: path, withPaths: otherPaths)
-}
-
-// TODO: missing docstring.
-public func join(paths path: String, _ otherPaths: String...) -> String {
-    return join(path: path, withPaths: otherPaths)
+public func join(paths firstPath: String, _ secondPath: String, _ otherPaths: String...) -> String {
+    return join(paths: [firstPath, secondPath] + otherPaths)
 }
 
 // TODO: missing docstring.
@@ -215,14 +204,14 @@ extension PathRepresentable {
     }
 
     // TODO: missing docstring.
-    public func join(with otherPaths: [PathRepresentable]) -> Self {
-        let newPathString = join(path:withPaths:)(self.pathString, otherPaths.map { $0.pathString })
-        return Self(string: newPathString)
+    public func join(with paths: [PathRepresentable]) -> Self {
+        return Self(string: join(paths:)([self.pathString] + paths.map { $0.pathString }))
     }
 
     // TODO: missing docstring.
-    public func join(with otherPaths: PathRepresentable...) -> Self {
-        return self.join(with: otherPaths)
+    public func join(with secondPath: PathRepresentable, _ otherPaths: PathRepresentable...) -> Self {
+        let pathStrings = [self.pathString, secondPath.pathString] + otherPaths.map { $0.pathString }
+        return Self(string: join(paths:)(pathStrings))
     }
 
     // TODO: missing docstring.

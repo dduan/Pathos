@@ -7,7 +7,7 @@ private let kTMP = "TMP"
 
 private func generateTmp() -> String {
     /// yup, these tests assumes `/tmp` exists and is read/writeable.
-    return join(path: "/tmp", withPath: String(UInt.random(in: .min ... .max)))
+    return join(paths: "/tmp", String(UInt.random(in: .min ... .max)))
 }
 
 final class DefaultTemporaryDirectorySearchingTests: XCTestCase {
