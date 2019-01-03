@@ -49,7 +49,7 @@ private func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Boo
         }
 #endif
 
-        let fullName = join(path: path, withPaths: name)
+        let fullName = join(paths: path, name)
         if type == nil || pathType == type {
             result.append(fullName)
         }

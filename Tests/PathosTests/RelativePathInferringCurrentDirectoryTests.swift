@@ -8,9 +8,9 @@ final class RelativePathInferringCurrentDirectoryTests: XCTestCase {
     override func setUp() {
         try! deletePath(self.testRoot)
         let newRoot = makeTemporaryRoot()
-        try! makeDirectory(atPath: join(path: newRoot, withPath: "a/b/c"), createParents: true)
-        try! setCurrentWorkingDirectory(to: join(path: newRoot, withPath: "a/b"))
-        self.testRoot = try! normalize(path: join(path: getCurrentWorkingDirectory(), withPath: "../../"))
+        try! makeDirectory(atPath: join(paths: newRoot, "a/b/c"), createParents: true)
+        try! setCurrentWorkingDirectory(to: join(paths: newRoot, "a/b"))
+        self.testRoot = try! normalize(path: join(paths: getCurrentWorkingDirectory(), "../../"))
     }
 
     override func tearDown() {
@@ -22,7 +22,7 @@ final class RelativePathInferringCurrentDirectoryTests: XCTestCase {
     }
 
     func testAbsoluteChild() throws {
-        let testPath = join(path: self.testRoot, withPath: "a/b/c")
+        let testPath = join(paths: self.testRoot, "a/b/c")
         XCTAssertEqual(try relativePath(ofPath: testPath), "c")
     }
 
@@ -39,7 +39,7 @@ final class RelativePathInferringCurrentDirectoryTests: XCTestCase {
     }
 
     func testPathRepresentableAbsoluteChild() throws {
-        let testPath = join(path: self.testRoot, withPath: "a/b/c")
+        let testPath = join(paths: self.testRoot, "a/b/c")
         XCTAssertEqual(Path(string: testPath).relativePath().pathString, "c")
     }
 

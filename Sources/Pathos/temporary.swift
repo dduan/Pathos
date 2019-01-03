@@ -72,7 +72,7 @@ func _makeTemporaryPath(suffix: String = "", prefix: String = "", inDirectory di
 {
     let location = directory ?? defaultTemporaryDirectory
     func makePath() -> String {
-        return join(path: location, withPath: prefix + String(Int64.random(in: .min ... .max)) + suffix)
+        return join(paths: location, prefix + String(Int64.random(in: .min ... .max)) + suffix)
     }
 
     var fileLocation = makePath()

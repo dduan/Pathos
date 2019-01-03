@@ -21,7 +21,7 @@ extension XCTestCase {
     }
 
     func fixture(_ path: FixturePath) -> String {
-        return join(path: self.fixtureRoot, withPath: path.rawValue)
+        return join(paths: self.fixtureRoot, path.rawValue)
     }
 
     func fixturePath(_ path: FixturePath) -> Path {
