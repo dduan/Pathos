@@ -1,8 +1,3 @@
-## ⚠️ Warning: In Development ⚠️
-
-This library is in pre-release status. Using it in production is probably not
-a great idea just yet.
-
 # Pathos
 
 A file management library for Swift.
