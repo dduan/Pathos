@@ -10,7 +10,7 @@ func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, creat
     if let permission = permission {
         fd = open(path, oflag, permission.rawValue)
     } else {
-        fd = open(path, oflag)
+        fd = open(path, oflag, kDefaultPermission.rawValue)
     }
     defer { close(fd) }
     if fd == -1 {
@@ -48,15 +48,14 @@ public func readString(atPath path: String) throws -> String {
     return String(cString: &content)
 }
 
-// TODO: missing unit tests.
 // TODO: missing docstring.
-public func writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws where Bytes: Collection, Bytes.Element == UInt8 {
-    let buffer = [UInt8](bytes)
+public func writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws where Bytes: Collection, Bytes.Element: BinaryInteger {
+    let buffer = bytes.map(UInt8.init(truncatingIfNeeded:))
     try _writeAtPath(path, bytes: buffer, byteCount: buffer.count, createIfNecessary: createIfNecessary, permission: permission)
 }
 
-// TODO: missing unit tests.
 // TODO: missing docstring.
+// TODO: `write(string:atPath...` might be better than `write(atPath:string...`
 public func writeString(atPath path: String, _ string: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws {
     try string.utf8CString.withUnsafeBytes { bytes in
         try _writeAtPath(path, bytes: bytes.baseAddress!, byteCount: bytes.count, createIfNecessary: createIfNecessary, permission: permission)
@@ -74,9 +73,9 @@ extension PathRepresentable {
         return (try? readString(atPath:)(self.pathString)) ?? ""
     }
 
-    // TODO: missing unit tests.
-    // TODO: missing docstring.
-    public func writeBytes<Bytes>(bytes: Bytes, createIfNecessary: Bool = true, permission: FilePermission? = nil) -> Bool where Bytes: Collection, Bytes.Element == UInt8 {
+    // TODO: missing docstring. Remember to note the byte truncating!
+    @discardableResult
+    public func writeBytes<Bytes>(bytes: Bytes, createIfNecessary: Bool = true, permission: FilePermission? = nil) -> Bool where Bytes: Collection, Bytes.Element: BinaryInteger {
         do {
             try writeBytes(atPath:_:createIfNecessary:permission:)(self.pathString, bytes, createIfNecessary, permission)
         } catch {
@@ -85,8 +84,8 @@ extension PathRepresentable {
         return true
     }
 
-    // TODO: missing unit tests.
     // TODO: missing docstring.
+    @discardableResult
     public func writeString(string: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) -> Bool {
         do {
             try writeString(atPath:_:createIfNecessary:permission:)(self.pathString, string, createIfNecessary, permission)
