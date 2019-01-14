@@ -16,6 +16,7 @@ enum FixturePath: String {
 }
 
 extension XCTestCase {
+    var defaultPermission: FilePermission { return [.ownerRead, .ownerWrite, .groupRead, .otherRead] }
     var fixtureRoot: String {
         return normalize(path: "\(#file)/../Fixtures")
     }

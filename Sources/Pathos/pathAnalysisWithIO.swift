@@ -51,6 +51,7 @@ public func expandUserDirectory(inPath path: String) throws -> String {
 }
 
 // TODO: missing docstring.
+// TODO: `makeAboslute` sounds like the path is being altered
 public func makeAbsolute(path: String) throws -> String {
     var path = path
     if !isAbsolute(path: path) {

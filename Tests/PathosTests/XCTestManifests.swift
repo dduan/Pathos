@@ -295,10 +295,12 @@ extension IsSymbolicLinkTests {
 
 extension JoinPathTests {
     static let __allTests = [
+        ("testJoiningNothing", testJoiningNothing),
         ("testJoiningWithAbsolutePath", testJoiningWithAbsolutePath),
         ("testMultipleJoining", testMultipleJoining),
         ("testMultipleJoiningWithTrailingSeparators", testMultipleJoiningWithTrailingSeparators),
         ("testPathRepresentableJoiningWithAbsolutePath", testPathRepresentableJoiningWithAbsolutePath),
+        ("testPathRepresentableJoiningWithNothing", testPathRepresentableJoiningWithNothing),
         ("testPathRepresentableMultipleJoining", testPathRepresentableMultipleJoining),
         ("testPathRepresentableMultipleJoiningWithTrailingSeparators", testPathRepresentableMultipleJoiningWithTrailingSeparators),
         ("testPathRepresentableSimpleSingleJoining", testPathRepresentableSimpleSingleJoining),
@@ -496,6 +498,23 @@ extension TimeTests {
     ]
 }
 
+extension WritingTests {
+    static let __allTests = [
+        ("testBytesToExistingFile", testBytesToExistingFile),
+        ("testBytesToNewFile", testBytesToNewFile),
+        ("testBytesToUnwantedNewFile", testBytesToUnwantedNewFile),
+        ("testPathRepresentableBytesToExistingFile", testPathRepresentableBytesToExistingFile),
+        ("testPathRepresentableBytesToNewFile", testPathRepresentableBytesToNewFile),
+        ("testPathRepresentableBytesToUnwantedNewFile", testPathRepresentableBytesToUnwantedNewFile),
+        ("testPathRepresentableStringToExistingFile", testPathRepresentableStringToExistingFile),
+        ("testPathRepresentableStringToNewFile", testPathRepresentableStringToNewFile),
+        ("testPathRepresentableStringToUnwantedNewFile", testPathRepresentableStringToUnwantedNewFile),
+        ("testStringToExistingFile", testStringToExistingFile),
+        ("testStringToNewFile", testStringToNewFile),
+        ("testStringToUnwantedNewFile", testStringToUnwantedNewFile),
+    ]
+}
+
 #if !os(macOS)
 public func __allTests() -> [XCTestCaseEntry] {
     return [
@@ -531,6 +550,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(SplitExtensionTests.__allTests),
         testCase(SplitPathTests.__allTests),
         testCase(TimeTests.__allTests),
+        testCase(WritingTests.__allTests),
     ]
 }
 #endif

@@ -8,7 +8,7 @@ let kCurrentDirectory = "."
 let kParentDirectory = ".."
 let kSeparatorCharacter: Character = "/"
 let kSeparator = String(kSeparatorCharacter)
-
+let kDefaultPermission: FilePermission = [.ownerRead, .ownerWrite, .groupRead, .otherRead]
 #if PATH_MAX
 let kMaxPathNameLength = Int(PATH_MAX)
 #else

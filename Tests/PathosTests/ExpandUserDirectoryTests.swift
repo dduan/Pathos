@@ -15,7 +15,7 @@ final class ExpandUserDirectoryTests: XCTestCase {
 
     override func tearDown() {
         if let home = self.originalHome {
-	    setenv("HOME", home, 1)
+            setenv("HOME", home, 1)
         }
     }
 
