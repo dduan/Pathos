@@ -332,6 +332,13 @@ extension MakeDirectoryTests {
     ]
 }
 
+extension MakeSymbolicLinkTests {
+    static let __allTests = [
+        ("testMakingSymbolicLink", testMakingSymbolicLink),
+        ("testPathRepresentableMakingSymbolicLink", testPathRepresentableMakingSymbolicLink),
+    ]
+}
+
 extension NormalizePathTests {
     static let __allTests = [
         ("testAssertEmptyPathBecomesCurrent", testAssertEmptyPathBecomesCurrent),
@@ -537,6 +544,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(JoinPathTests.__allTests),
         testCase(MakeAbsoluteTests.__allTests),
         testCase(MakeDirectoryTests.__allTests),
+        testCase(MakeSymbolicLinkTests.__allTests),
         testCase(NormalizePathTests.__allTests),
         testCase(PathBaseNameTests.__allTests),
         testCase(PathDirectoryTests.__allTests),

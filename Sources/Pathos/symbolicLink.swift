@@ -4,7 +4,6 @@ import Glibc
 import Darwin
 #endif
 
-// TODO: missing unit tests.
 // TODO: missing docstring.
 public func makeSymbolicLink(fromPath source: String, toPath destination: String) throws {
     if symlink(source, destination) != 0 {
@@ -25,7 +24,6 @@ public func readSymbolicLink(atPath path: String) throws -> String {
 }
 
 extension PathRepresentable {
-    // TODO: missing unit tests.
     // TODO: missing docstring.
     public func makeSymbolicLink(to destination: Self) -> Bool {
         do {
