@@ -3,7 +3,7 @@ import XCTest
 
 final class MakeSymbolicLinkTests: XCTestCase {
     var originalWorkingDirectory: String = (try? getCurrentWorkingDirectory()) ?? "."
-    var rootPath = makeTemporaryRoot()
+    var rootPath = ""
 
     override func setUp() {
         self.rootPath = makeTemporaryRoot()

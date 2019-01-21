@@ -4,10 +4,9 @@ import Glibc
 import Darwin
 #endif
 
-// TODO: missing unit tests.
 // TODO: missing docstring.
 public func copyFile(fromPath source: String, toPath destination: String, followSymbolicLink: Bool = true, chunkSize: Int = 1024 * 16) throws {
-    let sourceStatus = try _lstat(at: source)
+    var sourceStatus = try _lstat(at: source)
     let destinationStatus = try? _stat(at: destination)
     if _ifmt(sourceStatus) != S_IFREG && _ifmt(sourceStatus) != S_IFLNK {
         throw PathosError.copyingNeitherFileNorSymlink(path: source)
@@ -23,9 +22,14 @@ public func copyFile(fromPath source: String, toPath destination: String, follow
 
     // some question from Python's standard library: What about other special files? (sockets, devices...)
 
-    if !followSymbolicLink && _ifmt(sourceStatus) == S_IFLNK {
+    let isLink = _ifmt(sourceStatus) == S_IFLNK
+    if !followSymbolicLink && isLink {
         try makeSymbolicLink(fromPath: readSymbolicLink(atPath: source), toPath: destination)
         return
+    }
+
+    if isLink {
+        sourceStatus = try _stat(at: source)
     }
 
     let sourceFD = open(source, O_RDONLY)
@@ -58,7 +62,6 @@ public func copyFile(fromPath source: String, toPath destination: String, follow
 }
 
 extension PathRepresentable {
-    // TODO: missing unit tests.
     // TODO: missing docstring.
     public func copy(to destination: PathRepresentable, followSymbolicLink: Bool = true, chunkSize: Int = 1024 * 16) -> Bool {
         do {
