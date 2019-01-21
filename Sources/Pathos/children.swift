@@ -79,7 +79,6 @@ private func _children<T>(_ path: T, recursive: Bool, block: (String, Bool) thro
 /// - Returns: path to directories and files of all types in `path`.
 /// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
 ///           data for the results.
-
 public func children(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, nil, recursive: recursive)
 }
