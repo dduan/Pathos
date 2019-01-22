@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class TemporaryFileTests: XCTest {
+final class TemporaryFileTests: XCTestCase {
     func testCreatingTemporaryDirectory() throws {
         let path = try makeTemporaryFile()
         XCTAssert(try isFile(atPath: path))
@@ -12,7 +12,7 @@ final class TemporaryFileTests: XCTest {
         let kPrefix = "kPrefix"
         let path = try makeTemporaryFile(prefix: kPrefix)
         XCTAssert(try isFile(atPath: path))
-        XCTAssert(path.hasPrefix(kPrefix))
+        XCTAssert(split(path: path).1.hasPrefix(kPrefix))
         try deletePath(path)
     }
 
@@ -25,7 +25,7 @@ final class TemporaryFileTests: XCTest {
     }
 
     func testCreatingTemporaryDirectoryInDirectory() throws {
-        let directory = try makeTemporaryFile()
+        let directory = try makeTemporaryDirectory()
         let path = try makeTemporaryFile(inDirectory: directory)
         XCTAssert(try isFile(atPath: path))
         XCTAssert(path.hasPrefix(directory))
@@ -51,7 +51,7 @@ final class TemporaryFileTests: XCTest {
         }
 
         XCTAssert(path.isFile)
-        XCTAssert(path.pathString.hasPrefix(kPrefix))
+        XCTAssert(path.split().1.pathString.hasPrefix(kPrefix))
         _ = path.delete()
     }
 
@@ -68,7 +68,7 @@ final class TemporaryFileTests: XCTest {
     }
 
     func testPathRepresentableCreatingTemporaryDirectoryInDirectory() throws {
-        let directory = try makeTemporaryFile()
+        let directory = try makeTemporaryDirectory()
         guard let path = Path.makeTemporaryFile(inDirectory: directory) else {
             XCTFail("temprorary directory creation failed")
             return

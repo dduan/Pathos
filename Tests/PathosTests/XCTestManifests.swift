@@ -544,6 +544,19 @@ extension TemporaryDirectoryTests {
     ]
 }
 
+extension TemporaryFileTests {
+    static let __allTests = [
+        ("testCreatingTemporaryDirectory", testCreatingTemporaryDirectory),
+        ("testCreatingTemporaryDirectoryInDirectory", testCreatingTemporaryDirectoryInDirectory),
+        ("testCreatingTemporaryDirectoryWithPrefix", testCreatingTemporaryDirectoryWithPrefix),
+        ("testCreatingTemporaryDirectoryWithSuffix", testCreatingTemporaryDirectoryWithSuffix),
+        ("testPathRepresentableCreatingTemporaryDirectory", testPathRepresentableCreatingTemporaryDirectory),
+        ("testPathRepresentableCreatingTemporaryDirectoryInDirectory", testPathRepresentableCreatingTemporaryDirectoryInDirectory),
+        ("testPathRepresentableCreatingTemporaryDirectoryWithPrefix", testPathRepresentableCreatingTemporaryDirectoryWithPrefix),
+        ("testPathRepresentableCreatingTemporaryDirectoryWithSuffix", testPathRepresentableCreatingTemporaryDirectoryWithSuffix),
+    ]
+}
+
 extension TimeTests {
     static let __allTests = [
         ("testAccessTime", testAccessTime),
@@ -611,6 +624,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(SplitExtensionTests.__allTests),
         testCase(SplitPathTests.__allTests),
         testCase(TemporaryDirectoryTests.__allTests),
+        testCase(TemporaryFileTests.__allTests),
         testCase(TimeTests.__allTests),
         testCase(WritingTests.__allTests),
     ]

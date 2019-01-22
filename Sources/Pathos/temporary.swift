@@ -88,7 +88,7 @@ func _makeTemporaryPath(suffix: String = "", prefix: String = "", inDirectory di
 }
 // TODO: Missing docstring.
 public func makeTemporaryFile(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) throws -> String {
-    let fileLocation = try _makeTemporaryPath()
+    let fileLocation = try _makeTemporaryPath(suffix: suffix, prefix: prefix, inDirectory: directory)
     try writeString(atPath: fileLocation, "")
     return fileLocation
 }
