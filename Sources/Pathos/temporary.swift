@@ -115,13 +115,13 @@ extension PathRepresentable {
     ///
     /// Pathos calls `searchForDefaultTemporaryDirectory` to calculate this value. The result of this search is
     /// cached. You can use the same method to reset this value if needed.
-    public static var defaultTemporaryDirectory: String {
+    public static var defaultTemporaryDirectory: Self {
         get {
-            return Pathos.defaultTemporaryDirectory
+            return Self(string: Pathos.defaultTemporaryDirectory)
         }
 
         set {
-            Pathos.defaultTemporaryDirectory = newValue
+            Pathos.defaultTemporaryDirectory = newValue.pathString
         }
     }
 
