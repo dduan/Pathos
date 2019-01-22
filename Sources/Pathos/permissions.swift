@@ -4,8 +4,12 @@ import Glibc
 import Darwin
 #endif
 
-// TODO: missing unit tests.
-// TODO: missing docstring.
+// TODO: "for" or "at" path?
+/// Get file permissions for path. This function will *not* follow symbolic links, it'll return permissions
+/// for the link itself instead.
+///
+/// - Parameter path: The path for which the permissions are get.
+/// - Throws: System error encountered while attempting to read permissions at the path.
 public func permissions(forPath path: String) throws -> FilePermission {
     var status = stat()
     if lstat(path, &status) != 0 {
@@ -14,23 +18,67 @@ public func permissions(forPath path: String) throws -> FilePermission {
     return FilePermission(rawValue: status.st_mode)
 }
 
-// TODO: missing unit tests.
-// TODO: missing docstring.
-public func setPermissions(forPath path: String, _ permission: FilePermission) throws {
-    if chmod(path, permission.rawValue) != 0 {
+/// Set additional permissions to existing permission at file or directories at path. This function will *not*
+/// follow symbolic links, it'll change permissions for the link itself instead.
+///
+/// - Parameters:
+///   - permissions: Additional permissions to be set at the path.
+///   - path: The path whose permission is being changed.
+/// - Throws: System error encountered while attempting to read or change permissions at the path.
+public func add(_ permissions: FilePermission, toPath path: String) throws {
+    let existingPermission = try permissions(forPath:)(path)
+    try set(existingPermission.union(permissions), forPath: path)
+}
+
+// TODO: "to" or "from" or "at" path?
+/// Remove permissions from existing permission at a path. This function will *not* follow symbolic links,
+/// it'll change permissions for the link itself instead.
+///
+/// - Parameters:
+///   - permissions: Permissions to be removed at the path.
+///   - path: The path whose permission is being changed.
+/// - Throws: System error encountered while attempting to read or change permissions at the path.
+public func remove(_ permissions: FilePermission, toPath path: String) throws {
+    let existingPermission = try permissions(forPath:)(path)
+    try set(existingPermission.subtracting(permissions), forPath: path)
+}
+
+/// Set permissions at a path. This function will *not* follow symbolic links, it'll change permissions for
+/// the link itself instead.
+///
+/// - Parameters:
+///   - permissions: Permissions to be set at the path.
+///   - path: The path whose permission is being changed.
+/// - Throws: System error encountered while attempting to read or change permissions at the path.
+public func set(_ permissions: FilePermission, forPath path: String) throws {
+    if chmod(path, permissions.rawValue) != 0 {
         throw SystemError(posixErrorCode: errno)
     }
 }
 
 extension PathRepresentable {
-    // TODO: missing unit tests.
-    // TODO: missing docstring.
+    /// The permissions at this path.
+    ///
+    /// If an error is encountered while reading the permission, `FilePermission(rawValue: 0)` will be the
+    /// value. If an error is encountered while setting the permission, this will be a no-op.
     public var permissions: FilePermission {
         get {
             return (try? permissions(forPath:)(self.pathString)) ?? FilePermission(rawValue: 0)
         }
         set {
-            try? setPermissions(forPath:_:)(self.pathString, newValue)
+            try? set(_:forPath:)(newValue, self.pathString)
         }
+    }
+
+    /// Set additional permissions to existing permission at this path. If this is an symbolic link, the
+    /// permission for the link itself will be changed.
+    public func add(_ permissions: FilePermission) {
+        try? add(_:toPath:)(permissions, self.pathString)
+    }
+
+    /// Remove permissions from existing permission at a path. If this is an symbolic link, the
+    /// permission for the link itself will be changed.
+    public func remove(_ permissions: FilePermission) {
+        try? remove(_:toPath:)(permissions, self.pathString)
     }
 }

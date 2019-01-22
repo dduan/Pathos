@@ -383,6 +383,19 @@ extension PathTests {
     ]
 }
 
+extension PermissionsTests {
+    static let __allTests = [
+        ("testAddingPermissions", testAddingPermissions),
+        ("testPathRepresentableAddingPermissions", testPathRepresentableAddingPermissions),
+        ("testPathRepresentableReadingDefaultPermissions", testPathRepresentableReadingDefaultPermissions),
+        ("testPathRepresentableRemovingPermissions", testPathRepresentableRemovingPermissions),
+        ("testPathRepresentableSettingPermissions", testPathRepresentableSettingPermissions),
+        ("testReadingDefaultPermissions", testReadingDefaultPermissions),
+        ("testRemovingPermissions", testRemovingPermissions),
+        ("testSettingPermissions", testSettingPermissions),
+    ]
+}
+
 extension ReadingTests {
     static let __allTests = [
         ("testPathRepresentableReadBytes", testPathRepresentableReadBytes),
@@ -563,6 +576,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(PathBaseNameTests.__allTests),
         testCase(PathDirectoryTests.__allTests),
         testCase(PathTests.__allTests),
+        testCase(PermissionsTests.__allTests),
         testCase(ReadingTests.__allTests),
         testCase(RealPathTests.__allTests),
         testCase(RelativePathInferringCurrentDirectoryTests.__allTests),
