@@ -8,6 +8,7 @@ test-all: test test-carthage
 
 update-linux-test-manifest:
 	@rm Tests/PathosTests/XCTestManifests.swift
+	@touch Tests/PathosTests/XCTestManifests.swift
 	@swift test --generate-linuxmain
 
 test: clean
