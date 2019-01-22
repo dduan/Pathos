@@ -186,7 +186,6 @@ extension PathRepresentable {
         return (try? isSocket(atPath:)(self.pathString)) ?? false
     }
 
-
     /// Return `true` if path refers to an existing path or an open file descriptor. Returns `false` for
     /// broken symbolic links. On some platforms, this function may return `false` if permission is not
     /// granted to execute `stat` on the requested file, even if the path physically exists.
