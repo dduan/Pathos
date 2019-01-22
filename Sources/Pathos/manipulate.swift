@@ -4,6 +4,7 @@ import Glibc
 import Darwin
 #endif
 
+// TODO: "Okay" or "Ok"? Or some less controversial verbiage?
 /// Create directory at given path.
 ///
 /// - Parameters:
@@ -85,6 +86,7 @@ public func movePath(_ source: String, toPath destination: String) throws {
 }
 
 extension PathRepresentable {
+    // TODO: "Okay" or "Ok"? Or some less controversial verbiage?
     /// Create a directory at `pathString`.
     ///
     /// - Parameters:

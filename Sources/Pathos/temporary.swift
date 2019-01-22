@@ -100,6 +100,7 @@ public func makeTemporaryDirectory(suffix: String? = nil, prefix: String? = nil,
     return fileLocation
 }
 
+// TODO: Missing docstring.
 public func withTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil, performAction closure: @escaping (String) throws -> Void) throws {
     let temporaryDirectory = try makeTemporaryDirectory(suffix: suffix, prefix: prefix, inDirectory: directory)
     try withWorkingDirectory(beingPath: temporaryDirectory) {
@@ -157,6 +158,7 @@ extension PathRepresentable {
         }
     }
 
+    // TODO: Missing docstring.
     public static func withTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: Self? = nil, performAction closure: @escaping (Self) throws -> Void) {
         guard let temporaryDirectory = self.makeTemporaryDirectory(suffix: suffix, prefix: prefix, inDirectory: directory) else
         {
