@@ -8,11 +8,11 @@ final class WritingTests: XCTestCase {
     override func setUp() {
         try? deletePath(self.rootPath, recursive: true)
         self.rootPath = makeTemporaryRoot()
-        try? setCurrentWorkingDirectory(to: self.rootPath)
+        try? setCurrentWorkingDirectory(toPath: self.rootPath)
     }
 
     override func tearDown() {
-        try? setCurrentWorkingDirectory(to: self.originalWorkingDirectory)
+        try? setCurrentWorkingDirectory(toPath: self.originalWorkingDirectory)
     }
 
     func testStringToNewFile() throws {

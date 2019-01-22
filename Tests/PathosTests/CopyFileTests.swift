@@ -7,11 +7,11 @@ final class CopyFileTests: XCTestCase {
 
     override func setUp() {
         self.rootPath = makeTemporaryRoot()
-        try? setCurrentWorkingDirectory(to: self.rootPath)
+        try? setCurrentWorkingDirectory(toPath: self.rootPath)
     }
 
     override func tearDown() {
-        try? setCurrentWorkingDirectory(to: self.originalWorkingDirectory)
+        try? setCurrentWorkingDirectory(toPath: self.originalWorkingDirectory)
         try? deletePath(self.rootPath, recursive: true)
     }
 
