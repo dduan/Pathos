@@ -541,6 +541,8 @@ extension TemporaryDirectoryTests {
         ("testPathRepresentableCreatingTemporaryDirectoryInDirectory", testPathRepresentableCreatingTemporaryDirectoryInDirectory),
         ("testPathRepresentableCreatingTemporaryDirectoryWithPrefix", testPathRepresentableCreatingTemporaryDirectoryWithPrefix),
         ("testPathRepresentableCreatingTemporaryDirectoryWithSuffix", testPathRepresentableCreatingTemporaryDirectoryWithSuffix),
+        ("testPathRepresentableTemporaryDirectoryClosure", testPathRepresentableTemporaryDirectoryClosure),
+        ("testTemporaryDirectoryClosure", testTemporaryDirectoryClosure),
     ]
 }
 
