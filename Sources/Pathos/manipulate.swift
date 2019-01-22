@@ -69,10 +69,17 @@ public func deletePath(_ path: String, recursive: Bool = false) throws {
     }
 }
 
-// TODO: missing unit tests.
-// TODO: missing docstring.
-public func movePath(_ path: String, to other: String) throws {
-    if rename(path, other) != 0 {
+/// Move the file or directory from path to a new location. If new path exists, it is first removed. Both path
+/// must be of the same file type (directories, or non-directories) and must reside on the same file system.
+/// If the final component of old is a symbolic link, the symbolic link is renamed, not the file or directory
+/// to which it points.
+/// - Parameters:
+///   - source: The original location.
+///   - destination: The new location.
+/// - Throws: System error. This could be caused by lack of permissions in either path, paths having different
+///           file types; attempting to move `.` or `..`, etc.
+public func movePath(_ source: String, toPath destination: String) throws {
+    if rename(source, destination) != 0 {
         throw SystemError(posixErrorCode: errno)
     }
 }
@@ -110,11 +117,16 @@ extension PathRepresentable {
         return true
     }
 
-    // TODO: missing unit tests.
-    // TODO: missing docstring.
+    /// Move the file or directory to a new location. If new path exists, it is first removed. Both path
+    /// must be of the same file type (directories, or non-directories) and must reside on the same file
+    /// system. If the final component of old is a symbolic link, the symbolic link is renamed, not the file
+    /// or directory to which it points.
+    /// - Parameter destination: The new location.
+    /// - Throws: System error. This could be caused by lack of permissions in either path, paths having
+    ///           different file types; attempting to move `.` or `..`, etc.
     public func move(to destination: Self) -> Bool {
         do {
-            try movePath(_:to:)(self.pathString, destination.pathString)
+            try movePath(_:toPath:)(self.pathString, destination.pathString)
         } catch {
             return false
         }

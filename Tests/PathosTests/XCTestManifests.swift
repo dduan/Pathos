@@ -363,6 +363,21 @@ extension MakeSymbolicLinkTests {
     ]
 }
 
+extension MoveTests {
+    static let __allTests = [
+        ("testDirectory", testDirectory),
+        ("testMixingTypes", testMixingTypes),
+        ("testOverridingExistingDirectory", testOverridingExistingDirectory),
+        ("testOverridingExistingFile", testOverridingExistingFile),
+        ("testPathRepresentableDirectory", testPathRepresentableDirectory),
+        ("testPathRepresentableMixingTypes", testPathRepresentableMixingTypes),
+        ("testPathRepresentableOverridingExistingDirectory", testPathRepresentableOverridingExistingDirectory),
+        ("testPathRepresentableOverridingExistingFile", testPathRepresentableOverridingExistingFile),
+        ("testPathRepresentableSingleFile", testPathRepresentableSingleFile),
+        ("testSingleFile", testSingleFile),
+    ]
+}
+
 extension NormalizePathTests {
     static let __allTests = [
         ("testAssertEmptyPathBecomesCurrent", testAssertEmptyPathBecomesCurrent),
@@ -612,6 +627,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(MakeAbsoluteTests.__allTests),
         testCase(MakeDirectoryTests.__allTests),
         testCase(MakeSymbolicLinkTests.__allTests),
+        testCase(MoveTests.__allTests),
         testCase(NormalizePathTests.__allTests),
         testCase(PathBaseNameTests.__allTests),
         testCase(PathDirectoryTests.__allTests),

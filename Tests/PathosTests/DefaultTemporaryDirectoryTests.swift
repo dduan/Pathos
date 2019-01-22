@@ -9,8 +9,8 @@ final class DefaultTemporaryDirectoryTests: XCTestCase {
     }
 
     func testPathRepresentableDefaultsTemporaryDirectory() throws {
-        XCTAssertTrue(exists(atPath: Path.defaultTemporaryDirectory))
-        let permissions = try Pathos.permissions(forPath: Path.defaultTemporaryDirectory)
+        XCTAssertTrue(Path.defaultTemporaryDirectory.exists())
+        let permissions = Path.defaultTemporaryDirectory.permissions
         XCTAssertTrue(permissions.contains([.ownerRead, .ownerWrite]))
     }
 }
