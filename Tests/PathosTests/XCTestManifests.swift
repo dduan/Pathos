@@ -87,7 +87,9 @@ extension CurrentWorkingDirectoryTests {
         ("testGetting", testGetting),
         ("testPathRepresentableGetting", testPathRepresentableGetting),
         ("testPathRepresentableSetting", testPathRepresentableSetting),
+        ("testPathRepresentableWorkingDirectoryBlock", testPathRepresentableWorkingDirectoryBlock),
         ("testSetting", testSetting),
+        ("testWorkingDirectoryBlock", testWorkingDirectoryBlock),
     ]
 }
 

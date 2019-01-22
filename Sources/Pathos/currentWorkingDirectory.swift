@@ -28,6 +28,24 @@ public func setCurrentWorkingDirectory(toPath path: String) throws {
     }
 }
 
+/// Execute a closure with the current working direcotry being the specified path. Restore the current working
+/// directory when the execution is finished.
+///
+/// The closure is guaranteed to be invoked synchronously.
+///
+/// - Parameters:
+///   - path: The path that would be the current working directory.
+///   - closure: The closure that will be called with `path` being the working directory.
+/// - Throws: Errors encountered setting or reading working directories.
+public func withWorkingDirectory(beingPath path: String, performAction closure: @escaping () throws -> Void) throws {
+    let originalDirectory = try getCurrentWorkingDirectory()
+    defer {
+        try? setCurrentWorkingDirectory(toPath: originalDirectory)
+    }
+    try setCurrentWorkingDirectory(toPath: path)
+    try closure()
+}
+
 extension PathRepresentable {
     /// The current working directory.
     ///
@@ -44,5 +62,14 @@ extension PathRepresentable {
             try? setCurrentWorkingDirectory(toPath:)(newValue.pathString)
         }
     }
-}
 
+    /// Execute a closure with this path being the working directory. Restore the original working direcotry
+    /// afterwards.
+    ///
+    /// The closure is guaranteed to be invoked synchronously.
+    ///
+    /// - Parameter closure: The closure to be called with this path being the working directory.
+    public func asCurrentWorkingDirectory(performAction closure: @escaping () throws -> Void) {
+        try? withWorkingDirectory(beingPath: self.pathString, performAction: closure)
+    }
+}
