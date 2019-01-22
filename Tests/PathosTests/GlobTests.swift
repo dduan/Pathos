@@ -4,11 +4,11 @@ import XCTest
 final class GlobTests: XCTestCase {
     var originalWorkingDirectory: String = (try? getCurrentWorkingDirectory()) ?? "."
     override func setUp() {
-        _ = try? setCurrentWorkingDirectory(to: self.fixtureRoot)
+        _ = try? setCurrentWorkingDirectory(toPath: self.fixtureRoot)
     }
 
     override func tearDown() {
-        _ = try? setCurrentWorkingDirectory(to: self.originalWorkingDirectory)
+        _ = try? setCurrentWorkingDirectory(toPath: self.originalWorkingDirectory)
     }
 
     func testGlobWithResult() throws {
