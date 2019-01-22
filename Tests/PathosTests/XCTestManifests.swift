@@ -82,6 +82,15 @@ extension CopyFileTests {
     ]
 }
 
+extension CurrentWorkingDirectoryTests {
+    static let __allTests = [
+        ("testGetting", testGetting),
+        ("testPathRepresentableGetting", testPathRepresentableGetting),
+        ("testPathRepresentableSetting", testPathRepresentableSetting),
+        ("testSetting", testSetting),
+    ]
+}
+
 extension DefaultTemporaryDirectorySearchingTests {
     static let __allTests = [
         ("testPathRepresentableSearchingTemporaryDirectoryFromTEMP", testPathRepresentableSearchingTemporaryDirectoryFromTEMP),
@@ -554,6 +563,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(ChildrenTests.__allTests),
         testCase(CommonPathTests.__allTests),
         testCase(CopyFileTests.__allTests),
+        testCase(CurrentWorkingDirectoryTests.__allTests),
         testCase(DefaultTemporaryDirectorySearchingTests.__allTests),
         testCase(DefaultTemporaryDirectoryTests.__allTests),
         testCase(ExistsTests.__allTests),
