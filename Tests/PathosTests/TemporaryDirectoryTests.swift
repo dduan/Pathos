@@ -33,6 +33,21 @@ final class TemporaryDirectoryTests: XCTestCase {
         try deletePath(directory)
     }
 
+    func testTemporaryDirectoryClosure() throws {
+        let startingDirectory = try getCurrentWorkingDirectory()
+        var directory: String?
+        var directoryExisted = false
+        try withTemporaryDirectory() { temporaryDirectory in
+            directory = temporaryDirectory
+            directoryExisted = exists(atPath: temporaryDirectory)
+        }
+
+        XCTAssertEqual(try getCurrentWorkingDirectory(), startingDirectory)
+        XCTAssertNotEqual(directory, startingDirectory)
+        XCTAssertTrue(directoryExisted)
+        XCTAssertFalse(directory.map { exists(atPath: $0) } ?? true)
+    }
+
     func testPathRepresentableCreatingTemporaryDirectory() {
         guard let path = Path.makeTemporaryDirectory() else {
             XCTFail("temprorary directory creation failed")
@@ -78,5 +93,21 @@ final class TemporaryDirectoryTests: XCTestCase {
         XCTAssert(path.pathString.hasPrefix(directory))
         _ = path.delete()
         try deletePath(directory)
+    }
+
+    func testPathRepresentableTemporaryDirectoryClosure() throws {
+        let startingDirectory = Path.currentWorkingDirectory
+        var directory: Path?
+        var directoryExisted = false
+
+        Path.withTemporaryDirectory() { temporaryDirectory in
+            directory = temporaryDirectory
+            directoryExisted = temporaryDirectory.exists()
+        }
+
+        XCTAssertEqual(Path.currentWorkingDirectory.pathString, startingDirectory.pathString)
+        XCTAssertNotEqual(directory?.pathString, startingDirectory.pathString)
+        XCTAssertTrue(directoryExisted)
+        XCTAssert(directory?.exists() == false)
     }
 }

@@ -100,6 +100,15 @@ public func makeTemporaryDirectory(suffix: String? = nil, prefix: String? = nil,
     return fileLocation
 }
 
+public func withTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil, performAction closure: @escaping (String) throws -> Void) throws {
+    let temporaryDirectory = try makeTemporaryDirectory(suffix: suffix, prefix: prefix, inDirectory: directory)
+    try withWorkingDirectory(beingPath: temporaryDirectory) {
+        try closure(temporaryDirectory)
+    }
+
+    try deletePath(temporaryDirectory, recursive: true)
+}
+
 extension PathRepresentable {
     /// The name of the directory used for temporary files. This defines the default value for the `directory`
     /// argument to all functions involving a temporary path.
@@ -146,5 +155,18 @@ extension PathRepresentable {
         } catch {
             return nil
         }
+    }
+
+    public static func withTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: Self? = nil, performAction closure: @escaping (Self) throws -> Void) {
+        guard let temporaryDirectory = self.makeTemporaryDirectory(suffix: suffix, prefix: prefix, inDirectory: directory) else
+        {
+            return
+        }
+
+        let originalDirectory = self.currentWorkingDirectory
+        self.currentWorkingDirectory = temporaryDirectory
+        try? closure(temporaryDirectory)
+        self.currentWorkingDirectory = originalDirectory
+        _ = temporaryDirectory.delete(recursive: true)
     }
 }
