@@ -95,7 +95,7 @@ public func makeTemporaryFile(suffix: String = "", prefix: String = "", inDirect
 
 // TODO: Missing docstring.
 public func makeTemporaryDirectory(suffix: String? = nil, prefix: String? = nil, inDirectory directory: String? = nil) throws -> String {
-    let fileLocation = try _makeTemporaryPath()
+    let fileLocation = try _makeTemporaryPath(suffix: suffix ?? "", prefix: prefix ?? "", inDirectory: directory)
     try makeDirectory(atPath: fileLocation)
     return fileLocation
 }
@@ -140,9 +140,9 @@ extension PathRepresentable {
     }
 
     // TODO: Missing docstring.
-    public static func makeTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) -> Self? {
+    public static func makeTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: Self? = nil) -> Self? {
         do {
-            return Self(string: try Pathos.makeTemporaryDirectory(suffix:prefix:inDirectory:)(suffix, prefix, directory))
+            return Self(string: try Pathos.makeTemporaryDirectory(suffix:prefix:inDirectory:)(suffix, prefix, directory?.pathString))
         } catch {
             return nil
         }

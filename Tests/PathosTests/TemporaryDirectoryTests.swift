@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class TemporaryDirectoryTests: XCTest {
+final class TemporaryDirectoryTests: XCTestCase {
     func testCreatingTemporaryDirectory() throws {
         let path = try makeTemporaryDirectory()
         XCTAssert(try isDirectory(atPath: path))
@@ -11,24 +11,24 @@ final class TemporaryDirectoryTests: XCTest {
     func testCreatingTemporaryDirectoryWithPrefix() throws {
         let kPrefix = "kPrefix"
         let path = try makeTemporaryDirectory(prefix: kPrefix)
-        XCTAssert(try isDirectory(atPath: path))
-        XCTAssert(path.hasPrefix(kPrefix))
+        XCTAssertTrue(try isDirectory(atPath: path))
+        XCTAssertTrue(split(path: path).1.hasPrefix(kPrefix), path)
         try deletePath(path)
     }
 
     func testCreatingTemporaryDirectoryWithSuffix() throws {
         let kSuffix = "kSuffix"
         let path = try makeTemporaryDirectory(suffix: kSuffix)
-        XCTAssert(try isDirectory(atPath: path))
-        XCTAssert(path.hasSuffix(kSuffix))
+        XCTAssertTrue(try isDirectory(atPath: path))
+        XCTAssertTrue(split(path: path).1.hasSuffix(kSuffix))
         try deletePath(path)
     }
 
     func testCreatingTemporaryDirectoryInDirectory() throws {
         let directory = try makeTemporaryDirectory()
         let path = try makeTemporaryDirectory(inDirectory: directory)
-        XCTAssert(try isDirectory(atPath: path))
-        XCTAssert(path.hasPrefix(directory))
+        XCTAssertTrue(try isDirectory(atPath: path))
+        XCTAssertTrue(path.hasPrefix(directory))
         try deletePath(path)
         try deletePath(directory)
     }
@@ -51,7 +51,7 @@ final class TemporaryDirectoryTests: XCTest {
         }
 
         XCTAssert(path.isDirectory)
-        XCTAssert(path.pathString.hasPrefix(kPrefix))
+        XCTAssert(path.split().1.pathString.hasPrefix(kPrefix))
         _ = path.delete()
     }
 
@@ -63,13 +63,13 @@ final class TemporaryDirectoryTests: XCTest {
         }
 
         XCTAssert(path.isDirectory)
-        XCTAssert(path.pathString.hasSuffix(kSuffix))
+        XCTAssert(path.split().1.pathString.hasSuffix(kSuffix))
         _ = path.delete()
     }
 
     func testPathRepresentableCreatingTemporaryDirectoryInDirectory() throws {
         let directory = try makeTemporaryDirectory()
-        guard let path = Path.makeTemporaryDirectory(inDirectory: directory) else {
+        guard let path = Path.makeTemporaryDirectory(inDirectory: Path(string: directory)) else {
             XCTFail("temprorary directory creation failed")
             return
         }
