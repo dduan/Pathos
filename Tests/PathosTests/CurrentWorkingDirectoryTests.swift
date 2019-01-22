@@ -19,13 +19,10 @@ final class CurrentWorkingDirectoryTests: XCTestCase {
     func testWorkingDirectoryBlock() throws {
         let original = try getCurrentWorkingDirectory()
         let temporary = try realPath(ofPath: makeTemporaryDirectory())
-        let expectation = self.expectation(description: "closure is executed")
         try withWorkingDirectory(beingPath: temporary) {
-            expectation.fulfill()
             XCTAssertEqual(try getCurrentWorkingDirectory(), temporary)
         }
 
-        XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: 0.01), .completed)
         XCTAssertEqual(try getCurrentWorkingDirectory(), original)
     }
 
@@ -47,13 +44,10 @@ final class CurrentWorkingDirectoryTests: XCTestCase {
     func testPathRepresentableWorkingDirectoryBlock() throws {
         let original = Path.currentWorkingDirectory
         let temporary = Path.makeTemporaryDirectory()!.realPath
-        let expectation = self.expectation(description: "closure is executed")
         temporary.asCurrentWorkingDirectory {
-            expectation.fulfill()
             XCTAssertEqual(try getCurrentWorkingDirectory(), temporary.pathString)
         }
 
-        XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: 0.01), .completed)
         XCTAssertEqual(try getCurrentWorkingDirectory(), original.pathString)
     }
 }
