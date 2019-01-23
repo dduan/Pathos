@@ -19,7 +19,7 @@ final class WritingTests: XCTestCase {
         let expected = "Hello"
         let path = "world"
 
-        try writeString(atPath: path, expected)
+        try write(expected, atPath: path)
 
         let createdPermission = try permissions(forPath: path)
         XCTAssertEqual(createdPermission, self.defaultPermission)
@@ -29,9 +29,9 @@ final class WritingTests: XCTestCase {
     func testStringToExistingFile() throws {
         let expected = "Hello"
         let path = "world"
-        try writeString(atPath: path, "")
+        try write("", atPath: path)
 
-        try writeString(atPath: path, expected)
+        try write(expected, atPath: path)
 
         let createdPermission = try permissions(forPath: path)
         XCTAssertEqual(createdPermission, self.defaultPermission)
@@ -40,7 +40,7 @@ final class WritingTests: XCTestCase {
 
     func testStringToUnwantedNewFile() throws {
         let path = "world"
-        XCTAssertThrowsError(try writeString(atPath: path, "", createIfNecessary: false))
+        XCTAssertThrowsError(try write("", atPath: path, createIfNecessary: false))
     }
 
     func testBytesToNewFile() throws {
@@ -48,7 +48,7 @@ final class WritingTests: XCTestCase {
         let expectedBytes = expected.cString(using: String.defaultCStringEncoding)!
         let path = "world"
 
-        try writeBytes(atPath: path, expectedBytes)
+        try write(expectedBytes, atPath: path)
 
         let createdPermission = try permissions(forPath: path)
         XCTAssertEqual(createdPermission, self.defaultPermission)
@@ -60,9 +60,9 @@ final class WritingTests: XCTestCase {
         let expected = "Hello"
         let expectedBytes = expected.cString(using: String.defaultCStringEncoding)!
         let path = "world"
-        try writeString(atPath: path, "")
+        try write("", atPath: path)
 
-        try writeBytes(atPath: path, expectedBytes)
+        try write(expectedBytes, atPath: path)
 
         let createdPermission = try permissions(forPath: path)
         XCTAssertEqual(createdPermission, self.defaultPermission)
@@ -71,14 +71,14 @@ final class WritingTests: XCTestCase {
 
     func testBytesToUnwantedNewFile() throws {
         let path = "world"
-        XCTAssertThrowsError(try writeBytes(atPath: path, "".cString(using: .utf8)!, createIfNecessary: false))
+        XCTAssertThrowsError(try write("".cString(using: .utf8)!, atPath: path, createIfNecessary: false))
     }
 
     func testPathRepresentableStringToNewFile() throws {
         let expected = "Hello"
         let path = Path(string: "world")
 
-        XCTAssertTrue(path.writeString(string: expected))
+        XCTAssertTrue(path.write(expected))
 
         let createdPermission = try permissions(forPath: path.pathString)
         XCTAssertEqual(createdPermission, self.defaultPermission)
@@ -88,9 +88,9 @@ final class WritingTests: XCTestCase {
     func testPathRepresentableStringToExistingFile() throws {
         let expected = "Hello"
         let path = Path(string: "world")
-        try writeString(atPath: path.pathString, "")
+        try write(expected, atPath: path.pathString)
 
-        XCTAssertTrue(path.writeString(string: expected))
+        XCTAssertTrue(path.write(expected))
 
         let createdPermission = try permissions(forPath: path.pathString)
         XCTAssertEqual(createdPermission, self.defaultPermission)
@@ -99,7 +99,7 @@ final class WritingTests: XCTestCase {
 
     func testPathRepresentableStringToUnwantedNewFile() throws {
         let path = Path(string: "world")
-        XCTAssertFalse(path.writeString(string: "", createIfNecessary: false))
+        XCTAssertFalse(path.write("", createIfNecessary: false))
     }
 
     func testPathRepresentableBytesToNewFile() throws {
@@ -107,7 +107,7 @@ final class WritingTests: XCTestCase {
         let expectedBytes = expected.cString(using: String.defaultCStringEncoding)!
         let path = Path(string: "world")
 
-        XCTAssertTrue(path.writeBytes(bytes: expectedBytes))
+        XCTAssertTrue(path.write(expectedBytes))
 
         let createdPermission = try permissions(forPath: path.pathString)
         XCTAssertEqual(createdPermission, self.defaultPermission)
@@ -119,9 +119,9 @@ final class WritingTests: XCTestCase {
         let expected = "Hello"
         let expectedBytes = expected.cString(using: String.defaultCStringEncoding)!
         let path = Path(string: "world")
-        try writeString(atPath: path.pathString, "")
+        try write("", atPath: path.pathString)
 
-        XCTAssertTrue(path.writeBytes(bytes: expectedBytes))
+        XCTAssertTrue(path.write(expectedBytes))
 
         let createdPermission = try permissions(forPath: path.pathString)
         XCTAssertEqual(createdPermission, self.defaultPermission)
@@ -130,6 +130,6 @@ final class WritingTests: XCTestCase {
 
     func testPathRepresentableBytesToUnwantedNewFile() throws {
         let path = Path(string: "world")
-        XCTAssertFalse(path.writeBytes(bytes: "".cString(using: .utf8)!, createIfNecessary: false))
+        XCTAssertFalse(path.write("".cString(using: .utf8)!, createIfNecessary: false))
     }
 }
