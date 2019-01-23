@@ -28,9 +28,9 @@ final class MoveTests: XCTestCase {
         try withTemporaryDirectory { _ in
             let filePath = "test"
             let fileContent = "hello"
-            try writeString(atPath: filePath, fileContent)
+            try write(fileContent, atPath: filePath)
             let otherFilePath = "test2"
-            try writeString(atPath: otherFilePath, fileContent + " world")
+            try write(fileContent + " world", atPath: otherFilePath)
 
             try movePath(filePath, toPath: otherFilePath)
 
@@ -56,7 +56,7 @@ final class MoveTests: XCTestCase {
     func testMixingTypes() throws {
         try withTemporaryDirectory { _ in
             let filePath = "test"
-            try writeString(atPath: filePath, "")
+            try write("", atPath: filePath)
             let directoryPath = "test2"
             try makeDirectory(atPath: directoryPath)
             XCTAssertThrowsError(try movePath(filePath, toPath: directoryPath))
@@ -89,9 +89,9 @@ final class MoveTests: XCTestCase {
         try withTemporaryDirectory { _ in
             let filePath = Path(string: "test")
             let fileContent = "hello"
-            filePath.writeString(string: fileContent)
+            filePath.write(fileContent)
             let otherFilePath = Path(string: "test2")
-            otherFilePath.writeString(string: fileContent + " world")
+            otherFilePath.write(fileContent + " world")
 
             XCTAssertTrue(filePath.move(to: otherFilePath))
 
@@ -117,7 +117,7 @@ final class MoveTests: XCTestCase {
     func testPathRepresentableMixingTypes() throws {
         try withTemporaryDirectory { _ in
             let filePath = Path(string: "test")
-            XCTAssertTrue(filePath.writeString(string: ""))
+            XCTAssertTrue(filePath.write(""))
             let directoryPath = Path(string: "test2")
             XCTAssertTrue(directoryPath.makeDirectory())
             XCTAssertFalse(filePath.move(to: directoryPath))

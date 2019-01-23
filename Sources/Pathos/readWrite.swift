@@ -49,15 +49,13 @@ public func readString(atPath path: String) throws -> String {
 }
 
 // TODO: missing docstring.
-public func writeBytes<Bytes>(atPath path: String, _ bytes: Bytes, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws where Bytes: Collection, Bytes.Element: BinaryInteger {
+public func write<Bytes>(_ bytes: Bytes, atPath path: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws where Bytes: Collection, Bytes.Element: BinaryInteger {
     let buffer = bytes.map(UInt8.init(truncatingIfNeeded:))
     try _writeAtPath(path, bytes: buffer, byteCount: buffer.count, createIfNecessary: createIfNecessary, permission: permission)
 }
 
 // TODO: missing docstring.
-// TODO: `write(string:atPath...` might be better than `write(atPath:string...`
-//       or `writeString(_:atPath:)` matches with `readString(atPath:)`.
-public func writeString(atPath path: String, _ string: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws {
+public func write(_ string: String, atPath path: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws {
     try string.utf8CString.withUnsafeBytes { bytes in
         try _writeAtPath(path, bytes: bytes.baseAddress!, byteCount: bytes.count, createIfNecessary: createIfNecessary, permission: permission)
     }
@@ -75,11 +73,10 @@ extension PathRepresentable {
     }
 
     // TODO: missing docstring. Remember to note the byte truncating!
-    // TODO: `write(bytes:...`?
     @discardableResult
-    public func writeBytes<Bytes>(bytes: Bytes, createIfNecessary: Bool = true, permission: FilePermission? = nil) -> Bool where Bytes: Collection, Bytes.Element: BinaryInteger {
+    public func write<Bytes>(_ bytes: Bytes, createIfNecessary: Bool = true, permission: FilePermission? = nil) -> Bool where Bytes: Collection, Bytes.Element: BinaryInteger {
         do {
-            try writeBytes(atPath:_:createIfNecessary:permission:)(self.pathString, bytes, createIfNecessary, permission)
+            try write(_:atPath:createIfNecessary:permission:)(bytes, self.pathString, createIfNecessary, permission)
         } catch {
             return false
         }
@@ -87,11 +84,10 @@ extension PathRepresentable {
     }
 
     // TODO: missing docstring.
-    // TODO: `write(string:...`?
     @discardableResult
-    public func writeString(string: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) -> Bool {
+    public func write(_ string: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) -> Bool {
         do {
-            try writeString(atPath:_:createIfNecessary:permission:)(self.pathString, string, createIfNecessary, permission)
+            try write(_:atPath:createIfNecessary:permission:)(string, self.pathString, createIfNecessary, permission)
         } catch {
             return false
         }
