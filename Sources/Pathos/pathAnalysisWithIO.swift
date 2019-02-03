@@ -51,8 +51,7 @@ public func expandUserDirectory(inPath path: String) throws -> String {
 }
 
 // TODO: missing docstring.
-// TODO: `makeAboslute` sounds like the path is being altered
-public func makeAbsolute(path: String) throws -> String {
+public func absolutePath(ofPath path: String) throws -> String {
     var path = path
     if !isAbsolute(path: path) {
         guard let buffer = getcwd(nil, 0) else {
@@ -71,8 +70,8 @@ public func makeAbsolute(path: String) throws -> String {
 /// - Returns: a relative file path to current working directory.
 /// - Throws: system error resulted from trying to access current working directory.
 public func relativePath(ofPath path: String) throws -> String {
-    let startingPath = try makeAbsolute(path: kCurrentDirectory)
-    let path = try makeAbsolute(path: path)
+    let startingPath = try absolutePath(ofPath: kCurrentDirectory)
+    let path = try absolutePath(ofPath: path)
     return relativePath(ofPath: path, startingFromPath: startingPath)
 }
 
@@ -147,7 +146,7 @@ public func realPath(ofPath path: String) throws -> String {
 
     var cache = [String: String]()
     let (result, _) = try _join("", path, seen: &cache)
-    return try makeAbsolute(path: result)
+    return try absolutePath(ofPath: result)
 }
 
 extension PathRepresentable {
@@ -157,8 +156,8 @@ extension PathRepresentable {
     }
 
     // TODO: missing docstring.
-    public func makeAbsolute() -> Self {
-        return (try? makeAbsolute(path:)(self.pathString)).map(Self.init) ?? self
+    public func absolutePath() -> Self {
+        return (try? absolutePath(ofPath:)(self.pathString)).map(Self.init) ?? self
     }
 
     /// Return the relative location from the current working directory. The original value is returned if an

@@ -4,7 +4,7 @@ import XCTest
 final class MakeAbsoluteTests: XCTestCase {
     func testMakeAbsolutePath() {
         do {
-            let result = try makeAbsolute(path: "foo")
+            let result = try absolutePath(ofPath: "foo")
             XCTAssertTrue(result.hasPrefix("/"))
             XCTAssertTrue(result.hasSuffix("foo"))
         } catch let error {
@@ -13,7 +13,7 @@ final class MakeAbsoluteTests: XCTestCase {
     }
 
     func testPathRepresentableMakeAbsolutePath() {
-        let result = Path(string: "foo").makeAbsolute()
+        let result = Path(string: "foo").absolutePath()
         XCTAssertTrue(result.pathString.hasPrefix("/"))
         XCTAssertTrue(result.pathString.hasSuffix("foo"))
     }
