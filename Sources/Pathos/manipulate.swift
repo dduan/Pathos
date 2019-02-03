@@ -50,9 +50,8 @@ public func makeDirectory(atPath path: String, permission: FilePermission = 0o07
     try _makeDirectory()
 }
 
-// TODO: missing unit tests.
 // TODO: missing docstring.
-public func deletePath(_ path: String, recursive: Bool = false) throws {
+public func deletePath(_ path: String, recursive: Bool = true) throws {
     let status = try _stat(at: path)
     if _ifmt(status) == S_IFDIR {
         if recursive {
@@ -108,9 +107,8 @@ extension PathRepresentable {
         return true
     }
 
-    // TODO: missing unit tests.
     // TODO: missing docstring.
-    public func delete(recursive: Bool = false) -> Bool {
+    public func delete(recursive: Bool = true) -> Bool {
         do {
             try deletePath(_:recursive:)(self.pathString, recursive)
         } catch {

@@ -111,6 +111,19 @@ extension DefaultTemporaryDirectoryTests {
     ]
 }
 
+extension DeleteTests {
+    static let __allTests = [
+        ("testDirectory", testDirectory),
+        ("testDirectoryWithContent", testDirectoryWithContent),
+        ("testDirectoryWithContentNotAllowed", testDirectoryWithContentNotAllowed),
+        ("testFile", testFile),
+        ("testPathRepresentableDirectory", testPathRepresentableDirectory),
+        ("testPathRepresentableDirectoryWithContent", testPathRepresentableDirectoryWithContent),
+        ("testPathRepresentableDirectoryWithContentNotAllowed", testPathRepresentableDirectoryWithContentNotAllowed),
+        ("testPathRepresentableFile", testPathRepresentableFile),
+    ]
+}
+
 extension ExistsTests {
     static let __allTests = [
         ("testBadSymbolicLink", testBadSymbolicLink),
@@ -611,6 +624,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(CurrentWorkingDirectoryTests.__allTests),
         testCase(DefaultTemporaryDirectorySearchingTests.__allTests),
         testCase(DefaultTemporaryDirectoryTests.__allTests),
+        testCase(DeleteTests.__allTests),
         testCase(ExistsTests.__allTests),
         testCase(ExpandUserDirectoryTests.__allTests),
         testCase(FileExtensionTests.__allTests),
