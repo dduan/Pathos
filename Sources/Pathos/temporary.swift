@@ -42,7 +42,7 @@ public func searchForDefaultTemporaryDirectory() -> String {
         }
     }
 
-    return (try? makeAbsolute(path: kCurrentDirectory)) ?? kCurrentDirectory
+    return (try? absolutePath(ofPath: kCurrentDirectory)) ?? kCurrentDirectory
 }
 
 private var _defaultTemporaryDirectory: String? = nil
