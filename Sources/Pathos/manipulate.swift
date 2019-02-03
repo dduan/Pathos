@@ -4,7 +4,6 @@ import Glibc
 import Darwin
 #endif
 
-// TODO: "Okay" or "Ok"? Or some less controversial verbiage?
 /// Create directory at given path.
 ///
 /// - Parameters:
@@ -14,16 +13,16 @@ import Darwin
 ///                    with the default permissions without taking mode into account (mimicking the POSIX
 ///                    `mkdir -p` command). If `false`, a missing parent will cause a `SystemError`. Defaults
 ///                    to `false`
-///   - existOkay: If `false`, a `SystemError` is thrown if the target directory (or any of it's parent, if it
-///                needs creation) already exists.
+///   - throwIfAlreadyExists: If `true`, a `SystemError` is thrown if the target directory (or any of it's
+///                           parent, if it needs creation) already exists.
 /// - Throws: A `SystemError`.
-public func makeDirectory(atPath path: String, permission: FilePermission = 0o0755, createParents: Bool = false, existOkay: Bool = false) throws {
+public func makeDirectory(atPath path: String, permission: FilePermission = 0o0755, createParents: Bool = false, throwIfAlreadyExists: Bool = false) throws {
     func _makeDirectory() throws {
         if mkdir(path, permission.rawValue) != 0 {
             // Cannot rely on checking for EEXIST, since the operating system
             // could give priority to other errors like EACCES or EROFS
             let error = errno
-            if (try? isDirectory(atPath: path)) != true || !existOkay {
+            if (try? isDirectory(atPath: path)) != true || throwIfAlreadyExists {
                 throw SystemError(posixErrorCode: error)
             }
         }
@@ -40,7 +39,7 @@ public func makeDirectory(atPath path: String, permission: FilePermission = 0o07
     }
 
     if !head.isEmpty && !tail.isEmpty && !exists(atPath: head) {
-        try makeDirectory(atPath: head, createParents: true, existOkay: existOkay)
+        try makeDirectory(atPath: head, createParents: true, throwIfAlreadyExists: throwIfAlreadyExists)
     }
 
     if tail == kCurrentDirectory {
@@ -85,7 +84,6 @@ public func movePath(_ source: String, toPath destination: String) throws {
 }
 
 extension PathRepresentable {
-    // TODO: "Okay" or "Ok"? Or some less controversial verbiage?
     /// Create a directory at `pathString`.
     ///
     /// - Parameters:
@@ -94,13 +92,13 @@ extension PathRepresentable {
     ///                    with the default permissions without taking mode into account (mimicking the POSIX
     ///                    `mkdir -p` command). If `false`, a missing parent will cause a `SystemError`.
     ///                    Defaults to `false`
-    ///   - existOkay: If `false`, a `SystemError` is thrown if the target directory (or any of it's parent,
-    ///                if it needs creation) already exists.
+    ///   - failIfAlreadyExists: If `true`, a `SystemError` is thrown if the target directory (or any of it's
+    ///                          parent, if it needs creation) already exists.
     /// - Returns: `true` if a directory is created, `false` if an error occurred and the directory was not
     ///            created.
-    public func makeDirectory(createParents: Bool = false, permission: FilePermission = 0o0755, existOkay: Bool = false) -> Bool {
+    public func makeDirectory(createParents: Bool = false, permission: FilePermission = 0o0755, failIfAlreadyExists: Bool = false) -> Bool {
         do {
-            try makeDirectory(atPath:permission:createParents:existOkay:)(self.pathString, permission, createParents, existOkay)
+            try makeDirectory(atPath:permission:createParents:throwIfAlreadyExists:)(self.pathString, permission, createParents, failIfAlreadyExists)
         } catch {
             return false
         }
