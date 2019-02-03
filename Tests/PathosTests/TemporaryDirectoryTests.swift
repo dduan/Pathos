@@ -3,14 +3,14 @@ import XCTest
 
 final class TemporaryDirectoryTests: XCTestCase {
     func testCreatingTemporaryDirectory() throws {
-        let path = try makeTemporaryDirectory()
+        let path = try createTemporaryDirectory()
         XCTAssert(try isDirectory(atPath: path))
         try deletePath(path)
     }
 
     func testCreatingTemporaryDirectoryWithPrefix() throws {
         let kPrefix = "kPrefix"
-        let path = try makeTemporaryDirectory(prefix: kPrefix)
+        let path = try createTemporaryDirectory(prefix: kPrefix)
         XCTAssertTrue(try isDirectory(atPath: path))
         XCTAssertTrue(split(path: path).1.hasPrefix(kPrefix), path)
         try deletePath(path)
@@ -18,15 +18,15 @@ final class TemporaryDirectoryTests: XCTestCase {
 
     func testCreatingTemporaryDirectoryWithSuffix() throws {
         let kSuffix = "kSuffix"
-        let path = try makeTemporaryDirectory(suffix: kSuffix)
+        let path = try createTemporaryDirectory(suffix: kSuffix)
         XCTAssertTrue(try isDirectory(atPath: path))
         XCTAssertTrue(split(path: path).1.hasSuffix(kSuffix))
         try deletePath(path)
     }
 
     func testCreatingTemporaryDirectoryInDirectory() throws {
-        let directory = try makeTemporaryDirectory()
-        let path = try makeTemporaryDirectory(inDirectory: directory)
+        let directory = try createTemporaryDirectory()
+        let path = try createTemporaryDirectory(inDirectory: directory)
         XCTAssertTrue(try isDirectory(atPath: path))
         XCTAssertTrue(path.hasPrefix(directory))
         try deletePath(path)
@@ -49,7 +49,7 @@ final class TemporaryDirectoryTests: XCTestCase {
     }
 
     func testPathRepresentableCreatingTemporaryDirectory() {
-        guard let path = Path.makeTemporaryDirectory() else {
+        guard let path = Path.createTemporaryDirectory() else {
             XCTFail("temprorary directory creation failed")
             return
         }
@@ -60,7 +60,7 @@ final class TemporaryDirectoryTests: XCTestCase {
 
     func testPathRepresentableCreatingTemporaryDirectoryWithPrefix() {
         let kPrefix = "kPrefix"
-        guard let path = Path.makeTemporaryDirectory(prefix: kPrefix) else {
+        guard let path = Path.createTemporaryDirectory(prefix: kPrefix) else {
             XCTFail("temprorary directory creation failed")
             return
         }
@@ -72,7 +72,7 @@ final class TemporaryDirectoryTests: XCTestCase {
 
     func testPathRepresentableCreatingTemporaryDirectoryWithSuffix() {
         let kSuffix = "kSuffix"
-        guard let path = Path.makeTemporaryDirectory(suffix: kSuffix) else {
+        guard let path = Path.createTemporaryDirectory(suffix: kSuffix) else {
             XCTFail("temprorary directory creation failed")
             return
         }
@@ -83,8 +83,8 @@ final class TemporaryDirectoryTests: XCTestCase {
     }
 
     func testPathRepresentableCreatingTemporaryDirectoryInDirectory() throws {
-        let directory = try makeTemporaryDirectory()
-        guard let path = Path.makeTemporaryDirectory(inDirectory: Path(string: directory)) else {
+        let directory = try createTemporaryDirectory()
+        guard let path = Path.createTemporaryDirectory(inDirectory: Path(string: directory)) else {
             XCTFail("temprorary directory creation failed")
             return
         }

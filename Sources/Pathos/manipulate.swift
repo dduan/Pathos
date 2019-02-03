@@ -16,7 +16,7 @@ import Darwin
 ///   - throwIfAlreadyExists: If `true`, a `SystemError` is thrown if the target directory (or any of it's
 ///                           parent, if it needs creation) already exists.
 /// - Throws: A `SystemError`.
-public func makeDirectory(atPath path: String, permission: FilePermission = 0o0755, createParents: Bool = false, throwIfAlreadyExists: Bool = false) throws {
+public func createDirectory(atPath path: String, permission: FilePermission = 0o0755, createParents: Bool = false, throwIfAlreadyExists: Bool = false) throws {
     func _makeDirectory() throws {
         if mkdir(path, permission.rawValue) != 0 {
             // Cannot rely on checking for EEXIST, since the operating system
@@ -39,7 +39,7 @@ public func makeDirectory(atPath path: String, permission: FilePermission = 0o07
     }
 
     if !head.isEmpty && !tail.isEmpty && !exists(atPath: head) {
-        try makeDirectory(atPath: head, createParents: true, throwIfAlreadyExists: throwIfAlreadyExists)
+        try createDirectory(atPath: head, createParents: true, throwIfAlreadyExists: throwIfAlreadyExists)
     }
 
     if tail == kCurrentDirectory {
@@ -96,9 +96,9 @@ extension PathRepresentable {
     ///                          parent, if it needs creation) already exists.
     /// - Returns: `true` if a directory is created, `false` if an error occurred and the directory was not
     ///            created.
-    public func makeDirectory(createParents: Bool = false, permission: FilePermission = 0o0755, failIfAlreadyExists: Bool = false) -> Bool {
+    public func createDirectory(createParents: Bool = false, permission: FilePermission = 0o0755, failIfAlreadyExists: Bool = false) -> Bool {
         do {
-            try makeDirectory(atPath:permission:createParents:throwIfAlreadyExists:)(self.pathString, permission, createParents, failIfAlreadyExists)
+            try createDirectory(atPath:permission:createParents:throwIfAlreadyExists:)(self.pathString, permission, createParents, failIfAlreadyExists)
         } catch {
             return false
         }

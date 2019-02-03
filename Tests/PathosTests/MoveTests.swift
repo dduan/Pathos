@@ -4,7 +4,7 @@ import XCTest
 final class MoveTests: XCTestCase {
     func testSingleFile() throws {
         try withTemporaryDirectory { directory in
-            let temporaryFile = try makeTemporaryFile()
+            let temporaryFile = try createTemporaryFile()
             XCTAssertTrue(try isFile(atPath: temporaryFile))
             let destination = join(paths: directory, "test")
             try movePath(temporaryFile, toPath: destination)
@@ -15,7 +15,7 @@ final class MoveTests: XCTestCase {
 
     func testDirectory() throws {
         try withTemporaryDirectory { directory in
-            let originalDirectory = try makeTemporaryDirectory(inDirectory: directory)
+            let originalDirectory = try createTemporaryDirectory(inDirectory: directory)
             XCTAssertTrue(try isDirectory(atPath: originalDirectory))
             let destination = join(paths: defaultTemporaryDirectory, "test")
             try movePath(originalDirectory, toPath: destination)
@@ -42,9 +42,9 @@ final class MoveTests: XCTestCase {
     func testOverridingExistingDirectory() throws {
         try withTemporaryDirectory { _ in
             let directoryPath = "test"
-            try makeDirectory(atPath: directoryPath)
+            try createDirectory(atPath: directoryPath)
             let otherDirectoryPath = "test2"
-            try makeDirectory(atPath: otherDirectoryPath)
+            try createDirectory(atPath: otherDirectoryPath)
 
             try movePath(directoryPath, toPath: otherDirectoryPath)
 
@@ -58,14 +58,14 @@ final class MoveTests: XCTestCase {
             let filePath = "test"
             try write("", atPath: filePath)
             let directoryPath = "test2"
-            try makeDirectory(atPath: directoryPath)
+            try createDirectory(atPath: directoryPath)
             XCTAssertThrowsError(try movePath(filePath, toPath: directoryPath))
         }
     }
 
     func testPathRepresentableSingleFile() {
         Path.withTemporaryDirectory { directory in
-            let temporaryFile = Path.makeTemporaryFile()!
+            let temporaryFile = Path.createTemporaryFile()!
             XCTAssertTrue(temporaryFile.isFile)
             let destination = directory.join(with: Path(string: "test"))
             XCTAssertTrue(temporaryFile.move(to: destination))
@@ -76,7 +76,7 @@ final class MoveTests: XCTestCase {
 
     func testPathRepresentableDirectory() throws {
         Path.withTemporaryDirectory { directory in
-            let originalDirectory = Path.makeTemporaryDirectory(inDirectory: directory)!
+            let originalDirectory = Path.createTemporaryDirectory(inDirectory: directory)!
             XCTAssertTrue(originalDirectory.isDirectory)
             let destination = Path.defaultTemporaryDirectory.join(with: Path(string: "test"))
             XCTAssertTrue(originalDirectory.move(to: destination))
@@ -103,9 +103,9 @@ final class MoveTests: XCTestCase {
     func testPathRepresentableOverridingExistingDirectory() throws {
         try withTemporaryDirectory { _ in
             let directoryPath = Path(string: "test")
-            XCTAssertTrue(directoryPath.makeDirectory())
+            XCTAssertTrue(directoryPath.createDirectory())
             let otherDirectoryPath = Path(string: "test2")
-            XCTAssertTrue(otherDirectoryPath.makeDirectory())
+            XCTAssertTrue(otherDirectoryPath.createDirectory())
 
             XCTAssertTrue(directoryPath.move(to: otherDirectoryPath))
 
@@ -119,7 +119,7 @@ final class MoveTests: XCTestCase {
             let filePath = Path(string: "test")
             XCTAssertTrue(filePath.write(""))
             let directoryPath = Path(string: "test2")
-            XCTAssertTrue(directoryPath.makeDirectory())
+            XCTAssertTrue(directoryPath.createDirectory())
             XCTAssertFalse(filePath.move(to: directoryPath))
         }
     }

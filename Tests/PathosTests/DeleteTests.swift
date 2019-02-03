@@ -17,7 +17,7 @@ final class DeleteTests: XCTestCase {
     func testDirectory() throws {
         try withTemporaryDirectory { _ in
             let path = "test"
-            try makeDirectory(atPath: path)
+            try createDirectory(atPath: path)
             XCTAssertTrue(try isDirectory(atPath: path))
 
             try deletePath(path)
@@ -31,8 +31,8 @@ final class DeleteTests: XCTestCase {
             let rootPath = "test"
             let contentPath = "test/content"
             let nestedPath = "test/test"
-            try makeDirectory(atPath: rootPath)
-            try makeDirectory(atPath: nestedPath)
+            try createDirectory(atPath: rootPath)
+            try createDirectory(atPath: nestedPath)
             try write("", atPath: contentPath)
             XCTAssertTrue(try isDirectory(atPath: rootPath))
             XCTAssertTrue(try isDirectory(atPath: nestedPath))
@@ -48,7 +48,7 @@ final class DeleteTests: XCTestCase {
         try withTemporaryDirectory { _ in
             let rootPath = "test"
             let contentPath = "test/content"
-            try makeDirectory(atPath: rootPath)
+            try createDirectory(atPath: rootPath)
             try write("", atPath: contentPath)
             XCTAssertTrue(try isDirectory(atPath: rootPath))
             XCTAssertTrue(try isFile(atPath: contentPath))
@@ -76,7 +76,7 @@ final class DeleteTests: XCTestCase {
     func testPathRepresentableDirectory() throws {
         try withTemporaryDirectory { _ in
             let path = "test"
-            try makeDirectory(atPath: path)
+            try createDirectory(atPath: path)
             XCTAssertTrue(try isDirectory(atPath: path))
 
             let result = Path(string: path).delete()
@@ -91,8 +91,8 @@ final class DeleteTests: XCTestCase {
             let rootPath = "test"
             let contentPath = "test/content"
             let nestedPath = "test/test"
-            try makeDirectory(atPath: rootPath)
-            try makeDirectory(atPath: nestedPath)
+            try createDirectory(atPath: rootPath)
+            try createDirectory(atPath: nestedPath)
             try write("", atPath: contentPath)
             XCTAssertTrue(try isDirectory(atPath: rootPath))
             XCTAssertTrue(try isDirectory(atPath: nestedPath))
@@ -109,7 +109,7 @@ final class DeleteTests: XCTestCase {
         try withTemporaryDirectory { _ in
             let rootPath = "test"
             let contentPath = "test/content"
-            try makeDirectory(atPath: rootPath)
+            try createDirectory(atPath: rootPath)
             try write("", atPath: contentPath)
             XCTAssertTrue(try isDirectory(atPath: rootPath))
             XCTAssertTrue(try isFile(atPath: contentPath))
