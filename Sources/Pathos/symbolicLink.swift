@@ -5,7 +5,7 @@ import Darwin
 #endif
 
 // TODO: missing docstring.
-public func makeSymbolicLink(fromPath source: String, toPath destination: String) throws {
+public func createSymbolicLink(fromPath source: String, toPath destination: String) throws {
     if symlink(source, destination) != 0 {
         throw SystemError(posixErrorCode: errno)
     }
@@ -25,9 +25,9 @@ public func readSymbolicLink(atPath path: String) throws -> String {
 
 extension PathRepresentable {
     // TODO: missing docstring.
-    public func makeSymbolicLink(to destination: Self) -> Bool {
+    public func createSymbolicLink(to destination: Self) -> Bool {
         do {
-            try makeSymbolicLink(fromPath:toPath:)(self.pathString, destination.pathString)
+            try createSymbolicLink(fromPath:toPath:)(self.pathString, destination.pathString)
         } catch {
             return false
         }

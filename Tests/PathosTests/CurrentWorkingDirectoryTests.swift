@@ -7,7 +7,7 @@ final class CurrentWorkingDirectoryTests: XCTestCase {
     }
 
     func testSetting() throws {
-        let newDirectory = try realPath(ofPath: makeTemporaryDirectory())
+        let newDirectory = try realPath(ofPath: createTemporaryDirectory())
         let original = try getCurrentWorkingDirectory()
         try setCurrentWorkingDirectory(toPath: newDirectory)
 
@@ -18,7 +18,7 @@ final class CurrentWorkingDirectoryTests: XCTestCase {
 
     func testWorkingDirectoryBlock() throws {
         let original = try getCurrentWorkingDirectory()
-        let temporary = try realPath(ofPath: makeTemporaryDirectory())
+        let temporary = try realPath(ofPath: createTemporaryDirectory())
         try withWorkingDirectory(beingPath: temporary) {
             XCTAssertEqual(try getCurrentWorkingDirectory(), temporary)
         }
@@ -31,7 +31,7 @@ final class CurrentWorkingDirectoryTests: XCTestCase {
     }
 
     func testPathRepresentableSetting() throws {
-        let newDirectory = Path(string: try realPath(ofPath: makeTemporaryDirectory()))
+        let newDirectory = Path(string: try realPath(ofPath: createTemporaryDirectory()))
         let original = try getCurrentWorkingDirectory()
 
         Path.currentWorkingDirectory = newDirectory
@@ -43,7 +43,7 @@ final class CurrentWorkingDirectoryTests: XCTestCase {
 
     func testPathRepresentableWorkingDirectoryBlock() throws {
         let original = Path.currentWorkingDirectory
-        let temporary = Path.makeTemporaryDirectory()!.realPath
+        let temporary = Path.createTemporaryDirectory()!.realPath
         temporary.asCurrentWorkingDirectory {
             XCTAssertEqual(try getCurrentWorkingDirectory(), temporary.pathString)
         }

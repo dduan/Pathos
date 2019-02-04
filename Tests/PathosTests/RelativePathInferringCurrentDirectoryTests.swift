@@ -8,7 +8,7 @@ final class RelativePathInferringCurrentDirectoryTests: XCTestCase {
     override func setUp() {
         try! deletePath(self.testRoot)
         let newRoot = makeTemporaryRoot()
-        try! makeDirectory(atPath: join(paths: newRoot, "a/b/c"), createParents: true)
+        try! createDirectory(atPath: join(paths: newRoot, "a/b/c"), createParents: true)
         try! setCurrentWorkingDirectory(toPath: join(paths: newRoot, "a/b"))
         self.testRoot = try! normalize(path: join(paths: getCurrentWorkingDirectory(), "../../"))
     }

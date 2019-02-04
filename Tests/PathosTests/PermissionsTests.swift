@@ -3,13 +3,13 @@ import XCTest
 
 final class PermissionsTests: XCTestCase {
     func testReadingDefaultPermissions() throws {
-        let destination = try makeTemporaryFile()
+        let destination = try createTemporaryFile()
         let expectedPermissions: FilePermission = [.ownerRead, .ownerWrite, .otherRead, .groupRead]
         XCTAssertEqual(try permissions(forPath: destination), expectedPermissions)
     }
 
     func testSettingPermissions() throws {
-        let destination = try makeTemporaryFile()
+        let destination = try createTemporaryFile()
         let expectedPermissions: FilePermission = [.ownerRead, .ownerWrite, .otherRead, .groupRead]
         XCTAssertEqual(try permissions(forPath: destination), expectedPermissions)
         let resultPermissions: FilePermission = [.ownerRead, .ownerWrite]
@@ -20,7 +20,7 @@ final class PermissionsTests: XCTestCase {
     }
 
     func testAddingPermissions() throws {
-        let destination = try makeTemporaryFile()
+        let destination = try createTemporaryFile()
         let initialPermissions: FilePermission = [.ownerRead, .ownerWrite, .otherRead, .groupRead]
         XCTAssertEqual(try permissions(forPath: destination), initialPermissions)
         let newPermission: FilePermission = .ownerExecute
@@ -32,7 +32,7 @@ final class PermissionsTests: XCTestCase {
     }
 
     func testRemovingPermissions() throws {
-        let destination = try makeTemporaryFile()
+        let destination = try createTemporaryFile()
         let initialPermissions: FilePermission = [.ownerRead, .ownerWrite, .otherRead, .groupRead]
         XCTAssertEqual(try permissions(forPath: destination), initialPermissions)
         let permissionToRemove: FilePermission = .ownerExecute
@@ -44,13 +44,13 @@ final class PermissionsTests: XCTestCase {
     }
 
     func testPathRepresentableReadingDefaultPermissions() {
-        let destination = Path.makeTemporaryFile()!
+        let destination = Path.createTemporaryFile()!
         let expectedPermissions: FilePermission = [.ownerRead, .ownerWrite, .otherRead, .groupRead]
         XCTAssertEqual(destination.permissions, expectedPermissions)
     }
 
     func testPathRepresentableSettingPermissions() throws {
-        var destination = Path.makeTemporaryFile()!
+        var destination = Path.createTemporaryFile()!
         let expectedPermissions: FilePermission = [.ownerRead, .ownerWrite, .otherRead, .groupRead]
         XCTAssertEqual(try permissions(forPath: destination.pathString), expectedPermissions)
         let resultPermissions: FilePermission = [.ownerRead, .ownerWrite]
@@ -61,7 +61,7 @@ final class PermissionsTests: XCTestCase {
     }
 
     func testPathRepresentableAddingPermissions() throws {
-        let destination = Path.makeTemporaryFile()!
+        let destination = Path.createTemporaryFile()!
         let initialPermissions: FilePermission = [.ownerRead, .ownerWrite, .otherRead, .groupRead]
         XCTAssertEqual(try permissions(forPath: destination.pathString), initialPermissions)
         let newPermission: FilePermission = .ownerExecute
@@ -73,7 +73,7 @@ final class PermissionsTests: XCTestCase {
     }
 
     func testPathRepresentableRemovingPermissions() throws {
-        let destination = Path.makeTemporaryFile()!
+        let destination = Path.createTemporaryFile()!
         let initialPermissions: FilePermission = [.ownerRead, .ownerWrite, .otherRead, .groupRead]
         XCTAssertEqual(try permissions(forPath: destination.pathString), initialPermissions)
         let permissionToRemove: FilePermission = .ownerExecute

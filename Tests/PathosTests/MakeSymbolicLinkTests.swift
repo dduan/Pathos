@@ -18,14 +18,14 @@ final class MakeSymbolicLinkTests: XCTestCase {
     func testMakingSymbolicLink() throws {
         let source = self.fixture(.fileThatExists)
         let destination = "test"
-        try makeSymbolicLink(fromPath: source, toPath: destination)
+        try createSymbolicLink(fromPath: source, toPath: destination)
         XCTAssertEqual(try realPath(ofPath: destination), source)
     }
 
     func testPathRepresentableMakingSymbolicLink() throws {
         let source = self.fixturePath(.fileThatExists)
         let destination = Path(string: self.rootPath).join(with: Path(string: "test"))
-        XCTAssertTrue(source.makeSymbolicLink(to: destination))
+        XCTAssertTrue(source.createSymbolicLink(to: destination))
         XCTAssertEqual(destination.realPath.pathString, source.pathString)
     }
 }

@@ -68,7 +68,7 @@ public var defaultTemporaryDirectory: String {
     }
 }
 
-func _makeTemporaryPath(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) throws -> String
+private func _makeTemporaryPath(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) throws -> String
 {
     let location = directory ?? defaultTemporaryDirectory
     func makePath() -> String {
@@ -87,22 +87,22 @@ func _makeTemporaryPath(suffix: String = "", prefix: String = "", inDirectory di
     return fileLocation
 }
 // TODO: Missing docstring.
-public func makeTemporaryFile(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) throws -> String {
+public func createTemporaryFile(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) throws -> String {
     let fileLocation = try _makeTemporaryPath(suffix: suffix, prefix: prefix, inDirectory: directory)
     try write("", atPath: fileLocation)
     return fileLocation
 }
 
 // TODO: Missing docstring.
-public func makeTemporaryDirectory(suffix: String? = nil, prefix: String? = nil, inDirectory directory: String? = nil) throws -> String {
+public func createTemporaryDirectory(suffix: String? = nil, prefix: String? = nil, inDirectory directory: String? = nil) throws -> String {
     let fileLocation = try _makeTemporaryPath(suffix: suffix ?? "", prefix: prefix ?? "", inDirectory: directory)
-    try makeDirectory(atPath: fileLocation)
+    try createDirectory(atPath: fileLocation)
     return fileLocation
 }
 
 // TODO: Missing docstring.
 public func withTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil, performAction closure: @escaping (String) throws -> Void) throws {
-    let temporaryDirectory = try makeTemporaryDirectory(suffix: suffix, prefix: prefix, inDirectory: directory)
+    let temporaryDirectory = try createTemporaryDirectory(suffix: suffix, prefix: prefix, inDirectory: directory)
     try withWorkingDirectory(beingPath: temporaryDirectory) {
         try closure(temporaryDirectory)
     }
@@ -141,18 +141,18 @@ extension PathRepresentable {
     }
 
     // TODO: Missing docstring.
-    public static func makeTemporaryFile(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) -> Self? {
+    public static func createTemporaryFile(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) -> Self? {
         do {
-            return Self(string: try Pathos.makeTemporaryFile(suffix:prefix:inDirectory:)(suffix, prefix, directory))
+            return Self(string: try Pathos.createTemporaryFile(suffix:prefix:inDirectory:)(suffix, prefix, directory))
         } catch {
             return nil
         }
     }
 
     // TODO: Missing docstring.
-    public static func makeTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: Self? = nil) -> Self? {
+    public static func createTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: Self? = nil) -> Self? {
         do {
-            return Self(string: try Pathos.makeTemporaryDirectory(suffix:prefix:inDirectory:)(suffix, prefix, directory?.pathString))
+            return Self(string: try Pathos.createTemporaryDirectory(suffix:prefix:inDirectory:)(suffix, prefix, directory?.pathString))
         } catch {
             return nil
         }
@@ -160,7 +160,7 @@ extension PathRepresentable {
 
     // TODO: Missing docstring.
     public static func withTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: Self? = nil, performAction closure: @escaping (Self) throws -> Void) {
-        guard let temporaryDirectory = self.makeTemporaryDirectory(suffix: suffix, prefix: prefix, inDirectory: directory) else
+        guard let temporaryDirectory = self.createTemporaryDirectory(suffix: suffix, prefix: prefix, inDirectory: directory) else
         {
             return
         }

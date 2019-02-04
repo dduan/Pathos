@@ -95,5 +95,5 @@ extension XCTestCase {
 }
 
 func makeTemporaryRoot() -> String {
-    return (try? makeTemporaryDirectory()) ?? "/tmp"
+    return (try? createTemporaryDirectory()) ?? "/tmp"
 }
