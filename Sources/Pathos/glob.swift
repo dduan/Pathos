@@ -50,7 +50,7 @@ private func _glob(_ pattern: String) -> [String] {
 public func glob(_ pattern: String) throws -> [String] {
     guard let globStarPosition = pattern.firstIndex(of: "**") else {
         return _glob(pattern)
-            .map { _stripFromRight($0, kSeparatorCharacter) }
+            .map { _stripFromRight($0, pathSeparatorCharacter) }
     }
 
     func recursiveFNMatch(_ path: String) throws -> [String] {
@@ -61,7 +61,7 @@ public func glob(_ pattern: String) throws -> [String] {
     return try _glob(String(pattern[pattern.startIndex ... globStarPosition]))
         .filter(isDirectory(atPath:))
         .flatMap(recursiveFNMatch)
-        .map { _stripFromRight($0, kSeparatorCharacter) }
+        .map { _stripFromRight($0, pathSeparatorCharacter) }
 }
 
 extension PathRepresentable {
