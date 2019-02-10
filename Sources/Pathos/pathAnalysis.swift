@@ -20,27 +20,27 @@ public func normalize(path: String) -> String {
         }
     }
     components = newComponents
-    var newPath = newComponents.joined(separator: kSeparator)
+    var newPath = newComponents.joined(separator: pathSeparator)
     if initialSlashes != 0 {
-        newPath = String(Array(repeating: kSeparatorCharacter, count: initialSlashes)) + newPath
+        newPath = String(Array(repeating: pathSeparatorCharacter, count: initialSlashes)) + newPath
     }
     return newPath.isEmpty ? "." : newPath
 }
 
 // TODO: missing docstring.
 public func isAbsolute(path: String) -> Bool {
-    return path.hasPrefix(kSeparator)
+    return path.hasPrefix(pathSeparator)
 }
 
 public func join(paths: [String]) -> String {
     var result = ""
     for other in paths {
-        if other.hasPrefix(kSeparator) {
+        if other.hasPrefix(pathSeparator) {
             result = other
-        } else if result.isEmpty || result.hasSuffix(kSeparator) {
+        } else if result.isEmpty || result.hasSuffix(pathSeparator) {
             result += other
         } else {
-            result += kSeparator + other
+            result += pathSeparator + other
         }
     }
 
@@ -54,7 +54,7 @@ public func join(paths firstPath: String, _ secondPath: String, _ otherPaths: St
 
 // TODO: missing docstring.
 public func split(path: String) -> (String, String) {
-    guard let index = path.lastIndex(of: kSeparatorCharacter) else {
+    guard let index = path.lastIndex(of: pathSeparatorCharacter) else {
         return ("", path)
     }
 
@@ -62,8 +62,8 @@ public func split(path: String) -> (String, String) {
     var head = String(path.prefix(upTo: next))
     let tail = String(path.suffix(from: next))
 
-    if !head.isEmpty && head != String(Array(repeating: kSeparatorCharacter, count: head.count)) {
-        while head.last == kSeparatorCharacter {
+    if !head.isEmpty && head != String(Array(repeating: pathSeparatorCharacter, count: head.count)) {
+        while head.last == pathSeparatorCharacter {
             head.removeLast()
         }
     }
@@ -77,7 +77,7 @@ public func splitExtension(ofPath path: String) -> (String, String) {
         return (path, "")
     }
 
-    var nameIndex = path.lastIndex(of: kSeparatorCharacter)
+    var nameIndex = path.lastIndex(of: pathSeparatorCharacter)
         .map { path.index(after: $0) }
         ?? path.startIndex
 
@@ -106,7 +106,7 @@ public func fileExtension(ofPath path: String) -> String {
 
 // TODO: missing docstring.
 public func basename(ofPath path: String) -> String {
-    if let separatorIndex = path.lastIndex(of: kSeparatorCharacter) {
+    if let separatorIndex = path.lastIndex(of: pathSeparatorCharacter) {
         return String(path.suffix(from: path.index(after: separatorIndex)))
     } else {
         return path
@@ -116,12 +116,12 @@ public func basename(ofPath path: String) -> String {
 // TODO: missing docstring.
 public func directory(ofPath path: String) -> String {
     let head = path
-        .lastIndex(of: kSeparatorCharacter)
+        .lastIndex(of: pathSeparatorCharacter)
         .map { path.prefix(upTo: path.index(after: $0)) }
         .map(String.init)
         ?? ""
-    if !head.isEmpty && head != String(Array(repeating: kSeparatorCharacter, count: head.count)) {
-        return _stripFromRight(head, kSeparatorCharacter)
+    if !head.isEmpty && head != String(Array(repeating: pathSeparatorCharacter, count: head.count)) {
+        return _stripFromRight(head, pathSeparatorCharacter)
     }
 
     return head
@@ -135,7 +135,7 @@ func _commonPath(amongPaths paths: [String]) -> String {
     }
 
     let splitPaths = paths
-        .map { $0.split(separator: kSeparatorCharacter) }
+        .map { $0.split(separator: pathSeparatorCharacter) }
         .map { $0.filter { $0 != kCurrentDirectory } }
         .sorted { $0.count < $1.count }
     let shortest = splitPaths.first!
@@ -150,8 +150,8 @@ func _commonPath(amongPaths paths: [String]) -> String {
         }
     }
 
-    let joint = progress.map { longest[0...$0].joined(separator: kSeparator) }
-    let prefix = paths[0].hasPrefix(kSeparator) ? "/" : ""
+    let joint = progress.map { longest[0...$0].joined(separator: pathSeparator) }
+    let prefix = paths[0].hasPrefix(pathSeparator) ? "/" : ""
     return prefix + (joint ?? "")
 }
 
@@ -179,8 +179,8 @@ public func commonPath(amongPaths firstPath: String, _ secondPath: String, _ oth
 ///   - startingPath: starting path of the relativity.
 /// - Returns: a relative file path to `path`.
 public func relativePath(ofPath path: String, startingFromPath startingPath: String) -> String {
-    let startSegments = startingPath.split(separator: kSeparatorCharacter)
-    let pathSegements = path.split(separator: kSeparatorCharacter)
+    let startSegments = startingPath.split(separator: pathSeparatorCharacter)
+    let pathSegements = path.split(separator: pathSeparatorCharacter)
     let sharedCount = pathSegements.commonPrefix(with: startSegments).count
     let parentSegments = Array(repeating: kParentDirectory, count: max(startSegments.count - sharedCount, 0))
     let remainingSegments = pathSegements[sharedCount...].map(String.init)
@@ -188,7 +188,7 @@ public func relativePath(ofPath path: String, startingFromPath startingPath: Str
     if allSegments.isEmpty {
         return kCurrentDirectory
     } else {
-        return allSegments.joined(separator: kSeparator)
+        return allSegments.joined(separator: pathSeparator)
     }
 }
 

@@ -12,14 +12,14 @@ public func expandUserDirectory(inPath path: String) throws -> String {
 
     var foundOne = false
     let secondSeparatorIndex = path.firstIndex { c in
-        if c == kSeparatorCharacter {
+        if c == pathSeparatorCharacter {
             foundOne = true
             return false
         }
-        return foundOne && c == kSeparatorCharacter
+        return foundOne && c == pathSeparatorCharacter
     }
     var userHome = ""
-    let index = secondSeparatorIndex ?? path.firstIndex(of: kSeparatorCharacter) ?? path.endIndex
+    let index = secondSeparatorIndex ?? path.firstIndex(of: pathSeparatorCharacter) ?? path.endIndex
     if foundOne && secondSeparatorIndex == nil || index == path.index(after: path.startIndex)  {
         let homeFromEnv = getenv("HOME")
         errno = 0
@@ -46,7 +46,7 @@ public func expandUserDirectory(inPath path: String) throws -> String {
         userHome = String(cString: homePointer)
     }
 
-    let result = _stripFromRight(userHome, kSeparatorCharacter) + String(path[index...])
+    let result = _stripFromRight(userHome, pathSeparatorCharacter) + String(path[index...])
     return result.isEmpty ? "/" : result
 }
 
@@ -87,11 +87,11 @@ public func realPath(ofPath path: String) throws -> String {
         var rest = rest
         if isAbsolute(path: rest) {
             rest = String(rest.dropFirst())
-            path = kSeparator
+            path = pathSeparator
         }
 
         while !rest.isEmpty {
-            var parts = rest.split(separator: kSeparatorCharacter, maxSplits: 1,
+            var parts = rest.split(separator: pathSeparatorCharacter, maxSplits: 1,
                                    omittingEmptySubsequences: false)
             if parts.count < 2 {
                 parts.append("")
