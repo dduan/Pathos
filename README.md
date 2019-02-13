@@ -2,6 +2,35 @@
 
 A file management library for Swift.
 
+## Overview
+
+Here's a sample of the things Pathos enables you to do:
+
+```swift
+// Given `markdown2html: (String) -> String…
+// Let's generate a static site from Markdown files with matching paths!
+for markdown in try glob("**/*.md") {               // Recursively find paths for Markdown files.
+    let sitePath = basename(ofPath: markdown)       // "path/to/file.md" -> "path/to/file"
+    try createDirectory(atPath: sitePath)           // Make a directory.
+    let html = join(paths: sitePath, "index.html")  // Join path segments.
+    let source = try readString(atPath: markdown)   // Read from a file.
+    try write(markdown2html(source), atPath: html)  // Write to a file.
+}
+```
+
+Each free functions from that example has a OOP counterpart. Here's the
+same logic written with Pathos's other, parallel API style.
+
+```swift
+Path.glob("**/*.md")
+    .map { ($0, Path(string: $0.basename)) }
+    .map { ($0, $1, $1.join(with: Path(string: "index.html"))) }
+    .forEach { md, path, html in
+        html.write(markdown2html(md.readString()))
+        path.createDirectory()
+    }
+```
+
 ## Design
 
 Pathos is designed with the following philosophy in mind.
