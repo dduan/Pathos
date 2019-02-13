@@ -7,8 +7,8 @@ A file management library for Swift.
 Here's a sample of the things Pathos enables you to do:
 
 ```swift
-// Given `markdown2html: (String) -> String…
-// Let's generate a static site from Markdown files with matching paths!
+// Given a `markdown2html: (String) -> String` …
+// … let's generate a static site from Markdown files with matching paths!
 for markdown in try glob("**/*.md") {               // Recursively find paths for Markdown files.
     let sitePath = basename(ofPath: markdown)       // "path/to/file.md" -> "path/to/file"
     try createDirectory(atPath: sitePath)           // Make a directory.
