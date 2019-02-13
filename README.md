@@ -26,8 +26,8 @@ Path.glob("**/*.md")
     .map { ($0, Path(string: $0.basename)) }
     .map { ($0, $1, $1.join(with: Path(string: "index.html"))) }
     .forEach { md, path, html in
-        html.write(markdown2html(md.readString()))
         path.createDirectory()
+        html.write(markdown2html(md.readString()))
     }
 ```
 
