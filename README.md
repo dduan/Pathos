@@ -31,6 +31,10 @@ Path.glob("**/*.md")
     }
 ```
 
+For an example of real application, checkout [tre][].
+
+[tre]: https://github.com/dduan/tre
+
 ## Design
 
 Pathos is designed with the following philosophy in mind.
