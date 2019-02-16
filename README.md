@@ -10,17 +10,17 @@ files!
 ```swift
 // Current working directory.
 let cwd = try getCurrentWorkingDirectory()
-// Create a unique, temporary directory
+// Create a unique, temporary directory.
 let temporaryRoot = try createTemporaryDirectory()
 // Find paths to all .md files, recursively.
 for markdown in try glob("**/*.md") {
     // Find common prefixes among paths.
     let common = commonPath(amongPaths: cwd, markdown)
-    // path/to/file.md -> path/to/file. This will be the URL
+    // path/to/file.md -> path/to/file. This will be the URL.
     let url = basename(ofPath: String(markdown.dropFirst(common.count)))
-    // Join path segements. File system location for the URL
+    // Join path segements. File system location for the URL.
     let urlPath = join(paths: temporaryRoot, url)
-    // Make a directory
+    // Make a directory.
     try createDirectory(atPath: urlPath)
     // Read from a file.
     let source = try readString(atPath: markdown)
