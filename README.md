@@ -4,32 +4,35 @@ A file management library for Swift.
 
 ## Overview
 
-Here's a sample of the things Pathos enables you to do:
+For a taste of what Pathos can do, let's generate a static site from Markdown
+files!
 
 ```swift
-// Given a `markdown2html: (String) -> String` …
-// … let's generate a static site from Markdown files with matching paths!
-for markdown in try glob("**/*.md") {               // Recursively find paths for Markdown files.
-    let sitePath = basename(ofPath: markdown)       // "path/to/file.md" -> "path/to/file"
-    try createDirectory(atPath: sitePath)           // Make a directory.
-    let html = join(paths: sitePath, "index.html")  // Join path segments.
-    let source = try readString(atPath: markdown)   // Read from a file.
-    try write(markdown2html(source), atPath: html)  // Write to a file.
+// Current working directory.
+let cwd = try getCurrentWorkingDirectory()
+// Create a unique, temporary directory
+let temporaryRoot = try createTemporaryDirectory()
+// Find paths to all .md files, recursively.
+for markdown in try glob("**/*.md") {
+    // Find common prefixes among paths.
+    let common = commonPath(amongPaths: cwd, markdown)
+    // path/to/file.md -> path/to/file. This will be the URL
+    let url = basename(ofPath: String(markdown.dropFirst(common.count)))
+    // Join path segements. File system location for the URL
+    let urlPath = join(paths: temporaryRoot, url)
+    // Make a directory
+    try createDirectory(atPath: urlPath)
+    // Read from a file.
+    let source = try readString(atPath: markdown)
+    // Write to a file. `markdown2html` … just imagine it exists.
+    try write(markdown2html(source), atPath: join(paths: url, "index.html"))
 }
+// Move a directory. Move it to where we want it!
+try movePath(temporaryRoot, toPath: "output")
 ```
 
-Each free functions from that example has a OOP counterpart. Here's the
-same logic written with Pathos's other, parallel API style.
-
-```swift
-Path.glob("**/*.md")
-    .map { ($0, Path(string: $0.basename)) }
-    .map { ($0, $1, $1.join(with: Path(string: "index.html"))) }
-    .forEach { md, path, html in
-        path.createDirectory()
-        html.write(markdown2html(md.readString()))
-    }
-```
+Pathos offers more conventional OOP interfaces to all of these functions as
+well.
 
 For an example of real application, checkout [tre][].
 
