@@ -7,9 +7,15 @@ matrix:
       services:
         - docker
       script:
-        - make test-linux-docker
+        - make test-docker
     - os: osx
-      language: objective-c
-      osx_image: xcode10.1
-      script:
-        - make test-all
+      env: ACTION=SwiftPM
+    - os: osx
+      env: ACTION=Carthage
+    - os: osx
+      env: ACTION=CocoaPods
+
+language: objective-c
+osx_image: xcode10.1
+script:
+- make test-$ACTION
