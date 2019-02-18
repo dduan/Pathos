@@ -3,7 +3,6 @@ Pod::Spec.new do |spec|
   spec.version                  = "0.0.4"
   spec.summary                  = "A file management library for Swift"
   spec.homepage                 = "https://github.com/dduan/Pathos"
-  spec.license                  = "MIT (example)"
   spec.license                  = { :type => "MIT", :file => "LICENSE.md" }
   spec.author                   = { "Daniel Duan" => "daniel@duan.ca" }
   spec.social_media_url         = "https://twitter.com/daniel_duan"
