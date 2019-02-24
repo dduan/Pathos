@@ -4,8 +4,7 @@ A file management library for Swift.
 
 ## Overview
 
-For a taste of what Pathos can do, let's generate a static site from Markdown
-files!
+For a taste Pathos, let's generate a static site from Markdown files!
 
 ```swift
 // Current working directory.
