@@ -7,20 +7,14 @@ A file management library for Swift.
 For a taste Pathos, let's generate a static site from Markdown files!
 
 ```swift
-// Current working directory.
-let cwd = try getCurrentWorkingDirectory()
-
 // Create a unique, temporary directory.
 let temporaryRoot = try createTemporaryDirectory()
 
-// Find paths to all .md files, recursively.
+// Find paths to .md files relative to current working directory, recursively.
 for markdown in try glob("**/*.md") {
 
-    // Find common the prefix among paths.
-    let common = commonPath(amongPaths: cwd, markdown)
-
     // path/to/file.md -> path/to/file. This will be the URL.
-    let url = basename(ofPath: String(markdown.dropFirst(common.count)))
+    let url = basename(ofPath: markdown)
 
     // Join path segements. File system location for the URL.
     let urlPath = join(paths: temporaryRoot, url)
