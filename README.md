@@ -16,7 +16,7 @@ let temporaryRoot = try createTemporaryDirectory()
 // Find paths to all .md files, recursively.
 for markdown in try glob("**/*.md") {
 
-    // Find common prefixes among paths.
+    // Find common the prefix among paths.
     let common = commonPath(amongPaths: cwd, markdown)
 
     // path/to/file.md -> path/to/file. This will be the URL.
