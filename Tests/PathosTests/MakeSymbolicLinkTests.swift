@@ -24,7 +24,7 @@ final class MakeSymbolicLinkTests: XCTestCase {
 
     func testPathRepresentableMakingSymbolicLink() throws {
         let source = self.fixturePath(.fileThatExists)
-        let destination = Path(string: self.rootPath).join(with: Path(string: "test"))
+        let destination = Path(self.rootPath).join(with: Path("test"))
         XCTAssertTrue(source.createSymbolicLink(to: destination))
         XCTAssertEqual(destination.realPath.pathString, source.pathString)
     }

@@ -5,5 +5,5 @@ public protocol PathRepresentable {
     /// Initialize the type providing a string as path.
     ///
     /// - parameter string: string value for the path.
-    init(string: String)
+    init(_ string: String)
 }

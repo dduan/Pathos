@@ -32,57 +32,57 @@ final class JoinPathTests: XCTestCase {
 
     func testPathRepresentableSimpleSingleJoining() {
         XCTAssertEqual(
-            Path(string: "/foo").join(with: [Path(string: "bar")]).pathString,
+            Path("/foo").join(with: [Path("bar")]).pathString,
             "/foo/bar")
         XCTAssertEqual(
-            Path(string: "/foo").join(with: Path(string: "bar")).pathString,
+            Path("/foo").join(with: Path("bar")).pathString,
             "/foo/bar")
     }
 
     func testPathRepresentableMultipleJoining() {
         XCTAssertEqual(
-            Path(string: "/foo").join(with: [Path(string: "bar"), Path(string: "baz")]).pathString,
+            Path("/foo").join(with: [Path("bar"), Path("baz")]).pathString,
             "/foo/bar/baz")
         XCTAssertEqual(
-            Path(string: "/foo").join(with: Path(string: "bar"), Path(string: "baz")).pathString,
+            Path("/foo").join(with: Path("bar"), Path("baz")).pathString,
             "/foo/bar/baz")
     }
 
     func testPathRepresentableMultipleJoiningWithTrailingSeparators() {
         XCTAssertEqual(
-            Path(string: "/foo/").join(with: [Path(string: "bar/"), Path(string: "baz/")]).pathString,
+            Path("/foo/").join(with: [Path("bar/"), Path("baz/")]).pathString,
             "/foo/bar/baz/")
         XCTAssertEqual(
-            Path(string: "/foo/").join(with: Path(string: "bar/"), Path(string: "baz/")).pathString,
+            Path("/foo/").join(with: Path("bar/"), Path("baz/")).pathString,
             "/foo/bar/baz/")
     }
 
     func testPathRepresentableJoiningWithNothing() {
         XCTAssertEqual(
-            Path(string: "/foo").join(with: []).pathString,
+            Path("/foo").join(with: []).pathString,
             "/foo")
     }
 
     func testPathRepresentableJoiningWithAbsolutePath() {
         XCTAssertEqual(
-            Path(string: "/foo").join(with: [Path(string: "/bar")]).pathString,
+            Path("/foo").join(with: [Path("/bar")]).pathString,
             "/bar")
         XCTAssertEqual(
-            Path(string: "/foo").join(with: Path(string: "/bar")).pathString,
+            Path("/foo").join(with: Path("/bar")).pathString,
             "/bar")
 
         XCTAssertEqual(
-            Path(string: "/foo").join(with: [Path(string: "/bar"), Path(string: "baz")]).pathString,
+            Path("/foo").join(with: [Path("/bar"), Path("baz")]).pathString,
             "/bar/baz")
         XCTAssertEqual(
-            Path(string: "/foo").join(with: Path(string: "/bar"), Path(string: "baz")).pathString,
+            Path("/foo").join(with: Path("/bar"), Path("baz")).pathString,
             "/bar/baz")
 
         XCTAssertEqual(
-            Path(string: "/foo").join(with: [Path(string: "bar"), Path(string: "/baz")]).pathString,
+            Path("/foo").join(with: [Path("bar"), Path("/baz")]).pathString,
             "/baz")
         XCTAssertEqual(
-            Path(string: "/foo").join(with: Path(string: "bar"), Path(string: "/baz")).pathString,
+            Path("/foo").join(with: Path("bar"), Path("/baz")).pathString,
             "/baz")
     }
 }

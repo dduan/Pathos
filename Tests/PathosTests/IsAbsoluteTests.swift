@@ -11,10 +11,10 @@ final class IsAbsoluteTests: XCTestCase {
     }
 
     func testPathRepresentableIsAbsolute() {
-        XCTAssertFalse(Path(string: "").isAbsolute)
-        XCTAssertTrue(Path(string: "/").isAbsolute)
-        XCTAssertTrue(Path(string: "/foo").isAbsolute)
-        XCTAssertTrue(Path(string: "/foo/bar").isAbsolute)
-        XCTAssertFalse(Path(string: "foo/bar").isAbsolute)
+        XCTAssertFalse(Path("").isAbsolute)
+        XCTAssertTrue(Path("/").isAbsolute)
+        XCTAssertTrue(Path("/foo").isAbsolute)
+        XCTAssertTrue(Path("/foo/bar").isAbsolute)
+        XCTAssertFalse(Path("foo/bar").isAbsolute)
     }
 }

@@ -48,7 +48,7 @@ final class CopyFileTests: XCTestCase {
     }
 
     func testPathRepresentableFile() {
-        let destination = Path(string: "hello")
+        let destination = Path("hello")
         let source = self.fixturePath(.fileThatExists)
         XCTAssertTrue(source.copy(to: destination))
         XCTAssertEqual(
@@ -62,7 +62,7 @@ final class CopyFileTests: XCTestCase {
     }
 
     func testPathRepresentableFollowingFileSymbol() throws {
-        let destination = Path(string: "hello")
+        let destination = Path("hello")
         let source = self.fixturePath(.goodFileSymbol)
         let realSource = try realPath(ofPath: source.pathString)
         XCTAssertTrue(source.copy(to: destination))
@@ -77,7 +77,7 @@ final class CopyFileTests: XCTestCase {
     }
 
     func testPathRepresentableNotFollowingFileSymbol() {
-        let destination = Path(string: "hello")
+        let destination = Path("hello")
         let source = self.fixturePath(.goodFileSymbol)
         XCTAssertTrue(source.copy(to: destination, followSymbolicLink: false))
         XCTAssertTrue(try isSymbolicLink(atPath: destination.pathString))
@@ -92,7 +92,7 @@ final class CopyFileTests: XCTestCase {
     }
 
     func testPathRepresentableDirectory() {
-        let destination = Path(string: "hello")
+        let destination = Path("hello")
         let source = self.fixturePath(.directoryThatExists)
         XCTAssertFalse(source.copy(to: destination))
     }

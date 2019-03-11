@@ -86,7 +86,7 @@ final class ChildrenTests: XCTestCase {
 
     func testPathRepresentableChildrenInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).children().map { $0.pathString }),
+            Set(Path(self.fixtureRoot).children().map { $0.pathString }),
             self.childFiles
                 .union(self.childDirectories)
                 .union(self.childSymbolicLinks)
@@ -95,7 +95,7 @@ final class ChildrenTests: XCTestCase {
 
     func testPathRepresentableChildrenRecursiveInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).children(recursive: true).map { $0.pathString }),
+            Set(Path(self.fixtureRoot).children(recursive: true).map { $0.pathString }),
             self.childFilesRecursive
                 .union(self.childDirectoriesRecursive)
                 .union(self.childSymbolicLinksRecursive)
@@ -104,42 +104,42 @@ final class ChildrenTests: XCTestCase {
 
     func testPathRepresentableFilesInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).files().map { $0.pathString }),
+            Set(Path(self.fixtureRoot).files().map { $0.pathString }),
             self.childFiles
         )
     }
 
     func testPathRepresentableFilesRecursiveInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).files(recursive: true).map { $0.pathString }),
+            Set(Path(self.fixtureRoot).files(recursive: true).map { $0.pathString }),
             self.childFilesRecursive
         )
     }
 
     func testPathRepresentableDirectoriesInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).directories().map { $0.pathString }),
+            Set(Path(self.fixtureRoot).directories().map { $0.pathString }),
             self.childDirectories
         )
     }
 
     func testPathRepresentableDirectoriesRecursiveInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).directories(recursive: true).map { $0.pathString }),
+            Set(Path(self.fixtureRoot).directories(recursive: true).map { $0.pathString }),
             self.childDirectoriesRecursive
         )
     }
 
     func testPathRepresentableSymbolicLinksInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).symbolicLinks().map { $0.pathString }),
+            Set(Path(self.fixtureRoot).symbolicLinks().map { $0.pathString }),
             self.childSymbolicLinks
         )
     }
 
     func testPathRepresentableSymbolicLinksRecursiveInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).symbolicLinks(recursive: true).map { $0.pathString }),
+            Set(Path(self.fixtureRoot).symbolicLinks(recursive: true).map { $0.pathString }),
             self.childSymbolicLinksRecursive
         )
     }
@@ -158,14 +158,14 @@ final class ChildrenTests: XCTestCase {
 
     func testPathRepresentableUnknownTypeFilesInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).unknownTypeFiles().map { $0.pathString }), 
+            Set(Path(self.fixtureRoot).unknownTypeFiles().map { $0.pathString }), 
             []
         )
     }
 
     func testPathRepresentableUnknownTypeFilesRecursiveInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).unknownTypeFiles(recursive: true).map { $0.pathString }), 
+            Set(Path(self.fixtureRoot).unknownTypeFiles(recursive: true).map { $0.pathString }), 
             []
         )
     }
@@ -181,14 +181,14 @@ final class ChildrenTests: XCTestCase {
 
     func testPathRepresentablePipesInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).pipes().map { $0.pathString }), 
+            Set(Path(self.fixtureRoot).pipes().map { $0.pathString }), 
             []
         )
     }
 
     func testPathRepresentablePipesRecursiveInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).pipes(recursive: true).map { $0.pathString }), 
+            Set(Path(self.fixtureRoot).pipes(recursive: true).map { $0.pathString }), 
             []
         )
     }
@@ -204,14 +204,14 @@ final class ChildrenTests: XCTestCase {
 
     func testPathRepresentableCharacterDevicesInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).characterDevices().map { $0.pathString }), 
+            Set(Path(self.fixtureRoot).characterDevices().map { $0.pathString }), 
             []
         )
     }
 
     func testPathRepresentableCharacterDevicesRecursiveInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).characterDevices(recursive: true).map { $0.pathString }), 
+            Set(Path(self.fixtureRoot).characterDevices(recursive: true).map { $0.pathString }), 
             []
         )
     }
@@ -227,14 +227,14 @@ final class ChildrenTests: XCTestCase {
 
     func testPathRepresentableBlockDevicesInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).blockDevices().map { $0.pathString }), 
+            Set(Path(self.fixtureRoot).blockDevices().map { $0.pathString }), 
             []
         )
     }
 
     func testPathRepresentableBlockDevicesRecursiveInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).blockDevices(recursive: true).map { $0.pathString }), 
+            Set(Path(self.fixtureRoot).blockDevices(recursive: true).map { $0.pathString }), 
             []
         )
     }
@@ -250,14 +250,14 @@ final class ChildrenTests: XCTestCase {
 
     func testPathRepresentableSocketsInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).sockets().map { $0.pathString }), 
+            Set(Path(self.fixtureRoot).sockets().map { $0.pathString }), 
             []
         )
     }
 
     func testPathRepresentableSocketsRecursiveInPath() {
         XCTAssertEqual(
-            Set(Path(string: self.fixtureRoot).sockets(recursive: true).map { $0.pathString }), 
+            Set(Path(self.fixtureRoot).sockets(recursive: true).map { $0.pathString }), 
             []
         )
     }

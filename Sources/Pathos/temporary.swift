@@ -118,7 +118,7 @@ extension PathRepresentable {
     /// cached. You can use the same method to reset this value if needed.
     public static var defaultTemporaryDirectory: Self {
         get {
-            return Self(string: Pathos.defaultTemporaryDirectory)
+            return Self(Pathos.defaultTemporaryDirectory)
         }
 
         set {
@@ -143,7 +143,7 @@ extension PathRepresentable {
     // TODO: Missing docstring.
     public static func createTemporaryFile(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) -> Self? {
         do {
-            return Self(string: try Pathos.createTemporaryFile(suffix:prefix:inDirectory:)(suffix, prefix, directory))
+            return Self(try Pathos.createTemporaryFile(suffix:prefix:inDirectory:)(suffix, prefix, directory))
         } catch {
             return nil
         }
@@ -152,7 +152,7 @@ extension PathRepresentable {
     // TODO: Missing docstring.
     public static func createTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: Self? = nil) -> Self? {
         do {
-            return Self(string: try Pathos.createTemporaryDirectory(suffix:prefix:inDirectory:)(suffix, prefix, directory?.pathString))
+            return Self(try Pathos.createTemporaryDirectory(suffix:prefix:inDirectory:)(suffix, prefix, directory?.pathString))
         } catch {
             return nil
         }

@@ -54,11 +54,11 @@ final class CommonPathTests: XCTestCase {
     }
 
     private func checkPathRepresentable(_ first: String, _ second: String) -> String? {
-        return Path(string: first).commonPath(with: Path(string: second))?.pathString
+        return Path(first).commonPath(with: Path(second))?.pathString
     }
 
     private func checkPathRepresentable(_ first: String, _ second: String, _ third: String) -> String? {
-        return Path(string: first).commonPath(with: Path(string: second), Path(string: third))?.pathString
+        return Path(first).commonPath(with: Path(second), Path(third))?.pathString
     }
 
     func testPathRepresentableAbsolutePathWithoutTrailingSeparator() {

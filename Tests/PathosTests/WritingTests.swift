@@ -76,7 +76,7 @@ final class WritingTests: XCTestCase {
 
     func testPathRepresentableStringToNewFile() throws {
         let expected = "Hello"
-        let path = Path(string: "world")
+        let path = Path("world")
 
         XCTAssertTrue(path.write(expected))
 
@@ -87,7 +87,7 @@ final class WritingTests: XCTestCase {
 
     func testPathRepresentableStringToExistingFile() throws {
         let expected = "Hello"
-        let path = Path(string: "world")
+        let path = Path("world")
         try write(expected, atPath: path.pathString)
 
         XCTAssertTrue(path.write(expected))
@@ -98,14 +98,14 @@ final class WritingTests: XCTestCase {
     }
 
     func testPathRepresentableStringToUnwantedNewFile() throws {
-        let path = Path(string: "world")
+        let path = Path("world")
         XCTAssertFalse(path.write("", createIfNecessary: false))
     }
 
     func testPathRepresentableBytesToNewFile() throws {
         let expected = "Hello"
         let expectedBytes = expected.cString(using: String.defaultCStringEncoding)!
-        let path = Path(string: "world")
+        let path = Path("world")
 
         XCTAssertTrue(path.write(expectedBytes))
 
@@ -118,7 +118,7 @@ final class WritingTests: XCTestCase {
     func testPathRepresentableBytesToExistingFile() throws {
         let expected = "Hello"
         let expectedBytes = expected.cString(using: String.defaultCStringEncoding)!
-        let path = Path(string: "world")
+        let path = Path("world")
         try write("", atPath: path.pathString)
 
         XCTAssertTrue(path.write(expectedBytes))
@@ -129,7 +129,7 @@ final class WritingTests: XCTestCase {
     }
 
     func testPathRepresentableBytesToUnwantedNewFile() throws {
-        let path = Path(string: "world")
+        let path = Path("world")
         XCTAssertFalse(path.write("".cString(using: .utf8)!, createIfNecessary: false))
     }
 }

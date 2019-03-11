@@ -45,44 +45,44 @@ final class FileExtensionTests: XCTestCase {
     }
 
     func testPathRepresentableFileExtensionOnSimplePath() {
-        XCTAssertEqual(Path(string: "foo.bar").extension, ".bar")
+        XCTAssertEqual(Path("foo.bar").extension, ".bar")
     }
 
     func testPathRepresentableFileExtensionOnPathWithMultipleDots() {
-        XCTAssertEqual(Path(string: "foo.boo.bar").extension, ".bar")
-        XCTAssertEqual(Path(string:"foo.boo.biff.bar").extension, ".bar")
+        XCTAssertEqual(Path("foo.boo.bar").extension, ".bar")
+        XCTAssertEqual(Path("foo.boo.biff.bar").extension, ".bar")
     }
 
     func testPathRepresentableFileExtensionOnPathWithLeadingDot() {
-        XCTAssertEqual(Path(string: ".csh.rc").extension, ".rc")
+        XCTAssertEqual(Path(".csh.rc").extension, ".rc")
     }
 
     func testPathRepresentableFileExtensionOnPathWithNoDots() {
-        XCTAssertEqual(Path(string: "nodots").extension, "")
+        XCTAssertEqual(Path("nodots").extension, "")
     }
 
     func testPathRepresentableFileExtensionOnPathWithLeadingDotButNoExtension() {
-        XCTAssertEqual(Path(string: ".cshrc").extension, "")
+        XCTAssertEqual(Path(".cshrc").extension, "")
     }
 
     func testPathRepresentableFileExtensionOnPathWithManyLeadingDotsButNoExtension() {
-        XCTAssertEqual(Path(string: "...manydots").extension, "")
+        XCTAssertEqual(Path("...manydots").extension, "")
     }
 
     func testPathRepresentableFileExtensionOnPathWithLeadingDotsButNoExtension() {
-         XCTAssertEqual(Path(string: "...manydots.ext").extension, ".ext")
+         XCTAssertEqual(Path("...manydots.ext").extension, ".ext")
     }
 
     func testPathRepresentableFileExtensionOnPathWithLeadingDots() {
-        XCTAssertEqual(Path(string: ".").extension, "")
+        XCTAssertEqual(Path(".").extension, "")
     }
 
     func testPathRepresentableFileExtensionOnPathWithOnlyDots() {
-        XCTAssertEqual(Path(string: "..").extension, "")
+        XCTAssertEqual(Path("..").extension, "")
         XCTAssertEqual(fileExtension(ofPath: "........"), "")
     }
 
     func testPathRepresentableFileExtensionOnEmptyPath() {
-        XCTAssertEqual(Path(string: "").extension, "")
+        XCTAssertEqual(Path("").extension, "")
     }
 }

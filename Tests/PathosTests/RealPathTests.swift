@@ -47,10 +47,10 @@ final class RealPathTests: XCTestCase {
     }
 
     func testPathRepresentableRoot() {
-        XCTAssertEqual(Path(string: "/").realPath.pathString, "/")
+        XCTAssertEqual(Path("/").realPath.pathString, "/")
     }
 
     func testPathRepresentableEmpty() {
-        XCTAssertEqual(Path(string: "").realPath.pathString, try getCurrentWorkingDirectory())
+        XCTAssertEqual(Path("").realPath.pathString, try getCurrentWorkingDirectory())
     }
 }
