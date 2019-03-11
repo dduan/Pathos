@@ -84,7 +84,7 @@ final class TemporaryDirectoryTests: XCTestCase {
 
     func testPathRepresentableCreatingTemporaryDirectoryInDirectory() throws {
         let directory = try createTemporaryDirectory()
-        guard let path = Path.createTemporaryDirectory(inDirectory: Path(string: directory)) else {
+        guard let path = Path.createTemporaryDirectory(inDirectory: Path(directory)) else {
             XCTFail("temprorary directory creation failed")
             return
         }

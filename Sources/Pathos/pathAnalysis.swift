@@ -195,7 +195,7 @@ public func relativePath(ofPath path: String, startingFromPath startingPath: Str
 extension PathRepresentable {
     // TODO: missing docstring.
     public func normalize() -> Self {
-        return Self(string: normalize(path:)(self.pathString))
+        return Self(normalize(path:)(self.pathString))
     }
 
     // TODO: missing docstring.
@@ -205,25 +205,25 @@ extension PathRepresentable {
 
     // TODO: missing docstring.
     public func join(with paths: [PathRepresentable]) -> Self {
-        return Self(string: join(paths:)([self.pathString] + paths.map { $0.pathString }))
+        return Self(join(paths:)([self.pathString] + paths.map { $0.pathString }))
     }
 
     // TODO: missing docstring.
     public func join(with secondPath: PathRepresentable, _ otherPaths: PathRepresentable...) -> Self {
         let pathStrings = [self.pathString, secondPath.pathString] + otherPaths.map { $0.pathString }
-        return Self(string: join(paths:)(pathStrings))
+        return Self(join(paths:)(pathStrings))
     }
 
     // TODO: missing docstring.
     public func split() -> (Self, Self) {
         let (p0, p1) = split(path:)(self.pathString)
-        return (Self(string: p0), Self(string: p1))
+        return (Self(p0), Self(p1))
     }
 
     // TODO: missing docstring.
     public func splitExtension() -> (Self, String) {
         let splitResult = splitExtension(ofPath:)(self.pathString)
-        return (Self(string: splitResult.0), splitResult.1)
+        return (Self(splitResult.0), splitResult.1)
     }
 
     // TODO: missing docstring.
@@ -252,7 +252,7 @@ extension PathRepresentable {
     public func commonPath(with second: PathRepresentable, _ others: PathRepresentable...) -> Self? {
         let pathStrings = [self.pathString, second.pathString] + others.map { $0.pathString }
         let commonString = _commonPath(amongPaths:)(pathStrings)
-        return commonString.isEmpty ? nil : Self(string: commonString)
+        return commonString.isEmpty ? nil : Self(commonString)
     }
 
     /// Return a relative path to `startingPath`.
@@ -263,7 +263,7 @@ extension PathRepresentable {
     /// - Parameter startingPath: starting path of the relativity.
     /// - Returns: a relative file path to `path`.
     public func relativePath(to startingPath: PathRepresentable) -> Self {
-        return Self(string: relativePath(ofPath:startingFromPath:)(self.pathString, startingPath.pathString))
+        return Self(relativePath(ofPath:startingFromPath:)(self.pathString, startingPath.pathString))
     }
 }
 

@@ -14,7 +14,7 @@ final class SplitPathTests: XCTestCase {
     func _testPathRepresentableSplit(_ path: String, _ expected: (String, String), file: StaticString = #file,
                                      line: UInt = #line)
     {
-        let result = Path(string: path).split()
+        let result = Path(path).split()
         XCTAssertEqual(result.0.pathString, expected.0, file: file, line: line)
         XCTAssertEqual(result.1.pathString, expected.1, file: file, line: line)
     }

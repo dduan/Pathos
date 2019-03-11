@@ -28,27 +28,27 @@ final class RelativePathTests: XCTestCase {
     }
 
     func testPathRepresentableRelativeSelf() {
-        XCTAssertEqual(Path(string: "a").relativePath(to: Path(string: "a")).pathString, ".")
+        XCTAssertEqual(Path("a").relativePath(to: Path("a")).pathString, ".")
     }
 
     func testPathRepresentableRelativeParentSibling() {
-        XCTAssertEqual(Path(string: "a").relativePath(to: Path(string: "b/c")).pathString, "../../a")
+        XCTAssertEqual(Path("a").relativePath(to: Path("b/c")).pathString, "../../a")
     }
 
     func testPathRepresentableAbsoluteSiblings() {
-        XCTAssertEqual(Path(string: "/a/b").relativePath(to: Path(string: "/x/y")).pathString, "../../a/b")
+        XCTAssertEqual(Path("/a/b").relativePath(to: Path("/x/y")).pathString, "../../a/b")
     }
 
     func testPathRepresentableAbsoluteChild() {
-        XCTAssertEqual(Path(string: "/a/b/c").relativePath(to: Path(string: "/a/b")).pathString, "c")
-        XCTAssertEqual(Path(string: "/a/b/c").relativePath(to: Path(string: "/")).pathString, "a/b/c")
+        XCTAssertEqual(Path("/a/b/c").relativePath(to: Path("/a/b")).pathString, "c")
+        XCTAssertEqual(Path("/a/b/c").relativePath(to: Path("/")).pathString, "a/b/c")
     }
 
     func testPathRepresentableAbsoluteParent() {
-        XCTAssertEqual(Path(string: "/").relativePath(to: Path(string: "/a/b/c")).pathString, "../../..")
+        XCTAssertEqual(Path("/").relativePath(to: Path("/a/b/c")).pathString, "../../..")
     }
 
     func testPathRepresentableAbsoluteRoot() {
-        XCTAssertEqual(Path(string: "/").relativePath(to: Path(string: "/")).pathString, ".")
+        XCTAssertEqual(Path("/").relativePath(to: Path("/")).pathString, ".")
     }
 }

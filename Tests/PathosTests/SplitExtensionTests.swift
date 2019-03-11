@@ -33,27 +33,27 @@ final class SplitExtensionTests: XCTestCase {
     func _testPathRepresentableSplitExtension(_ path: String, _ filename: String, _ fileExtension: String,
                                               file: StaticString = #file, line: UInt = #line)
     {
-        var result = Path(string: path).splitExtension()
+        var result = Path(path).splitExtension()
         XCTAssertEqual(result.0.pathString, filename, file: file, line: line)
         XCTAssertEqual(result.1, fileExtension, file: file, line: line)
 
-        result = Path(string: "/" + path).splitExtension()
+        result = Path("/" + path).splitExtension()
         XCTAssertEqual(result.0.pathString, "/" + filename, file: file, line: line)
         XCTAssertEqual(result.1, fileExtension, file: file, line: line)
 
-        result = Path(string: "abc/" + path).splitExtension()
+        result = Path("abc/" + path).splitExtension()
         XCTAssertEqual(result.0.pathString, "abc/" + filename, file: file, line: line)
         XCTAssertEqual(result.1, fileExtension, file: file, line: line)
 
-        result = Path(string: "abc.def/" + path).splitExtension()
+        result = Path("abc.def/" + path).splitExtension()
         XCTAssertEqual(result.0.pathString, "abc.def/" + filename, file: file, line: line)
         XCTAssertEqual(result.1, fileExtension, file: file, line: line)
 
-        result = Path(string: "/abc.def/" + path).splitExtension()
+        result = Path("/abc.def/" + path).splitExtension()
         XCTAssertEqual(result.0.pathString, "/abc.def/" + filename, file: file, line: line)
         XCTAssertEqual(result.1, fileExtension, file: file, line: line)
 
-        result = Path(string: path + "/").splitExtension()
+        result = Path(path + "/").splitExtension()
         XCTAssertEqual(result.0.pathString, filename + fileExtension + "/", file: file, line: line)
         XCTAssertEqual(result.1, "", file: file, line: line)
     }

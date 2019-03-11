@@ -11,10 +11,10 @@ final class PathDirectoryTests: XCTestCase {
     }
 
     func testPathRepresentableDirectory() {
-        XCTAssertEqual(Path(string: "/foo/bar").directory, "/foo")
-        XCTAssertEqual(Path(string: "/").directory, "/")
-        XCTAssertEqual(Path(string: "foo").directory, "")
-        XCTAssertEqual(Path(string: "////foo").directory, "////")
-        XCTAssertEqual(Path(string: "//foo//bar").directory, "//foo")
+        XCTAssertEqual(Path("/foo/bar").directory, "/foo")
+        XCTAssertEqual(Path("/").directory, "/")
+        XCTAssertEqual(Path("foo").directory, "")
+        XCTAssertEqual(Path("////foo").directory, "////")
+        XCTAssertEqual(Path("//foo//bar").directory, "//foo")
     }
 }

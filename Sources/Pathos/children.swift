@@ -65,7 +65,7 @@ private func _typedChildrenInPath(_ path: String, _ type: Int32?, recursive: Boo
 
 private func _children<T>(_ path: T, recursive: Bool, block: (String, Bool) throws -> [String]) -> [T] where T: PathRepresentable {
     let result = try? block(path.pathString, recursive)
-        .map(T.init(string:))
+        .map(T.init)
     return result ?? []
 }
 

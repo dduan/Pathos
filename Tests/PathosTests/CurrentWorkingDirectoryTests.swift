@@ -31,7 +31,7 @@ final class CurrentWorkingDirectoryTests: XCTestCase {
     }
 
     func testPathRepresentableSetting() throws {
-        let newDirectory = Path(string: try realPath(ofPath: createTemporaryDirectory()))
+        let newDirectory = Path(try realPath(ofPath: createTemporaryDirectory()))
         let original = try getCurrentWorkingDirectory()
 
         Path.currentWorkingDirectory = newDirectory

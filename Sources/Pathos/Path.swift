@@ -2,7 +2,7 @@
 public struct Path: PathRepresentable {
     public let pathString: String
 
-    public init(string: String) {
+    public init(_ string: String) {
         self.pathString = string
     }
 }

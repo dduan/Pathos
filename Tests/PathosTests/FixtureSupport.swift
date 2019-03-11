@@ -26,7 +26,7 @@ extension XCTestCase {
     }
 
     func fixturePath(_ path: FixturePath) -> Path {
-        return Path(string: self.fixture(path))
+        return Path(self.fixture(path))
     }
 
     // note: directory sizes are different on HFS+ vs APFS

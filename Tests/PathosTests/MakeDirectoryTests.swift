@@ -62,7 +62,7 @@ final class MakeDirectoryTests: XCTestCase {
 
     func testPathRepresentableMakeDiroctory() throws {
         let directory = self.randomTmpDirectoryPath
-        XCTAssertTrue(Path(string: directory).createDirectory())
+        XCTAssertTrue(Path(directory).createDirectory())
         XCTAssertTrue(try isDirectory(atPath: directory))
         var status = stat()
         lstat(directory, &status)
@@ -73,27 +73,27 @@ final class MakeDirectoryTests: XCTestCase {
     func testPathRepresentableMakeExistingDirectory() throws {
         let existingDirectory = self.randomTmpDirectoryPath
         try createDirectory(atPath: existingDirectory)
-        XCTAssertFalse(Path(string: existingDirectory).createDirectory(failIfAlreadyExists: true))
+        XCTAssertFalse(Path(existingDirectory).createDirectory(failIfAlreadyExists: true))
         rmdir(existingDirectory)
     }
 
     func testPathRepresentableMakeExistingDirectoryExistOkay() throws {
         let existingDirectory = self.randomTmpDirectoryPath
         try createDirectory(atPath: existingDirectory)
-        XCTAssertTrue(Path(string: existingDirectory).createDirectory())
+        XCTAssertTrue(Path(existingDirectory).createDirectory())
         XCTAssertTrue(try isDirectory(atPath: existingDirectory))
         rmdir(existingDirectory)
     }
 
     func testPathRepresentableMakeDirectoryWithNonExistParentShouldFail() {
         let path = join(paths: self.randomTmpDirectoryPath, "a/b/c")
-        XCTAssertFalse(Path(string: path).createDirectory())
+        XCTAssertFalse(Path(path).createDirectory())
         XCTAssertFalse(exists(atPath: path))
     }
 
     func testPathRepresentableMakeDirectoryWithCreateParent() {
         let path = join(paths: self.randomTmpDirectoryPath, "a/b/c")
-        XCTAssertTrue(Path(string: path).createDirectory(createParents: true))
+        XCTAssertTrue(Path(path).createDirectory(createParents: true))
         XCTAssertTrue(try isDirectory(atPath: path))
         rmdir(path)
     }
@@ -101,7 +101,7 @@ final class MakeDirectoryTests: XCTestCase {
     func testPathRepresentableMakeDirectoryWithSpecificPermission() throws {
         let directory = self.randomTmpDirectoryPath
         let permission: FilePermission = 0o0744
-        XCTAssertTrue(Path(string: directory).createDirectory(permission: permission))
+        XCTAssertTrue(Path(directory).createDirectory(permission: permission))
         XCTAssertTrue(try isDirectory(atPath: directory))
         var status = stat()
         lstat(directory, &status)

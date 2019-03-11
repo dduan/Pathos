@@ -55,7 +55,7 @@ extension PathRepresentable {
     /// working directory will be unchanged.
     public static var currentWorkingDirectory: Self {
         get {
-            return Self(string: (try? getCurrentWorkingDirectory()) ?? ".")
+            return Self((try? getCurrentWorkingDirectory()) ?? ".")
         }
 
         set {

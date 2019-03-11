@@ -152,7 +152,7 @@ public func realPath(ofPath path: String) throws -> String {
 extension PathRepresentable {
     // TODO: missing docstring.
     public func expandUserDirectory() -> Self {
-        return Self(string: (try? expandUserDirectory(inPath:)(self.pathString)) ?? "/")
+        return Self((try? expandUserDirectory(inPath:)(self.pathString)) ?? "/")
     }
 
     // TODO: missing docstring.
@@ -166,7 +166,7 @@ extension PathRepresentable {
     /// - Returns: a relative file path to current working directory.
     public func relativePath() -> Self {
         let result = try? relativePath(ofPath:)(self.pathString)
-        return result.map(Self.init(string:)) ?? self
+        return result.map(Self.init) ?? self
     }
 
     /// Return the canonical path of self, eliminating any symbolic links encountered in the

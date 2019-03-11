@@ -66,7 +66,7 @@ final class DeleteTests: XCTestCase {
             try write("", atPath: path)
             XCTAssertTrue(try isFile(atPath: path))
 
-            let result = Path(string: path).delete()
+            let result = Path(path).delete()
 
             XCTAssertTrue(result)
             XCTAssertFalse(exists(atPath: path))
@@ -79,7 +79,7 @@ final class DeleteTests: XCTestCase {
             try createDirectory(atPath: path)
             XCTAssertTrue(try isDirectory(atPath: path))
 
-            let result = Path(string: path).delete()
+            let result = Path(path).delete()
 
             XCTAssertTrue(result)
             XCTAssertFalse(exists(atPath: path))
@@ -98,7 +98,7 @@ final class DeleteTests: XCTestCase {
             XCTAssertTrue(try isDirectory(atPath: nestedPath))
             XCTAssertTrue(try isFile(atPath: contentPath))
 
-            let result = Path(string: rootPath).delete()
+            let result = Path(rootPath).delete()
 
             XCTAssertTrue(result)
             XCTAssertFalse(exists(atPath: rootPath))
@@ -114,7 +114,7 @@ final class DeleteTests: XCTestCase {
             XCTAssertTrue(try isDirectory(atPath: rootPath))
             XCTAssertTrue(try isFile(atPath: contentPath))
 
-            let result = Path(string: rootPath).delete(recursive: false)
+            let result = Path(rootPath).delete(recursive: false)
 
             XCTAssertFalse(result)
             XCTAssertTrue(try isFile(atPath: contentPath))

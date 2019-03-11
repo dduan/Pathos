@@ -12,10 +12,10 @@ final class PathBaseNameTests: XCTestCase {
     }
 
     func testPathRepresentableBaseNameOfPath() {
-        XCTAssertEqual(Path(string: "/foo/bar").basename, "bar")
-        XCTAssertEqual(Path(string: "/").basename, "")
-        XCTAssertEqual(Path(string: "foo").basename, "foo")
-        XCTAssertEqual(Path(string: "////foo").basename, "foo")
-        XCTAssertEqual(Path(string: "//foo//bar").basename, "bar")
+        XCTAssertEqual(Path("/foo/bar").basename, "bar")
+        XCTAssertEqual(Path("/").basename, "")
+        XCTAssertEqual(Path("foo").basename, "foo")
+        XCTAssertEqual(Path("////foo").basename, "foo")
+        XCTAssertEqual(Path("//foo//bar").basename, "bar")
     }
 }
