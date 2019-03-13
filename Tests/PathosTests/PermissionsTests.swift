@@ -38,7 +38,7 @@ final class PermissionsTests: XCTestCase {
         let permissionToRemove: FilePermission = .ownerExecute
         let resultPermissions: FilePermission = initialPermissions.subtracting(permissionToRemove)
 
-        try Pathos.remove(permissionToRemove, toPath: destination)
+        try Pathos.remove(permissionToRemove, forPath: destination)
 
         XCTAssertEqual(try permissions(forPath: destination), resultPermissions)
     }
