@@ -4,7 +4,6 @@ import Glibc
 import Darwin
 #endif
 
-// TODO: "for" or "at" path?
 /// Get file permissions for path. This function will *not* follow symbolic links, it'll return permissions
 /// for the link itself instead.
 ///
@@ -30,7 +29,6 @@ public func add(_ permissions: FilePermission, toPath path: String) throws {
     try set(existingPermission.union(permissions), forPath: path)
 }
 
-// TODO: "to" or "from" or "at" path?
 /// Remove permissions from existing permission at a path. This function will *not* follow symbolic links,
 /// it'll change permissions for the link itself instead.
 ///
@@ -38,7 +36,7 @@ public func add(_ permissions: FilePermission, toPath path: String) throws {
 ///   - permissions: Permissions to be removed at the path.
 ///   - path: The path whose permission is being changed.
 /// - Throws: System error encountered while attempting to read or change permissions at the path.
-public func remove(_ permissions: FilePermission, toPath path: String) throws {
+public func remove(_ permissions: FilePermission, forPath path: String) throws {
     let existingPermission = try permissions(forPath:)(path)
     try set(existingPermission.subtracting(permissions), forPath: path)
 }
@@ -79,6 +77,6 @@ extension PathRepresentable {
     /// Remove permissions from existing permission at a path. If this is an symbolic link, the
     /// permission for the link itself will be changed.
     public func remove(_ permissions: FilePermission) {
-        try? remove(_:toPath:)(permissions, self.pathString)
+        try? remove(_:forPath:)(permissions, self.pathString)
     }
 }
