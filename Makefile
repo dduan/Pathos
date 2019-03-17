@@ -65,4 +65,5 @@ ensure-CocoaPods:
 test-CocoaPods: ensure-CocoaPods
 	pod lib lint --verbose
 
-
+docs:
+	jazzy --config Documentation/jazzy.json --output /tmp/pathos_docs
