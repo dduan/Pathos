@@ -16,7 +16,11 @@ public func createSymbolicLink(fromPath source: String, toPath destination: Stri
     }
 }
 
-// TODO: missing docstring.
+/// Return a string representing the path to which the symbolic link points. The result may be either an absolute or relative pathname.
+///
+/// - Parameter path: the location of the symbolic link.
+/// - Returns: string reprentation of the link's destination.
+/// - Throws: system error encountered while attempting to read the content of the link.
 public func readSymbolicLink(atPath path: String) throws -> String {
     let buffer = UnsafeMutableBufferPointer<Int8>.allocate(capacity: kMaxPathNameLength + 1)
     defer { buffer.deallocate() }
@@ -42,7 +46,10 @@ extension PathRepresentable {
         return true
     }
 
-    // TODO: missing docstring.
+    /// Return a string representing the path to which the symbolic link points. The result may be either an absolute or relative pathname.
+    ///
+    /// - Parameter path: the location of the symbolic link.
+    /// - Returns: string reprentation of the link's destination. nil if an error is encountered while trying to read the link.
     public func readSymbolicLink() -> String? {
         return try? readSymbolicLink(atPath:)(self.pathString)
     }
