@@ -21,7 +21,10 @@ func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, creat
     }
 }
 
-// TODO: missing docstring.
+/// Read content of a file at `path` as bytes. If the path is a directory, no bytes will be read.
+///
+/// - Parameter path: the path to the file that will be read. If the path is a directory, no bytes will be read.
+/// - Throws: System error encountered while opening the file.
 public func readBytes(atPath path: String) throws -> [UInt8] {
     guard case let fd = open(path, O_RDONLY), fd != -1 else {
         throw SystemError(posixErrorCode: errno)
@@ -62,7 +65,11 @@ public func write(_ string: String, atPath path: String, createIfNecessary: Bool
 }
 
 extension PathRepresentable {
-    // TODO: missing docstring.
+    /// Read content of a file as bytes.  If the path is a directory, no bytes
+    /// will be read.
+    ///
+    /// If an error is encounterd while opening or reading the file, no bytes
+    /// will be returned.
     public func readBytes() -> [UInt8] {
         return (try? readBytes(atPath:)(self.pathString)) ?? []
     }
