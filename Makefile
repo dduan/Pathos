@@ -44,6 +44,9 @@ clean: clean-carthage
 carthage-archive: clean-carthage xcode ensure-carthage
 	@carthage build --archive
 
+docs: xcode
+	@Scripts/generate-docs.sh
+
 test-SwiftPM:
 	swift test -Xswiftc -warnings-as-errors
 
@@ -64,6 +67,3 @@ ensure-CocoaPods:
 
 test-CocoaPods: ensure-CocoaPods
 	pod lib lint --verbose
-
-docs:
-	jazzy --config Documentation/jazzy.json --output /tmp/pathos_docs
