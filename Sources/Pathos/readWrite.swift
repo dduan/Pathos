@@ -44,11 +44,15 @@ public func readBytes(atPath path: String) throws -> [UInt8] {
     return [UInt8](buffer)
 }
 
-// TODO: missing docstring.
+/// Read the content of file at `path` as an UTF-8 string. If the path points to a directory, empty string will be returned. If other encoding is desired, use `readBytes` and encode separetely.
+///
+/// - Parameter path: path at which the content will be read.
+/// - Returns: content of the file as an UTF-8 string.
+/// - Throws: System error encountered while opening the file.
 public func readString(atPath path: String) throws -> String {
     var content = try readBytes(atPath: path)
     content.append(0)
-    return String(cString: &content)
+    return String(decodingCString: content, as: UTF8.self)
 }
 
 // TODO: missing docstring.
@@ -74,7 +78,9 @@ extension PathRepresentable {
         return (try? readBytes(atPath:)(self.pathString)) ?? []
     }
 
-    // TODO: missing docstring.
+    /// Read the content of file at this path as an UTF-8 string. If the path points to a directory, empty string will be returned. If other encoding is desired, use `readBytes` and encode separetely. If an error is encountered opening the file, an empty string will be returned.
+    ///
+    /// - Returns: content of the file as an UTF-8 string.
     public func readString() -> String {
         return (try? readString(atPath:)(self.pathString)) ?? ""
     }
