@@ -4,7 +4,12 @@ import Glibc
 import Darwin
 #endif
 
-// TODO: missing docstring.
+/// Create a symbolic link for file or directory at `source` in the location of `destination`.
+///
+/// - Parameters:
+///   - source: path to the original file or directory.
+///   - destination: the location for the symbolic link to be created.
+/// - Throws: system error. Example of cause includes lack of write permission at destination, lack of additional space, etc.
 public func createSymbolicLink(fromPath source: String, toPath destination: String) throws {
     if symlink(source, destination) != 0 {
         throw SystemError(posixErrorCode: errno)
@@ -24,8 +29,11 @@ public func readSymbolicLink(atPath path: String) throws -> String {
 }
 
 extension PathRepresentable {
-    // TODO: missing docstring.
-    public func createSymbolicLink(to destination: Self) -> Bool {
+    /// Create a symbolic link for file or directory at this path in the location `destination`.
+    ///
+    /// - Parameter destination: the location for the symbolic link to be created.
+    /// - Returns: `true` if the symbolic link is successfully created. `false` otherwise.
+    public func createSymbolicLink(at destination: Self) -> Bool {
         do {
             try createSymbolicLink(fromPath:toPath:)(self.pathString, destination.pathString)
         } catch {
