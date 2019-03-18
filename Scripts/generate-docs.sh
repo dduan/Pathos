@@ -19,7 +19,7 @@ if [ "${deploy}" == "y" ] || [ "${deploy}" == "Y" ]; then
     git push origin gh-pages
     if [ $? -eq 0 ]; then
         popd
-        read -p "Clean up the generated site (Y/n)?" cleanup
+        read -p "Clean up the generated site (Y/n)? " cleanup
         if [ "${cleanup}" == "n" ] || [ "${cleanup}" == "N" ]; then
             echo "Okay. The generated site is at:"
             echo "${output}"
