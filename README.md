@@ -94,6 +94,6 @@ Also, see "Testing".
 
 See `RELEASING.md`.
 
-### License
+## License
 
 MIT. See `LICENSE.md`.
