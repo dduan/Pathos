@@ -37,6 +37,7 @@ Pathos offers more conventional OOP interfaces to all of these functions as
 well.
 
 Read the [documentation][] to learn more.
+
 For an example of real application, checkout [tre][].
 
 [tre]: https://github.com/dduan/tre
@@ -86,8 +87,8 @@ Also, see "Testing".
 - `make test` runs all tests.
 - `make generate-linux-test-manifest` updates the test manifest for Linux, this
   only works on macOS.
-- `make test-linux-docker` runs tests in Linux docker container (you'll need
-  Docker installed in your host).
+- `make test-docker` runs tests in Linux docker container (you'll need Docker
+  installed in your host).
 
 ### Releasing
 
