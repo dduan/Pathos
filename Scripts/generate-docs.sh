@@ -3,6 +3,8 @@
 output=$(mktemp -d)
 cp -r .git "${output}"
 pushd "${output}"
+git branch -D gh-pages
+git fetch
 git checkout -f gh-pages
 git clean -fxd
 popd

@@ -1,6 +1,6 @@
 {
     "author": "Daniel Duan",
-    "theme": "fullwidth",
+    "theme": "jony",
     "module": "Pathos",
     "abstract": "Documentation/_abstracts/*.md",
     "custom_categories": [
