@@ -1,1 +1,1 @@
-Files in this directory serves as source for the generated documentation site.
+Files in this directory serve as source for the generated documentation site.
