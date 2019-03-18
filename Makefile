@@ -44,7 +44,10 @@ clean: clean-carthage
 carthage-archive: clean-carthage xcode ensure-carthage
 	@carthage build --archive
 
-docs: xcode
+ensure-jazzy:
+	Scripts/ensure-jazzy.sh
+
+docs: xcode ensure-jazzy
 	@Scripts/generate-docs.sh
 
 test-SwiftPM:
