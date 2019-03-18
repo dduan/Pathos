@@ -49,6 +49,7 @@
         {
             "name": "Analyzing Paths",
             "children": [
+                "isAbsolute(path:)",
                 "absolutePath(ofPath:)",
                 "basename(ofPath:)",
                 "directory(ofPath:)",
@@ -107,7 +108,6 @@
             "name": "Existence",
             "children": [
                 "exists(atPath:followSymbol:)",
-                "isAbsolute(path:)",
                 "isBlockDevice(atPath:)",
                 "isCharacterDevice(atPath:)",
                 "isDirectory(atPath:)",
