@@ -1,0 +1,14 @@
+{
+    "author": "Daniel Duan",
+    "theme": "fullwidth",
+    "module": "Pathos",
+    "abstract": "Documentation/_abstracts/*.md",
+    "custom_categories": [
+        {
+            "name": "Manipulating Paths",
+            "children": [
+                "deletePath(_:recursive:)"
+            ]
+        }
+    ]
+}

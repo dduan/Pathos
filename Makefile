@@ -44,6 +44,12 @@ clean: clean-carthage
 carthage-archive: clean-carthage xcode ensure-carthage
 	@carthage build --archive
 
+ensure-jazzy:
+	Scripts/ensure-jazzy.sh
+
+docs: xcode ensure-jazzy
+	@Scripts/generate-docs.sh
+
 test-SwiftPM:
 	swift test -Xswiftc -warnings-as-errors
 
@@ -64,5 +70,3 @@ ensure-CocoaPods:
 
 test-CocoaPods: ensure-CocoaPods
 	pod lib lint --verbose
-
-

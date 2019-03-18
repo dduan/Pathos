@@ -50,6 +50,7 @@ public func createDirectory(atPath path: String, permission: FilePermission = 0o
 }
 
 // TODO: missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.delete(recursive:)`.
 public func deletePath(_ path: String, recursive: Bool = true) throws {
     let status = try _stat(at: path)
     if _ifmt(status) == S_IFDIR {
@@ -106,6 +107,7 @@ extension PathRepresentable {
     }
 
     // TODO: missing docstring.
+    /// - SeeAlso: `deletePath(_:recursive:)`.
     public func delete(recursive: Bool = true) -> Bool {
         do {
             try deletePath(_:recursive:)(self.pathString, recursive)

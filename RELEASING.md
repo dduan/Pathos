@@ -14,3 +14,4 @@
 - Create a GitHub release from the new version tag. Paste in content of
 - corresponding change log. Upload `Pathos.framework.zip` as part of the release.
 - Run `pod trunk push`.
+- Run `make docs` to generate and deploy the documentation website.

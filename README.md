@@ -36,9 +36,11 @@ try movePath(temporaryRoot, toPath: "output")
 Pathos offers more conventional OOP interfaces to all of these functions as
 well.
 
+Read the [documentation][] to learn more.
 For an example of real application, checkout [tre][].
 
 [tre]: https://github.com/dduan/tre
+[documentation]: https://dduan.github.io/Pathos
 
 ## Design
 
