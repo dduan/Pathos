@@ -1,5 +1,5 @@
 // TODO: missing docstring.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.normalize()`.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.normalized`.
 public func normalize(path: String) -> String {
     if path.isEmpty {
         return "."
@@ -207,7 +207,7 @@ public func relativePath(ofPath path: String, startingFromPath startingPath: Str
 extension PathRepresentable {
     // TODO: missing docstring.
     /// - SeeAlso: `normalize(path:)`.
-    public func normalize() -> Self {
+    public var normalized: Self {
         return Self(normalize(path:)(self.pathString))
     }
 
