@@ -26,7 +26,7 @@ public func permissions(forPath path: String) throws -> FilePermission {
 ///   - path: The path whose permission is being changed.
 /// - Throws: System error encountered while attempting to read or change permissions at the path.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.add(_:)`.
-public func add(_ permissions: FilePermission, toPath path: String) throws {
+public func add(_ permissions: FilePermission, forPath path: String) throws {
     let existingPermission = try permissions(forPath:)(path)
     try set(existingPermission.union(permissions), forPath: path)
 }
@@ -75,9 +75,9 @@ extension PathRepresentable {
 
     /// Set additional permissions to existing permission at this path. If this is an symbolic link, the
     /// permission for the link itself will be changed.
-    /// - SeeAlso: `add(_:toPath:)`.
+    /// - SeeAlso: `add(_:forPath:)`.
     public func add(_ permissions: FilePermission) {
-        try? add(_:toPath:)(permissions, self.pathString)
+        try? add(_:forPath:)(permissions, self.pathString)
     }
 
     /// Remove permissions from existing permission at a path. If this is an symbolic link, the

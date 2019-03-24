@@ -26,7 +26,7 @@ final class PermissionsTests: XCTestCase {
         let newPermission: FilePermission = .ownerExecute
         let resultPermissions: FilePermission = initialPermissions.union(newPermission)
 
-        try Pathos.add(newPermission, toPath: destination)
+        try Pathos.add(newPermission, forPath: destination)
 
         XCTAssertEqual(try permissions(forPath: destination), resultPermissions)
     }
