@@ -64,35 +64,35 @@ final class ExpandUserDirectoryTests: XCTestCase {
     }
 
     func testPathRepresentableExpandPathWithNoUser() {
-        XCTAssertEqual(Path("foo").expandUserDirectory().pathString, "foo")
+        XCTAssertEqual(Path("foo").withExpandedUserDirectory.pathString, "foo")
     }
 
     func testPathRepresentableUserDirectoryExpandsToHomeEnvironment() {
         setenv("HOME", "/I/do/not/exist", 1)
-        XCTAssertEqual(Path("~").expandUserDirectory().pathString, "/I/do/not/exist")
-        XCTAssertEqual(Path("~/foo").expandUserDirectory().pathString, "/I/do/not/exist/foo")
+        XCTAssertEqual(Path("~").withExpandedUserDirectory.pathString, "/I/do/not/exist")
+        XCTAssertEqual(Path("~/foo").withExpandedUserDirectory.pathString, "/I/do/not/exist/foo")
     }
 
     func testPathRepresentableSpecialHomeValue() {
         setenv("HOME", "/", 1)
-        XCTAssertEqual(Path("~").expandUserDirectory().pathString, "/")
-        XCTAssertEqual(Path("~/").expandUserDirectory().pathString, "/")
-        XCTAssertEqual(Path("~/foo").expandUserDirectory().pathString, "/foo")
+        XCTAssertEqual(Path("~").withExpandedUserDirectory.pathString, "/")
+        XCTAssertEqual(Path("~/").withExpandedUserDirectory.pathString, "/")
+        XCTAssertEqual(Path("~/foo").withExpandedUserDirectory.pathString, "/foo")
 
         setenv("HOME", "", 1)
-        XCTAssertEqual(Path("~").expandUserDirectory().pathString, "/")
-        XCTAssertEqual(Path("~/").expandUserDirectory().pathString, "/")
-        XCTAssertEqual(Path("~/foo").expandUserDirectory().pathString, "/foo")
+        XCTAssertEqual(Path("~").withExpandedUserDirectory.pathString, "/")
+        XCTAssertEqual(Path("~/").withExpandedUserDirectory.pathString, "/")
+        XCTAssertEqual(Path("~/foo").withExpandedUserDirectory.pathString, "/foo")
 
         setenv("HOME", "//", 1)
-        XCTAssertEqual(Path("~").expandUserDirectory().pathString, "/")
-        XCTAssertEqual(Path("~/").expandUserDirectory().pathString, "/")
-        XCTAssertEqual(Path("~/foo").expandUserDirectory().pathString, "/foo")
+        XCTAssertEqual(Path("~").withExpandedUserDirectory.pathString, "/")
+        XCTAssertEqual(Path("~/").withExpandedUserDirectory.pathString, "/")
+        XCTAssertEqual(Path("~/foo").withExpandedUserDirectory.pathString, "/foo")
 
         setenv("HOME", "///", 1)
-        XCTAssertEqual(Path("~").expandUserDirectory().pathString, "/")
-        XCTAssertEqual(Path("~/").expandUserDirectory().pathString, "/")
-        XCTAssertEqual(Path("~/foo").expandUserDirectory().pathString, "/foo")
+        XCTAssertEqual(Path("~").withExpandedUserDirectory.pathString, "/")
+        XCTAssertEqual(Path("~/").withExpandedUserDirectory.pathString, "/")
+        XCTAssertEqual(Path("~/foo").withExpandedUserDirectory.pathString, "/foo")
     }
 
     func testPathRepresentableFallbackToPasswdDatabase() {
@@ -104,6 +104,6 @@ final class ExpandUserDirectoryTests: XCTestCase {
             return
         }
         unsetenv("HOME")
-        XCTAssertEqual(Path("~").expandUserDirectory().pathString, home)
+        XCTAssertEqual(Path("~").withExpandedUserDirectory.pathString, home)
     }
 }

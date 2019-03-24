@@ -35,19 +35,19 @@ final class RelativePathInferringCurrentDirectoryTests: XCTestCase {
     }
 
     func testPathRepresentableAbsoluteParent() throws {
-        XCTAssertEqual(Path(self.testRoot).relativePath().pathString, "../..")
+        XCTAssertEqual(Path(self.testRoot).relativePath.pathString, "../..")
     }
 
     func testPathRepresentableAbsoluteChild() throws {
         let testPath = join(paths: self.testRoot, "a/b/c")
-        XCTAssertEqual(Path(testPath).relativePath().pathString, "c")
+        XCTAssertEqual(Path(testPath).relativePath.pathString, "c")
     }
 
     func testPathRepresentableRelativeParent() throws {
-        XCTAssertEqual(Path("../..").relativePath().pathString, "../..")
+        XCTAssertEqual(Path("../..").relativePath.pathString, "../..")
     }
 
     func testPathRepresentableRelativeChild() throws {
-        XCTAssertEqual(Path("./c").relativePath().pathString, "c")
+        XCTAssertEqual(Path("./c").relativePath.pathString, "c")
     }
 }

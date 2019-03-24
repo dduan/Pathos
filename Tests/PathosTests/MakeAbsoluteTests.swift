@@ -13,7 +13,7 @@ final class MakeAbsoluteTests: XCTestCase {
     }
 
     func testPathRepresentableMakeAbsolutePath() {
-        let result = Path("foo").absolutePath()
+        let result = Path("foo").absolutePath
         XCTAssertTrue(result.pathString.hasPrefix("/"))
         XCTAssertTrue(result.pathString.hasSuffix("foo"))
     }

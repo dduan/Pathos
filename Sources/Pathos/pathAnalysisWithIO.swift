@@ -5,7 +5,7 @@ import Darwin
 #endif
 
 // TODO: missing docstring.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.expandUserDirectory()`.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.withExpandedUserDirectory`.
 public func expandUserDirectory(inPath path: String) throws -> String {
     if !path.starts(with: "~") {
         return path
@@ -52,7 +52,7 @@ public func expandUserDirectory(inPath path: String) throws -> String {
 }
 
 // TODO: missing docstring.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.absolutePath()`.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.absolutePath`.
 public func absolutePath(ofPath path: String) throws -> String {
     var path = path
     if !isAbsolute(path: path) {
@@ -71,7 +71,7 @@ public func absolutePath(ofPath path: String) throws -> String {
 /// - Parameter path: the path the result is relative to.
 /// - Returns: a relative file path to current working directory.
 /// - Throws: system error resulted from trying to access current working directory.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.relativePath()`.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.relativePath`.
 public func relativePath(ofPath path: String) throws -> String {
     let startingPath = try absolutePath(ofPath: kCurrentDirectory)
     let path = try absolutePath(ofPath: path)
@@ -156,13 +156,13 @@ public func realPath(ofPath path: String) throws -> String {
 extension PathRepresentable {
     // TODO: missing docstring.
     /// - SeeAlso: `expandUserDirectory(inPath:)`.
-    public func expandUserDirectory() -> Self {
+    public var withExpandedUserDirectory: Self {
         return Self((try? expandUserDirectory(inPath:)(self.pathString)) ?? "/")
     }
 
     // TODO: missing docstring.
     /// - SeeAlso: `absolutePath(ofPath:)`.
-    public func absolutePath() -> Self {
+    public var absolutePath: Self {
         return (try? absolutePath(ofPath:)(self.pathString)).map(Self.init) ?? self
     }
 
@@ -171,7 +171,7 @@ extension PathRepresentable {
     /// Example: starting from `/Users/dan`, the relative path of `/` would be `../..`.
     /// - Returns: a relative file path to current working directory.
     /// - SeeAlso: `relativePath(ofPath:)`.
-    public func relativePath() -> Self {
+    public var relativePath: Self {
         let result = try? relativePath(ofPath:)(self.pathString)
         return result.map(Self.init) ?? self
     }
