@@ -95,8 +95,8 @@ public func children(inPath path: String, recursive: Bool = false) throws -> [St
 /// - Returns: paths to files with unknown types in `path`.
 /// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
 ///           data for the results.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.unknownTypeFiles(recursive:)`.
-public func unknownTypeFiles(inPath path: String, recursive: Bool = false) throws -> [String] {
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.childUnknownTypeFiles(recursive:)`.
+public func childUnknownTypeFiles(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_FIFO), recursive: recursive)
 }
 
@@ -110,8 +110,8 @@ public func unknownTypeFiles(inPath path: String, recursive: Bool = false) throw
 /// - Returns: path to all pipes in `path`.
 /// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
 ///           data for the results.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.pipes(recursive:)`.
-public func pipes(inPath path: String, recursive: Bool = false) throws -> [String] {
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.childPipes(recursive:)`.
+public func childPipes(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_UNKNOWN), recursive: recursive)
 }
 
@@ -125,8 +125,8 @@ public func pipes(inPath path: String, recursive: Bool = false) throws -> [Strin
 /// - Returns: path to all character device files in `path`.
 /// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
 ///           data for the results.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.characterDevices(recursive:)`.
-public func characterDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.childCharacterDevices(recursive:)`.
+public func childCharacterDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_CHR), recursive: recursive)
 }
 
@@ -140,8 +140,8 @@ public func characterDevices(inPath path: String, recursive: Bool = false) throw
 /// - Returns: path to directories in `path`.
 /// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
 ///           data for the results.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.directories(recursive:)`.
-public func directories(inPath path: String, recursive: Bool = false) throws -> [String] {
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.childDirectories(recursive:)`.
+public func childDirectories(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_DIR), recursive: recursive)
 }
 
@@ -155,8 +155,8 @@ public func directories(inPath path: String, recursive: Bool = false) throws -> 
 /// - Returns: path to block device files in `path`.
 /// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
 ///           data for the results.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.blockDevices(recursive:)`.
-public func blockDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.childBlockDevices(recursive:)`.
+public func childBlockDevices(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_BLK), recursive: recursive)
 }
 
@@ -170,8 +170,8 @@ public func blockDevices(inPath path: String, recursive: Bool = false) throws ->
 /// - Returns: path to normal files in `path`.
 /// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
 ///           data for the results.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.files(recursive:)`.
-public func files(inPath path: String, recursive: Bool = false) throws -> [String] {
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.childFiles(recursive:)`.
+public func childFiles(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_REG), recursive: recursive)
 }
 
@@ -185,8 +185,8 @@ public func files(inPath path: String, recursive: Bool = false) throws -> [Strin
 /// - Returns: path to symbolic links in `path`.
 /// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
 ///           data for the results.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.symbolicLinks(recursive:)`.
-public func symbolicLinks(inPath path: String, recursive: Bool = false) throws -> [String] {
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.childSymbolicLinks(recursive:)`.
+public func childSymbolicLinks(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_LNK), recursive: recursive)
 }
 
@@ -200,8 +200,8 @@ public func symbolicLinks(inPath path: String, recursive: Bool = false) throws -
 /// - Returns: path to sockets in `path`.
 /// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
 ///           data for the results.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.sockets(recursive:)`.
-public func sockets(inPath path: String, recursive: Bool = false) throws -> [String] {
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.childSockets(recursive:)`.
+public func childSockets(inPath path: String, recursive: Bool = false) throws -> [String] {
     return try _typedChildrenInPath(path, Int32(DT_SOCK), recursive: recursive)
 }
 
@@ -230,9 +230,9 @@ extension PathRepresentable {
     ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to files with unknown types in `self`.
-    /// - SeeAlso: `unknownTypeFiles(inPath:recursive:)`.
-    public func unknownTypeFiles(recursive: Bool = false) -> [Self] {
-        return _children(self, recursive: recursive, block: unknownTypeFiles(inPath:recursive:))
+    /// - SeeAlso: `childUnknownTypeFiles(inPath:recursive:)`.
+    public func childUnknownTypeFiles(recursive: Bool = false) -> [Self] {
+        return _children(self, recursive: recursive, block: childUnknownTypeFiles(inPath:recursive:))
     }
 
     /// Find paths to pipes in `self`.
@@ -244,9 +244,9 @@ extension PathRepresentable {
     ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to pipes in `self`.
-    /// - SeeAlso: `pipes(inPath:recursive:)`.
-    public func pipes(recursive: Bool = false) -> [Self] {
-        return _children(self, recursive: recursive, block: pipes(inPath:recursive:))
+    /// - SeeAlso: `childPipes(inPath:recursive:)`.
+    public func childPipes(recursive: Bool = false) -> [Self] {
+        return _children(self, recursive: recursive, block: childPipes(inPath:recursive:))
     }
 
     /// Find paths to character devices in `self`.
@@ -258,9 +258,9 @@ extension PathRepresentable {
     ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to character devices in `self`.
-    /// - SeeAlso: `characterDevices(inPath:recursive:)`.
-    public func characterDevices(recursive: Bool = false) -> [Self] {
-        return _children(self, recursive: recursive, block: characterDevices(inPath:recursive:))
+    /// - SeeAlso: `childCharacterDevices(inPath:recursive:)`.
+    public func childCharacterDevices(recursive: Bool = false) -> [Self] {
+        return _children(self, recursive: recursive, block: childCharacterDevices(inPath:recursive:))
     }
 
     /// Find paths to directories in `self`.
@@ -272,9 +272,9 @@ extension PathRepresentable {
     ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to character devices in `self`.
-    /// - SeeAlso: `directories(inPath:recursive:)`.
-    public func directories(recursive: Bool = false) -> [Self] {
-        return _children(self, recursive: recursive, block: directories(inPath:recursive:))
+    /// - SeeAlso: `childDirectories(inPath:recursive:)`.
+    public func childDirectories(recursive: Bool = false) -> [Self] {
+        return _children(self, recursive: recursive, block: childDirectories(inPath:recursive:))
     }
 
     /// Find paths to block devices in `self`.
@@ -286,9 +286,9 @@ extension PathRepresentable {
     ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to block devices in `self`.
-    /// - SeeAlso: `blockDevices(inPath:recursive:)`.
-    public func blockDevices(recursive: Bool = false) -> [Self] {
-        return _children(self, recursive: recursive, block: blockDevices(inPath:recursive:))
+    /// - SeeAlso: `childBlockDevices(inPath:recursive:)`.
+    public func childBlockDevices(recursive: Bool = false) -> [Self] {
+        return _children(self, recursive: recursive, block: childBlockDevices(inPath:recursive:))
     }
 
     /// Find paths to normal files in `self`.
@@ -300,10 +300,9 @@ extension PathRepresentable {
     ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to normal files in `self`.
-    /// - SeeAlso: `files(inPath:recursive:)`.
-    /// - SeeAlso: `files(inPath:recursive:)`.
-    public func files(recursive: Bool = false) -> [Self] {
-        return _children(self, recursive: recursive, block: files(inPath:recursive:))
+    /// - SeeAlso: `childFiles(inPath:recursive:)`.
+    public func childFiles(recursive: Bool = false) -> [Self] {
+        return _children(self, recursive: recursive, block: childFiles(inPath:recursive:))
     }
 
     /// Find paths to symbolic links (also known as symlinks or soft links) in `self`.
@@ -315,9 +314,9 @@ extension PathRepresentable {
     ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to symbolic links in `self`.
-    /// - SeeAlso: `symbolicLinks(inPath:recursive:)`.
-    public func symbolicLinks(recursive: Bool = false) -> [Self] {
-        return _children(self, recursive: recursive, block: symbolicLinks(inPath:recursive:))
+    /// - SeeAlso: `childSymbolicLinks(inPath:recursive:)`.
+    public func childSymbolicLinks(recursive: Bool = false) -> [Self] {
+        return _children(self, recursive: recursive, block: childSymbolicLinks(inPath:recursive:))
     }
 
     /// Find paths to sockets in `self`.
@@ -329,8 +328,8 @@ extension PathRepresentable {
     ///                        in this path. Defaults to `false`.
     ///
     /// - Returns: paths to sockets in `self`.
-    /// - SeeAlso: `sockets(inPath:recursive:)`.
-    public func sockets(recursive: Bool = false) -> [Self] {
-        return _children(self, recursive: recursive, block: sockets(inPath:recursive:))
+    /// - SeeAlso: `childSockets(inPath:recursive:)`.
+    public func childSockets(recursive: Bool = false) -> [Self] {
+        return _children(self, recursive: recursive, block: childSockets(inPath:recursive:))
     }
 }
