@@ -47,6 +47,7 @@ private func _glob(_ pattern: String) -> [String] {
 /// - Returns: paths in current working directory that matches the pattern.
 /// - Throws: A `SystemError` if any sub-directory cannot be opened or there's not enough memory to hold all
 ///           data for results from listing child paths.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.glob(_:)`.
 public func glob(_ pattern: String) throws -> [String] {
     guard let globStarPosition = pattern.firstIndex(of: "**") else {
         return _glob(pattern)
@@ -85,6 +86,7 @@ extension PathRepresentable {
     ///
     /// - Parameter pattern: a pattern according to rules of Unix shells.
     /// - Returns: paths in current working directory that matches the pattern.
+    /// - SeeAlso: `glob(_:)`.
     public static func glob(_ pattern: String) -> [Self] {
         return (try? Pathos.glob(_:)(pattern).map(Self.init)) ?? []
     }

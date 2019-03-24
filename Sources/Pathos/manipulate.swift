@@ -16,6 +16,7 @@ import Darwin
 ///   - throwIfAlreadyExists: If `true`, a `SystemError` is thrown if the target directory (or any of it's
 ///                           parent, if it needs creation) already exists.
 /// - Throws: A `SystemError`.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.createDirectory(createParents:permission:failIfAlreadyExists:)`.
 public func createDirectory(atPath path: String, permission: FilePermission = 0o0755, createParents: Bool = false, throwIfAlreadyExists: Bool = false) throws {
     func _makeDirectory() throws {
         if mkdir(path, permission.rawValue) != 0 {
@@ -78,6 +79,7 @@ public func deletePath(_ path: String, recursive: Bool = true) throws {
 ///   - destination: The new location.
 /// - Throws: System error. This could be caused by lack of permissions in either path, paths having different
 ///           file types; attempting to move `.` or `..`, etc.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.move(to:)`.
 public func movePath(_ source: String, toPath destination: String) throws {
     if rename(source, destination) != 0 {
         throw SystemError(posixErrorCode: errno)
@@ -97,6 +99,7 @@ extension PathRepresentable {
     ///                          parent, if it needs creation) already exists.
     /// - Returns: `true` if a directory is created, `false` if an error occurred and the directory was not
     ///            created.
+    /// - SeeAlso: `createDirectory(atPath:permission:createParents:throwIfAlreadyExists:)`.
     public func createDirectory(createParents: Bool = false, permission: FilePermission = 0o0755, failIfAlreadyExists: Bool = false) -> Bool {
         do {
             try createDirectory(atPath:permission:createParents:throwIfAlreadyExists:)(self.pathString, permission, createParents, failIfAlreadyExists)
@@ -124,6 +127,7 @@ extension PathRepresentable {
     /// - Parameter destination: The new location.
     /// - Throws: System error. This could be caused by lack of permissions in either path, paths having
     ///           different file types; attempting to move `.` or `..`, etc.
+    /// - SeeAlso: `movePath(_:toPath:)`.
     public func move(to destination: Self) -> Bool {
         do {
             try movePath(_:toPath:)(self.pathString, destination.pathString)

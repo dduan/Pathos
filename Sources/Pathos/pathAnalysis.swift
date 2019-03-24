@@ -1,4 +1,5 @@
 // TODO: missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.normalize()`.
 public func normalize(path: String) -> String {
     if path.isEmpty {
         return "."
@@ -28,10 +29,13 @@ public func normalize(path: String) -> String {
 }
 
 // TODO: missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.isAbsolute`.
 public func isAbsolute(path: String) -> Bool {
     return path.hasPrefix(pathSeparator)
 }
 
+// TODO: missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.join(with:)`.
 public func join(paths: [String]) -> String {
     var result = ""
     for other in paths {
@@ -48,11 +52,13 @@ public func join(paths: [String]) -> String {
 }
 
 // TODO: missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.join(with:_:)`.
 public func join(paths firstPath: String, _ secondPath: String, _ otherPaths: String...) -> String {
     return join(paths: [firstPath, secondPath] + otherPaths)
 }
 
 // TODO: missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.split()`.
 public func split(path: String) -> (String, String) {
     guard let index = path.lastIndex(of: pathSeparatorCharacter) else {
         return ("", path)
@@ -72,6 +78,7 @@ public func split(path: String) -> (String, String) {
 }
 
 // TODO: missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.splitExtension()`.
 public func splitExtension(ofPath path: String) -> (String, String) {
     guard let dotIndex = path.lastIndex(of: ".") else {
         return (path, "")
@@ -100,11 +107,13 @@ public func splitExtension(ofPath path: String) -> (String, String) {
 }
 
 // TODO: missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.extension`.
 public func fileExtension(ofPath path: String) -> String {
     return splitExtension(ofPath: path).1
 }
 
 // TODO: missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.basename`.
 public func basename(ofPath path: String) -> String {
     if let separatorIndex = path.lastIndex(of: pathSeparatorCharacter) {
         return String(path.suffix(from: path.index(after: separatorIndex)))
@@ -114,6 +123,7 @@ public func basename(ofPath path: String) -> String {
 }
 
 // TODO: missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.directory`.
 public func directory(ofPath path: String) -> String {
     let head = path
         .lastIndex(of: pathSeparatorCharacter)
@@ -164,6 +174,7 @@ func _commonPath(amongPaths paths: [String]) -> String {
 ///   - secondPath: Second path. This parameter ensures there are at least 2 paths to compare.
 ///   - otherPaths: Other, optional paths.
 /// - Returns: The longest common sub-path of each given argument.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.commonPath(with:_:)`.
 public func commonPath(amongPaths firstPath: String, _ secondPath: String, _ otherPaths: String...) -> String
 {
     return _commonPath(amongPaths: [firstPath, secondPath] + otherPaths)
@@ -178,6 +189,7 @@ public func commonPath(amongPaths firstPath: String, _ secondPath: String, _ oth
 ///   - path: the path the result is relative to.
 ///   - startingPath: starting path of the relativity.
 /// - Returns: a relative file path to `path`.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.relativePath(to:)`.
 public func relativePath(ofPath path: String, startingFromPath startingPath: String) -> String {
     let startSegments = startingPath.split(separator: pathSeparatorCharacter)
     let pathSegements = path.split(separator: pathSeparatorCharacter)
@@ -194,49 +206,58 @@ public func relativePath(ofPath path: String, startingFromPath startingPath: Str
 
 extension PathRepresentable {
     // TODO: missing docstring.
+    /// - SeeAlso: `normalize(path:)`.
     public func normalize() -> Self {
         return Self(normalize(path:)(self.pathString))
     }
 
     // TODO: missing docstring.
+    /// - SeeAlso: `isAbsolute(path:)`.
     public var isAbsolute: Bool {
         return isAbsolute(path:)(self.pathString)
     }
 
     // TODO: missing docstring.
+    /// - SeeAlso: `join(paths:)`.
     public func join(with paths: [PathRepresentable]) -> Self {
         return Self(join(paths:)([self.pathString] + paths.map { $0.pathString }))
     }
 
     // TODO: missing docstring.
+    /// - SeeAlso: `join(paths:_:_:)`.
     public func join(with secondPath: PathRepresentable, _ otherPaths: PathRepresentable...) -> Self {
         let pathStrings = [self.pathString, secondPath.pathString] + otherPaths.map { $0.pathString }
         return Self(join(paths:)(pathStrings))
     }
 
     // TODO: missing docstring.
+    /// - SeeAlso: `split(path:)`.
     public func split() -> (Self, Self) {
         let (p0, p1) = split(path:)(self.pathString)
         return (Self(p0), Self(p1))
     }
 
     // TODO: missing docstring.
+    /// - SeeAlso: `splitExtension(ofPath:)`.
     public func splitExtension() -> (Self, String) {
         let splitResult = splitExtension(ofPath:)(self.pathString)
         return (Self(splitResult.0), splitResult.1)
     }
 
     // TODO: missing docstring.
+    /// - SeeAlso: `directory(ofPath:)`.
     public var directory: String {
         return directory(ofPath:)(self.pathString)
     }
 
     // TODO: missing docstring.
+    /// - SeeAlso: `basename(ofPath:)`.
     public var basename: String {
         return basename(ofPath:)(self.pathString)
     }
 
     // TODO: missing docstring.
+    /// - SeeAlso: `fileExtension(ofPath:)`.
     public var `extension`: String {
         return fileExtension(ofPath:)(self.pathString)
     }
@@ -249,6 +270,7 @@ extension PathRepresentable {
     ///   - second: The second path to compare. This ensures there's at least a path to compare to.
     ///   - others: Other, optional paths.
     /// - Returns: The longest common sub-path of each given argument.
+    /// - SeeAlso: `commonPath(amongPaths:_:_:)`.
     public func commonPath(with second: PathRepresentable, _ others: PathRepresentable...) -> Self? {
         let pathStrings = [self.pathString, second.pathString] + others.map { $0.pathString }
         let commonString = _commonPath(amongPaths:)(pathStrings)
@@ -262,6 +284,7 @@ extension PathRepresentable {
     ///
     /// - Parameter startingPath: starting path of the relativity.
     /// - Returns: a relative file path to `path`.
+    /// - SeeAlso: `relativePath(ofPath:)`.
     public func relativePath(to startingPath: PathRepresentable) -> Self {
         return Self(relativePath(ofPath:startingFromPath:)(self.pathString, startingPath.pathString))
     }

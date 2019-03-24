@@ -9,6 +9,7 @@ import Darwin
 /// - Returns: Path for current working directory.
 /// - Throws: System error that could trigger when a component of the current path no longer exists or the
 ///           process lacks permission to read it.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.currentWorkingDirectory`.
 public func getCurrentWorkingDirectory() throws -> String {
     if let buffer = getcwd(nil, 0) {
         return String(cString: buffer)
@@ -22,6 +23,7 @@ public func getCurrentWorkingDirectory() throws -> String {
 /// - Throws: System error that could trigger when, for example, search permission is denied for any component
 ///           of the path name; There's a symbolic link loop among some components; A component is not an
 ///           directory, etc.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.currentWorkingDirectory`.
 public func setCurrentWorkingDirectory(toPath path: String) throws {
     if chdir(path) != 0 {
         throw SystemError(posixErrorCode: errno)
@@ -37,6 +39,7 @@ public func setCurrentWorkingDirectory(toPath path: String) throws {
 ///   - path: The path that would be the current working directory.
 ///   - closure: The closure that will be called with `path` being the working directory.
 /// - Throws: Errors encountered setting or reading working directories.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.asCurrentWorkingDirectory(performAction:)`.
 public func withWorkingDirectory(beingPath path: String, performAction closure: @escaping () throws -> Void) throws {
     let originalDirectory = try getCurrentWorkingDirectory()
     defer {
@@ -53,6 +56,7 @@ extension PathRepresentable {
     /// `Path(string: ".")` will be returned instead.
     /// If an error occures while setting the directory (see `setCurrentWorkingDirectory(toPath:)`), the
     /// working directory will be unchanged.
+    /// - SeeAlso: `getCurrentWorkingDirectory()` and `setCurrentWorkingDirectory(toPath:)`.
     public static var currentWorkingDirectory: Self {
         get {
             return Self((try? getCurrentWorkingDirectory()) ?? ".")
@@ -69,6 +73,7 @@ extension PathRepresentable {
     /// The closure is guaranteed to be invoked synchronously.
     ///
     /// - Parameter closure: The closure to be called with this path being the working directory.
+    /// - SeeAlso: `withTemporaryDirectory(suffix:prefix:inDirectory:performAction:)`.
     public func asCurrentWorkingDirectory(performAction closure: @escaping () throws -> Void) {
         try? withWorkingDirectory(beingPath: self.pathString, performAction: closure)
     }

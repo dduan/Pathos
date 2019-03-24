@@ -10,6 +10,7 @@ import Darwin
 ///   - source: path to the original file or directory.
 ///   - destination: the location for the symbolic link to be created.
 /// - Throws: system error. Example of cause includes lack of write permission at destination, lack of additional space, etc.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.createSymbolicLink(at:)`.
 public func createSymbolicLink(fromPath source: String, toPath destination: String) throws {
     if symlink(source, destination) != 0 {
         throw SystemError(posixErrorCode: errno)
@@ -21,6 +22,7 @@ public func createSymbolicLink(fromPath source: String, toPath destination: Stri
 /// - Parameter path: the location of the symbolic link.
 /// - Returns: string reprentation of the link's destination.
 /// - Throws: system error encountered while attempting to read the content of the link.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.readSymbolicLink()`.
 public func readSymbolicLink(atPath path: String) throws -> String {
     let buffer = UnsafeMutableBufferPointer<Int8>.allocate(capacity: kMaxPathNameLength + 1)
     defer { buffer.deallocate() }
@@ -37,6 +39,7 @@ extension PathRepresentable {
     ///
     /// - Parameter destination: the location for the symbolic link to be created.
     /// - Returns: `true` if the symbolic link is successfully created. `false` otherwise.
+    /// - SeeAlso: `createSymbolicLink(fromPath:toPath:)`.
     public func createSymbolicLink(at destination: Self) -> Bool {
         do {
             try createSymbolicLink(fromPath:toPath:)(self.pathString, destination.pathString)
@@ -50,6 +53,7 @@ extension PathRepresentable {
     ///
     /// - Parameter path: the location of the symbolic link.
     /// - Returns: string reprentation of the link's destination. nil if an error is encountered while trying to read the link.
+    /// - SeeAlso: `readSymbolicLink(atPath:)`.
     public func readSymbolicLink() -> String? {
         return try? readSymbolicLink(atPath:)(self.pathString)
     }

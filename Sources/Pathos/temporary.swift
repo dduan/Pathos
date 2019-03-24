@@ -31,6 +31,7 @@ private func candidateTemporaryDirectories() -> [String] {
 /// * As a last resort, the current working directory.
 ///
 /// - Returns: result of the search.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.searchForDefaultTemporaryDirectory()`
 public func searchForDefaultTemporaryDirectory() -> String {
     for path in candidateTemporaryDirectories() where path != kCurrentDirectory {
         do {
@@ -52,6 +53,7 @@ private var _defaultTemporaryDirectory: String? = nil
 ///
 /// Pathos calls `searchForDefaultTemporaryDirectory` to calculate this value. The result of this search is
 /// cached. You can use the same method to reset this value if needed.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.defaultTemporaryDirectory`
 public var defaultTemporaryDirectory: String {
     get {
         if let directory = _defaultTemporaryDirectory {
@@ -87,6 +89,7 @@ private func _makeTemporaryPath(suffix: String = "", prefix: String = "", inDire
     return fileLocation
 }
 // TODO: Missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.createTemporaryDirectory(suffix:prefix:inDirectory:)`.
 public func createTemporaryFile(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) throws -> String {
     let fileLocation = try _makeTemporaryPath(suffix: suffix, prefix: prefix, inDirectory: directory)
     try write("", atPath: fileLocation)
@@ -94,6 +97,7 @@ public func createTemporaryFile(suffix: String = "", prefix: String = "", inDire
 }
 
 // TODO: Missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.createTemporaryFile(suffix:prefix:inDirectory:)`.
 public func createTemporaryDirectory(suffix: String? = nil, prefix: String? = nil, inDirectory directory: String? = nil) throws -> String {
     let fileLocation = try _makeTemporaryPath(suffix: suffix ?? "", prefix: prefix ?? "", inDirectory: directory)
     try createDirectory(atPath: fileLocation)
@@ -101,6 +105,7 @@ public func createTemporaryDirectory(suffix: String? = nil, prefix: String? = ni
 }
 
 // TODO: Missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.withTemporaryDirectory(suffix:prefix:inDirectory:performAction:)`.
 public func withTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil, performAction closure: @escaping (String) throws -> Void) throws {
     let temporaryDirectory = try createTemporaryDirectory(suffix: suffix, prefix: prefix, inDirectory: directory)
     try withWorkingDirectory(beingPath: temporaryDirectory) {
@@ -116,6 +121,7 @@ extension PathRepresentable {
     ///
     /// Pathos calls `searchForDefaultTemporaryDirectory` to calculate this value. The result of this search is
     /// cached. You can use the same method to reset this value if needed.
+    /// - SeeAlso: `Pathos.defaultTemporaryDirectory`.
     public static var defaultTemporaryDirectory: Self {
         get {
             return Self(Pathos.defaultTemporaryDirectory)
@@ -136,11 +142,13 @@ extension PathRepresentable {
     /// - As a last resort, the current working directory.
     ///
     /// - Returns: result of the search.
+    /// - SeeAlso: `searchForDefaultTemporaryDirectory()`.
     public static func searchForDefaultTemporaryDirectory() -> String {
         return Pathos.searchForDefaultTemporaryDirectory()
     }
 
     // TODO: Missing docstring.
+    /// - SeeAlso: `createTemporaryFile(suffix:prefix:inDirectory:)`.
     public static func createTemporaryFile(suffix: String = "", prefix: String = "", inDirectory directory: String? = nil) -> Self? {
         do {
             return Self(try Pathos.createTemporaryFile(suffix:prefix:inDirectory:)(suffix, prefix, directory))
@@ -150,6 +158,7 @@ extension PathRepresentable {
     }
 
     // TODO: Missing docstring.
+    /// - SeeAlso: `createTemporaryDirectory(suffix:prefix:inDirectory:)`.
     public static func createTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: Self? = nil) -> Self? {
         do {
             return Self(try Pathos.createTemporaryDirectory(suffix:prefix:inDirectory:)(suffix, prefix, directory?.pathString))
@@ -159,6 +168,7 @@ extension PathRepresentable {
     }
 
     // TODO: Missing docstring.
+    /// - SeeAlso: `withTemporaryDirectory(suffix:prefix:inDirectory:performAction:)`.
     public static func withTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: Self? = nil, performAction closure: @escaping (Self) throws -> Void) {
         guard let temporaryDirectory = self.createTemporaryDirectory(suffix: suffix, prefix: prefix, inDirectory: directory) else
         {

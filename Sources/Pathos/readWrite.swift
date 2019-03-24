@@ -25,6 +25,7 @@ func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, creat
 ///
 /// - Parameter path: the path to the file that will be read. If the path is a directory, no bytes will be read.
 /// - Throws: System error encountered while opening the file.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.readBytes()`.
 public func readBytes(atPath path: String) throws -> [UInt8] {
     guard case let fd = open(path, O_RDONLY), fd != -1 else {
         throw SystemError(posixErrorCode: errno)
@@ -49,6 +50,7 @@ public func readBytes(atPath path: String) throws -> [UInt8] {
 /// - Parameter path: path at which the content will be read.
 /// - Returns: content of the file as an UTF-8 string.
 /// - Throws: System error encountered while opening the file.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.readString()`.
 public func readString(atPath path: String) throws -> String {
     var content = try readBytes(atPath: path)
     content.append(0)
@@ -56,12 +58,14 @@ public func readString(atPath path: String) throws -> String {
 }
 
 // TODO: missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.write(_:createIfNecessary:permission:)`.
 public func write<Bytes>(_ bytes: Bytes, atPath path: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws where Bytes: Collection, Bytes.Element: BinaryInteger {
     let buffer = bytes.map(UInt8.init(truncatingIfNeeded:))
     try _writeAtPath(path, bytes: buffer, byteCount: buffer.count, createIfNecessary: createIfNecessary, permission: permission)
 }
 
 // TODO: missing docstring.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.write(_:createIfNecessary:permission:)`.
 public func write(_ string: String, atPath path: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws {
     try string.utf8CString.withUnsafeBytes { bytes in
         try _writeAtPath(path, bytes: bytes.baseAddress!, byteCount: bytes.count, createIfNecessary: createIfNecessary, permission: permission)
@@ -74,6 +78,7 @@ extension PathRepresentable {
     ///
     /// If an error is encounterd while opening or reading the file, no bytes
     /// will be returned.
+    /// - SeeAlso: `readBytes(atPath:)`.
     public func readBytes() -> [UInt8] {
         return (try? readBytes(atPath:)(self.pathString)) ?? []
     }
@@ -81,11 +86,13 @@ extension PathRepresentable {
     /// Read the content of file at this path as an UTF-8 string. If the path points to a directory, empty string will be returned. If other encoding is desired, use `readBytes` and encode separetely. If an error is encountered opening the file, an empty string will be returned.
     ///
     /// - Returns: content of the file as an UTF-8 string.
+    /// - SeeAlso: `readString(atPath:)`.
     public func readString() -> String {
         return (try? readString(atPath:)(self.pathString)) ?? ""
     }
 
     // TODO: missing docstring. Remember to note the byte truncating!
+    /// - SeeAlso: `write(_:atPath:createIfNecessary:permission:)`.
     @discardableResult
     public func write<Bytes>(_ bytes: Bytes, createIfNecessary: Bool = true, permission: FilePermission? = nil) -> Bool where Bytes: Collection, Bytes.Element: BinaryInteger {
         do {
@@ -97,6 +104,7 @@ extension PathRepresentable {
     }
 
     // TODO: missing docstring.
+    /// - SeeAlso: `write(_:atPath:createIfNecessary:permission:)`.
     @discardableResult
     public func write(_ string: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) -> Bool {
         do {
