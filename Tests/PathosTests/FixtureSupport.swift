@@ -53,15 +53,15 @@ extension XCTestCase {
         }
     }
 
-    var childFiles: Set<String> {
+    var childFileFixture: Set<String> {
         return [self.fixture(.fileThatExists)]
     }
 
-    var childDirectories: Set<String> {
+    var childDirectoryFixture: Set<String> {
         return [self.fixture(.directoryThatExists)]
     }
 
-    var childSymbolicLinks: Set<String> {
+    var childSymbolicLinkFixture: Set<String> {
         return [
             self.fixture(.goodFileSymbol),
             self.fixture(.goodDirectorySymbol),
@@ -69,7 +69,7 @@ extension XCTestCase {
         ]
     }
 
-    var childFilesRecursive: Set<String> {
+    var childFileRecursiveFixture: Set<String> {
         return [
             self.fixture(.fileThatExists),
             self.fixture(.fileInDirectory),
@@ -77,14 +77,14 @@ extension XCTestCase {
         ]
     }
 
-    var childDirectoriesRecursive: Set<String> {
+    var childDirectoryRecursiveFixture: Set<String> {
         return [
             self.fixture(.directoryThatExists),
             self.fixture(.directoryInDirectory),
         ]
     }
 
-    var childSymbolicLinksRecursive: Set<String> {
+    var childSymbolicLinkRecursiveFixture: Set<String> {
         return [
             self.fixture(.goodFileSymbol),
             self.fixture(.goodDirectorySymbol),
