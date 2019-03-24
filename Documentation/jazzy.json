@@ -15,15 +15,15 @@
             "name": "Finding Files",
             "children": [
                 "glob(_:)",
-                "files(inPath:recursive:)",
-                "directories(inPath:recursive:)",
                 "children(inPath:recursive:)",
-                "symbolicLinks(inPath:recursive:)",
-                "blockDevices(inPath:recursive:)",
-                "characterDevices(inPath:recursive:)",
-                "pipes(inPath:recursive:)",
-                "sockets(inPath:recursive:)",
-                "unknownTypeFiles(inPath:recursive:)"
+                "childFiles(inPath:recursive:)",
+                "childDirectories(inPath:recursive:)",
+                "childSymbolicLinks(inPath:recursive:)",
+                "childSockets(inPath:recursive:)",
+                "childPipes(inPath:recursive:)",
+                "childCharacterDevices(inPath:recursive:)",
+                "childBlockDevices(inPath:recursive:)",
+                "childUnknownTypeFiles(inPath:recursive:)"
             ]
         },
         {
@@ -95,7 +95,7 @@
                 "size(atPath:)",
                 "FilePermission",
                 "permissions(forPath:)",
-                "add(_:toPath:)",
+                "add(_:forPath:)",
                 "remove(_:forPath:)",
                 "set(_:forPath:)",
                 "FileTime",
