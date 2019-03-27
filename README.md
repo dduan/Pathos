@@ -62,7 +62,7 @@ github "dduan/Pathos"
 #### With [SwiftPM](https://swift.org/package-manager)
 
 ```
-.package(url: "http://github.com/dduan/Pathos", from: "0.1.1")
+.package(url: "http://github.com/dduan/Pathos", from: "0.1.2")
 ```
 
 ## Design
