@@ -43,6 +43,28 @@ For an example of real application, checkout [tre][].
 [tre]: https://github.com/dduan/tre
 [documentation]: https://dduan.github.io/Pathos
 
+## Installation
+
+#### With [CocoaPods](http://cocoapods.org/)
+
+```ruby
+use_frameworks!
+
+pod "Pathos"
+```
+
+#### With [Carthage](https://github.com/Carthage/Carthage)
+
+```
+github "dduan/Pathos"
+```
+
+#### With [SwiftPM](https://swift.org/package-manager)
+
+```
+.package(url: "http://github.com/dduan/Pathos", from: "0.1.0")
+```
+
 ## Design
 
 Pathos is designed with the following philosophy in mind.
