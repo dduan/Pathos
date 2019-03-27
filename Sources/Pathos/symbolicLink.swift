@@ -40,6 +40,7 @@ extension PathRepresentable {
     /// - Parameter destination: the location for the symbolic link to be created.
     /// - Returns: `true` if the symbolic link is successfully created. `false` otherwise.
     /// - SeeAlso: `createSymbolicLink(fromPath:toPath:)`.
+    @discardableResult
     public func createSymbolicLink(at destination: Self) -> Bool {
         do {
             try createSymbolicLink(fromPath:toPath:)(self.pathString, destination.pathString)
