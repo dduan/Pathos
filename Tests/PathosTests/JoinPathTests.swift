@@ -37,6 +37,13 @@ final class JoinPathTests: XCTestCase {
         XCTAssertEqual(
             Path("/foo").join(with: Path("bar")).pathString,
             "/foo/bar")
+
+        XCTAssertEqual(
+            (Path("/foo") + Path("bar")).pathString,
+            "/foo/bar")
+        XCTAssertEqual(
+            (Path("/foo") + Path("bar")).pathString,
+            "/foo/bar")
     }
 
     func testPathRepresentableMultipleJoining() {
