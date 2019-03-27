@@ -100,6 +100,7 @@ extension PathRepresentable {
     /// - Returns: `true` if a directory is created, `false` if an error occurred and the directory was not
     ///            created.
     /// - SeeAlso: `createDirectory(atPath:permission:createParents:throwIfAlreadyExists:)`.
+    @discardableResult
     public func createDirectory(createParents: Bool = false, permission: FilePermission = 0o0755, failIfAlreadyExists: Bool = false) -> Bool {
         do {
             try createDirectory(atPath:permission:createParents:throwIfAlreadyExists:)(self.pathString, permission, createParents, failIfAlreadyExists)
@@ -111,6 +112,7 @@ extension PathRepresentable {
 
     // TODO: missing docstring.
     /// - SeeAlso: `deletePath(_:recursive:)`.
+    @discardableResult
     public func delete(recursive: Bool = true) -> Bool {
         do {
             try deletePath(_:recursive:)(self.pathString, recursive)
@@ -128,6 +130,7 @@ extension PathRepresentable {
     /// - Throws: System error. This could be caused by lack of permissions in either path, paths having
     ///           different file types; attempting to move `.` or `..`, etc.
     /// - SeeAlso: `movePath(_:toPath:)`.
+    @discardableResult
     public func move(to destination: Self) -> Bool {
         do {
             try movePath(_:toPath:)(self.pathString, destination.pathString)

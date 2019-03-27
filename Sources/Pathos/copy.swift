@@ -65,6 +65,7 @@ public func copyFile(fromPath source: String, toPath destination: String, follow
 extension PathRepresentable {
     // TODO: missing docstring.
     /// - SeeAlso: `copyFile(fromPath:toPath:followSymbolicLink:chunkSize:)`.
+    @discardableResult
     public func copy(to destination: PathRepresentable, followSymbolicLink: Bool = true, chunkSize: Int = 1024 * 16) -> Bool {
         do {
             try copyFile(fromPath: self.pathString, toPath: destination.pathString, followSymbolicLink: followSymbolicLink, chunkSize: chunkSize)
