@@ -290,3 +290,7 @@ extension PathRepresentable {
     }
 }
 
+/// Syntax sugar for joining two `PathRepresentable`s.
+public func + <T: PathRepresentable>(lhs: T, rhs: T) -> T {
+    return lhs.join(with: rhs)
+}
