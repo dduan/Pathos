@@ -1,10 +1,8 @@
 # Pathos
 
-A file management library for Swift.
+Pathos is everything you need for file system¹ inquiry and manipulation.
 
-## Overview
-
-For a taste Pathos, let's generate a static site from Markdown files!
+For a taste what that means, let's generate a static site from Markdown files!
 
 ```swift
 // Create a unique, temporary directory.
@@ -33,15 +31,18 @@ for markdown in try glob("**/*.md") {
 try movePath(temporaryRoot, toPath: "output")
 ```
 
-Pathos offers more conventional OOP interfaces to all of these functions as
-well.
+Pathos offers conventional OOP interfaces to all of these functions as well.
 
 Read the [documentation][] to learn more.
 
 For an example of real application, checkout [tre][].
 
+¹ Unix [virtual file system][], as opposed to underlying system such as APFS,
+Ext4, btrfs etc.
+
 [tre]: https://github.com/dduan/tre
 [documentation]: https://dduan.github.io/Pathos
+[virtual file system]: https://en.wikipedia.org/wiki/Virtual_file_system
 
 ## Installation
 
@@ -65,23 +66,23 @@ github "dduan/Pathos"
 .package(url: "http://github.com/dduan/Pathos", from: "0.1.2")
 ```
 
-## Design
-
-Pathos is designed with the following philosophy in mind.
+## Design Goals
 
 1. **Provide as few abstractions atop POSIX file API as possible, but no
    fewer.** Make conventional C APIs Swift-y, but avoid over-abstraction. Use
    string for path values for efficiency and simplicity. User can trivially and
-   incrementally add on abstractions for their needs. A _super_ simple protocol,
-   `PathRepresentable`, paired with a equally simple `Path` type, serve as
-   bridge to the OO world.
+   incrementally add on abstractions for their needs.
 2. **Battery included**. Include a well-rounded set of convenience for file
    manipulations. (Python users, for example, should feel right at home).
-3. **An object-oriented secondary layer hides system errors**. In production
-   systems, specific POSIX error code is often not more actionable than _some_
-   indication that things went wrong. This additional layer also hides most
-   original system error. For example, instead of throwing out errors such as
-   lack of permission, `PathRepresentable.delete()` simply returns `false` to
+3. **Support OOP**. Almost everything in Pathos is available in 2 paradigms:
+   procedural (free functions) and OOP (methods). A _super_ simple protocol,
+   `PathRepresentable`, serves as the root for all functionalities.
+4. **Error handling can be optional**. In practice, specific POSIX error code is
+   often not more actionable than _some_ indication that things went wrong.
+   Therefore, the OOP interfaces from Pathos hides the system errors. Users can
+   opt in and out of the overhead of dealing with POSIX errors by switching
+   between paradigms. For example, instead of throwing out errors such as lack
+   of permission, `PathRepresentable.delete()` simply returns `false` to
    indication the operation failure.
 
 ## Development
