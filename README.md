@@ -68,7 +68,7 @@ github "dduan/Pathos"
 ## Overview
 
 Pathos includes a ton of interfaces ([Battery included](#design-goals)). Here's
-a rough breakdown and links to API documentation.
+a rough breakdown and links to API [documentation][].
 
 |Section                 | Description                                                               |
 |------------------------|---------------------------------------------------------------------------|
