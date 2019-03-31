@@ -65,6 +65,38 @@ github "dduan/Pathos"
 ```
 .package(url: "http://github.com/dduan/Pathos", from: "0.1.2")
 ```
+## Overview
+
+Pathos includes a ton of interfaces ([Battery included](#design-goals)). Here's
+a rough breakdown and links to API documentation.
+
+|Section|Description|
+|-|-|
+|[POP and OOP][]| Protocols and types for OOP interfaces. |
+|[Finding Files][]| Discover child in folders by pattern or file type. |
+|[File IO][]| Reading and writing files and symoblic links. |
+|[Manipulating Paths][]| Deleting/moving/creating directories. |
+|[Analyzing Paths][]| Properties about the path, such as its equivalent absolute path. |
+|[Temporary Paths][]| Temporary and unique files and directories. |
+|[Relationships][]| Relationships between multiple paths. Joining, common components, etc. |
+|[Working Directory][]| Getting/setting current working directory. |
+|[System Attributes][]| File size, access time, permissions, etc. |
+|[Existence][] | Find out if a path points to an existing file, the type of the file, etc. |
+|[Constants][] | Public constants. |
+|[Errors][] | Errors Pathos throw in various places. |
+
+[POP and OOP]: https://dduan.github.io/Pathos/POP%20and%20OOP.html
+[Finding Files]: https://dduan.github.io/Pathos/Finding%20Files.html
+[File IO]: https://dduan.github.io/Pathos/File%20IO.html
+[Manipulating Paths]: https://dduan.github.io/Pathos/Manipulating%20Paths.html
+[Analyzing Paths]: https://dduan.github.io/Pathos/Analyzing%20Paths.html
+[Temporary Paths]: https://dduan.github.io/Pathos/Temporary%20Paths.html
+[Relationships]: https://dduan.github.io/Pathos/Relationship.html
+[Working Directory]: https://dduan.github.io/Pathos/Working%20Directory.html
+[System Attributes]: https://dduan.github.io/Pathos/System%20Attributes.html
+[Existence]: https://dduan.github.io/Pathos/Existence.html
+[Constants]: https://dduan.github.io/Pathos/Constants.html
+[Errors]: https://dduan.github.io/Pathos/Errors.html
 
 ## Design Goals
 
