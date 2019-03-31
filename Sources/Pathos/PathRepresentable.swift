@@ -4,6 +4,6 @@ public protocol PathRepresentable {
     var pathString: String { get }
     /// Initialize the type providing a string as path.
     ///
-    /// - parameter string: string value for the path.
+    /// - Parameter string: string value for the path.
     init(_ string: String)
 }
