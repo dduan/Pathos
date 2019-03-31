@@ -32,7 +32,6 @@
                 "readBytes(atPath:)",
                 "readString(atPath:)",
                 "write(_:atPath:createIfNecessary:permission:)",
-                "write(_:atPath:createIfNecessary:permission:)",
                 "readSymbolicLink(atPath:)",
                 "createSymbolicLink(fromPath:toPath:)"
             ]
@@ -78,6 +77,7 @@
                 "commonPath(amongPaths:_:_:)",
                 "join(paths:)",
                 "join(paths:_:_:)",
+                "+(_:_:)",
                 "expandUserDirectory(inPath:)"
             ]
         },
