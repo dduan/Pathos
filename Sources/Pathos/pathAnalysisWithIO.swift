@@ -4,7 +4,8 @@ import Glibc
 import Darwin
 #endif
 
-// TODO: missing docstring.
+/// Return the argument with an initial component of `~` or `~user` replaced by that user’s home directory.
+/// - Parameter path: The path whose initial component is to be expanded.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.withExpandedUserDirectory`.
 public func expandUserDirectory(inPath path: String) throws -> String {
     if !path.starts(with: "~") {
@@ -51,7 +52,8 @@ public func expandUserDirectory(inPath path: String) throws -> String {
     return result.isEmpty ? "/" : result
 }
 
-// TODO: missing docstring.
+/// Return a normalized absolutized version of the path.
+/// - Parameter path: the path which is is to be absolutized.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.absolutePath`.
 public func absolutePath(ofPath path: String) throws -> String {
     var path = path
@@ -154,13 +156,13 @@ public func realPath(ofPath path: String) throws -> String {
 }
 
 extension PathRepresentable {
-    // TODO: missing docstring.
+    /// Return the path with an initial component of `~` or `~user` replaced by that user’s home directory.
     /// - SeeAlso: `expandUserDirectory(inPath:)`.
     public var withExpandedUserDirectory: Self {
         return Self((try? expandUserDirectory(inPath:)(self.pathString)) ?? "/")
     }
 
-    // TODO: missing docstring.
+    /// Return a normalized absolutized version of path.
     /// - SeeAlso: `absolutePath(ofPath:)`.
     public var absolutePath: Self {
         return (try? absolutePath(ofPath:)(self.pathString)).map(Self.init) ?? self

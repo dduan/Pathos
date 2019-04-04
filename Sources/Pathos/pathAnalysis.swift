@@ -1,4 +1,7 @@
-// TODO: missing docstring.
+/// Normalize a path by collapsing redundant separators and up-level references so that `A//B`, `A/B/`,
+/// `A/./B` and `A/foo/../B` all become `A/B`. This string manipulation may change the meaning of a path that
+/// contains symbolic links.
+/// - Parameter path: The path to be normalized.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.normalized`.
 public func normalize(path: String) -> String {
     if path.isEmpty {
@@ -28,7 +31,8 @@ public func normalize(path: String) -> String {
     return newPath.isEmpty ? "." : newPath
 }
 
-// TODO: missing docstring.
+/// Return `true` if `path` is an absolute path name. On Unix, that means it begins with a slash.
+/// - Paramater path: the path in question.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.isAbsolute`.
 public func isAbsolute(path: String) -> Bool {
     return path.hasPrefix(pathSeparator)
@@ -57,7 +61,12 @@ public func join(paths firstPath: String, _ secondPath: String, _ otherPaths: St
     return join(paths: [firstPath, secondPath] + otherPaths)
 }
 
-// TODO: missing docstring.
+/// Split the pathname path into a pair, "head", "tail" where "tail" is the last path name component and
+/// "head" is everything leading up to that. The "tail" part will never contain a slash; if path ends in a
+/// slash, "tail" will be empty. If there is no slash in path, head will be empty. If path is empty, both
+/// "head" and "tail" are empty. Trailing slashes are stripped from head unless it is the root (one or more
+/// slashes only).
+/// - Parameter path: the path to be split.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.split()`.
 public func split(path: String) -> (String, String) {
     guard let index = path.lastIndex(of: pathSeparatorCharacter) else {
@@ -77,7 +86,10 @@ public func split(path: String) -> (String, String) {
     return (String(head), String(tail))
 }
 
-// TODO: missing docstring.
+/// Split the path name into a pair "root", "ext" such that root + ext == original path, and "ext" is
+/// empty or begins with a period and contains at most one period. Leading periods on the basename are
+/// ignored.
+/// - Parameter path: The path to be split.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.splitExtension()`.
 public func splitExtension(ofPath path: String) -> (String, String) {
     guard let dotIndex = path.lastIndex(of: ".") else {
@@ -205,13 +217,15 @@ public func relativePath(ofPath path: String, startingFromPath startingPath: Str
 }
 
 extension PathRepresentable {
-    // TODO: missing docstring.
+    /// Normalize a path by collapsing redundant separators and up-level references so that `A//B`, `A/B/`,
+    /// `A/./B` and `A/foo/../B` all become `A/B`. This string manipulation may change the meaning of a path
+    /// that contains symbolic links.
     /// - SeeAlso: `normalize(path:)`.
     public var normalized: Self {
         return Self(normalize(path:)(self.pathString))
     }
 
-    // TODO: missing docstring.
+    /// Return `true` if this path is an absolute path name. On Unix, that means it begins with a slash.
     /// - SeeAlso: `isAbsolute(path:)`.
     public var isAbsolute: Bool {
         return isAbsolute(path:)(self.pathString)
@@ -230,14 +244,20 @@ extension PathRepresentable {
         return Self(join(paths:)(pathStrings))
     }
 
-    // TODO: missing docstring.
+    /// Split the path into a pair, "head", "tail" where "tail" is the last path name component and "head" is
+    /// everything leading up to that. The "tail" part will never contain a slash; if path ends in a slash,
+    /// "tail" will be empty. If there is no slash in path, head will be empty. If path is empty, both "head"
+    /// and "tail" are empty. Trailing slashes are stripped from head unless it is the root (one or more 
+    /// slashes only).
     /// - SeeAlso: `split(path:)`.
     public func split() -> (Self, Self) {
         let (p0, p1) = split(path:)(self.pathString)
         return (Self(p0), Self(p1))
     }
 
-    // TODO: missing docstring.
+    /// Split the path name into a pair "root", "ext" such that root + ext == original path, and "ext" is
+    /// empty or begins with a period and contains at most one period. Leading periods on the basename are
+    /// ignored.
     /// - SeeAlso: `splitExtension(ofPath:)`.
     public func splitExtension() -> (Self, String) {
         let splitResult = splitExtension(ofPath:)(self.pathString)
