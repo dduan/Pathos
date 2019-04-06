@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name                     = "Pathos"
-  spec.version                  = "0.1.2"
+  spec.version                  = "0.1.3"
   spec.summary                  = "A file management library for Swift"
   spec.homepage                 = "https://github.com/dduan/Pathos"
   spec.license                  = { :type => "MIT", :file => "LICENSE.md" }
