@@ -52,9 +52,8 @@ public func readBytes(atPath path: String) throws -> [UInt8] {
 /// - Throws: System error encountered while opening the file.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.readString()`.
 public func readString(atPath path: String) throws -> String {
-    var content = try readBytes(atPath: path)
-    content.append(0)
-    return String(decodingCString: content, as: UTF8.self)
+    let content = try readBytes(atPath: path)
+    return String(decodingCString: content + [0], as: UTF8.self)
 }
 
 // TODO: missing docstring.
@@ -68,7 +67,7 @@ public func write<Bytes>(_ bytes: Bytes, atPath path: String, createIfNecessary:
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.write(_:createIfNecessary:permission:)`.
 public func write(_ string: String, atPath path: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws {
     try string.utf8CString.withUnsafeBytes { bytes in
-        try _writeAtPath(path, bytes: bytes.baseAddress!, byteCount: bytes.count, createIfNecessary: createIfNecessary, permission: permission)
+        try _writeAtPath(path, bytes: bytes.baseAddress!, byteCount: bytes.count - 1, createIfNecessary: createIfNecessary, permission: permission)
     }
 }
 
