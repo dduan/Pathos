@@ -11,10 +11,10 @@ let temporaryRoot = try createTemporaryDirectory()
 // Find paths to .md files relative to current working directory, recursively.
 for markdown in try glob("**/*.md") {
 
-    // path/to/file.md -> path/to/file. This will be the URL.
+    // path/to/file.md -> path/to/file.
     let url = basename(ofPath: markdown)
 
-    // Join path segements. File system location for the URL.
+    // Join path segements.
     let urlPath = join(paths: temporaryRoot, url)
 
     // Make a directory.
@@ -27,7 +27,7 @@ for markdown in try glob("**/*.md") {
     try write(markdown2html(source), atPath: join(paths: url, "index.html"))
 }
 
-// Move a directory. Move it to where we want it!
+// Move a directory.
 try movePath(temporaryRoot, toPath: "output")
 ```
 
