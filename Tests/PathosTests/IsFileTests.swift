@@ -3,15 +3,15 @@ import XCTest
 
 final class IsFileTests: XCTestCase {
     func testIsFileOnExistingFile() {
-        XCTAssertTrue(try isFile(atPath: self.fixture(.fileThatExists)))
+        XCTAssertTrue(try isA(.file, atPath: self.fixture(.fileThatExists)))
     }
 
     func testIsFileOnExistingDirectory() {
-        XCTAssertFalse(try isFile(atPath: self.fixture(.directoryThatExists)))
+        XCTAssertFalse(try isA(.file, atPath: self.fixture(.directoryThatExists)))
     }
 
     func testIsFileOnNonExistingPath() throws {
-        XCTAssertThrowsError(try isFile(atPath: self.fixture(.noneExistence))) { error in
+        XCTAssertThrowsError(try isA(.file, atPath: self.fixture(.noneExistence))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")
                 return
@@ -20,15 +20,15 @@ final class IsFileTests: XCTestCase {
     }
 
     func testIsFileOnSymbolicLink() {
-        XCTAssertTrue(try isFile(atPath: self.fixture(.goodFileSymbol)))
+        XCTAssertTrue(try isA(.file, atPath: self.fixture(.goodFileSymbol)))
     }
 
     func testIsFileOnSymbolicDirectoryLink() {
-        XCTAssertFalse(try isFile(atPath: self.fixture(.goodDirectorySymbol)))
+        XCTAssertFalse(try isA(.file, atPath: self.fixture(.goodDirectorySymbol)))
     }
 
     func testIsFileOnBadSymbolicLink() throws {
-        XCTAssertThrowsError(try isFile(atPath: self.fixture(.badSymbol))) { error in
+        XCTAssertThrowsError(try isA(.file, atPath: self.fixture(.badSymbol))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")
                 return
@@ -37,26 +37,26 @@ final class IsFileTests: XCTestCase {
     }
 
     func testFileRepresentableIsFileOnExistingFile() {
-        XCTAssertTrue(self.fixturePath(.fileThatExists).isFile)
+        XCTAssertTrue(self.fixturePath(.fileThatExists).isA(.file))
     }
 
     func testFileRepresentableIsFileOnExistingDirectory() {
-        XCTAssertFalse(self.fixturePath(.directoryThatExists).isFile)
+        XCTAssertFalse(self.fixturePath(.directoryThatExists).isA(.file))
     }
 
     func testFileRepresentableIsFileOnNonExistingFile() {
-        XCTAssertFalse(self.fixturePath(.noneExistence).isFile)
+        XCTAssertFalse(self.fixturePath(.noneExistence).isA(.file))
     }
 
     func testPathRerpesentableIsFileOnSymbolicLink() {
-        XCTAssertTrue(self.fixturePath(.goodFileSymbol).isFile)
+        XCTAssertTrue(self.fixturePath(.goodFileSymbol).isA(.file))
     }
 
     func testPathRepresentableIsFileOnSymbolicDirectoryLink() {
-        XCTAssertFalse(self.fixturePath(.goodDirectorySymbol).isFile)
+        XCTAssertFalse(self.fixturePath(.goodDirectorySymbol).isA(.file))
     }
 
     func testPathRerpesentableIsFileOnBadSymbolicLink() {
-        XCTAssertFalse(self.fixturePath(.badSymbol).isFile)
+        XCTAssertFalse(self.fixturePath(.badSymbol).isA(.file))
     }
 }

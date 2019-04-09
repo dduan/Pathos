@@ -3,15 +3,15 @@ import XCTest
 
 final class IsBlockDeviceTests: XCTestCase {
     func testIsBlockDeviceOnExistingFile() {
-        XCTAssertFalse(try isBlockDevice(atPath: self.fixture(.fileThatExists)))
+        XCTAssertFalse(try isA(.blockDevice, atPath: self.fixture(.fileThatExists)))
     }
 
     func testIsBlockDeviceOnExistingDirectory() {
-        XCTAssertFalse(try isBlockDevice(atPath: self.fixture(.directoryThatExists)))
+        XCTAssertFalse(try isA(.blockDevice, atPath: self.fixture(.directoryThatExists)))
     }
 
     func testIsBlockDeviceOnNonExistingPath() throws {
-        XCTAssertThrowsError(try isBlockDevice(atPath: self.fixture(.noneExistence))) { error in
+        XCTAssertThrowsError(try isA(.blockDevice, atPath: self.fixture(.noneExistence))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")
                 return
@@ -20,15 +20,15 @@ final class IsBlockDeviceTests: XCTestCase {
     }
 
     func testIsBlockDeviceOnSymbolicLink() {
-        XCTAssertFalse(try isBlockDevice(atPath: self.fixture(.goodFileSymbol)))
+        XCTAssertFalse(try isA(.blockDevice, atPath: self.fixture(.goodFileSymbol)))
     }
 
     func testIsBlockDeviceOnSymbolicDirectoryLink() {
-        XCTAssertFalse(try isBlockDevice(atPath: self.fixture(.goodDirectorySymbol)))
+        XCTAssertFalse(try isA(.blockDevice, atPath: self.fixture(.goodDirectorySymbol)))
     }
 
     func testIsBlockDeviceOnBadSymbolicLink() {
-        XCTAssertThrowsError(try isBlockDevice(atPath: self.fixture(.badSymbol))) { error in
+        XCTAssertThrowsError(try isA(.blockDevice, atPath: self.fixture(.badSymbol))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")
                 return
@@ -37,26 +37,26 @@ final class IsBlockDeviceTests: XCTestCase {
     }
 
     func testFileRepresentableIsBlockDeviceOnExistingFile() {
-        XCTAssertFalse(self.fixturePath(.fileThatExists).isBlockDevice)
+        XCTAssertFalse(self.fixturePath(.fileThatExists).isA(.blockDevice))
     }
 
     func testFileRepresentableIsBlockDeviceOnExistingDirectory() {
-        XCTAssertFalse(self.fixturePath(.directoryThatExists).isBlockDevice)
+        XCTAssertFalse(self.fixturePath(.directoryThatExists).isA(.blockDevice))
     }
 
     func testFileRepresentableIsBlockDeviceOnNonExistingFile() {
-        XCTAssertFalse(self.fixturePath(.noneExistence).isBlockDevice)
+        XCTAssertFalse(self.fixturePath(.noneExistence).isA(.blockDevice))
     }
 
     func testPathRerpesentableIsBlockDeviceOnSymbolicLink() {
-        XCTAssertFalse(self.fixturePath(.goodFileSymbol).isBlockDevice)
+        XCTAssertFalse(self.fixturePath(.goodFileSymbol).isA(.blockDevice))
     }
 
     func testPathRepresentableIsBlockDeviceOnSymbolicDirectoryLink() {
-        XCTAssertFalse(self.fixturePath(.goodDirectorySymbol).isBlockDevice)
+        XCTAssertFalse(self.fixturePath(.goodDirectorySymbol).isA(.blockDevice))
     }
 
     func testPathRepresentableIsBlockDeviceOnBadSymbolicLink() {
-        XCTAssertFalse(self.fixturePath(.badSymbol).isBlockDevice)
+        XCTAssertFalse(self.fixturePath(.badSymbol).isA(.blockDevice))
     }
 }

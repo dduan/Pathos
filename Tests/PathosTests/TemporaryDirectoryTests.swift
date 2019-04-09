@@ -4,14 +4,14 @@ import XCTest
 final class TemporaryDirectoryTests: XCTestCase {
     func testCreatingTemporaryDirectory() throws {
         let path = try createTemporaryDirectory()
-        XCTAssert(try isDirectory(atPath: path))
+        XCTAssert(try isA(.directory, atPath: path))
         try deletePath(path)
     }
 
     func testCreatingTemporaryDirectoryWithPrefix() throws {
         let kPrefix = "kPrefix"
         let path = try createTemporaryDirectory(prefix: kPrefix)
-        XCTAssertTrue(try isDirectory(atPath: path))
+        XCTAssertTrue(try isA(.directory, atPath: path))
         XCTAssertTrue(split(path: path).1.hasPrefix(kPrefix), path)
         try deletePath(path)
     }
@@ -19,7 +19,7 @@ final class TemporaryDirectoryTests: XCTestCase {
     func testCreatingTemporaryDirectoryWithSuffix() throws {
         let kSuffix = "kSuffix"
         let path = try createTemporaryDirectory(suffix: kSuffix)
-        XCTAssertTrue(try isDirectory(atPath: path))
+        XCTAssertTrue(try isA(.directory, atPath: path))
         XCTAssertTrue(split(path: path).1.hasSuffix(kSuffix))
         try deletePath(path)
     }
@@ -27,7 +27,7 @@ final class TemporaryDirectoryTests: XCTestCase {
     func testCreatingTemporaryDirectoryInDirectory() throws {
         let directory = try createTemporaryDirectory()
         let path = try createTemporaryDirectory(inDirectory: directory)
-        XCTAssertTrue(try isDirectory(atPath: path))
+        XCTAssertTrue(try isA(.directory, atPath: path))
         XCTAssertTrue(path.hasPrefix(directory))
         try deletePath(path)
         try deletePath(directory)
@@ -54,7 +54,7 @@ final class TemporaryDirectoryTests: XCTestCase {
             return
         }
 
-        XCTAssert(path.isDirectory)
+        XCTAssert(path.isA(.directory))
         _ = path.delete()
     }
 
@@ -65,7 +65,7 @@ final class TemporaryDirectoryTests: XCTestCase {
             return
         }
 
-        XCTAssert(path.isDirectory)
+        XCTAssert(path.isA(.directory))
         XCTAssert(path.split().1.pathString.hasPrefix(kPrefix))
         _ = path.delete()
     }
@@ -77,7 +77,7 @@ final class TemporaryDirectoryTests: XCTestCase {
             return
         }
 
-        XCTAssert(path.isDirectory)
+        XCTAssert(path.isA(.directory))
         XCTAssert(path.split().1.pathString.hasSuffix(kSuffix))
         _ = path.delete()
     }
@@ -89,7 +89,7 @@ final class TemporaryDirectoryTests: XCTestCase {
             return
         }
 
-        XCTAssert(path.isDirectory)
+        XCTAssert(path.isA(.directory))
         XCTAssert(path.pathString.hasPrefix(directory))
         _ = path.delete()
         try deletePath(directory)

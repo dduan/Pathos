@@ -3,15 +3,15 @@ import XCTest
 
 final class IsPipeTests: XCTestCase {
     func testIsPipeOnExistingFile() {
-        XCTAssertFalse(try isPipe(atPath: self.fixture(.fileThatExists)))
+        XCTAssertFalse(try isA(.pipe, atPath: self.fixture(.fileThatExists)))
     }
 
     func testIsPipeOnExistingDirectory() {
-        XCTAssertFalse(try isPipe(atPath: self.fixture(.directoryThatExists)))
+        XCTAssertFalse(try isA(.pipe, atPath: self.fixture(.directoryThatExists)))
     }
 
     func testIsPipeOnNonExistingPath() throws {
-        XCTAssertThrowsError(try isPipe(atPath: self.fixture(.noneExistence))) { error in
+        XCTAssertThrowsError(try isA(.pipe, atPath: self.fixture(.noneExistence))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")
                 return
@@ -20,15 +20,15 @@ final class IsPipeTests: XCTestCase {
     }
 
     func testIsPipeOnSymbolicLink() {
-        XCTAssertFalse(try isPipe(atPath: self.fixture(.goodFileSymbol)))
+        XCTAssertFalse(try isA(.pipe, atPath: self.fixture(.goodFileSymbol)))
     }
 
     func testIsPipeOnSymbolicDirectoryLink() {
-        XCTAssertFalse(try isPipe(atPath: self.fixture(.goodDirectorySymbol)))
+        XCTAssertFalse(try isA(.pipe, atPath: self.fixture(.goodDirectorySymbol)))
     }
 
     func testIsPipeOnBadSymbolicLink() throws {
-        XCTAssertThrowsError(try isPipe(atPath: self.fixture(.badSymbol))) { error in
+        XCTAssertThrowsError(try isA(.pipe, atPath: self.fixture(.badSymbol))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")
                 return
@@ -37,27 +37,27 @@ final class IsPipeTests: XCTestCase {
     }
 
     func testFileRepresentableIsPipeOnExistingFile() {
-        XCTAssertFalse(self.fixturePath(.fileThatExists).isPipe)
+        XCTAssertFalse(self.fixturePath(.fileThatExists).isA(.pipe))
     }
 
     func testFileRepresentableIsPipeOnExistingDirectory() {
-        XCTAssertFalse(self.fixturePath(.directoryThatExists).isPipe)
+        XCTAssertFalse(self.fixturePath(.directoryThatExists).isA(.pipe))
     }
 
     func testFileRepresentableIsPipeOnNonExistingFile() {
-        XCTAssertFalse(self.fixturePath(.noneExistence).isPipe)
+        XCTAssertFalse(self.fixturePath(.noneExistence).isA(.pipe))
     }
 
     func testPathRepresentableIsPipeOnSymbolicLink() {
-        XCTAssertFalse(self.fixturePath(.goodFileSymbol).isPipe)
+        XCTAssertFalse(self.fixturePath(.goodFileSymbol).isA(.pipe))
     }
 
     func testPathRepresentableIsPipeOnSymbolicDirectoryLink() {
-        XCTAssertFalse(self.fixturePath(.goodDirectorySymbol).isPipe)
+        XCTAssertFalse(self.fixturePath(.goodDirectorySymbol).isA(.pipe))
     }
 
     func testPathRepresentableIsPipeOnBadSymbolicLink() {
-        XCTAssertFalse(self.fixturePath(.badSymbol).isPipe)
+        XCTAssertFalse(self.fixturePath(.badSymbol).isA(.pipe))
     }
 }
 
