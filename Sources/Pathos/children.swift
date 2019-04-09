@@ -73,7 +73,7 @@ public func children(inPath path: String, recursive: Bool = false) throws -> [(S
 ///
 /// - Parameters:
 ///   - path: the path whose children will be returned.
-///   - type: the type of file to find.
+///   - type: the type of file to find. See `FileType`.
 ///   - recursive: set to `true` to include results from child directories in addition to that from `path`.
 ///                Defaults to `false`.
 ///
