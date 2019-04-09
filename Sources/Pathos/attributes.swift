@@ -6,7 +6,7 @@ import Darwin
 
 /// Whether file at path is of a type. Returns `false` if the path does not exist or is
 /// not accessible.
-/// - Parameter type: The type in question.
+/// - Parameter type: The type in question. See `FileType`.
 /// - SeeAlso: `PathRepresentable.isA(_:)`.
 public func isA(_ type: FileType, atPath path: String) throws -> Bool {
     if type == .symbolicLink {

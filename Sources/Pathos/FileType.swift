@@ -4,17 +4,27 @@ import Glibc
 import Darwin
 #endif
 
-// TODO: missing docstring
+/// Type of files found in standards such as POSIX.
+/// NOTE: a directory is a type of file as everything else.
 public enum FileType: Int, Equatable, Codable {
+    /// Unknown type.
     case unknown
+    /// FIFO pipe.
     case pipe
+    /// Character device, or character special file.
     case characterDevice
+    /// Directory.
     case directory
+    /// Block special files.
     case blockDevice
+    /// A regular file.
     case file
+    /// A symbolic link, or symlink.
     case symbolicLink
+    /// A socket.
     case socket
 
+    /// Creates a `FileType` from a POSIX file type such as `DT_REG`.
     public init(posixFileType: Int32) {
         switch posixFileType {
         case Int32(DT_FIFO):
@@ -36,6 +46,7 @@ public enum FileType: Int, Equatable, Codable {
         }
     }
 
+    /// Creates a `FileType` from a POSIX inode protection mode (`stat.st_mode`) such as `S_IFREG`.
     public init(posixMode: mode_t) {
         switch posixMode {
         case S_IFIFO:
@@ -57,6 +68,7 @@ public enum FileType: Int, Equatable, Codable {
         }
     }
 
+    /// A corresponding POSIX file type such as `DT_REG`.
     public var posixFileType: Int32 {
         switch self {
         case .unknown:
@@ -78,6 +90,7 @@ public enum FileType: Int, Equatable, Codable {
         }
     }
 
+    /// A corresponding POSIX inode protection mode value (`stat.st_mode`) such as `S_IFREG`.
     public var posixMode: mode_t {
         switch self {
         case .unknown:

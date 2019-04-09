@@ -101,6 +101,7 @@
             "name": "Existence",
             "children": [
                 "exists(atPath:followSymbol:)",
+                "FileType",
                 "isA(_:atPath:)",
                 "sameFile(atPath:otherPath:)"
             ]
