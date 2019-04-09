@@ -16,14 +16,7 @@
             "children": [
                 "glob(_:)",
                 "children(inPath:recursive:)",
-                "childFiles(inPath:recursive:)",
-                "childDirectories(inPath:recursive:)",
-                "childSymbolicLinks(inPath:recursive:)",
-                "childSockets(inPath:recursive:)",
-                "childPipes(inPath:recursive:)",
-                "childCharacterDevices(inPath:recursive:)",
-                "childBlockDevices(inPath:recursive:)",
-                "childUnknownTypeFiles(inPath:recursive:)"
+                "children(inPath:ofType:recursive:)"
             ]
         },
         {
@@ -108,13 +101,7 @@
             "name": "Existence",
             "children": [
                 "exists(atPath:followSymbol:)",
-                "isBlockDevice(atPath:)",
-                "isCharacterDevice(atPath:)",
-                "isDirectory(atPath:)",
-                "isFile(atPath:)",
-                "isPipe(atPath:)",
-                "isSocket(atPath:)",
-                "isSymbolicLink(atPath:)",
+                "isA(_:atPath:)",
                 "sameFile(atPath:otherPath:)"
             ]
         },

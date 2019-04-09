@@ -23,7 +23,7 @@ public func createDirectory(atPath path: String, permission: FilePermission = 0o
             // Cannot rely on checking for EEXIST, since the operating system
             // could give priority to other errors like EACCES or EROFS
             let error = errno
-            if (try? isDirectory(atPath: path)) != true || throwIfAlreadyExists {
+            if (try? isA(.directory, atPath: path)) != true || throwIfAlreadyExists {
                 throw SystemError(posixErrorCode: error)
             }
         }
@@ -57,7 +57,7 @@ public func deletePath(_ path: String, recursive: Bool = true) throws {
     if _ifmt(status) == S_IFDIR {
         if recursive {
             for child in try children(inPath: path) {
-                try deletePath(child, recursive: true)
+                try deletePath(child.0, recursive: true)
             }
         }
         if rmdir(path) != 0 {

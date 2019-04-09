@@ -9,7 +9,7 @@ final class MakeDirectoryTests: XCTestCase {
     func testMakeDirectory() throws {
         let directory = self.randomTmpDirectoryPath
         try createDirectory(atPath: directory)
-        XCTAssertTrue(try isDirectory(atPath: directory))
+        XCTAssertTrue(try isA(.directory, atPath: directory))
         var status = stat()
         lstat(directory, &status)
         XCTAssertEqual(status.st_mode & 0o7777, 0o0755)
@@ -32,7 +32,7 @@ final class MakeDirectoryTests: XCTestCase {
         let existingDirectory = self.randomTmpDirectoryPath
         try createDirectory(atPath: existingDirectory)
         try createDirectory(atPath: existingDirectory)
-        XCTAssertTrue(try isDirectory(atPath: existingDirectory))
+        XCTAssertTrue(try isA(.directory, atPath: existingDirectory))
         rmdir(existingDirectory)
     }
 
@@ -45,7 +45,7 @@ final class MakeDirectoryTests: XCTestCase {
     func testMakeDirectoryWithCreateParent() throws {
         let path = join(paths: self.randomTmpDirectoryPath, "a/b/c")
         try createDirectory(atPath: path, createParents: true)
-        XCTAssertTrue(try isDirectory(atPath: path))
+        XCTAssertTrue(try isA(.directory, atPath: path))
         rmdir(path)
     }
 
@@ -53,7 +53,7 @@ final class MakeDirectoryTests: XCTestCase {
         let directory = self.randomTmpDirectoryPath
         let permission: FilePermission = 0o0744
         try createDirectory(atPath: directory, permission: permission)
-        XCTAssertTrue(try isDirectory(atPath: directory))
+        XCTAssertTrue(try isA(.directory, atPath: directory))
         var status = stat()
         lstat(directory, &status)
         XCTAssertEqual(status.st_mode & 0o7777, permission.rawValue)
@@ -63,7 +63,7 @@ final class MakeDirectoryTests: XCTestCase {
     func testPathRepresentableMakeDiroctory() throws {
         let directory = self.randomTmpDirectoryPath
         XCTAssertTrue(Path(directory).createDirectory())
-        XCTAssertTrue(try isDirectory(atPath: directory))
+        XCTAssertTrue(try isA(.directory, atPath: directory))
         var status = stat()
         lstat(directory, &status)
         XCTAssertEqual(status.st_mode & 0o7777, 0o0755)
@@ -81,7 +81,7 @@ final class MakeDirectoryTests: XCTestCase {
         let existingDirectory = self.randomTmpDirectoryPath
         try createDirectory(atPath: existingDirectory)
         XCTAssertTrue(Path(existingDirectory).createDirectory())
-        XCTAssertTrue(try isDirectory(atPath: existingDirectory))
+        XCTAssertTrue(try isA(.directory, atPath: existingDirectory))
         rmdir(existingDirectory)
     }
 
@@ -94,7 +94,7 @@ final class MakeDirectoryTests: XCTestCase {
     func testPathRepresentableMakeDirectoryWithCreateParent() {
         let path = join(paths: self.randomTmpDirectoryPath, "a/b/c")
         XCTAssertTrue(Path(path).createDirectory(createParents: true))
-        XCTAssertTrue(try isDirectory(atPath: path))
+        XCTAssertTrue(try isA(.directory, atPath: path))
         rmdir(path)
     }
 
@@ -102,7 +102,7 @@ final class MakeDirectoryTests: XCTestCase {
         let directory = self.randomTmpDirectoryPath
         let permission: FilePermission = 0o0744
         XCTAssertTrue(Path(directory).createDirectory(permission: permission))
-        XCTAssertTrue(try isDirectory(atPath: directory))
+        XCTAssertTrue(try isA(.directory, atPath: directory))
         var status = stat()
         lstat(directory, &status)
         XCTAssertEqual(status.st_mode & 0o7777, permission.rawValue)

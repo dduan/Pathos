@@ -3,15 +3,15 @@ import XCTest
 
 final class IsSymbolicLinkTests: XCTestCase {
     func testIsSymbolicLinkOnFile() {
-        XCTAssertFalse(try isSymbolicLink(atPath: self.fixture(.fileThatExists)))
+        XCTAssertFalse(try isA(.symbolicLink, atPath: self.fixture(.fileThatExists)))
     }
 
     func testIsSymbolicLinkOnDirectory() {
-        XCTAssertFalse(try isSymbolicLink(atPath: self.fixture(.directoryThatExists)))
+        XCTAssertFalse(try isA(.symbolicLink, atPath: self.fixture(.directoryThatExists)))
     }
 
     func testIsSymbolicLinkOnNonExistingPath() throws {
-        XCTAssertThrowsError(try isSymbolicLink(atPath: self.fixture(.noneExistence))) { error in
+        XCTAssertThrowsError(try isA(.symbolicLink, atPath: self.fixture(.noneExistence))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")
                 return
@@ -20,38 +20,38 @@ final class IsSymbolicLinkTests: XCTestCase {
     }
 
     func testIsSymbolicLinkOnGoodFileSymbol() {
-        XCTAssertTrue(try isSymbolicLink(atPath: self.fixture(.goodFileSymbol)))
+        XCTAssertTrue(try isA(.symbolicLink, atPath: self.fixture(.goodFileSymbol)))
     }
 
     func testIsSymbolicLinkOnGoodDirectorySymbol() {
-        XCTAssertTrue(try isSymbolicLink(atPath: self.fixture(.goodDirectorySymbol)))
+        XCTAssertTrue(try isA(.symbolicLink, atPath: self.fixture(.goodDirectorySymbol)))
     }
 
     func testIsSymbolicLinkOnBadSymbol() {
-        XCTAssertTrue(try isSymbolicLink(atPath: self.fixture(.badSymbol)))
+        XCTAssertTrue(try isA(.symbolicLink, atPath: self.fixture(.badSymbol)))
     }
 
     func testPathRepresentableIsSymbolicLinkOnFile() {
-        XCTAssertFalse(self.fixturePath(.fileThatExists).isSymbolicLink)
+        XCTAssertFalse(self.fixturePath(.fileThatExists).isA(.symbolicLink))
     }
 
     func testPathRepresentableIsSymbolicLinkOnDirectory() {
-        XCTAssertFalse(self.fixturePath(.directoryThatExists).isSymbolicLink)
+        XCTAssertFalse(self.fixturePath(.directoryThatExists).isA(.symbolicLink))
     }
 
     func testPathRepresentableIsSymbolicLinkOnNonExistingPath() {
-        XCTAssertFalse(self.fixturePath(.noneExistence).isSymbolicLink)
+        XCTAssertFalse(self.fixturePath(.noneExistence).isA(.symbolicLink))
     }
 
     func testPathRepresentableIsSymbolicLinkOnGoodFileSymbol() {
-        XCTAssertTrue(self.fixturePath(.goodFileSymbol).isSymbolicLink)
+        XCTAssertTrue(self.fixturePath(.goodFileSymbol).isA(.symbolicLink))
     }
 
     func testPathRepresentableIsSymbolicLinkOnGoodDirectorySymbol() {
-        XCTAssertTrue(self.fixturePath(.goodDirectorySymbol).isSymbolicLink)
+        XCTAssertTrue(self.fixturePath(.goodDirectorySymbol).isA(.symbolicLink))
     }
 
     func testPathRepresentableIsSymbolicLinkOnBadSymbol() {
-        XCTAssertTrue(self.fixturePath(.badSymbol).isSymbolicLink)
+        XCTAssertTrue(self.fixturePath(.badSymbol).isA(.symbolicLink))
     }
 }

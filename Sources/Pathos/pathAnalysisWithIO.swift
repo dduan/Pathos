@@ -124,7 +124,7 @@ public func realPath(ofPath path: String) throws -> String {
             }
 
             let newPath = join(paths: path, name)
-            if !((try? isSymbolicLink(atPath: newPath)) ?? false) {
+            if !((try? isA(.symbolicLink, atPath: newPath)) ?? false) {
                 path = newPath
                 continue
             }

@@ -56,11 +56,12 @@ public func glob(_ pattern: String) throws -> [String] {
 
     func recursiveFNMatch(_ path: String) throws -> [String] {
         return try children(inPath: path, recursive: true)
+            .map { $0.0 }
             .filter { fnmatch(pattern, $0, 0) == 0 }
     }
 
     return try _glob(String(pattern[pattern.startIndex ... globStarPosition]))
-        .filter(isDirectory(atPath:))
+        .filter { try isA(.directory, atPath: $0) }
         .flatMap(recursiveFNMatch)
         .map { _stripFromRight($0, pathSeparatorCharacter) }
 }

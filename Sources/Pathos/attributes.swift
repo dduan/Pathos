@@ -4,74 +4,16 @@ import Glibc
 import Darwin
 #endif
 
-/// Whether file at path is a named pipe (FIFO).
-///
-/// - Parameter path: the path to be tested.
-/// - Returns: `true` if file at path is a named pipe (FIFO), `false` otherwise.
-/// - Throws: A `SystemError` originated from the OS.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.isPipe`.
-public func isPipe(atPath path: String) throws -> Bool {
-    return try _ifmt(_stat(at: path)) == S_IFIFO
-}
+/// Whether file at path is of a type. Returns `false` if the path does not exist or is
+/// not accessible.
+/// - Parameter type: The type in question.
+/// - SeeAlso: `PathRepresentable.isA(_:)`.
+public func isA(_ type: FileType, atPath path: String) throws -> Bool {
+    if type == .symbolicLink {
+        return try _ifmt(_lstat(at: path)) == S_IFLNK
+    }
 
-/// Whether file at path is a character device (also known as "raw device" or "character special files").
-///
-/// - Parameter path: the path to be tested.
-/// - Returns: `true` if file at path is a character device, `false` otherwise.
-/// - Throws: A `SystemError` originated from the OS.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.isCharacterDevice`.
-public func isCharacterDevice(atPath path: String) throws -> Bool {
-    return try _ifmt(_stat(at: path)) == S_IFCHR
-}
-
-/// Whether file at path is a directory.
-///
-/// - Parameter path: the path to be tested.
-/// - Returns: `true` if file at path is a directory, `false` otherwise.
-/// - Throws: A `SystemError` originated from the OS.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.isDirectory`.
-public func isDirectory(atPath path: String) throws -> Bool {
-    return try _ifmt(_stat(at: path)) == S_IFDIR
-}
-
-/// Whether file at path is a block device (also know as "block special files").
-///
-/// - Parameter path: the path to be tested.
-/// - Returns: `true` if file at path is a block device, `false` otherwise.
-/// - Throws: A `SystemError` originated from the OS.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.isBlockDevice`.
-public func isBlockDevice(atPath path: String) throws -> Bool {
-    return try _ifmt(_stat(at: path)) == S_IFBLK
-}
-
-/// Whether file at path is a regular file.
-///
-/// - Parameter path: the path to be tested.
-/// - Returns: `true` if file at path is a regular file, `false` otherwise.
-/// - Throws: A `SystemError` originated from the OS.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.isFile`.
-public func isFile(atPath path: String) throws -> Bool {
-    return try _ifmt(_stat(at: path)) == S_IFREG
-}
-
-/// Whether file at path is a symbolic link.
-///
-/// - Parameter path: the path to be tested.
-/// - Returns: `true` if file at path is a symbolic link, `false` otherwise.
-/// - Throws: A `SystemError` originated from the OS.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.isSymbolicLink`.
-public func isSymbolicLink(atPath path: String) throws -> Bool {
-    return try _ifmt(_lstat(at: path)) == S_IFLNK
-}
-
-/// Whether file at path is a socket.
-///
-/// - Parameter path: the path to be tested.
-/// - Returns: `true` if file at path is a socket, `false` otherwise.
-/// - Throws: A `SystemError` originated from the OS.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.isSocket`.
-public func isSocket(atPath path: String) throws -> Bool {
-    return try _ifmt(_stat(at: path)) == S_IFSOCK
+    return try _ifmt(_stat(at: path)) == type.posixMode
 }
 
 /// Return `true` if path refers to an existing path or an open file descriptor.
@@ -153,60 +95,14 @@ public func sameFile(atPath path: String, otherPath: String) throws -> Bool {
 }
 
 extension PathRepresentable {
-    /// Whether file at path is a named pipe (FIFO). Returns `false` if the path does not exist or is
-    /// not accessible.
-    /// - SeeAlso: `isPipe(atPath:)`.
-    public var isPipe: Bool {
-        return (try? isPipe(atPath:)(self.pathString)) ?? false
-    }
 
-    /// Whether file at path is a character device. Returns `false` if the path does not exist or is
+    /// Whether file at path is of a type. Returns `false` if the path does not exist or is
     /// not accessible.
-    ///
-    /// Character device is also known as "character special file" or "raw device".
-    /// - SeeAlso: `isCharacterDevice(atPath:)`.
-    public var isCharacterDevice: Bool {
-        return (try? isCharacterDevice(atPath:)(self.pathString)) ?? false
+    /// - Parameter type: The type in question.
+    /// - SeeAlso: `isA(_:atPath:)`.
+    public func isA(_ type: FileType) -> Bool {
+        return (try? isA(_:atPath:)(type, self.pathString)) ?? false
     }
-
-    /// Whether file at path is a directory. Returns `false` if the path does not exist or is
-    /// not accessible.
-    /// - SeeAlso: `isDirectory(atPath:)`.
-    public var isDirectory: Bool {
-        return (try? isDirectory(atPath:)(self.pathString)) ?? false
-    }
-
-    /// Whether file at path is a block device. Returns `false` if the path does not exist or is
-    /// not accessible.
-    ///
-    /// Block device is also known as "block special file".
-    ///
-    /// - SeeAlso: `isBlockDevice(atPath:)`.
-    public var isBlockDevice: Bool {
-        return (try? isBlockDevice(atPath:)(self.pathString)) ?? false
-    }
-
-    /// Whether file at path is a regular file. Returns `false` if the path does not exist or is
-    /// not accessible.
-    /// - SeeAlso: `isFile(atPath:)`.
-    public var isFile: Bool {
-        return (try? isFile(atPath:)(self.pathString)) ?? false
-    }
-
-    /// Whether file at path is a symbolic link. Returns `false` if the path does not exist or is
-    /// not accessible.
-    /// - SeeAlso: `isSymbolicLink(atPath:)`.
-    public var isSymbolicLink: Bool {
-        return (try? isSymbolicLink(atPath:)(self.pathString)) ?? false
-    }
-
-    /// Whether file at path is a symbolic link. Returns `false` if the path does not exist or is
-    /// not accessible.
-    /// - SeeAlso: `isSocket(atPath:)`.
-    public var isSocket: Bool {
-        return (try? isSocket(atPath:)(self.pathString)) ?? false
-    }
-
     /// Return `true` if path refers to an existing path or an open file descriptor. Returns `false` for
     /// broken symbolic links. On some platforms, this function may return `false` if permission is not
     /// granted to execute `stat` on the requested file, even if the path physically exists.

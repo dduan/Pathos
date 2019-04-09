@@ -6,7 +6,7 @@ final class DeleteTests: XCTestCase {
         try withTemporaryDirectory { _ in
             let path = "test"
             try write("", atPath: path)
-            XCTAssertTrue(try isFile(atPath: path))
+            XCTAssertTrue(try isA(.file, atPath: path))
 
             try deletePath(path)
 
@@ -18,7 +18,7 @@ final class DeleteTests: XCTestCase {
         try withTemporaryDirectory { _ in
             let path = "test"
             try createDirectory(atPath: path)
-            XCTAssertTrue(try isDirectory(atPath: path))
+            XCTAssertTrue(try isA(.directory, atPath: path))
 
             try deletePath(path)
 
@@ -34,9 +34,9 @@ final class DeleteTests: XCTestCase {
             try createDirectory(atPath: rootPath)
             try createDirectory(atPath: nestedPath)
             try write("", atPath: contentPath)
-            XCTAssertTrue(try isDirectory(atPath: rootPath))
-            XCTAssertTrue(try isDirectory(atPath: nestedPath))
-            XCTAssertTrue(try isFile(atPath: contentPath))
+            XCTAssertTrue(try isA(.directory, atPath: rootPath))
+            XCTAssertTrue(try isA(.directory, atPath: nestedPath))
+            XCTAssertTrue(try isA(.file, atPath: contentPath))
 
             try deletePath(rootPath)
 
@@ -50,13 +50,13 @@ final class DeleteTests: XCTestCase {
             let contentPath = "test/content"
             try createDirectory(atPath: rootPath)
             try write("", atPath: contentPath)
-            XCTAssertTrue(try isDirectory(atPath: rootPath))
-            XCTAssertTrue(try isFile(atPath: contentPath))
+            XCTAssertTrue(try isA(.directory, atPath: rootPath))
+            XCTAssertTrue(try isA(.file, atPath: contentPath))
 
             XCTAssertThrowsError(try deletePath(rootPath, recursive: false))
 
-            XCTAssertTrue(try isDirectory(atPath: rootPath))
-            XCTAssertTrue(try isFile(atPath: contentPath))
+            XCTAssertTrue(try isA(.directory, atPath: rootPath))
+            XCTAssertTrue(try isA(.file, atPath: contentPath))
         }
     }
 
@@ -64,7 +64,7 @@ final class DeleteTests: XCTestCase {
         try withTemporaryDirectory { _ in
             let path = "test"
             try write("", atPath: path)
-            XCTAssertTrue(try isFile(atPath: path))
+            XCTAssertTrue(try isA(.file, atPath: path))
 
             let result = Path(path).delete()
 
@@ -77,7 +77,7 @@ final class DeleteTests: XCTestCase {
         try withTemporaryDirectory { _ in
             let path = "test"
             try createDirectory(atPath: path)
-            XCTAssertTrue(try isDirectory(atPath: path))
+            XCTAssertTrue(try isA(.directory, atPath: path))
 
             let result = Path(path).delete()
 
@@ -94,9 +94,9 @@ final class DeleteTests: XCTestCase {
             try createDirectory(atPath: rootPath)
             try createDirectory(atPath: nestedPath)
             try write("", atPath: contentPath)
-            XCTAssertTrue(try isDirectory(atPath: rootPath))
-            XCTAssertTrue(try isDirectory(atPath: nestedPath))
-            XCTAssertTrue(try isFile(atPath: contentPath))
+            XCTAssertTrue(try isA(.directory, atPath: rootPath))
+            XCTAssertTrue(try isA(.directory, atPath: nestedPath))
+            XCTAssertTrue(try isA(.file, atPath: contentPath))
 
             let result = Path(rootPath).delete()
 
@@ -111,13 +111,13 @@ final class DeleteTests: XCTestCase {
             let contentPath = "test/content"
             try createDirectory(atPath: rootPath)
             try write("", atPath: contentPath)
-            XCTAssertTrue(try isDirectory(atPath: rootPath))
-            XCTAssertTrue(try isFile(atPath: contentPath))
+            XCTAssertTrue(try isA(.directory, atPath: rootPath))
+            XCTAssertTrue(try isA(.file, atPath: contentPath))
 
             let result = Path(rootPath).delete(recursive: false)
 
             XCTAssertFalse(result)
-            XCTAssertTrue(try isFile(atPath: contentPath))
+            XCTAssertTrue(try isA(.file, atPath: contentPath))
         }
     }
 }
