@@ -97,7 +97,7 @@ public func children(inPath path: String, recursive: Bool = false) throws -> [St
 ///           data for the results.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.childUnknownTypeFiles(recursive:)`.
 public func childUnknownTypeFiles(inPath path: String, recursive: Bool = false) throws -> [String] {
-    return try _typedChildrenInPath(path, Int32(DT_FIFO), recursive: recursive)
+    return try _typedChildrenInPath(path, Int32(DT_UNKNOWN), recursive: recursive)
 }
 
 /// Find paths to pipes in `path`.
@@ -112,7 +112,7 @@ public func childUnknownTypeFiles(inPath path: String, recursive: Bool = false) 
 ///           data for the results.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.childPipes(recursive:)`.
 public func childPipes(inPath path: String, recursive: Bool = false) throws -> [String] {
-    return try _typedChildrenInPath(path, Int32(DT_UNKNOWN), recursive: recursive)
+    return try _typedChildrenInPath(path, Int32(DT_FIFO), recursive: recursive)
 }
 
 /// Find paths to character device files in `path`.
