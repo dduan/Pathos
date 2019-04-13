@@ -1,5 +1,9 @@
 matrix:
   include:
+    - os: osx
+      env: ACTION=CocoaPods
+    - os: osx
+      env: ACTION=Carthage
     - os: linux
       language: generic
       dist: trusty
@@ -10,10 +14,6 @@ matrix:
         - make test-docker
     - os: osx
       env: ACTION=SwiftPM
-    - os: osx
-      env: ACTION=Carthage
-    - os: osx
-      env: ACTION=CocoaPods
 
 language: objective-c
 osx_image: xcode10.2
