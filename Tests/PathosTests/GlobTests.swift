@@ -12,16 +12,6 @@ final class GlobTests: XCTestCase {
     }
 
     func testGlobWithResult() throws {
-        // Eww, libc platform differences
-#if os(Linux)
-        XCTAssertEqual(
-            Set(try Pathos.glob("*_symbol")),
-            Set([
-                FixturePath.goodFileSymbol.rawValue,
-                FixturePath.goodDirectorySymbol.rawValue,
-            ])
-        )
-#else
         XCTAssertEqual(
             Set(try Pathos.glob("*_symbol")),
             Set([
@@ -30,8 +20,6 @@ final class GlobTests: XCTestCase {
                 FixturePath.goodDirectorySymbol.rawValue,
             ])
         )
-#endif
-
     }
 
     func testGlobWithoutResult() throws {
@@ -61,16 +49,6 @@ final class GlobTests: XCTestCase {
     }
 
     func testPathRepresentableGlobWithResult() {
-        // Eww, libc platform differences
-#if os(Linux)
-        XCTAssertEqual(
-            Set(Path.glob("*_symbol").map { $0.pathString }),
-            Set([
-                FixturePath.goodFileSymbol.rawValue,
-                FixturePath.goodDirectorySymbol.rawValue,
-            ])
-        )
-#else
         XCTAssertEqual(
             Set(Path.glob("*_symbol").map { $0.pathString }),
             Set([
@@ -79,7 +57,6 @@ final class GlobTests: XCTestCase {
                 FixturePath.goodDirectorySymbol.rawValue,
             ])
         )
-#endif
     }
 
     func testPathRepresentableGlobWithoutResult() {
