@@ -38,6 +38,30 @@ final class WritingTests: XCTestCase {
         XCTAssertEqual(try readString(atPath: path), expected)
     }
 
+    func testTruncating() throws {
+        let expected = ""
+        let path = "world"
+        try write("Hello", atPath: path)
+
+        try write(expected, atPath: path)
+
+        let createdPermission = try permissions(forPath: path)
+        XCTAssertEqual(createdPermission, self.defaultPermission)
+        XCTAssertEqual(try readString(atPath: path), expected)
+    }
+
+    func testNotTruncating() throws {
+        let expected = "Hello"
+        let path = "world"
+        try write(expected, atPath: path)
+
+        try write("Hell", atPath: path, truncate: false)
+
+        let createdPermission = try permissions(forPath: path)
+        XCTAssertEqual(createdPermission, self.defaultPermission)
+        XCTAssertEqual(try readString(atPath: path), expected)
+    }
+
     func testStringToUnwantedNewFile() throws {
         let path = "world"
         XCTAssertThrowsError(try write("", atPath: path, createIfNecessary: false))
@@ -54,7 +78,6 @@ final class WritingTests: XCTestCase {
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(try readString(atPath: path), expected)
     }
-
 
     func testBytesToExistingFile() throws {
         let expected = "Hello"
@@ -95,6 +118,30 @@ final class WritingTests: XCTestCase {
         let createdPermission = try permissions(forPath: path.pathString)
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(try readString(atPath: path.pathString), expected)
+    }
+
+    func testPathRepresentableTruncating() throws {
+        let expected = ""
+        let path = Path("world")
+        path.write("Hello")
+
+        path.write(expected)
+
+        let createdPermission = path.permissions
+        XCTAssertEqual(createdPermission, self.defaultPermission)
+        XCTAssertEqual(path.readString(), expected)
+    }
+
+    func testPathRepresentableNotTruncating() throws {
+        let expected = "Hello"
+        let path = Path("world")
+        path.write(expected)
+
+        path.write("Hell", truncate: false)
+
+        let createdPermission = path.permissions
+        XCTAssertEqual(createdPermission, self.defaultPermission)
+        XCTAssertEqual(path.readString(), expected)
     }
 
     func testPathRepresentableStringToUnwantedNewFile() throws {
