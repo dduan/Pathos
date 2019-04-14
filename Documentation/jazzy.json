@@ -24,7 +24,7 @@
             "children": [
                 "readBytes(atPath:)",
                 "readString(atPath:)",
-                "write(_:atPath:createIfNecessary:permission:)",
+                "write(_:atPath:createIfNecessary:truncate:permission:)",
                 "readSymbolicLink(atPath:)",
                 "createSymbolicLink(fromPath:toPath:)"
             ]

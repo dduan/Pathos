@@ -4,8 +4,8 @@ import Glibc
 import Darwin
 #endif
 
-func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool, permission: FilePermission?) throws {
-    let oflag = createIfNecessary ? O_WRONLY | O_CREAT : O_WRONLY
+func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool, truncate: Bool, permission: FilePermission?) throws {
+    let oflag = O_WRONLY | (createIfNecessary ? O_CREAT : 0) | (truncate ? O_TRUNC : 0)
     let fd: Int32
     if let permission = permission {
         fd = open(path, oflag, permission.rawValue)
@@ -41,7 +41,7 @@ public func readBytes(atPath path: String) throws -> [UInt8] {
     let fileSize = Int(status.st_size)
     var buffer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: fileSize)
     defer { buffer.deallocate() }
-    pread(fd, buffer.baseAddress!, fileSize, 0)
+    read(fd, buffer.baseAddress!, fileSize)
     return [UInt8](buffer)
 }
 
@@ -58,16 +58,16 @@ public func readString(atPath path: String) throws -> String {
 
 // TODO: missing docstring.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.write(_:createIfNecessary:permission:)`.
-public func write<Bytes>(_ bytes: Bytes, atPath path: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws where Bytes: Collection, Bytes.Element: BinaryInteger {
+public func write<Bytes>(_ bytes: Bytes, atPath path: String, createIfNecessary: Bool = true, truncate: Bool = true, permission: FilePermission? = nil) throws where Bytes: Collection, Bytes.Element: BinaryInteger {
     let buffer = bytes.map(UInt8.init(truncatingIfNeeded:))
-    try _writeAtPath(path, bytes: buffer, byteCount: buffer.count, createIfNecessary: createIfNecessary, permission: permission)
+    try _writeAtPath(path, bytes: buffer, byteCount: buffer.count, createIfNecessary: createIfNecessary, truncate: truncate, permission: permission)
 }
 
 // TODO: missing docstring.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.write(_:createIfNecessary:permission:)`.
-public func write(_ string: String, atPath path: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) throws {
+public func write(_ string: String, atPath path: String, createIfNecessary: Bool = true, truncate: Bool = true, permission: FilePermission? = nil) throws {
     try string.utf8CString.withUnsafeBytes { bytes in
-        try _writeAtPath(path, bytes: bytes.baseAddress!, byteCount: bytes.count - 1, createIfNecessary: createIfNecessary, permission: permission)
+        try _writeAtPath(path, bytes: bytes.baseAddress!, byteCount: bytes.count - 1, createIfNecessary: createIfNecessary, truncate: truncate, permission: permission)
     }
 }
 
@@ -93,9 +93,9 @@ extension PathRepresentable {
     // TODO: missing docstring. Remember to note the byte truncating!
     /// - SeeAlso: `write(_:atPath:createIfNecessary:permission:)`.
     @discardableResult
-    public func write<Bytes>(_ bytes: Bytes, createIfNecessary: Bool = true, permission: FilePermission? = nil) -> Bool where Bytes: Collection, Bytes.Element: BinaryInteger {
+    public func write<Bytes>(_ bytes: Bytes, createIfNecessary: Bool = true, truncate: Bool = true, permission: FilePermission? = nil) -> Bool where Bytes: Collection, Bytes.Element: BinaryInteger {
         do {
-            try write(_:atPath:createIfNecessary:permission:)(bytes, self.pathString, createIfNecessary, permission)
+            try write(_:atPath:createIfNecessary:truncate:permission:)(bytes, self.pathString, createIfNecessary, truncate, permission)
         } catch {
             return false
         }
@@ -105,9 +105,9 @@ extension PathRepresentable {
     // TODO: missing docstring.
     /// - SeeAlso: `write(_:atPath:createIfNecessary:permission:)`.
     @discardableResult
-    public func write(_ string: String, createIfNecessary: Bool = true, permission: FilePermission? = nil) -> Bool {
+    public func write(_ string: String, createIfNecessary: Bool = true, truncate: Bool = true, permission: FilePermission? = nil) -> Bool {
         do {
-            try write(_:atPath:createIfNecessary:permission:)(string, self.pathString, createIfNecessary, permission)
+            try write(_:atPath:createIfNecessary:truncate:permission:)(string, self.pathString, createIfNecessary, truncate, permission)
         } catch {
             return false
         }

@@ -727,15 +727,19 @@ extension WritingTests {
         ("testBytesToExistingFile", testBytesToExistingFile),
         ("testBytesToNewFile", testBytesToNewFile),
         ("testBytesToUnwantedNewFile", testBytesToUnwantedNewFile),
+        ("testNotTruncating", testNotTruncating),
         ("testPathRepresentableBytesToExistingFile", testPathRepresentableBytesToExistingFile),
         ("testPathRepresentableBytesToNewFile", testPathRepresentableBytesToNewFile),
         ("testPathRepresentableBytesToUnwantedNewFile", testPathRepresentableBytesToUnwantedNewFile),
+        ("testPathRepresentableNotTruncating", testPathRepresentableNotTruncating),
         ("testPathRepresentableStringToExistingFile", testPathRepresentableStringToExistingFile),
         ("testPathRepresentableStringToNewFile", testPathRepresentableStringToNewFile),
         ("testPathRepresentableStringToUnwantedNewFile", testPathRepresentableStringToUnwantedNewFile),
+        ("testPathRepresentableTruncating", testPathRepresentableTruncating),
         ("testStringToExistingFile", testStringToExistingFile),
         ("testStringToNewFile", testStringToNewFile),
         ("testStringToUnwantedNewFile", testStringToUnwantedNewFile),
+        ("testTruncating", testTruncating),
     ]
 }
 
