@@ -169,10 +169,10 @@ extension PathRepresentable {
 
     // TODO: Missing docstring.
     /// - SeeAlso: `withTemporaryDirectory(suffix:prefix:inDirectory:performAction:)`.
-    public static func withTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: Self? = nil, performAction closure: @escaping (Self) throws -> Void) {
-        guard let temporaryDirectory = self.createTemporaryDirectory(suffix: suffix, prefix: prefix, inDirectory: directory) else
-        {
-            return
+    @discardableResult
+    public static func withTemporaryDirectory(suffix: String = "", prefix: String = "", inDirectory directory: Self? = nil, performAction closure: @escaping (Self) throws -> Void) -> Bool {
+        guard let temporaryDirectory = self.createTemporaryDirectory(suffix: suffix, prefix: prefix, inDirectory: directory) else {
+            return false
         }
 
         let originalDirectory = self.currentWorkingDirectory
@@ -180,5 +180,6 @@ extension PathRepresentable {
         try? closure(temporaryDirectory)
         self.currentWorkingDirectory = originalDirectory
         _ = temporaryDirectory.delete(recursive: true)
+        return true
     }
 }
