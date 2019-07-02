@@ -35,12 +35,9 @@ Pathos offers conventional OOP interfaces to all of these functions as well.
 
 Read the [documentation][] to learn more.
 
-For an example of real application, checkout [tre][].
-
 ¹ Unix [virtual file system][], as opposed to underlying system such as APFS,
 Ext4, btrfs etc.
 
-[tre]: https://github.com/dduan/tre
 [documentation]: https://dduan.github.io/Pathos
 [virtual file system]: https://en.wikipedia.org/wiki/Virtual_file_system
 
