@@ -13,10 +13,7 @@ test: clean
 	@swift test -Xswiftc -warnings-as-errors
 
 test-docker:
-	@Scripts/run-tests-linux-docker.sh
-
-develop-docker:
-	@Scripts/develop-linux-docker.sh
+	@Scripts/ubuntu.sh Pathos test 5.1.1 bionic
 
 xcode: clean-xcodeproj-gen
 	@echo "Generating Xcode project…"
