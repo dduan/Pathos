@@ -41,7 +41,6 @@ jobs:
           - 5.0.3
           - 5.1.1
         ubuntu:
-          - xenial
           - bionic
     steps:
     - uses: actions/checkout@v1
