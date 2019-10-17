@@ -42,7 +42,7 @@ jobs:
           - 5.1.1
         ubuntu:
           - xenial
-          - Bionic
+          - bionic
     steps:
     - uses: actions/checkout@v1
     - name: Test
