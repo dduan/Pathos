@@ -1,0 +1,49 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  macos:
+    name: macOS
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        xcode:
+          - 10.2
+          - 11.1
+        action:
+          - Carthage
+          - CocoaPods
+          - SwiftPM
+    steps:
+    - uses: actions/checkout@v1
+    - name: Xcode version
+      run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
+    - name: Prepare And Test
+      run: make test-${{ matrix.action }}
+
+  macos-generated-code:
+    name: Code generation
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Xcode version
+      run: sudo xcode-select -s /Applications/Xcode_11.1.app
+    - name: Ensure code are generated
+      run: make test-codegen
+
+  ubuntu:
+    name: Ubuntu
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        swift:
+          - 5.0.3
+          - 5.1.1
+        ubuntu:
+          - xenial
+          - Bionic
+    steps:
+    - uses: actions/checkout@v1
+    - name: Test
+      run: Scripts/ubuntu.sh Pathos test ${{ matrix.swift }} ${{ matrix.ubuntu }}
