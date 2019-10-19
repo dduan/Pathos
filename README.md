@@ -1,7 +1,5 @@
 ![Banner](Resources/Assets/Banner.png)
 
-# Pathos
-
 Pathos is everything you need for file system¹ inquiry and manipulation.
 
 For a taste what that means, let's generate a static site from Markdown files!
