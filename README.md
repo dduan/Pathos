@@ -1,3 +1,5 @@
+![Banner](Resources/Assets/Banner.png)
+
 # Pathos
 
 Pathos is everything you need for file system¹ inquiry and manipulation.
