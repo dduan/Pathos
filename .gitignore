@@ -7,3 +7,4 @@ Carthage/
 Pathos.framework.zip
 .idea
 /build
+.swiftpm
