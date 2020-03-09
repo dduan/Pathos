@@ -34,27 +34,15 @@ public func children(inPath path: String, recursive: Bool = false) throws -> [(S
     result.reserveCapacity(count)
     let buffer = UnsafeBufferPointer(start: bufferPointer.pointee, count: Int(count))
     for d in buffer {
-        #if os(Linux)
-        guard var entry = d?.pointee,
-            case let nameLength = Int(entry.d_reclen + 1),
-            let nameBuffer = UnsafeBufferPointer(start: &entry.d_name.0, count: nameLength).baseAddress,
-            case let name = String(cString: nameBuffer),
+        guard let entry = d?.pointee,
+            let name = withUnsafeBytes(of: entry.d_name, {
+                $0.bindMemory(to: Int8.self).baseAddress.map(String.init(cString:))
+            }),
             name != ".." && name != "."
             else
         {
             continue
         }
-        #else
-        guard var entry = d?.pointee,
-            case let nameLength = Int(entry.d_namlen + 1),
-            let nameBuffer = UnsafeBufferPointer(start: &entry.d_name.0, count: nameLength).baseAddress,
-            case let name = String(cString: nameBuffer),
-            name != ".." && name != "."
-            else
-        {
-            continue
-        }
-        #endif
 
         let pathType = FileType(posixFileType: Int32(entry.d_type))
         let fullName = join(paths: path, name)

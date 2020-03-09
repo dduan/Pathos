@@ -1,11 +1,3 @@
 ## master
 
-### Breaking
-
-- None
-
-### Enhancements
-
-- None
-
----
+- Removed a build warning in Swift 5.2
