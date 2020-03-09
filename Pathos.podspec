@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name                     = "Pathos"
-  spec.version                  = "0.2.1"
+  spec.version                  = "0.2.2"
   spec.summary                  = "A file management library for Swift"
   spec.homepage                 = "https://github.com/dduan/Pathos"
   spec.license                  = { :type => "MIT", :file => "LICENSE.md" }
@@ -11,4 +11,5 @@ Pod::Spec.new do |spec|
   spec.source_files             = "Sources/**/*.swift"
   spec.requires_arc             = true
   spec.module_name              = "Pathos"
+  spec.swift_versions           = ['5.1']
 end
