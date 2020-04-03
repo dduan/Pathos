@@ -4,7 +4,20 @@ import Glibc
 import Darwin
 #endif
 
+/// Return metadata regarding a path.
+///
+/// - Parameters:
+///   - path: the path to be tested.
+///   - followSymbol: whether to follow symbolic links when retrieving the metadata.
+/// - Throws: A `SystemError` if the file does not exist or is inaccessible.
+/// - Returns: metadata regarding file at the given path.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.metadata(followSymbol:)`.
+public func metadata(atPath path: String, followSymbol: Bool = true) throws -> Metadata {
+    return try Metadata(followSymbol ? _stat(at: path) : _lstat(at: path))
+}
+
 /// Whether file at path is of a type. Returns `false` if the path does not exist or is
+///
 /// not accessible.
 /// - Parameter type: The type in question. See `FileType`.
 /// - SeeAlso: `PathRepresentable.isA(_:)`.
@@ -151,5 +164,16 @@ extension PathRepresentable {
     /// - SeeAlso: `sameFile(atPath:otherPath:)`.
     public func isSame(as other: Self) -> Bool {
         return (try? sameFile(atPath:otherPath:)(self.pathString, other.pathString)) ?? false
+    }
+
+    /// Return metadata regarding the path.
+    ///
+    /// - Parameter followSymbol: whether to follow symbolic links when retrieving the metadata.
+    /// - Returns: metadata regarding file at the given path. `nil` if the file does not exist or is
+    ///            inaccessible.
+    /// - SeeAlso: To work with `Path` or `PathRepresentable`, use
+    ///            `PathRepresentable.metadata(followSymbol:)`.
+    public func metadata(followSymbol: Bool = true) -> Metadata? {
+        return try? metadata(atPath:followSymbol:)(self.pathString, followSymbol)
     }
 }
