@@ -17,27 +17,19 @@ import Darwin
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.children(recursive:)`.
 public func children(inPath path: String, recursive: Bool = false) throws -> [(String, FileType)] {
     var result = [(String, FileType)]()
-    let bufferPointer = UnsafeMutablePointer<UnsafeMutablePointer<UnsafeMutablePointer<dirent>?>?>.allocate(capacity: 0)
-    #if os(Linux)
-    let sorting: @convention(c) (UnsafeMutablePointer<UnsafePointer<dirent>?>?, UnsafeMutablePointer<UnsafePointer<dirent>?>?) -> Int32 = { p0, p1 in
-        return alphasort(p0!, p1!)
-    }
-
-    let count = Int(scandir(path, bufferPointer, nil, sorting))
-    #else
-    let count = Int(scandir(path, bufferPointer, nil, alphasort))
-    #endif
-    if count == -1 {
+    guard let streamPtr = opendir(path) else {
         throw SystemError(posixErrorCode: errno)
     }
 
-    result.reserveCapacity(count)
-    let buffer = UnsafeBufferPointer(start: bufferPointer.pointee, count: Int(count))
-    for d in buffer {
-        guard let entry = d?.pointee,
-            let name = withUnsafeBytes(of: entry.d_name, {
-                $0.bindMemory(to: Int8.self).baseAddress.map(String.init(cString:))
-            }),
+    defer {
+        closedir(streamPtr)
+    }
+
+    while let entryPtr = readdir(streamPtr) {
+        let entry = entryPtr.pointee
+        guard let name = withUnsafeBytes(of: entry.d_name, {
+            $0.bindMemory(to: Int8.self).baseAddress.map(String.init(cString:))
+        }),
             name != ".." && name != "."
             else
         {
@@ -53,7 +45,6 @@ public func children(inPath path: String, recursive: Bool = false) throws -> [(S
         }
     }
 
-    free(bufferPointer)
     return result
 }
 
