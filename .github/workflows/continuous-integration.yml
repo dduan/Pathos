@@ -14,22 +14,13 @@ jobs:
           - Carthage
           - CocoaPods
           - SwiftPM
+          - codegen
     steps:
     - uses: actions/checkout@v1
     - name: Xcode version
       run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
     - name: Prepare And Test
       run: make test-${{ matrix.action }}
-
-  macos-generated-code:
-    name: Code generation
-    runs-on: macOS-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Xcode version
-      run: sudo xcode-select -s /Applications/Xcode_11.1.app
-    - name: Ensure code are generated
-      run: make test-codegen
 
   ubuntu:
     name: Ubuntu
