@@ -49,6 +49,7 @@ public func exists(atPath path: String, followSymbol: Bool = true) -> Bool {
 /// - Returns: size of the file at path.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.size`.
+@available(*, deprecated, message: "Use `metadata(atPath:followSymbol:).size` instead.")
 public func size(atPath path: String) throws -> Int64 {
     return Int64(try _stat(at: path).st_size)
 }
@@ -59,6 +60,7 @@ public func size(atPath path: String) throws -> Int64 {
 /// - Returns: modification time in `FileTime`.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.modificationTime`.
+@available(*, deprecated, message: "Use `metadata(atPath:followSymbol:).time.modified` instead.")
 public func modificationTime(atPath path: String) throws -> FileTime {
 #if os(Linux)
     return unsafeBitCast(try _stat(at: path).st_mtim, to: FileTime.self)
@@ -73,6 +75,7 @@ public func modificationTime(atPath path: String) throws -> FileTime {
 /// - Returns: time of last access in `FileTime`.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.accessTime`.
+@available(*, deprecated, message: "Use `metadata(atPath:followSymbol:).time.accessed` instead.")
 public func accessTime(atPath path: String) throws -> FileTime {
 #if os(Linux)
     return unsafeBitCast(try _stat(at: path).st_atim, to: FileTime.self)
@@ -87,6 +90,7 @@ public func accessTime(atPath path: String) throws -> FileTime {
 /// - Returns: time of last metadata change in `FileTime`.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.metadataChangeTime`.
+@available(*, deprecated, message: "Use `metadata(atPath:followSymbol:).time.statusChanged` instead.")
 public func metadataChangeTime(atPath path: String) throws -> FileTime {
 #if os(Linux)
     return unsafeBitCast(try _stat(at: path).st_ctim, to: FileTime.self)
@@ -131,6 +135,7 @@ extension PathRepresentable {
     /// Return the size in bytes of path. Returns `false` if the path does not exist or is
     /// not accessible.
     /// - SeeAlso: `size(atPath:)`.
+    @available(*, deprecated, message: "use `self.metadata(followSymbol:).size` instead.")
     public var size: Int64 {
         return (try? size(atPath:)(self.pathString)) ?? 0
     }
@@ -138,6 +143,7 @@ extension PathRepresentable {
     /// Return the time of last modification. Returns `nil` if the path does not exist or is
     /// not accessible.
     /// - SeeAlso: `modificationTime(atPath:)`.
+    @available(*, deprecated, message: "use `self.metadata(followSymbol:).time.modified` instead.")
     public var modificationTime: FileTime? {
         return try? modificationTime(atPath:)(self.pathString)
     }
@@ -145,6 +151,7 @@ extension PathRepresentable {
     /// Return the time of last access. Returns `nil` if the path does not exist or is
     /// not accessible.
     /// - SeeAlso: `accessTime(atPath:)`.
+    @available(*, deprecated, message: "use `self.metadata(followSymbol:).time.accessed` instead.")
     public var accessTime: FileTime? {
         return try? accessTime(atPath:)(self.pathString)
     }
@@ -152,6 +159,7 @@ extension PathRepresentable {
     /// Return the system’s ctime which, on some systems (like Unix) is the time of the last metadata change,
     /// Returns `nil` if the path does not exist or is not accessible.
     /// - SeeAlso: `metadataChangeTime(atPath:)`.
+    @available(*, deprecated, message: "use `self.metadata(followSymbol:).time.statusChanged` instead.")
     public var metadataChangeTime: FileTime? {
         return try? metadataChangeTime(atPath:)(self.pathString)
     }
