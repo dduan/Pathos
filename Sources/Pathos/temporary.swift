@@ -35,7 +35,7 @@ private func candidateTemporaryDirectories() -> [String] {
 public func searchForDefaultTemporaryDirectory() -> String {
     for path in candidateTemporaryDirectories() where path != kCurrentDirectory {
         do {
-            let p = try permissions(forPath: path)
+            let p = try metadata(atPath: path).permissions
             if p.contains([.ownerRead, .ownerWrite]) {
                 return path
             }

@@ -19,7 +19,7 @@ final class CopyFileTests: XCTestCase {
         let destination = "hello"
         let source = self.fixture(.fileThatExists)
         try copyFile(fromPath: source, toPath: destination)
-        XCTAssertEqual(try permissions(forPath: destination), try permissions(forPath: source))
+        try XCTAssertEqual(metadata(atPath: destination).permissions, metadata(atPath: source).permissions)
         XCTAssertEqual(try readString(atPath: destination), try readString(atPath: source))
     }
 
@@ -28,7 +28,10 @@ final class CopyFileTests: XCTestCase {
         let source = self.fixture(.goodFileSymbol)
         let realSource = try realPath(ofPath: source)
         try copyFile(fromPath: source, toPath: destination)
-        XCTAssertEqual(try permissions(forPath: destination), try permissions(forPath: realSource))
+        try XCTAssertEqual(
+            metadata(atPath: destination).permissions,
+            metadata(atPath: realSource).permissions
+        )
         XCTAssertEqual(try readString(atPath: destination), try readString(atPath: realSource))
     }
 
@@ -37,7 +40,10 @@ final class CopyFileTests: XCTestCase {
         let source = self.fixture(.goodFileSymbol)
         try copyFile(fromPath: source, toPath: destination, followSymbolicLink: false)
         XCTAssertTrue(try isA(.symbolicLink, atPath: destination))
-        XCTAssertEqual(try permissions(forPath: destination), try permissions(forPath: source))
+        try XCTAssertEqual(
+            metadata(atPath: destination, followSymbol: false).permissions,
+            metadata(atPath: source, followSymbol: false).permissions
+        )
         XCTAssertEqual(try readSymbolicLink(atPath: destination), try readSymbolicLink(atPath: source))
     }
 
@@ -51,9 +57,9 @@ final class CopyFileTests: XCTestCase {
         let destination = Path("hello")
         let source = self.fixturePath(.fileThatExists)
         XCTAssertTrue(source.copy(to: destination))
-        XCTAssertEqual(
-            try permissions(forPath: destination.pathString),
-            try permissions(forPath: source.pathString)
+        try XCTAssertEqual(
+            metadata(atPath: destination.pathString).permissions,
+            metadata(atPath: source.pathString).permissions
         )
         XCTAssertEqual(
             try readString(atPath: destination.pathString),
@@ -66,9 +72,9 @@ final class CopyFileTests: XCTestCase {
         let source = self.fixturePath(.goodFileSymbol)
         let realSource = try realPath(ofPath: source.pathString)
         XCTAssertTrue(source.copy(to: destination))
-        XCTAssertEqual(
-            try permissions(forPath: destination.pathString),
-            try permissions(forPath: realSource)
+        try XCTAssertEqual(
+            metadata(atPath: destination.pathString).permissions,
+            metadata(atPath: realSource).permissions
         )
         XCTAssertEqual(
             try readString(atPath: destination.pathString),
@@ -81,9 +87,9 @@ final class CopyFileTests: XCTestCase {
         let source = self.fixturePath(.goodFileSymbol)
         XCTAssertTrue(source.copy(to: destination, followSymbolicLink: false))
         XCTAssertTrue(try isA(.symbolicLink, atPath: destination.pathString))
-        XCTAssertEqual(
-            try permissions(forPath: destination.pathString),
-            try permissions(forPath: source.pathString)
+        try XCTAssertEqual(
+            metadata(atPath: destination.pathString, followSymbol: false).permissions,
+            metadata(atPath: source.pathString, followSymbol: false).permissions
         )
         XCTAssertEqual(
             try readSymbolicLink(atPath: destination.pathString),

@@ -21,7 +21,7 @@ final class WritingTests: XCTestCase {
 
         try write(expected, atPath: path)
 
-        let createdPermission = try permissions(forPath: path)
+        let createdPermission = try metadata(atPath: path).permissions
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(try readString(atPath: path), expected)
     }
@@ -33,7 +33,7 @@ final class WritingTests: XCTestCase {
 
         try write(expected, atPath: path)
 
-        let createdPermission = try permissions(forPath: path)
+        let createdPermission = try metadata(atPath: path).permissions
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(try readString(atPath: path), expected)
     }
@@ -45,7 +45,7 @@ final class WritingTests: XCTestCase {
 
         try write(expected, atPath: path)
 
-        let createdPermission = try permissions(forPath: path)
+        let createdPermission = try metadata(atPath: path).permissions
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(try readString(atPath: path), expected)
     }
@@ -57,7 +57,7 @@ final class WritingTests: XCTestCase {
 
         try write("Hell", atPath: path, truncate: false)
 
-        let createdPermission = try permissions(forPath: path)
+        let createdPermission = try metadata(atPath: path).permissions
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(try readString(atPath: path), expected)
     }
@@ -74,7 +74,7 @@ final class WritingTests: XCTestCase {
 
         try write(expectedBytes, atPath: path)
 
-        let createdPermission = try permissions(forPath: path)
+        let createdPermission = try metadata(atPath: path).permissions
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(try readString(atPath: path), expected)
     }
@@ -87,7 +87,7 @@ final class WritingTests: XCTestCase {
 
         try write(expectedBytes, atPath: path)
 
-        let createdPermission = try permissions(forPath: path)
+        let createdPermission = try metadata(atPath: path).permissions
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(try readString(atPath: path), expected)
     }
@@ -103,7 +103,7 @@ final class WritingTests: XCTestCase {
 
         XCTAssertTrue(path.write(expected))
 
-        let createdPermission = try permissions(forPath: path.pathString)
+        let createdPermission = try metadata(atPath: path.pathString).permissions
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(try readString(atPath: path.pathString), expected)
     }
@@ -115,7 +115,7 @@ final class WritingTests: XCTestCase {
 
         XCTAssertTrue(path.write(expected))
 
-        let createdPermission = try permissions(forPath: path.pathString)
+        let createdPermission = try metadata(atPath: path.pathString).permissions
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(try readString(atPath: path.pathString), expected)
     }
@@ -127,7 +127,7 @@ final class WritingTests: XCTestCase {
 
         path.write(expected)
 
-        let createdPermission = path.permissions
+        let createdPermission = try XCTUnwrap(path.metadata()).permissions
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(path.readString(), expected)
     }
@@ -139,7 +139,7 @@ final class WritingTests: XCTestCase {
 
         path.write("Hell", truncate: false)
 
-        let createdPermission = path.permissions
+        let createdPermission = try XCTUnwrap(path.metadata()).permissions
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(path.readString(), expected)
     }
@@ -156,7 +156,7 @@ final class WritingTests: XCTestCase {
 
         XCTAssertTrue(path.write(expectedBytes))
 
-        let createdPermission = try permissions(forPath: path.pathString)
+        let createdPermission = try metadata(atPath: path.pathString).permissions
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(try readString(atPath: path.pathString), expected)
     }
@@ -170,7 +170,7 @@ final class WritingTests: XCTestCase {
 
         XCTAssertTrue(path.write(expectedBytes))
 
-        let createdPermission = try permissions(forPath: path.pathString)
+        let createdPermission = try metadata(atPath: path.pathString).permissions
         XCTAssertEqual(createdPermission, self.defaultPermission)
         XCTAssertEqual(try readString(atPath: path.pathString), expected)
     }
