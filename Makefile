@@ -13,7 +13,7 @@ test: clean
 	@swift test -Xswiftc -warnings-as-errors
 
 test-docker:
-	@Scripts/ubuntu.sh Pathos test 5.1.4 bionic
+	@Scripts/ubuntu.sh Pathos test 5.2 bionic
 
 test-codegen: update-linux-test-manifest docs
 	@git diff --exit-code
