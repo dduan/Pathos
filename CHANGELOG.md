@@ -21,6 +21,15 @@ The following is added
 
 - `PathRepresentable.set(_:)` (permissions)
 
+Removed adding/removing permissions in favor of directly setting it.
+
+Deprecated the following:
+
+- `add(_:forPath:)`
+- `remove(_:forPath:)`
+- `PathRepresentable.add(_:)`
+- `PathRepresentable.remove(_:)`
+
 ## 0.2.3
 
 - Re-implemented `children(inPath:recursive)` to fix issue #122

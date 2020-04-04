@@ -522,13 +522,9 @@ extension PermissionsTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__PermissionsTests = [
-        ("testAddingPermissions", testAddingPermissions),
-        ("testPathRepresentableAddingPermissions", testPathRepresentableAddingPermissions),
         ("testPathRepresentableReadingDefaultPermissions", testPathRepresentableReadingDefaultPermissions),
-        ("testPathRepresentableRemovingPermissions", testPathRepresentableRemovingPermissions),
         ("testPathRepresentableSettingPermissions", testPathRepresentableSettingPermissions),
         ("testReadingDefaultPermissions", testReadingDefaultPermissions),
-        ("testRemovingPermissions", testRemovingPermissions),
         ("testSettingPermissions", testSettingPermissions),
     ]
 }
