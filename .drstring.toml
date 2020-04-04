@@ -1,0 +1,6 @@
+parameter-style = "grouped"
+needs-separation = ["description"]
+column-limit = 110
+include = [
+    "Sources/**/*.swift"
+]
