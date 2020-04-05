@@ -27,6 +27,7 @@ public func permissions(forPath path: String) throws -> FilePermission {
 ///   - path: The path whose permission is being changed.
 /// - Throws: System error encountered while attempting to read or change permissions at the path.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.add(_:)`.
+@available(*, deprecated, message: "use `set(_:forPath:)` instead")
 public func add(_ permissions: FilePermission, forPath path: String) throws {
     let existingPermission = try metadata(atPath: path).permissions
     try set(existingPermission.union(permissions), forPath: path)
@@ -40,6 +41,7 @@ public func add(_ permissions: FilePermission, forPath path: String) throws {
 ///   - path: The path whose permission is being changed.
 /// - Throws: System error encountered while attempting to read or change permissions at the path.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.remove(_:)`.
+@available(*, deprecated, message: "use `set(_:forPath:)` instead")
 public func remove(_ permissions: FilePermission, forPath path: String) throws {
     let existingPermission = try metadata(atPath: path).permissions
     try set(existingPermission.subtracting(permissions), forPath: path)
@@ -87,6 +89,7 @@ extension PathRepresentable {
     /// Set additional permissions to existing permission at this path. If this is an symbolic link, the
     /// permission for the link itself will be changed.
     /// - SeeAlso: `add(_:forPath:)`.
+    @available(*, deprecated, message: "use `self.set(_:)` instead")
     public func add(_ permissions: FilePermission) {
         try? add(_:forPath:)(permissions, self.pathString)
     }
@@ -94,6 +97,7 @@ extension PathRepresentable {
     /// Remove permissions from existing permission at a path. If this is an symbolic link, the
     /// permission for the link itself will be changed.
     /// - SeeAlso: `remove(_:forPath:)`.
+    @available(*, deprecated, message: "use `self.set(_:)` instead")
     public func remove(_ permissions: FilePermission) {
         try? remove(_:forPath:)(permissions, self.pathString)
     }
