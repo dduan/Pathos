@@ -26,11 +26,11 @@ public struct Metadata {
     /// A data structure that encapsulates time-related attributes.
     public struct Time {
         /// Last time the file was accessed.
-        let accessed: FileTime
+        public let accessed: FileTime
         /// Last time the file was modified.
-        let modified: FileTime
+        public let modified: FileTime
         /// Last time the file status changed.
-        let statusChanged: FileTime
+        public let statusChanged: FileTime
 
         /// Create Time from a `stat` structure from POSIX.
         public init(_ stat: stat) {
