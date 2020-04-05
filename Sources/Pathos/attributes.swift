@@ -22,7 +22,7 @@ public func metadata(atPath path: String, followSymlink: Bool = true) throws -> 
 /// - Parameter type: The type in question. See `FileType`.
 /// - SeeAlso: `PathRepresentable.isA(_:)`.
 public func isA(_ type: FileType, atPath path: String) throws -> Bool {
-    if type == .symbolicLink {
+    if type == .symlink {
         return try _ifmt(_lstat(at: path)) == S_IFLNK
     }
 

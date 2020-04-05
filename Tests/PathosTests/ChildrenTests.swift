@@ -29,7 +29,7 @@ final class ChildrenTests: XCTestCase {
             Set(try children(inPath: self.fixtureRoot).map { $0.0 }),
             self.childFileFixture
                 .union(self.childDirectoryFixture)
-                .union(self.childSymbolicLinkFixture)
+                .union(self.childSymlinkFixture)
         )
     }
 
@@ -38,7 +38,7 @@ final class ChildrenTests: XCTestCase {
             Set(try children(inPath: self.fixtureRoot, recursive: true).map { $0.0 }),
             self.childFileRecursiveFixture
                 .union(self.childDirectoryRecursiveFixture)
-                .union(self.childSymbolicLinkRecursiveFixture)
+                .union(self.childSymlinkRecursiveFixture)
         )
     }
 
@@ -70,17 +70,17 @@ final class ChildrenTests: XCTestCase {
         )
     }
 
-    func testSymbolicLinksInPath() throws {
+    func testSymlinksInPath() throws {
         XCTAssertEqual(
-            Set(try children(inPath: self.fixtureRoot, ofType: .symbolicLink)),
-            self.childSymbolicLinkFixture
+            Set(try children(inPath: self.fixtureRoot, ofType: .symlink)),
+            self.childSymlinkFixture
         )
     }
 
-    func testSymbolicLinksRecursiveInPath() throws {
+    func testSymlinksRecursiveInPath() throws {
         XCTAssertEqual(
-            Set(try children(inPath: self.fixtureRoot, ofType: .symbolicLink, recursive: true)),
-            self.childSymbolicLinkRecursiveFixture
+            Set(try children(inPath: self.fixtureRoot, ofType: .symlink, recursive: true)),
+            self.childSymlinkRecursiveFixture
         )
     }
 
@@ -89,7 +89,7 @@ final class ChildrenTests: XCTestCase {
             Set(Path(self.fixtureRoot).children().map { $0.0.pathString }),
             self.childFileFixture
                 .union(self.childDirectoryFixture)
-                .union(self.childSymbolicLinkFixture)
+                .union(self.childSymlinkFixture)
         )
     }
 
@@ -98,7 +98,7 @@ final class ChildrenTests: XCTestCase {
             Set(Path(self.fixtureRoot).children(recursive: true).map { $0.0.pathString }),
             self.childFileRecursiveFixture
                 .union(self.childDirectoryRecursiveFixture)
-                .union(self.childSymbolicLinkRecursiveFixture)
+                .union(self.childSymlinkRecursiveFixture)
         )
     }
 
@@ -130,17 +130,17 @@ final class ChildrenTests: XCTestCase {
         )
     }
 
-    func testPathRepresentableSymbolicLinksInPath() {
+    func testPathRepresentableSymlinksInPath() {
         XCTAssertEqual(
-            Set(Path(self.fixtureRoot).children(ofType: .symbolicLink).map { $0.pathString }),
-            self.childSymbolicLinkFixture
+            Set(Path(self.fixtureRoot).children(ofType: .symlink).map { $0.pathString }),
+            self.childSymlinkFixture
         )
     }
 
-    func testPathRepresentableSymbolicLinksRecursiveInPath() {
+    func testPathRepresentableSymlinksRecursiveInPath() {
         XCTAssertEqual(
-            Set(Path(self.fixtureRoot).children(ofType: .symbolicLink, recursive: true).map { $0.pathString }),
-            self.childSymbolicLinkRecursiveFixture
+            Set(Path(self.fixtureRoot).children(ofType: .symlink, recursive: true).map { $0.pathString }),
+            self.childSymlinkRecursiveFixture
         )
     }
 

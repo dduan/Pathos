@@ -20,7 +20,10 @@ public enum FileType: Int, Equatable, Codable {
     /// A regular file.
     case file
     /// A symbolic link, or symlink.
+    @available(*, deprecated, renamed: "symlink")
     case symbolicLink
+    /// A symbolic link, or symlink.
+    case symlink
     /// A socket.
     case socket
 
@@ -38,7 +41,7 @@ public enum FileType: Int, Equatable, Codable {
         case Int32(DT_REG):
             self = .file
         case Int32(DT_LNK):
-            self = .symbolicLink
+            self = .symlink
         case Int32(DT_SOCK):
             self = .socket
         default:
@@ -60,7 +63,7 @@ public enum FileType: Int, Equatable, Codable {
         case S_IFREG:
             self = .file
         case S_IFLNK:
-            self = .symbolicLink
+            self = .symlink
         case S_IFSOCK:
             self = .socket
         default:
@@ -85,6 +88,8 @@ public enum FileType: Int, Equatable, Codable {
             return Int32(DT_REG)
         case .symbolicLink:
             return Int32(DT_LNK)
+        case .symlink:
+            return Int32(DT_LNK)
         case .socket:
             return Int32(DT_SOCK)
         }
@@ -106,6 +111,8 @@ public enum FileType: Int, Equatable, Codable {
         case .file:
             return S_IFREG
         case .symbolicLink:
+            return S_IFLNK
+        case .symlink:
             return S_IFLNK
         case .socket:
             return S_IFSOCK

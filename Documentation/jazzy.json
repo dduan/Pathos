@@ -25,8 +25,8 @@
                 "readBytes(atPath:)",
                 "readString(atPath:)",
                 "write(_:atPath:createIfNecessary:truncate:permission:)",
-                "readSymbolicLink(atPath:)",
-                "createSymbolicLink(fromPath:toPath:)"
+                "readSymlink(atPath:)",
+                "createSymlink(fromPath:toPath:)"
             ]
         },
         {
@@ -34,7 +34,7 @@
             "children": [
                 "deletePath(_:recursive:)",
                 "movePath(_:toPath:)",
-                "copyFile(fromPath:toPath:followSymbolicLink:chunkSize:)",
+                "copyFile(fromPath:toPath:followSymlink:chunkSize:)",
                 "createDirectory(atPath:permission:createParents:throwIfAlreadyExists:)"
             ]
         },

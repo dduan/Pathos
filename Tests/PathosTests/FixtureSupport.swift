@@ -61,7 +61,7 @@ extension XCTestCase {
         return [self.fixture(.directoryThatExists)]
     }
 
-    var childSymbolicLinkFixture: Set<String> {
+    var childSymlinkFixture: Set<String> {
         return [
             self.fixture(.goodFileSymbol),
             self.fixture(.goodDirectorySymbol),
@@ -84,7 +84,7 @@ extension XCTestCase {
         ]
     }
 
-    var childSymbolicLinkRecursiveFixture: Set<String> {
+    var childSymlinkRecursiveFixture: Set<String> {
         return [
             self.fixture(.goodFileSymbol),
             self.fixture(.goodDirectorySymbol),

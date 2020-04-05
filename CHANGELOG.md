@@ -22,20 +22,28 @@ The following APIs are deprecated in favor of metadata access APIs.
 - `permissions(forPath:)`
 - `PathRepresentable.permissions`
 
-Removed adding/removing permissions in favor of directly setting it.
-
-Deprecated the following:
+Removed adding/removing permissions in favor of directly setting it:
 
 - `add(_:forPath:)`
 - `remove(_:forPath:)`
 - `PathRepresentable.add(_:)`
 - `PathRepresentable.remove(_:)`
 
+Previously symbolic links were referred to as "symbol" or "symbolic link" in
+APIs. From this version on, they'll be referred to as "symlink". This resulted
+in the following changes:
+
+- `createSymbolicLink(fromPath:toPath:)` -> `createSymlink(fromPath:toPath:)`
+- `PathRepresentable.createSymbolicLink(at:)` -> `PathRepresentable.createSymlink(at:)`
+- `readSymbolicLink(atPath:toPath)` -> `readSymlink(atPath:toPath)`
+- `PathRepresentable.readSymbolicLink()` -> `PathRepresentable.readSymlink()`
+- `FileType.symbolicLink` -> `FileType.symlink`
+
 ### Breaking changes
 
 Previously symbolic links were referred to as "symbol" or "symbolic link" in
 APIs. From this version on, they'll be referred to as "symlink". This resulted
-in the following breaking changes
+in the following breaking changes:
 
 - `exists(atPath:followSymbol:)` -> `exists(atPath:followSymlink:)`
 - `PathRepresentable.exists(followSymbol:)` -> `PathRepresentable.exists(followSymlink:)`
