@@ -8,12 +8,12 @@ import Darwin
 ///
 /// - Parameters:
 ///   - path: the path to be tested.
-///   - followSymbol: whether to follow symbolic links when retrieving the metadata.
+///   - followSymlink: whether to follow symbolic links when retrieving the metadata.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 /// - Returns: metadata regarding file at the given path.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.metadata(followSymbol:)`.
-public func metadata(atPath path: String, followSymbol: Bool = true) throws -> Metadata {
-    return try Metadata(followSymbol ? _stat(at: path) : _lstat(at: path))
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.metadata(followSymlink:)`.
+public func metadata(atPath path: String, followSymlink: Bool = true) throws -> Metadata {
+    return try Metadata(followSymlink ? _stat(at: path) : _lstat(at: path))
 }
 
 /// Whether file at path is of a type. Returns `false` if the path does not exist or is
@@ -35,12 +35,12 @@ public func isA(_ type: FileType, atPath path: String) throws -> Bool {
 ///
 /// - Parameters:
 ///   - path: the path to be tested.
-///   - followSymbol: whether to follow symbolic links. If `true`, return `false` for broken symbolic links.
+///   - followSymlink: whether to follow symbolic links. If `true`, return `false` for broken symbolic links.
 /// - Returns: whether path refers to an existing path or an open file descriptor.
-/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.exists(followSymbol:)`.
-public func exists(atPath path: String, followSymbol: Bool = true) -> Bool {
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.exists(followSymlink:)`.
+public func exists(atPath path: String, followSymlink: Bool = true) -> Bool {
     var status = stat()
-    return followSymbol ? stat(path, &status) == 0 : lstat(path, &status) == 0
+    return followSymlink ? stat(path, &status) == 0 : lstat(path, &status) == 0
 }
 
 /// Return the size in bytes of path.
@@ -49,7 +49,7 @@ public func exists(atPath path: String, followSymbol: Bool = true) -> Bool {
 /// - Returns: size of the file at path.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.size`.
-@available(*, deprecated, message: "Use `metadata(atPath:followSymbol:).size` instead.")
+@available(*, deprecated, message: "Use `metadata(atPath:followSymlink:).size` instead.")
 public func size(atPath path: String) throws -> Int64 {
     return Int64(try _stat(at: path).st_size)
 }
@@ -60,7 +60,7 @@ public func size(atPath path: String) throws -> Int64 {
 /// - Returns: modification time in `FileTime`.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.modificationTime`.
-@available(*, deprecated, message: "Use `metadata(atPath:followSymbol:).time.modified` instead.")
+@available(*, deprecated, message: "Use `metadata(atPath:followSymlink:).time.modified` instead.")
 public func modificationTime(atPath path: String) throws -> FileTime {
 #if os(Linux)
     return unsafeBitCast(try _stat(at: path).st_mtim, to: FileTime.self)
@@ -75,7 +75,7 @@ public func modificationTime(atPath path: String) throws -> FileTime {
 /// - Returns: time of last access in `FileTime`.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.accessTime`.
-@available(*, deprecated, message: "Use `metadata(atPath:followSymbol:).time.accessed` instead.")
+@available(*, deprecated, message: "Use `metadata(atPath:followSymlink:).time.accessed` instead.")
 public func accessTime(atPath path: String) throws -> FileTime {
 #if os(Linux)
     return unsafeBitCast(try _stat(at: path).st_atim, to: FileTime.self)
@@ -90,7 +90,7 @@ public func accessTime(atPath path: String) throws -> FileTime {
 /// - Returns: time of last metadata change in `FileTime`.
 /// - Throws: A `SystemError` if the file does not exist or is inaccessible.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.metadataChangeTime`.
-@available(*, deprecated, message: "Use `metadata(atPath:followSymbol:).time.statusChanged` instead.")
+@available(*, deprecated, message: "Use `metadata(atPath:followSymlink:).time.statusChanged` instead.")
 public func metadataChangeTime(atPath path: String) throws -> FileTime {
 #if os(Linux)
     return unsafeBitCast(try _stat(at: path).st_ctim, to: FileTime.self)
@@ -124,18 +124,18 @@ extension PathRepresentable {
     /// broken symbolic links. On some platforms, this function may return `false` if permission is not
     /// granted to execute `stat` on the requested file, even if the path physically exists.
     ///
-    /// - Parameter followSymbol: whether to follow symbolic links. If `true`, return `false` for broken
+    /// - Parameter followSymlink: whether to follow symbolic links. If `true`, return `false` for broken
     ///                           symbolic links.
     /// - Returns: whether path refers to an existing path or an open file descriptor.
-    /// - SeeAlso: `exists(atPath:followSymbol:)`.
-    public func exists(followSymbol: Bool = true) -> Bool {
-        return exists(atPath:followSymbol:)(self.pathString, followSymbol)
+    /// - SeeAlso: `exists(atPath:followSymlink:)`.
+    public func exists(followSymlink: Bool = true) -> Bool {
+        return exists(atPath:followSymlink:)(self.pathString, followSymlink)
     }
 
     /// Return the size in bytes of path. Returns `false` if the path does not exist or is
     /// not accessible.
     /// - SeeAlso: `size(atPath:)`.
-    @available(*, deprecated, message: "use `self.metadata(followSymbol:).size` instead.")
+    @available(*, deprecated, message: "use `self.metadata(followSymlink:).size` instead.")
     public var size: Int64 {
         return (try? size(atPath:)(self.pathString)) ?? 0
     }
@@ -143,7 +143,7 @@ extension PathRepresentable {
     /// Return the time of last modification. Returns `nil` if the path does not exist or is
     /// not accessible.
     /// - SeeAlso: `modificationTime(atPath:)`.
-    @available(*, deprecated, message: "use `self.metadata(followSymbol:).time.modified` instead.")
+    @available(*, deprecated, message: "use `self.metadata(followSymlink:).time.modified` instead.")
     public var modificationTime: FileTime? {
         return try? modificationTime(atPath:)(self.pathString)
     }
@@ -151,7 +151,7 @@ extension PathRepresentable {
     /// Return the time of last access. Returns `nil` if the path does not exist or is
     /// not accessible.
     /// - SeeAlso: `accessTime(atPath:)`.
-    @available(*, deprecated, message: "use `self.metadata(followSymbol:).time.accessed` instead.")
+    @available(*, deprecated, message: "use `self.metadata(followSymlink:).time.accessed` instead.")
     public var accessTime: FileTime? {
         return try? accessTime(atPath:)(self.pathString)
     }
@@ -159,7 +159,7 @@ extension PathRepresentable {
     /// Return the system’s ctime which, on some systems (like Unix) is the time of the last metadata change,
     /// Returns `nil` if the path does not exist or is not accessible.
     /// - SeeAlso: `metadataChangeTime(atPath:)`.
-    @available(*, deprecated, message: "use `self.metadata(followSymbol:).time.statusChanged` instead.")
+    @available(*, deprecated, message: "use `self.metadata(followSymlink:).time.statusChanged` instead.")
     public var metadataChangeTime: FileTime? {
         return try? metadataChangeTime(atPath:)(self.pathString)
     }
@@ -176,12 +176,12 @@ extension PathRepresentable {
 
     /// Return metadata regarding the path.
     ///
-    /// - Parameter followSymbol: whether to follow symbolic links when retrieving the metadata.
+    /// - Parameter followSymlink: whether to follow symbolic links when retrieving the metadata.
     /// - Returns: metadata regarding file at the given path. `nil` if the file does not exist or is
     ///            inaccessible.
     /// - SeeAlso: To work with `Path` or `PathRepresentable`, use
-    ///            `PathRepresentable.metadata(followSymbol:)`.
-    public func metadata(followSymbol: Bool = true) -> Metadata? {
-        return try? metadata(atPath:followSymbol:)(self.pathString, followSymbol)
+    ///            `PathRepresentable.metadata(followSymlink:)`.
+    public func metadata(followSymlink: Bool = true) -> Metadata? {
+        return try? metadata(atPath:followSymlink:)(self.pathString, followSymlink)
     }
 }

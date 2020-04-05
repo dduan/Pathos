@@ -38,11 +38,11 @@ final class CopyFileTests: XCTestCase {
     func testNotFollowingFileSymbol() throws {
         let destination = "hello"
         let source = self.fixture(.goodFileSymbol)
-        try copyFile(fromPath: source, toPath: destination, followSymbolicLink: false)
+        try copyFile(fromPath: source, toPath: destination, followSymlink: false)
         XCTAssertTrue(try isA(.symbolicLink, atPath: destination))
         try XCTAssertEqual(
-            metadata(atPath: destination, followSymbol: false).permissions,
-            metadata(atPath: source, followSymbol: false).permissions
+            metadata(atPath: destination, followSymlink: false).permissions,
+            metadata(atPath: source, followSymlink: false).permissions
         )
         XCTAssertEqual(try readSymbolicLink(atPath: destination), try readSymbolicLink(atPath: source))
     }
@@ -85,11 +85,11 @@ final class CopyFileTests: XCTestCase {
     func testPathRepresentableNotFollowingFileSymbol() {
         let destination = Path("hello")
         let source = self.fixturePath(.goodFileSymbol)
-        XCTAssertTrue(source.copy(to: destination, followSymbolicLink: false))
+        XCTAssertTrue(source.copy(to: destination, followSymlink: false))
         XCTAssertTrue(try isA(.symbolicLink, atPath: destination.pathString))
         try XCTAssertEqual(
-            metadata(atPath: destination.pathString, followSymbol: false).permissions,
-            metadata(atPath: source.pathString, followSymbol: false).permissions
+            metadata(atPath: destination.pathString, followSymlink: false).permissions,
+            metadata(atPath: source.pathString, followSymlink: false).permissions
         )
         XCTAssertEqual(
             try readSymbolicLink(atPath: destination.pathString),
