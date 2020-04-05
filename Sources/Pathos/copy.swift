@@ -25,7 +25,7 @@ public func copyFile(fromPath source: String, toPath destination: String, follow
 
     let isLink = _ifmt(sourceStatus) == S_IFLNK
     if !followSymlink && isLink {
-        try createSymbolicLink(fromPath: readSymbolicLink(atPath: source), toPath: destination)
+        try createSymlink(fromPath: readSymlink(atPath: source), toPath: destination)
         return
     }
 

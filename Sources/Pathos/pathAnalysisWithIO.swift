@@ -124,7 +124,7 @@ public func realPath(ofPath path: String) throws -> String {
             }
 
             let newPath = join(paths: path, name)
-            if !((try? isA(.symbolicLink, atPath: newPath)) ?? false) {
+            if !((try? isA(.symlink, atPath: newPath)) ?? false) {
                 path = newPath
                 continue
             }
@@ -134,12 +134,12 @@ public func realPath(ofPath path: String) throws -> String {
                 if !path.isEmpty {
                     continue
                 }
-                return try (join(paths: path, readSymbolicLink(atPath: newPath)), false)
+                return try (join(paths: path, readSymlink(atPath: newPath)), false)
             }
 
             seen[newPath] = ""
             var success = false
-            (path, success) = try _join(path, readSymbolicLink(atPath: newPath), seen: &seen)
+            (path, success) = try _join(path, readSymlink(atPath: newPath), seen: &seen)
             if !success {
                 return (join(paths: path, rest), false)
             }

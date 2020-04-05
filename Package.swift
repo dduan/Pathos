@@ -15,6 +15,8 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "PathosTests",
-            dependencies: ["Pathos"]),
+            dependencies: ["Pathos"],
+            exclude: ["Fixtures"]
+        ),
     ]
 )

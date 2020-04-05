@@ -1,7 +1,7 @@
 import Pathos
 import XCTest
 
-final class MakeSymbolicLinkTests: XCTestCase {
+final class MakeSymlinkTests: XCTestCase {
     var originalWorkingDirectory: String = (try? getCurrentWorkingDirectory()) ?? "."
     var rootPath = ""
 
@@ -15,17 +15,17 @@ final class MakeSymbolicLinkTests: XCTestCase {
         try? deletePath(self.rootPath, recursive: true)
     }
 
-    func testMakingSymbolicLink() throws {
+    func testMakingSymlink() throws {
         let source = self.fixture(.fileThatExists)
         let destination = "test"
-        try createSymbolicLink(fromPath: source, toPath: destination)
+        try createSymlink(fromPath: source, toPath: destination)
         XCTAssertEqual(try realPath(ofPath: destination), source)
     }
 
-    func testPathRepresentableMakingSymbolicLink() throws {
+    func testPathRepresentableMakingSymlink() throws {
         let source = self.fixturePath(.fileThatExists)
         let destination = Path(self.rootPath).join(with: Path("test"))
-        XCTAssertTrue(source.createSymbolicLink(at: destination))
+        XCTAssertTrue(source.createSymlink(at: destination))
         XCTAssertEqual(destination.realPath.pathString, source.pathString)
     }
 }

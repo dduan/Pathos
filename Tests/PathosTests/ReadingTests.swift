@@ -18,8 +18,8 @@ final class ReadingTests: XCTestCase {
         XCTAssertThrowsError(try readString(atPath: self.fixture(.noneExistence)))
     }
 
-    func testReadSymbolicLink() {
-        XCTAssertEqual(try Pathos.readSymbolicLink(atPath: self.fixture(.goodFileSymbol)), "hello")
+    func testReadSymlink() {
+        XCTAssertEqual(try Pathos.readSymlink(atPath: self.fixture(.goodFileSymbol)), "hello")
     }
 
     func testPathRepresentableReadString() {
@@ -38,7 +38,7 @@ final class ReadingTests: XCTestCase {
         XCTAssertEqual(self.fixturePath(.noneExistence).readString(), "")
     }
 
-    func testPathRepresentableReadSymbolicLink() {
-        XCTAssertEqual(self.fixturePath(.goodFileSymbol).readSymbolicLink(), "hello")
+    func testPathRepresentableReadSymlink() {
+        XCTAssertEqual(self.fixturePath(.goodFileSymbol).readSymlink(), "hello")
     }
 }

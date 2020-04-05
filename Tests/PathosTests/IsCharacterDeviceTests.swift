@@ -19,7 +19,7 @@ final class IsCharacterDeviceTests: XCTestCase {
         }
     }
 
-    func testIsCharacterDeviceOnSymbolicLink() {
+    func testIsCharacterDeviceOnSymlink() {
         XCTAssertFalse(try isA(.characterDevice, atPath: self.fixture(.goodFileSymbol)))
     }
 
@@ -27,7 +27,7 @@ final class IsCharacterDeviceTests: XCTestCase {
         XCTAssertFalse(try isA(.characterDevice, atPath: self.fixture(.goodDirectorySymbol)))
     }
 
-    func testIsCharacterDeviceOnBadSymbolicLink() {
+    func testIsCharacterDeviceOnBadSymlink() {
         XCTAssertThrowsError(try isA(.characterDevice, atPath: self.fixture(.badSymbol))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")
@@ -48,7 +48,7 @@ final class IsCharacterDeviceTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.noneExistence).isA(.characterDevice))
     }
 
-    func testPathRepresentableIsCharacterDeviceOnSymbolicLink() {
+    func testPathRepresentableIsCharacterDeviceOnSymlink() {
         XCTAssertFalse(self.fixturePath(.goodFileSymbol).isA(.characterDevice))
     }
 
@@ -56,7 +56,7 @@ final class IsCharacterDeviceTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.goodDirectorySymbol).isA(.characterDevice))
     }
 
-    func testPathRepresentableIsCharacterDeviceOnBadSymbolicLink() {
+    func testPathRepresentableIsCharacterDeviceOnBadSymlink() {
         XCTAssertFalse(self.fixturePath(.badSymbol).isA(.characterDevice))
     }
 }

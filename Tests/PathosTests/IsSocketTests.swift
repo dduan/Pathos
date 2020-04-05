@@ -19,7 +19,7 @@ final class IsSocketTests: XCTestCase {
         }
     }
 
-    func testIsSocketOnSymbolicLink() {
+    func testIsSocketOnSymlink() {
         XCTAssertFalse(try isA(.socket, atPath: self.fixture(.goodFileSymbol)))
     }
 
@@ -27,7 +27,7 @@ final class IsSocketTests: XCTestCase {
         XCTAssertFalse(try isA(.socket, atPath: self.fixture(.goodDirectorySymbol)))
     }
 
-    func testIsSocketOnBadSymbolicLink() throws {
+    func testIsSocketOnBadSymlink() throws {
         XCTAssertThrowsError(try isA(.socket, atPath: self.fixture(.badSymbol))) { error in
             guard case SystemError.noSuchFileOrDirectory = error else {
                 XCTFail("expected SystemError.noSuchFileOrDirectory")
@@ -48,7 +48,7 @@ final class IsSocketTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.noneExistence).isA(.socket))
     }
 
-    func testPathRepresentableIsSocketOnSymbolicLink() {
+    func testPathRepresentableIsSocketOnSymlink() {
         XCTAssertFalse(self.fixturePath(.goodFileSymbol).isA(.socket))
     }
 
@@ -56,7 +56,7 @@ final class IsSocketTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.goodDirectorySymbol).isA(.socket))
     }
 
-    func testPathRepresentableIsSocketOnBadSymbolicLink() {
+    func testPathRepresentableIsSocketOnBadSymlink() {
         XCTAssertFalse(self.fixturePath(.badSymbol).isA(.socket))
     }
 }

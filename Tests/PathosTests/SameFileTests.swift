@@ -2,7 +2,7 @@ import Pathos
 import XCTest
 
 final class SameFileTests: XCTestCase {
-    func testSameFileAsSymbolicLink() {
+    func testSameFileAsSymlink() {
         XCTAssertTrue(try sameFile(
             atPath: self.fixture(.fileThatExists),
             otherPath: self.fixture(.fileThatExists)))
@@ -23,7 +23,7 @@ final class SameFileTests: XCTestCase {
             otherPath: self.fixture(.fileInDirectory)))
     }
 
-    func testPathRepresentableSameFileAsSymbolicLink() {
+    func testPathRepresentableSameFileAsSymlink() {
         XCTAssertTrue(self.fixturePath(.fileThatExists)
             .isSame(as: self.fixturePath(.fileThatExists)))
         XCTAssertTrue(self.fixturePath(.fileThatExists)

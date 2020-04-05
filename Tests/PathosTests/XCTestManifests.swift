@@ -30,8 +30,8 @@ extension ChildrenTests {
         ("testPathRepresentablePipesRecursiveInPath", testPathRepresentablePipesRecursiveInPath),
         ("testPathRepresentableSocketsInPath", testPathRepresentableSocketsInPath),
         ("testPathRepresentableSocketsRecursiveInPath", testPathRepresentableSocketsRecursiveInPath),
-        ("testPathRepresentableSymbolicLinksInPath", testPathRepresentableSymbolicLinksInPath),
-        ("testPathRepresentableSymbolicLinksRecursiveInPath", testPathRepresentableSymbolicLinksRecursiveInPath),
+        ("testPathRepresentableSymlinksInPath", testPathRepresentableSymlinksInPath),
+        ("testPathRepresentableSymlinksRecursiveInPath", testPathRepresentableSymlinksRecursiveInPath),
         ("testPathRepresentableUnknownTypeFilesInPath", testPathRepresentableUnknownTypeFilesInPath),
         ("testPathRepresentableUnknownTypeFilesRecursiveInPath", testPathRepresentableUnknownTypeFilesRecursiveInPath),
         ("testPipesInPath", testPipesInPath),
@@ -39,8 +39,8 @@ extension ChildrenTests {
         ("testRelativeDirectoryRecursive", testRelativeDirectoryRecursive),
         ("testSocketsInPath", testSocketsInPath),
         ("testSocketsRecursiveInPath", testSocketsRecursiveInPath),
-        ("testSymbolicLinksInPath", testSymbolicLinksInPath),
-        ("testSymbolicLinksRecursiveInPath", testSymbolicLinksRecursiveInPath),
+        ("testSymlinksInPath", testSymlinksInPath),
+        ("testSymlinksRecursiveInPath", testSymlinksRecursiveInPath),
         ("testUnknownTypeFilesInPath", testUnknownTypeFilesInPath),
         ("testUnknownTypeFilesRecursiveInPath", testUnknownTypeFilesRecursiveInPath),
     ]
@@ -151,31 +151,31 @@ extension ExistsTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__ExistsTests = [
-        ("testBadSymbolicLink", testBadSymbolicLink),
-        ("testBadSymbolicLinkFollowingSymbol", testBadSymbolicLinkFollowingSymbol),
-        ("testBadSymbolicLinkNotFollowingSymbol", testBadSymbolicLinkNotFollowingSymbol),
+        ("testBadSymlink", testBadSymlink),
+        ("testBadSymlinkFollowingSymbol", testBadSymlinkFollowingSymbol),
+        ("testBadSymlinkNotFollowingSymbol", testBadSymlinkNotFollowingSymbol),
         ("testExistingFiles", testExistingFiles),
         ("testExistingFilesFollowingSymbol", testExistingFilesFollowingSymbol),
         ("testExistingFilesNotFollowingSymbol", testExistingFilesNotFollowingSymbol),
         ("testGoodSymbolicDirectoryLink", testGoodSymbolicDirectoryLink),
         ("testGoodSymbolicDirectoryLinkFollowingSymbol", testGoodSymbolicDirectoryLinkFollowingSymbol),
         ("testGoodSymbolicDirectoryLinkNotFollowingSymbol", testGoodSymbolicDirectoryLinkNotFollowingSymbol),
-        ("testGoodSymbolicLink", testGoodSymbolicLink),
-        ("testGoodSymbolicLinkFollowingSymbol", testGoodSymbolicLinkFollowingSymbol),
-        ("testGoodSymbolicLinkNotFollowingSymbol", testGoodSymbolicLinkNotFollowingSymbol),
+        ("testGoodSymlink", testGoodSymlink),
+        ("testGoodSymlinkFollowingSymbol", testGoodSymlinkFollowingSymbol),
+        ("testGoodSymlinkNotFollowingSymbol", testGoodSymlinkNotFollowingSymbol),
         ("testNonExistingFiles", testNonExistingFiles),
-        ("testPathRepresentableBadSymbolicLink", testPathRepresentableBadSymbolicLink),
-        ("testPathRepresentableBadSymbolicLinkFollowingSymbol", testPathRepresentableBadSymbolicLinkFollowingSymbol),
-        ("testPathRepresentableBadSymbolicLinkNotFollowingSymbol", testPathRepresentableBadSymbolicLinkNotFollowingSymbol),
+        ("testPathRepresentableBadSymlink", testPathRepresentableBadSymlink),
+        ("testPathRepresentableBadSymlinkFollowingSymbol", testPathRepresentableBadSymlinkFollowingSymbol),
+        ("testPathRepresentableBadSymlinkNotFollowingSymbol", testPathRepresentableBadSymlinkNotFollowingSymbol),
         ("testPathRepresentableExistingFileFollowingSymbol", testPathRepresentableExistingFileFollowingSymbol),
         ("testPathRepresentableExistingFileNotFollowingSymbol", testPathRepresentableExistingFileNotFollowingSymbol),
         ("testPathRepresentableExistingFiles", testPathRepresentableExistingFiles),
-        ("testPathRepresentableGoodDirectorySymbolicLinkNotFollowingSymbol", testPathRepresentableGoodDirectorySymbolicLinkNotFollowingSymbol),
+        ("testPathRepresentableGoodDirectorySymlinkNotFollowingSymbol", testPathRepresentableGoodDirectorySymlinkNotFollowingSymbol),
         ("testPathRepresentableGoodSymbolicDirectoryLink", testPathRepresentableGoodSymbolicDirectoryLink),
         ("testPathRepresentableGoodSymbolicDirectoryLinkFollowingSymbol", testPathRepresentableGoodSymbolicDirectoryLinkFollowingSymbol),
-        ("testPathRepresentableGoodSymbolicLink", testPathRepresentableGoodSymbolicLink),
-        ("testPathRepresentableGoodSymbolicLinkFollowingSymbol", testPathRepresentableGoodSymbolicLinkFollowingSymbol),
-        ("testPathRepresentableGoodSymbolicLinkNotFollowingSymbol", testPathRepresentableGoodSymbolicLinkNotFollowingSymbol),
+        ("testPathRepresentableGoodSymlink", testPathRepresentableGoodSymlink),
+        ("testPathRepresentableGoodSymlinkFollowingSymbol", testPathRepresentableGoodSymlinkFollowingSymbol),
+        ("testPathRepresentableGoodSymlinkNotFollowingSymbol", testPathRepresentableGoodSymlinkNotFollowingSymbol),
         ("testPathRepresentableNonExistingFiles", testPathRepresentableNonExistingFiles),
     ]
 }
@@ -256,15 +256,15 @@ extension IsBlockDeviceTests {
         ("testFileRepresentableIsBlockDeviceOnExistingDirectory", testFileRepresentableIsBlockDeviceOnExistingDirectory),
         ("testFileRepresentableIsBlockDeviceOnExistingFile", testFileRepresentableIsBlockDeviceOnExistingFile),
         ("testFileRepresentableIsBlockDeviceOnNonExistingFile", testFileRepresentableIsBlockDeviceOnNonExistingFile),
-        ("testIsBlockDeviceOnBadSymbolicLink", testIsBlockDeviceOnBadSymbolicLink),
+        ("testIsBlockDeviceOnBadSymlink", testIsBlockDeviceOnBadSymlink),
         ("testIsBlockDeviceOnExistingDirectory", testIsBlockDeviceOnExistingDirectory),
         ("testIsBlockDeviceOnExistingFile", testIsBlockDeviceOnExistingFile),
         ("testIsBlockDeviceOnNonExistingPath", testIsBlockDeviceOnNonExistingPath),
         ("testIsBlockDeviceOnSymbolicDirectoryLink", testIsBlockDeviceOnSymbolicDirectoryLink),
-        ("testIsBlockDeviceOnSymbolicLink", testIsBlockDeviceOnSymbolicLink),
-        ("testPathRepresentableIsBlockDeviceOnBadSymbolicLink", testPathRepresentableIsBlockDeviceOnBadSymbolicLink),
+        ("testIsBlockDeviceOnSymlink", testIsBlockDeviceOnSymlink),
+        ("testPathRepresentableIsBlockDeviceOnBadSymlink", testPathRepresentableIsBlockDeviceOnBadSymlink),
         ("testPathRepresentableIsBlockDeviceOnSymbolicDirectoryLink", testPathRepresentableIsBlockDeviceOnSymbolicDirectoryLink),
-        ("testPathRerpesentableIsBlockDeviceOnSymbolicLink", testPathRerpesentableIsBlockDeviceOnSymbolicLink),
+        ("testPathRerpesentableIsBlockDeviceOnSymlink", testPathRerpesentableIsBlockDeviceOnSymlink),
     ]
 }
 
@@ -276,15 +276,15 @@ extension IsCharacterDeviceTests {
         ("testFileRepresentableIsCharacterDeviceOnExistingDirectory", testFileRepresentableIsCharacterDeviceOnExistingDirectory),
         ("testFileRepresentableIsCharacterDeviceOnExistingFile", testFileRepresentableIsCharacterDeviceOnExistingFile),
         ("testFileRepresentableIsCharacterDeviceOnNonExistingFile", testFileRepresentableIsCharacterDeviceOnNonExistingFile),
-        ("testIsCharacterDeviceOnBadSymbolicLink", testIsCharacterDeviceOnBadSymbolicLink),
+        ("testIsCharacterDeviceOnBadSymlink", testIsCharacterDeviceOnBadSymlink),
         ("testIsCharacterDeviceOnExistingDirectory", testIsCharacterDeviceOnExistingDirectory),
         ("testIsCharacterDeviceOnExistingFile", testIsCharacterDeviceOnExistingFile),
         ("testIsCharacterDeviceOnNonExistingPath", testIsCharacterDeviceOnNonExistingPath),
         ("testIsCharacterDeviceOnSymbolicDirectoryLink", testIsCharacterDeviceOnSymbolicDirectoryLink),
-        ("testIsCharacterDeviceOnSymbolicLink", testIsCharacterDeviceOnSymbolicLink),
-        ("testPathRepresentableIsCharacterDeviceOnBadSymbolicLink", testPathRepresentableIsCharacterDeviceOnBadSymbolicLink),
+        ("testIsCharacterDeviceOnSymlink", testIsCharacterDeviceOnSymlink),
+        ("testPathRepresentableIsCharacterDeviceOnBadSymlink", testPathRepresentableIsCharacterDeviceOnBadSymlink),
         ("testPathRepresentableIsCharacterDeviceOnSymbolicDirectoryLink", testPathRepresentableIsCharacterDeviceOnSymbolicDirectoryLink),
-        ("testPathRepresentableIsCharacterDeviceOnSymbolicLink", testPathRepresentableIsCharacterDeviceOnSymbolicLink),
+        ("testPathRepresentableIsCharacterDeviceOnSymlink", testPathRepresentableIsCharacterDeviceOnSymlink),
     ]
 }
 
@@ -296,15 +296,15 @@ extension IsDirectoryTests {
         ("testDirectoryRepresentableIsFileOnExistingDirectory", testDirectoryRepresentableIsFileOnExistingDirectory),
         ("testDirectoryRepresentableIsFileOnExistingFile", testDirectoryRepresentableIsFileOnExistingFile),
         ("testDirectoryRepresentableIsFileOnNonExistingFile", testDirectoryRepresentableIsFileOnNonExistingFile),
-        ("testIsDirectoryOnBadSymbolicLink", testIsDirectoryOnBadSymbolicLink),
+        ("testIsDirectoryOnBadSymlink", testIsDirectoryOnBadSymlink),
         ("testIsDirectoryOnExistingDirectory", testIsDirectoryOnExistingDirectory),
         ("testIsDirectoryOnExistingFile", testIsDirectoryOnExistingFile),
         ("testIsDirectoryOnNonExistingPath", testIsDirectoryOnNonExistingPath),
         ("testIsDirectoryOnSymbolicDirectoryLink", testIsDirectoryOnSymbolicDirectoryLink),
-        ("testIsDirectoryOnSymbolicLink", testIsDirectoryOnSymbolicLink),
-        ("testPathRepresentableIsDirectoryOnBadSymbolicLink", testPathRepresentableIsDirectoryOnBadSymbolicLink),
+        ("testIsDirectoryOnSymlink", testIsDirectoryOnSymlink),
+        ("testPathRepresentableIsDirectoryOnBadSymlink", testPathRepresentableIsDirectoryOnBadSymlink),
         ("testPathRepresentableIsDirectoryOnSymbolicDirectoryLink", testPathRepresentableIsDirectoryOnSymbolicDirectoryLink),
-        ("testPathRepresentableIsDirectoryOnSymbolicLink", testPathRepresentableIsDirectoryOnSymbolicLink),
+        ("testPathRepresentableIsDirectoryOnSymlink", testPathRepresentableIsDirectoryOnSymlink),
     ]
 }
 
@@ -316,15 +316,15 @@ extension IsFileTests {
         ("testFileRepresentableIsFileOnExistingDirectory", testFileRepresentableIsFileOnExistingDirectory),
         ("testFileRepresentableIsFileOnExistingFile", testFileRepresentableIsFileOnExistingFile),
         ("testFileRepresentableIsFileOnNonExistingFile", testFileRepresentableIsFileOnNonExistingFile),
-        ("testIsFileOnBadSymbolicLink", testIsFileOnBadSymbolicLink),
+        ("testIsFileOnBadSymlink", testIsFileOnBadSymlink),
         ("testIsFileOnExistingDirectory", testIsFileOnExistingDirectory),
         ("testIsFileOnExistingFile", testIsFileOnExistingFile),
         ("testIsFileOnNonExistingPath", testIsFileOnNonExistingPath),
         ("testIsFileOnSymbolicDirectoryLink", testIsFileOnSymbolicDirectoryLink),
-        ("testIsFileOnSymbolicLink", testIsFileOnSymbolicLink),
+        ("testIsFileOnSymlink", testIsFileOnSymlink),
         ("testPathRepresentableIsFileOnSymbolicDirectoryLink", testPathRepresentableIsFileOnSymbolicDirectoryLink),
-        ("testPathRerpesentableIsFileOnBadSymbolicLink", testPathRerpesentableIsFileOnBadSymbolicLink),
-        ("testPathRerpesentableIsFileOnSymbolicLink", testPathRerpesentableIsFileOnSymbolicLink),
+        ("testPathRerpesentableIsFileOnBadSymlink", testPathRerpesentableIsFileOnBadSymlink),
+        ("testPathRerpesentableIsFileOnSymlink", testPathRerpesentableIsFileOnSymlink),
     ]
 }
 
@@ -336,15 +336,15 @@ extension IsPipeTests {
         ("testFileRepresentableIsPipeOnExistingDirectory", testFileRepresentableIsPipeOnExistingDirectory),
         ("testFileRepresentableIsPipeOnExistingFile", testFileRepresentableIsPipeOnExistingFile),
         ("testFileRepresentableIsPipeOnNonExistingFile", testFileRepresentableIsPipeOnNonExistingFile),
-        ("testIsPipeOnBadSymbolicLink", testIsPipeOnBadSymbolicLink),
+        ("testIsPipeOnBadSymlink", testIsPipeOnBadSymlink),
         ("testIsPipeOnExistingDirectory", testIsPipeOnExistingDirectory),
         ("testIsPipeOnExistingFile", testIsPipeOnExistingFile),
         ("testIsPipeOnNonExistingPath", testIsPipeOnNonExistingPath),
         ("testIsPipeOnSymbolicDirectoryLink", testIsPipeOnSymbolicDirectoryLink),
-        ("testIsPipeOnSymbolicLink", testIsPipeOnSymbolicLink),
-        ("testPathRepresentableIsPipeOnBadSymbolicLink", testPathRepresentableIsPipeOnBadSymbolicLink),
+        ("testIsPipeOnSymlink", testIsPipeOnSymlink),
+        ("testPathRepresentableIsPipeOnBadSymlink", testPathRepresentableIsPipeOnBadSymlink),
         ("testPathRepresentableIsPipeOnSymbolicDirectoryLink", testPathRepresentableIsPipeOnSymbolicDirectoryLink),
-        ("testPathRepresentableIsPipeOnSymbolicLink", testPathRepresentableIsPipeOnSymbolicLink),
+        ("testPathRepresentableIsPipeOnSymlink", testPathRepresentableIsPipeOnSymlink),
     ]
 }
 
@@ -356,35 +356,35 @@ extension IsSocketTests {
         ("testFileRepresentableIsSocketOnExistingDirectory", testFileRepresentableIsSocketOnExistingDirectory),
         ("testFileRepresentableIsSocketOnExistingFile", testFileRepresentableIsSocketOnExistingFile),
         ("testFileRepresentableIsSocketOnNonExistingFile", testFileRepresentableIsSocketOnNonExistingFile),
-        ("testIsSocketOnBadSymbolicLink", testIsSocketOnBadSymbolicLink),
+        ("testIsSocketOnBadSymlink", testIsSocketOnBadSymlink),
         ("testIsSocketOnExistingDirectory", testIsSocketOnExistingDirectory),
         ("testIsSocketOnExistingFile", testIsSocketOnExistingFile),
         ("testIsSocketOnNonExistingPath", testIsSocketOnNonExistingPath),
         ("testIsSocketOnSymbolicDirectoryLink", testIsSocketOnSymbolicDirectoryLink),
-        ("testIsSocketOnSymbolicLink", testIsSocketOnSymbolicLink),
-        ("testPathRepresentableIsSocketOnBadSymbolicLink", testPathRepresentableIsSocketOnBadSymbolicLink),
+        ("testIsSocketOnSymlink", testIsSocketOnSymlink),
+        ("testPathRepresentableIsSocketOnBadSymlink", testPathRepresentableIsSocketOnBadSymlink),
         ("testPathRepresentableIsSocketOnSymbolicDirectoryLink", testPathRepresentableIsSocketOnSymbolicDirectoryLink),
-        ("testPathRepresentableIsSocketOnSymbolicLink", testPathRepresentableIsSocketOnSymbolicLink),
+        ("testPathRepresentableIsSocketOnSymlink", testPathRepresentableIsSocketOnSymlink),
     ]
 }
 
-extension IsSymbolicLinkTests {
+extension IsSymlinkTests {
     // DO NOT MODIFY: This is autogenerated, use:
     //   `swift test --generate-linuxmain`
     // to regenerate.
-    static let __allTests__IsSymbolicLinkTests = [
-        ("testIsSymbolicLinkOnBadSymbol", testIsSymbolicLinkOnBadSymbol),
-        ("testIsSymbolicLinkOnDirectory", testIsSymbolicLinkOnDirectory),
-        ("testIsSymbolicLinkOnFile", testIsSymbolicLinkOnFile),
-        ("testIsSymbolicLinkOnGoodDirectorySymbol", testIsSymbolicLinkOnGoodDirectorySymbol),
-        ("testIsSymbolicLinkOnGoodFileSymbol", testIsSymbolicLinkOnGoodFileSymbol),
-        ("testIsSymbolicLinkOnNonExistingPath", testIsSymbolicLinkOnNonExistingPath),
-        ("testPathRepresentableIsSymbolicLinkOnBadSymbol", testPathRepresentableIsSymbolicLinkOnBadSymbol),
-        ("testPathRepresentableIsSymbolicLinkOnDirectory", testPathRepresentableIsSymbolicLinkOnDirectory),
-        ("testPathRepresentableIsSymbolicLinkOnFile", testPathRepresentableIsSymbolicLinkOnFile),
-        ("testPathRepresentableIsSymbolicLinkOnGoodDirectorySymbol", testPathRepresentableIsSymbolicLinkOnGoodDirectorySymbol),
-        ("testPathRepresentableIsSymbolicLinkOnGoodFileSymbol", testPathRepresentableIsSymbolicLinkOnGoodFileSymbol),
-        ("testPathRepresentableIsSymbolicLinkOnNonExistingPath", testPathRepresentableIsSymbolicLinkOnNonExistingPath),
+    static let __allTests__IsSymlinkTests = [
+        ("testIsSymlinkOnBadSymbol", testIsSymlinkOnBadSymbol),
+        ("testIsSymlinkOnDirectory", testIsSymlinkOnDirectory),
+        ("testIsSymlinkOnFile", testIsSymlinkOnFile),
+        ("testIsSymlinkOnGoodDirectorySymbol", testIsSymlinkOnGoodDirectorySymbol),
+        ("testIsSymlinkOnGoodFileSymbol", testIsSymlinkOnGoodFileSymbol),
+        ("testIsSymlinkOnNonExistingPath", testIsSymlinkOnNonExistingPath),
+        ("testPathRepresentableIsSymlinkOnBadSymbol", testPathRepresentableIsSymlinkOnBadSymbol),
+        ("testPathRepresentableIsSymlinkOnDirectory", testPathRepresentableIsSymlinkOnDirectory),
+        ("testPathRepresentableIsSymlinkOnFile", testPathRepresentableIsSymlinkOnFile),
+        ("testPathRepresentableIsSymlinkOnGoodDirectorySymbol", testPathRepresentableIsSymlinkOnGoodDirectorySymbol),
+        ("testPathRepresentableIsSymlinkOnGoodFileSymbol", testPathRepresentableIsSymlinkOnGoodFileSymbol),
+        ("testPathRepresentableIsSymlinkOnNonExistingPath", testPathRepresentableIsSymlinkOnNonExistingPath),
     ]
 }
 
@@ -436,13 +436,13 @@ extension MakeDirectoryTests {
     ]
 }
 
-extension MakeSymbolicLinkTests {
+extension MakeSymlinkTests {
     // DO NOT MODIFY: This is autogenerated, use:
     //   `swift test --generate-linuxmain`
     // to regenerate.
-    static let __allTests__MakeSymbolicLinkTests = [
-        ("testMakingSymbolicLink", testMakingSymbolicLink),
-        ("testPathRepresentableMakingSymbolicLink", testPathRepresentableMakingSymbolicLink),
+    static let __allTests__MakeSymlinkTests = [
+        ("testMakingSymlink", testMakingSymlink),
+        ("testPathRepresentableMakingSymlink", testPathRepresentableMakingSymlink),
     ]
 }
 
@@ -538,12 +538,12 @@ extension ReadingTests {
         ("testPathRepresentableReadString", testPathRepresentableReadString),
         ("testPathRepresentableReadStringFromDirectory", testPathRepresentableReadStringFromDirectory),
         ("testPathRepresentableReadStringFromNoWhere", testPathRepresentableReadStringFromNoWhere),
-        ("testPathRepresentableReadSymbolicLink", testPathRepresentableReadSymbolicLink),
+        ("testPathRepresentableReadSymlink", testPathRepresentableReadSymlink),
         ("testReadBytes", testReadBytes),
         ("testReadString", testReadString),
         ("testReadStringFromDirectory", testReadStringFromDirectory),
         ("testReadStringFromNoWhere", testReadStringFromNoWhere),
-        ("testReadSymbolicLink", testReadSymbolicLink),
+        ("testReadSymlink", testReadSymlink),
     ]
 }
 
@@ -608,8 +608,8 @@ extension SameFileTests {
     static let __allTests__SameFileTests = [
         ("testNotSameFile", testNotSameFile),
         ("testPathRepresentableNotSameFile", testPathRepresentableNotSameFile),
-        ("testPathRepresentableSameFileAsSymbolicLink", testPathRepresentableSameFileAsSymbolicLink),
-        ("testSameFileAsSymbolicLink", testSameFileAsSymbolicLink),
+        ("testPathRepresentableSameFileAsSymlink", testPathRepresentableSameFileAsSymlink),
+        ("testSameFileAsSymlink", testSameFileAsSymlink),
     ]
 }
 
@@ -737,11 +737,11 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(IsFileTests.__allTests__IsFileTests),
         testCase(IsPipeTests.__allTests__IsPipeTests),
         testCase(IsSocketTests.__allTests__IsSocketTests),
-        testCase(IsSymbolicLinkTests.__allTests__IsSymbolicLinkTests),
+        testCase(IsSymlinkTests.__allTests__IsSymlinkTests),
         testCase(JoinPathTests.__allTests__JoinPathTests),
         testCase(MakeAbsoluteTests.__allTests__MakeAbsoluteTests),
         testCase(MakeDirectoryTests.__allTests__MakeDirectoryTests),
-        testCase(MakeSymbolicLinkTests.__allTests__MakeSymbolicLinkTests),
+        testCase(MakeSymlinkTests.__allTests__MakeSymlinkTests),
         testCase(MetadataTests.__allTests__MetadataTests),
         testCase(MoveTests.__allTests__MoveTests),
         testCase(NormalizePathTests.__allTests__NormalizePathTests),
