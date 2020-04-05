@@ -1,8 +1,13 @@
 ## master
 
+### New
 - Added a new type `Metadata`, which represents information from `stat` (Darwin,
   Linux).
 - Added API to retrieve `Metadata`.
+- `PathRepresentable.set(_:)` (permissions)
+
+
+### Deprecations
 
 The following APIs are deprecated in favor of metadata access APIs.
 
@@ -17,10 +22,6 @@ The following APIs are deprecated in favor of metadata access APIs.
 - `permissions(forPath:)`
 - `PathRepresentable.permissions`
 
-The following is added
-
-- `PathRepresentable.set(_:)` (permissions)
-
 Removed adding/removing permissions in favor of directly setting it.
 
 Deprecated the following:
@@ -29,6 +30,17 @@ Deprecated the following:
 - `remove(_:forPath:)`
 - `PathRepresentable.add(_:)`
 - `PathRepresentable.remove(_:)`
+
+### Breaking changes
+
+Previously symbolic links were referred to as "symbol" or "symbolic link" in
+APIs. From this version on, they'll be referred to as "symlink". This resulted
+in the following breaking changes
+
+- `exists(atPath:followSymbol:)` -> `exists(atPath:followSymlink:)`
+- `PathRepresentable.exists(followSymbol:)` -> `PathRepresentable.exists(followSymlink:)`
+- `copyFile(fromPath:toPath:followSymbolicLink:checkSize:)` -> `copyFile(fromPath:toPath:followSymlink:checkSize:)`
+- `PathRepresentable.copy(to:followSymbolicLink:checkSize:)` -> `PathRepresentable.copy(to:followSymlink:checkSize:)`
 
 ## 0.2.3
 

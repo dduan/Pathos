@@ -10,7 +10,7 @@ import Darwin
 /// - Parameter path: The path for which the permissions are get.
 /// - Throws: System error encountered while attempting to read permissions at the path.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.permissions`.
-@available(*, deprecated, message: "use `metadata(atPath:followSymbol:).permissions` instead")
+@available(*, deprecated, message: "use `metadata(atPath:followSymlink:).permissions` instead")
 public func permissions(forPath path: String) throws -> FilePermission {
     var status = stat()
     if lstat(path, &status) != 0 {
@@ -67,7 +67,7 @@ extension PathRepresentable {
     /// If an error is encountered while reading the permission, `FilePermission(rawValue: 0)` will be the
     /// value. If an error is encountered while setting the permission, this will be a no-op.
     /// - SeeAlso: `permissions(forPath:)`.
-    @available(*, deprecated, message: "use `metadata(atPath:followSymbol:).permissions` and self.set(_:) instead")
+    @available(*, deprecated, message: "use `metadata(atPath:followSymlink:).permissions` and self.set(_:) instead")
     public var permissions: FilePermission {
         get {
             return (try? permissions(forPath:)(self.pathString)) ?? FilePermission(rawValue: 0)
