@@ -1,9 +1,10 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
+#if !os(Windows)
 /// Create a symbolic link for file or directory at `source` in the location of `destination`.
 ///
 /// - Parameters:
@@ -103,3 +104,4 @@ extension PathRepresentable {
         try? readSymlink(atPath:)(self.pathString)
     }
 }
+#endif

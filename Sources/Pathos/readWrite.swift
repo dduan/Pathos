@@ -1,9 +1,12 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
+#elseif os(Windows)
+import WinSDK
 #endif
 
+#if !os(Windows)
 func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool, truncate: Bool, permission: FilePermission?) throws {
     let oflag = O_WRONLY | (createIfNecessary ? O_CREAT : 0) | (truncate ? O_TRUNC : 0)
     let fd: Int32
@@ -20,6 +23,7 @@ func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, creat
         throw SystemError(posixErrorCode: errno)
     }
 }
+#endif
 
 /// Read content of a file at `path` as bytes. If the path is a directory, no bytes will be read.
 ///
@@ -27,6 +31,9 @@ func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, creat
 /// - Throws: System error encountered while opening the file.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.readBytes()`.
 public func readBytes(atPath path: String) throws -> [UInt8] {
+#if os(Windows)
+    return []
+#else
     guard case let fd = open(path, O_RDONLY), fd != -1 else {
         throw SystemError(posixErrorCode: errno)
     }
@@ -43,6 +50,7 @@ public func readBytes(atPath path: String) throws -> [UInt8] {
     defer { buffer.deallocate() }
     read(fd, buffer.baseAddress!, fileSize)
     return [UInt8](buffer)
+#endif
 }
 
 /// Read the content of file at `path` as an UTF-8 string. If the path points to a directory, empty string will be returned. If other encoding is desired, use `readBytes` and encode separetely.
@@ -56,6 +64,7 @@ public func readString(atPath path: String) throws -> String {
     return String(decodingCString: content + [0], as: UTF8.self)
 }
 
+#if !os(Windows)
 // TODO: missing docstring.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.write(_:createIfNecessary:permission:)`.
 public func write<Bytes>(_ bytes: Bytes, atPath path: String, createIfNecessary: Bool = true, truncate: Bool = true, permission: FilePermission? = nil) throws where Bytes: Collection, Bytes.Element: BinaryInteger {
@@ -70,6 +79,7 @@ public func write(_ string: String, atPath path: String, createIfNecessary: Bool
         try _writeAtPath(path, bytes: bytes.baseAddress!, byteCount: bytes.count - 1, createIfNecessary: createIfNecessary, truncate: truncate, permission: permission)
     }
 }
+#endif
 
 extension PathRepresentable {
     /// Read content of a file as bytes.  If the path is a directory, no bytes
@@ -90,6 +100,7 @@ extension PathRepresentable {
         return (try? readString(atPath:)(self.pathString)) ?? ""
     }
 
+#if !os(Windows)
     // TODO: missing docstring. Remember to note the byte truncating!
     /// - SeeAlso: `write(_:atPath:createIfNecessary:permission:)`.
     @discardableResult
@@ -113,4 +124,5 @@ extension PathRepresentable {
         }
         return true
     }
+#endif
 }

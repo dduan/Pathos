@@ -1,9 +1,10 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
+#if !os(Windows)
 @inlinable
 func _stat(at path: String) throws -> stat {
     var status = stat()
@@ -33,3 +34,4 @@ func _ifmt(_ status: stat) -> mode_t {
 func _sameStat(_ a: stat, _ b: stat) -> Bool {
     return a.st_ino == b.st_ino && a.st_dev == b.st_dev
 }
+#endif

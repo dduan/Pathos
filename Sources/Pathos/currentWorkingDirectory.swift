@@ -1,9 +1,10 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
+#if !os(Windows)
 /// Get current working directory.
 ///
 /// - Returns: Path for current working directory.
@@ -78,3 +79,4 @@ extension PathRepresentable {
         try? withWorkingDirectory(beingPath: self.pathString, performAction: closure)
     }
 }
+#endif

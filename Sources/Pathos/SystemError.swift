@@ -1,6 +1,6 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
@@ -32,7 +32,10 @@ public enum SystemError: Error {
     case invalidArgument
     /// File exists (POSIX `EEXIST`).
     case fileExists
+}
 
+#if !os(Windows)
+extension SystemError {
     /// Create a `SystemError` from a code that corresponds to a POSIX error.
     public init(posixErrorCode: Int32) {
         switch posixErrorCode {
@@ -52,3 +55,4 @@ public enum SystemError: Error {
         }
     }
 }
+#endif

@@ -1,9 +1,10 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
+#if !os(Windows)
 /// Create directory at given path.
 ///
 /// - Parameters:
@@ -140,3 +141,4 @@ extension PathRepresentable {
         return true
     }
 }
+#endif

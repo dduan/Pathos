@@ -1,13 +1,12 @@
 #if os(Linux)
 import Glibc
-
 private let systemGlob = Glibc.glob
-#else
+#elseif os(macOS)
 import Darwin
-
 private let systemGlob = Darwin.glob
 #endif
 
+#if !os(Windows)
 private func _glob(_ pattern: String) -> [String] {
     var gt = glob_t()
     defer {
@@ -92,3 +91,4 @@ extension PathRepresentable {
         return (try? Pathos.glob(_:)(pattern).map(Self.init)) ?? []
     }
 }
+#endif

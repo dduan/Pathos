@@ -1,6 +1,6 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
@@ -20,7 +20,10 @@ public struct FileTime {
         self.second = second
         self.nanosecond = nanosecond
     }
+}
 
+#if !os(Windows)
+extension FileTime {
     /// Create a FileTime from POSIX timespec.
     ///
     /// - Parameter time: a timespec struct from `stat`.
@@ -29,3 +32,4 @@ public struct FileTime {
         self.nanosecond = time.tv_nsec
     }
 }
+#endif

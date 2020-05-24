@@ -1,9 +1,10 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
+#if !os(Windows)
 private func candidateTemporaryDirectories() -> [String] {
     var list = [String]()
     for envName in ["TMPDIR", "TEMP", "TMP"] {
@@ -183,3 +184,4 @@ extension PathRepresentable {
         return true
     }
 }
+#endif

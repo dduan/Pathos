@@ -1,9 +1,10 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
+#if !os(Windows)
 /// Find paths to directories and files of all types in `path`.
 ///
 /// - Parameters:
@@ -100,3 +101,4 @@ extension PathRepresentable {
             .map { .init($0.0) }
     }
 }
+#endif

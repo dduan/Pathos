@@ -1,6 +1,6 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
@@ -26,7 +26,7 @@ public enum FileType: Int, Equatable, Codable {
     case symlink
     /// A socket.
     case socket
-
+#if !os(Windows)
     /// Creates a `FileType` from a POSIX file type such as `DT_REG`.
     public init(posixFileType: Int32) {
         switch posixFileType {
@@ -118,5 +118,6 @@ public enum FileType: Int, Equatable, Codable {
             return S_IFSOCK
         }
     }
+#endif
 }
 

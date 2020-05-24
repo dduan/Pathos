@@ -1,9 +1,10 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
+#if !os(Windows)
 /// Return metadata regarding a path.
 ///
 /// - Parameters:
@@ -185,3 +186,4 @@ extension PathRepresentable {
         return try? metadata(atPath:followSymlink:)(self.pathString, followSymlink)
     }
 }
+#endif

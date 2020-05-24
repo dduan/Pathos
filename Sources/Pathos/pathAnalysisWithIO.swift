@@ -1,9 +1,10 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
+#if !os(Windows)
 /// Return the argument with an initial component of `~` or `~user` replaced by that user’s home directory.
 /// - Parameter path: The path whose initial component is to be expanded.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.withExpandedUserDirectory`.
@@ -186,3 +187,4 @@ extension PathRepresentable {
         return (try? realPath(ofPath:)(self.pathString)).map(Self.init) ?? self
     }
 }
+#endif

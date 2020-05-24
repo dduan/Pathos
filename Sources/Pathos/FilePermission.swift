@@ -1,9 +1,10 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
+#if !os(Windows)
 /// Represents the POSIX file permission bits. These bits determines read/write/execution access to a file as
 /// well as some miscellaneous information.
 public struct FilePermission: OptionSet {
@@ -78,3 +79,4 @@ extension FilePermission: ExpressibleByIntegerLiteral {
         self.rawValue = mode_t(integerLiteral)
     }
 }
+#endif

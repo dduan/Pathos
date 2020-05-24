@@ -1,9 +1,10 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
+#if !os(Windows)
 // TODO: missing docstring.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.copy(to:followSymlink:chunkSize:)`.
 public func copyFile(fromPath source: String, toPath destination: String, followSymlink: Bool = true, chunkSize: Int = 1024 * 16) throws {
@@ -75,3 +76,4 @@ extension PathRepresentable {
         return true
     }
 }
+#endif

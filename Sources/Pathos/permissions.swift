@@ -1,9 +1,10 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 
+#if !os(Windows)
 /// Get file permissions for path. This function will *not* follow symbolic links, it'll return permissions
 /// for the link itself instead.
 ///
@@ -102,3 +103,4 @@ extension PathRepresentable {
         try? remove(_:forPath:)(permissions, self.pathString)
     }
 }
+#endif
