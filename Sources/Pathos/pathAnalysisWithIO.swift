@@ -2,6 +2,8 @@
 import Glibc
 #elseif os(macOS)
 import Darwin
+#elseif os(Windows)
+import ucrt
 #endif
 
 #if !os(Windows)
@@ -52,6 +54,7 @@ public func expandUserDirectory(inPath path: String) throws -> String {
     let result = _stripFromRight(userHome, pathSeparatorCharacter) + String(path[index...])
     return result.isEmpty ? "/" : result
 }
+#endif
 
 /// Return a normalized absolutized version of the path.
 /// - Parameter path: the path which is is to be absolutized.
@@ -59,9 +62,15 @@ public func expandUserDirectory(inPath path: String) throws -> String {
 public func absolutePath(ofPath path: String) throws -> String {
     var path = path
     if !isAbsolute(path: path) {
+#if os(Windows)
+        guard let buffer = _getcwd(nil, 0) else {
+            throw SystemError.unknown(errorNumber: 0)
+        }
+#else
         guard let buffer = getcwd(nil, 0) else {
             throw SystemError(posixErrorCode: errno)
         }
+#endif
 
         path = join(paths: String(cString: buffer), path)
     }
@@ -69,6 +78,7 @@ public func absolutePath(ofPath path: String) throws -> String {
     return normalize(path: path)
 }
 
+#if !os(Windows)
 /// Return the relative location of `path` from the current working directory.
 /// Example: starting from `/Users/dan`, the relative path of `/` would be `../..`.
 /// - Parameter path: the path the result is relative to.
