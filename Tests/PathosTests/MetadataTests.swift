@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class MetadataTests: XCTestCase {
     func testMetadataAccessing() throws {
         try XCTAssertEqual(
@@ -24,3 +25,4 @@ final class MetadataTests: XCTestCase {
         )
     }
 }
+#endif

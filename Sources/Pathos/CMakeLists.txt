@@ -1,7 +1,6 @@
 add_library(Pathos
   attributes.swift
   children.swift
-  CMakeLists.txt
   constants.swift
   copy.swift
   currentWorkingDirectory.swift
@@ -28,8 +27,6 @@ set_target_properties(Pathos PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_Swift_MODULE_DIRECTORY})
 target_compile_options(Pathos PRIVATE
   $<$<BOOL:${BUILD_TESTING}>:-enable-testing>)
-target_link_libraries(Pathos PRIVATE
-  $<$<NOT:$<PLATFORM_ID:Darwin>>:Foundation>)
 
 
 _install_target(Pathos)

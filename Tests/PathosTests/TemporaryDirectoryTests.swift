@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class TemporaryDirectoryTests: XCTestCase {
     func testCreatingTemporaryDirectory() throws {
         let path = try createTemporaryDirectory()
@@ -111,3 +112,4 @@ final class TemporaryDirectoryTests: XCTestCase {
         XCTAssert(directory?.exists() == false)
     }
 }
+#endif
