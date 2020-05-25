@@ -2,12 +2,31 @@
 import Glibc
 #elseif os(macOS)
 import Darwin
+#elseif os(Windows)
+import WinSDK
 #endif
 
-#if !os(Windows)
 /// Represents the POSIX file permission bits. These bits determines read/write/execution access to a file as
 /// well as some miscellaneous information.
 public struct FilePermission: OptionSet {
+#if os(Windows)
+    /// A Windows file attribute constant https://docs.microsoft.com/en-us/windows/win32/fileio/file-attribute-constants.
+    public let rawValue: DWORD
+
+    /// Creates a `FilePermission` from an file attribute constant.
+    public init(rawValue: DWORD) {
+        self.rawValue = rawValue
+    }
+
+    /// Creates a `FilePermission` from an file attribute constant.
+    public init(rawValue: Int32) {
+        self.rawValue = DWORD(rawValue)
+    }
+
+
+    public static let readOnly = FilePermission(rawValue: FILE_ATTRIBUTE_READONLY)
+    public static let normal = FilePermission(rawValue: FILE_ATTRIBUTE_NORMAL)
+#else
     /// The file permission as the native `mode_t` type. A de-abstraction to help interact with POSIX APIs directly.
     public let rawValue: mode_t
 
@@ -72,8 +91,15 @@ public struct FilePermission: OptionSet {
     /// owner has given himself write permission for the directory). This is commonly used for the /tmp
     /// directory, where anyone may create files but not delete files created by other users.
     public static let saveSwappedTextAfterUser = FilePermission(rawValue: S_ISVTX)
+
+    public static let readOnly: FilePermission = [.ownerRead, .groupRead, .otherRead]
+    public static let normal: FilePermission = [.ownerRead, .ownerWrite, .groupRead, .otherRead]
+#endif
+
 }
 
+
+#if !os(Windows)
 extension FilePermission: ExpressibleByIntegerLiteral {
     public init(integerLiteral: UInt16) {
         self.rawValue = mode_t(integerLiteral)
