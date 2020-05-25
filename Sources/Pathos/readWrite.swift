@@ -6,7 +6,43 @@ import Darwin
 import WinSDK
 #endif
 
-#if !os(Windows)
+#if os(Windows)
+func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool, truncate: Bool, permission: FilePermission?) throws {
+    let behavior: Int32
+    /// https://stackoverflow.com/a/14469641
+    switch (createIfNecessary, truncate) {
+        case (true, true):
+            behavior = CREATE_ALWAYS
+        case (true, false):
+            behavior = OPEN_ALWAYS
+        case (false, true):
+            behavior = TRUNCATE_EXISTING
+        case (false, false):
+            behavior = OPEN_EXISTING
+    }
+
+    let handle = CreateFileA(
+        path,
+        DWORD(GENERIC_WRITE),
+        0,
+        nil,
+        DWORD(behavior),
+        permission?.rawValue ?? DWORD(FILE_ATTRIBUTE_NORMAL),
+        nil
+    )
+
+    if handle == INVALID_HANDLE_VALUE {
+        throw SystemError.unknown(errorNumber: GetLastError())
+    }
+
+    var bytesWritten: DWORD = 0
+    let writeIsSuccess = WriteFile(handle, bytes, DWORD(byteCount), &bytesWritten, nil)
+    if !writeIsSuccess {
+        throw SystemError.unknown(errorNumber: GetLastError())
+    }
+}
+#else
+
 func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool, truncate: Bool, permission: FilePermission?) throws {
     let oflag = O_WRONLY | (createIfNecessary ? O_CREAT : 0) | (truncate ? O_TRUNC : 0)
     let fd: Int32
@@ -64,7 +100,6 @@ public func readString(atPath path: String) throws -> String {
     return String(decodingCString: content + [0], as: UTF8.self)
 }
 
-#if !os(Windows)
 // TODO: missing docstring.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.write(_:createIfNecessary:permission:)`.
 public func write<Bytes>(_ bytes: Bytes, atPath path: String, createIfNecessary: Bool = true, truncate: Bool = true, permission: FilePermission? = nil) throws where Bytes: Collection, Bytes.Element: BinaryInteger {
@@ -79,7 +114,6 @@ public func write(_ string: String, atPath path: String, createIfNecessary: Bool
         try _writeAtPath(path, bytes: bytes.baseAddress!, byteCount: bytes.count - 1, createIfNecessary: createIfNecessary, truncate: truncate, permission: permission)
     }
 }
-#endif
 
 extension PathRepresentable {
     /// Read content of a file as bytes.  If the path is a directory, no bytes
@@ -100,7 +134,6 @@ extension PathRepresentable {
         return (try? readString(atPath:)(self.pathString)) ?? ""
     }
 
-#if !os(Windows)
     // TODO: missing docstring. Remember to note the byte truncating!
     /// - SeeAlso: `write(_:atPath:createIfNecessary:permission:)`.
     @discardableResult
@@ -124,5 +157,4 @@ extension PathRepresentable {
         }
         return true
     }
-#endif
 }
