@@ -2,10 +2,16 @@
 import Glibc
 #elseif os(macOS)
 import Darwin
+#elseif os(Windows)
+import WinSDK
 #endif
 
 /// POSIX errors.
 public enum SystemError: Error {
+#if os(Windows)
+    /// A raw, uncategorized error. The error code is from Windows API `GetLastError()`.
+    case unknown(errorNumber: DWORD)
+#else
     /// A raw, uncategorized POSIX error. `SystemError` includes some but not all POSIX errors.
     case unknown(errorNumber: Int32)
     /// Input/output error (POSIX `EIO`).
@@ -32,6 +38,7 @@ public enum SystemError: Error {
     case invalidArgument
     /// File exists (POSIX `EEXIST`).
     case fileExists
+#endif
 }
 
 #if !os(Windows)
