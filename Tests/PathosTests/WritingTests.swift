@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class WritingTests: XCTestCase {
     var originalWorkingDirectory: String = (try? getCurrentWorkingDirectory()) ?? "."
     var rootPath = makeTemporaryRoot()
@@ -180,3 +181,4 @@ final class WritingTests: XCTestCase {
         XCTAssertFalse(path.write("".cString(using: .utf8)!, createIfNecessary: false))
     }
 }
+#endif

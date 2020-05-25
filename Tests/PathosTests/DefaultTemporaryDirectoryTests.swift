@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class DefaultTemporaryDirectoryTests: XCTestCase {
     func testDefaultsTemporaryDirectory() throws {
         XCTAssertTrue(exists(atPath: defaultTemporaryDirectory))
@@ -14,3 +15,4 @@ final class DefaultTemporaryDirectoryTests: XCTestCase {
         XCTAssertTrue(permissions.contains([.ownerRead, .ownerWrite]))
     }
 }
+#endif
