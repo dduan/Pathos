@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class RelativePathInferringCurrentDirectoryTests: XCTestCase {
     let originalWorkingDirectory = (try? Pathos.getCurrentWorkingDirectory()) ?? "."
     var testRoot = makeTemporaryRoot()
@@ -51,3 +52,4 @@ final class RelativePathInferringCurrentDirectoryTests: XCTestCase {
         XCTAssertEqual(Path("./c").relativePath.pathString, "c")
     }
 }
+#endif

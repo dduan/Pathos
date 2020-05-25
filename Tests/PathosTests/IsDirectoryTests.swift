@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class IsDirectoryTests: XCTestCase {
     func testIsDirectoryOnExistingFile() {
         XCTAssertFalse(try isA(.directory, atPath: self.fixture(.fileThatExists)))
@@ -60,3 +61,4 @@ final class IsDirectoryTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.badSymbol).isA(.directory))
     }
 }
+#endif

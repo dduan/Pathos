@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class IsFileTests: XCTestCase {
     func testIsFileOnExistingFile() {
         XCTAssertTrue(try isA(.file, atPath: self.fixture(.fileThatExists)))
@@ -60,3 +61,4 @@ final class IsFileTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.badSymbol).isA(.file))
     }
 }
+#endif

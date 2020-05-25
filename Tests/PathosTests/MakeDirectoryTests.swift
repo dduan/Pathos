@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class MakeDirectoryTests: XCTestCase {
     private var randomTmpDirectoryPath: String {
         return join(paths: "/tmp", String(UInt64.random(in: .min ... .max)))
@@ -109,3 +110,4 @@ final class MakeDirectoryTests: XCTestCase {
         rmdir(directory)
     }
 }
+#endif

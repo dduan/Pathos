@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class RealPathTests: XCTestCase {
     func testTerminalSymbolIsResolved() throws {
         XCTAssertEqual(
@@ -54,3 +55,4 @@ final class RealPathTests: XCTestCase {
         XCTAssertEqual(Path("").realPath.pathString, try getCurrentWorkingDirectory())
     }
 }
+#endif

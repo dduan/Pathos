@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class MoveTests: XCTestCase {
     func testSingleFile() throws {
         try withTemporaryDirectory { directory in
@@ -124,3 +125,4 @@ final class MoveTests: XCTestCase {
         }
     }
 }
+#endif

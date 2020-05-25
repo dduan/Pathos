@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class IsSocketTests: XCTestCase {
     func testIsSocketOnExistingFile() {
         XCTAssertFalse(try isA(.socket, atPath: self.fixture(.fileThatExists)))
@@ -60,3 +61,4 @@ final class IsSocketTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.badSymbol).isA(.socket))
     }
 }
+#endif

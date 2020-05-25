@@ -16,13 +16,15 @@ enum FixturePath: String {
 }
 
 extension XCTestCase {
+#if !os(Windows)
     var defaultPermission: FilePermission { return [.ownerRead, .ownerWrite, .groupRead, .otherRead] }
+#endif
     var fixtureRoot: String {
         return normalize(path: "\(#file)/../Fixtures")
     }
 
     func fixture(_ path: FixturePath) -> String {
-        return join(paths: self.fixtureRoot, path.rawValue)
+        join(paths: self.fixtureRoot, path.rawValue)
     }
 
     func fixturePath(_ path: FixturePath) -> Path {
@@ -94,6 +96,8 @@ extension XCTestCase {
     }
 }
 
+#if !os(Windows)
 func makeTemporaryRoot() -> String {
     return (try? createTemporaryDirectory()) ?? "/tmp"
 }
+#endif
