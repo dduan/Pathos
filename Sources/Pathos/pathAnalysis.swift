@@ -7,11 +7,23 @@ public func normalize(path: String) -> String {
     if path.isEmpty {
         return "."
     }
+
+#if os(Windows)
+    let initialSlashes = path.starts(with: "/") || path.starts(with: "\\") ? 1 : 0
+    var components = path.split(separator: "/")
+        .map { segment in
+            segment.split(separator: "\\")
+        }
+        .flatMap { $0 }
+        .map(String.init)
+#else
     var initialSlashes = path.starts(with: "/") ? 1 : 0
     if initialSlashes == 1 && path.starts(with: "//") && !path.starts(with: "///") {
         initialSlashes = 2
     }
     var components = path.split(separator: "/").map(String.init)
+#endif
+
     var newComponents = [String]()
     for c in components {
         if c.isEmpty || c == "." {
