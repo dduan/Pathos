@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class SameFileTests: XCTestCase {
     func testSameFileAsSymlink() {
         XCTAssertTrue(try sameFile(
@@ -39,3 +40,4 @@ final class SameFileTests: XCTestCase {
             .isSame(as: self.fixturePath(.fileInDirectory)))
     }
 }
+#endif

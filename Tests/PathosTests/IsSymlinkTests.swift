@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class IsSymlinkTests: XCTestCase {
     func testIsSymlinkOnFile() {
         XCTAssertFalse(try isA(.symlink, atPath: self.fixture(.fileThatExists)))
@@ -55,3 +56,4 @@ final class IsSymlinkTests: XCTestCase {
         XCTAssertTrue(self.fixturePath(.badSymbol).isA(.symlink))
     }
 }
+#endif

@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class IsCharacterDeviceTests: XCTestCase {
     func testIsCharacterDeviceOnExistingFile() {
         XCTAssertFalse(try isA(.characterDevice, atPath: self.fixture(.fileThatExists)))
@@ -60,3 +61,4 @@ final class IsCharacterDeviceTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.badSymbol).isA(.characterDevice))
     }
 }
+#endif

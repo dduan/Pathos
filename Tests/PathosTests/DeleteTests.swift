@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class DeleteTests: XCTestCase {
     func testFile() throws {
         try withTemporaryDirectory { _ in
@@ -121,3 +122,4 @@ final class DeleteTests: XCTestCase {
         }
     }
 }
+#endif

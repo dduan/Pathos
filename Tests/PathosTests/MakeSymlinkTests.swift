@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class MakeSymlinkTests: XCTestCase {
     var originalWorkingDirectory: String = (try? getCurrentWorkingDirectory()) ?? "."
     var rootPath = ""
@@ -29,3 +30,4 @@ final class MakeSymlinkTests: XCTestCase {
         XCTAssertEqual(destination.realPath.pathString, source.pathString)
     }
 }
+#endif

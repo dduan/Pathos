@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class CopyFileTests: XCTestCase {
     var originalWorkingDirectory: String = (try? getCurrentWorkingDirectory()) ?? "."
     var rootPath = ""
@@ -103,3 +104,4 @@ final class CopyFileTests: XCTestCase {
         XCTAssertFalse(source.copy(to: destination))
     }
 }
+#endif

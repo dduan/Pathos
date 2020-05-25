@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 private let kTMPDIR = "TMPDIR"
 private let kTEMP = "TEMP"
 private let kTMP = "TMP"
@@ -89,3 +90,4 @@ final class DefaultTemporaryDirectorySearchingTests: XCTestCase {
         XCTAssertEqual(self.tmp, searchResult)
     }
 }
+#endif

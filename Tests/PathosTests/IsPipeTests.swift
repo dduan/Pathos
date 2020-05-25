@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class IsPipeTests: XCTestCase {
     func testIsPipeOnExistingFile() {
         XCTAssertFalse(try isA(.pipe, atPath: self.fixture(.fileThatExists)))
@@ -60,4 +61,4 @@ final class IsPipeTests: XCTestCase {
         XCTAssertFalse(self.fixturePath(.badSymbol).isA(.pipe))
     }
 }
-
+#endif

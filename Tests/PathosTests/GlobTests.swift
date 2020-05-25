@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class GlobTests: XCTestCase {
     var originalWorkingDirectory: String = (try? getCurrentWorkingDirectory()) ?? "."
     override func setUp() {
@@ -85,3 +86,4 @@ final class GlobTests: XCTestCase {
         )
     }
 }
+#endif

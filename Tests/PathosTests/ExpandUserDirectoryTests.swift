@@ -1,11 +1,12 @@
 #if os(Linux)
 import Glibc
-#else
+#elseif os(macOS)
 import Darwin
 #endif
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class ExpandUserDirectoryTests: XCTestCase {
     private var originalHome: UnsafeMutablePointer<Int8>? = nil
 
@@ -107,3 +108,4 @@ final class ExpandUserDirectoryTests: XCTestCase {
         XCTAssertEqual(Path("~").withExpandedUserDirectory.pathString, home)
     }
 }
+#endif

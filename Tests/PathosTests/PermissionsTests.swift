@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class PermissionsTests: XCTestCase {
     func testReadingDefaultPermissions() throws {
         let destination = try createTemporaryFile()
@@ -36,3 +37,4 @@ final class PermissionsTests: XCTestCase {
         XCTAssertEqual(destination.metadata()?.permissions, .some(resultPermissions))
     }
 }
+#endif

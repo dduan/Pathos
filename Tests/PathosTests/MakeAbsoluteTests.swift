@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class MakeAbsoluteTests: XCTestCase {
     func testMakeAbsolutePath() {
         do {
@@ -18,3 +19,4 @@ final class MakeAbsoluteTests: XCTestCase {
         XCTAssertTrue(result.pathString.hasSuffix("foo"))
     }
 }
+#endif

@@ -1,6 +1,7 @@
 import Pathos
 import XCTest
 
+#if !os(Windows)
 final class CurrentWorkingDirectoryTests: XCTestCase {
     func testGetting() throws {
         XCTAssertFalse(try getCurrentWorkingDirectory().isEmpty)
@@ -51,3 +52,4 @@ final class CurrentWorkingDirectoryTests: XCTestCase {
         XCTAssertEqual(try getCurrentWorkingDirectory(), original.pathString)
     }
 }
+#endif
