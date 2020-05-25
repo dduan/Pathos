@@ -6,8 +6,8 @@ import Darwin
 import WinSDK
 #endif
 
-#if os(Windows)
 func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool, truncate: Bool, permission: FilePermission?) throws {
+#if os(Windows)
     let behavior: Int32
     /// https://stackoverflow.com/a/14469641
     switch (createIfNecessary, truncate) {
@@ -40,10 +40,7 @@ func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, creat
     if !writeIsSuccess {
         throw SystemError.unknown(errorNumber: GetLastError())
     }
-}
-#else
-
-func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool, truncate: Bool, permission: FilePermission?) throws {
+#else // POSIX
     let oflag = O_WRONLY | (createIfNecessary ? O_CREAT : 0) | (truncate ? O_TRUNC : 0)
     let fd: Int32
     if let permission = permission {
@@ -58,8 +55,8 @@ func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, creat
     if pwrite(fd, bytes, byteCount, 0) == -1 {
         throw SystemError(posixErrorCode: errno)
     }
-}
 #endif
+}
 
 /// Read content of a file at `path` as bytes. If the path is a directory, no bytes will be read.
 ///
@@ -68,8 +65,32 @@ func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, creat
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.readBytes()`.
 public func readBytes(atPath path: String) throws -> [UInt8] {
 #if os(Windows)
-    return []
-#else
+    let handle = CreateFileA(
+        path,
+        GENERIC_READ,
+        DWORD(FILE_SHARE_READ),
+        nil,
+        DWORD(OPEN_EXISTING),
+        DWORD(FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED),
+        nil)
+    if handle == INVALID_HANDLE_VALUE {
+        throw SystemError.unknown(errorNumber: GetLastError())
+    }
+
+    let fileSize = GetFileSize(handle, nil)
+    if fileSize == INVALID_FILE_SIZE {
+        throw SystemError.unknown(errorNumber: GetLastError())
+    }
+
+    var buffer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: Int(fileSize))
+    defer { buffer.deallocate() }
+
+    var bytesRead: DWORD = 0
+    if(!ReadFile(handle, buffer.baseAddress!, fileSize, &bytesRead, nil)) {
+        throw SystemError.unknown(errorNumber: GetLastError())
+    }
+    return [UInt8](buffer)
+#else // POSIX
     guard case let fd = open(path, O_RDONLY), fd != -1 else {
         throw SystemError(posixErrorCode: errno)
     }
