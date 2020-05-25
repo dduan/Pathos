@@ -35,6 +35,8 @@ func _writeAtPath(_ path: String, bytes: UnsafeRawPointer, byteCount: Int, creat
         throw SystemError.unknown(errorNumber: GetLastError())
     }
 
+    defer { CloseHandle(handle) }
+
     var bytesWritten: DWORD = 0
     let writeIsSuccess = WriteFile(handle, bytes, DWORD(byteCount), &bytesWritten, nil)
     if !writeIsSuccess {
@@ -73,9 +75,12 @@ public func readBytes(atPath path: String) throws -> [UInt8] {
         DWORD(OPEN_EXISTING),
         DWORD(FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED),
         nil)
+
     if handle == INVALID_HANDLE_VALUE {
         throw SystemError.unknown(errorNumber: GetLastError())
     }
+
+    defer { CloseHandle(handle) }
 
     let fileSize = GetFileSize(handle, nil)
     if fileSize == INVALID_FILE_SIZE {
