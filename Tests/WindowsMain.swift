@@ -26,10 +26,14 @@ extension SplitDriveTests {
         ("testSimpleNoDrivePathSplit", testSimpleNoDrivePathSplit),
         ("testSimpleNoDrivePathSplit", testSimpleNoDrivePathSplit),
         ("testSplitingUNCHost", testSplitingUNCHost),
+        ("testSplitingUNCHostWithNoPath", testSplitingUNCHostWithNoPath),
+        ("testSplitingUNCHostLookAlike", testSplitingUNCHostLookAlike),
         ("testPathRepresentableSimpleDriveSplit", testPathRepresentableSimpleDriveSplit),
         ("testPathRepresentableSimpleDriveNoPathSplit", testPathRepresentableSimpleDriveNoPathSplit),
         ("testPathRepresentableSimpleNoDrivePathSplit", testPathRepresentableSimpleNoDrivePathSplit),
         ("testPathRepresentableSplitingUNCHost", testPathRepresentableSplitingUNCHost),
+        ("testPathRepresentableSplitingUNCHostWithNoPath", testPathRepresentableSplitingUNCHostWithNoPath),
+        ("testPathRepresentableSplitingUNCHostLookAlike", testPathRepresentableSplitingUNCHostLookAlike),
     ]
 }
 
