@@ -43,6 +43,60 @@ public func normalize(path: String) -> String {
     return newPath.isEmpty ? "." : newPath
 }
 
+/// Split the pathname path into a pair (drive, tail) where drive is either a
+/// mount point or the empty string. On systems which do not use drive
+/// specifications, drive will always be the empty string. In all cases, drive +
+/// tail will be the same as path.
+///
+/// On Windows, splits a pathname into drive/UNC sharepoint and relative path.
+///
+/// If the path contains a drive letter, drive will contain everything up to and
+/// including the colon. e.g. splitdrive("c:/dir") returns ("c:", "/dir")
+///
+/// If the path contains a UNC path, drive will contain the host name and share,
+/// up to but not including the fourth separator. e.g.
+/// splitdrive("//host/computer/dir") returns ("//host/computer", "/dir")
+///
+/// - Parameter path: The path to split.
+/// - Returns: A tuple with the first part being the drive or UNC host, the
+///            second part being the rest of the path.
+/// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.splitDrive()`.
+public func splitDrive(path: String) -> (String, String) {
+#if os(Windows)
+    let seq = path.map { $0 == "/" ? "\\" : $0 }
+    if seq.count > 2 && seq.starts(with: #"\\"#) && seq[2] != "\\" {
+        // UNC path
+        guard let nextSlashIndex = seq[2...].firstIndex(of: "\\") else {
+            return ("", path)
+        }
+
+        guard path.count > nextSlashIndex + 1, let nextNextSlashIndex = seq[(nextSlashIndex + 1)...].firstIndex(of: "\\") else {
+            return (path, "")
+        }
+
+        if nextNextSlashIndex == nextSlashIndex + 1 {
+            return ("", path)
+        }
+
+        return (
+            String(path.prefix(nextNextSlashIndex)),
+            String(path.dropFirst(nextNextSlashIndex))
+        )
+    }
+
+    let colonIndex = path.index(after: path.startIndex)
+
+    if path.count > 1 && path[colonIndex] == ":" {
+        return (
+            String(path[...colonIndex]),
+            String(path.dropFirst(2))
+        )
+    }
+#endif
+
+    return ("", path)
+}
+
 /// Return `true` if `path` is an absolute path name. On Unix, that means it begins with a slash.
 /// - Paramater path: the path in question.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.isAbsolute`.
@@ -235,6 +289,28 @@ extension PathRepresentable {
     /// - SeeAlso: `normalize(path:)`.
     public var normalized: Self {
         return Self(normalize(path:)(self.pathString))
+    }
+
+    /// Split the pathname path into a pair (drive, tail) where drive is either a
+    /// mount point or the empty string. On systems which do not use drive
+    /// specifications, drive will always be the empty string. In all cases, drive +
+    /// tail will be the same as path.
+    ///
+    /// On Windows, splits a pathname into drive/UNC sharepoint and relative path.
+    ///
+    /// If the path contains a drive letter, drive will contain everything up to and
+    /// including the colon. e.g. splitdrive("c:/dir") returns ("c:", "/dir")
+    ///
+    /// If the path contains a UNC path, drive will contain the host name and share,
+    /// up to but not including the fourth separator. e.g.
+    /// splitdrive("//host/computer/dir") returns ("//host/computer", "/dir")
+    ///
+    /// - Returns: A tuple with the first part being the drive or UNC host, the
+    ///            second part being the rest of the path.
+    /// - SeeAlso: `splitDrive(path:)`.
+    public func splitDrive() -> (Self, Self) {
+        let parts = splitDrive(path:)(self.pathString)
+        return (Self(parts.0), Self(parts.1))
     }
 
     /// Return `true` if this path is an absolute path name. On Unix, that means it begins with a slash.
