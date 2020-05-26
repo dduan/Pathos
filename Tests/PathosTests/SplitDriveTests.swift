@@ -50,6 +50,25 @@ final class SplitDriveTests: XCTestCase {
 #endif
     }
 
+    func testSplitingUNCHostWithNoPath() {
+#if os(Windows)
+        let (drive, path) = splitDrive(path: #"\\hostname\mountname"#)
+        XCTAssertEqual(drive, #"\\hostname\mountname"#)
+        XCTAssertEqual(path, "")
+#else
+        let (drive, path) = splitDrive(path: #"\\hostname\mountname"#)
+        XCTAssertEqual(drive, "")
+        XCTAssertEqual(path, #"\\hostname\mountname"#)
+#endif
+    }
+
+    func testSplitingUNCHostLookAlike() {
+        // this is actually not valid host because the 3rd \ must not be followed by another \
+        let (drive, path) = splitDrive(path: #"\\hostname\\mountname\a"#)
+        XCTAssertEqual(drive, "")
+        XCTAssertEqual(path, #"\\hostname\\mountname\a"#)
+    }
+
     func testPathRepresentableSimpleDriveSplit() {
 #if os(Windows)
         let (drive, path) = Path(#"c:\Library"#).splitDrive()
@@ -96,5 +115,24 @@ final class SplitDriveTests: XCTestCase {
         XCTAssertEqual(drive.pathString, "")
         XCTAssertEqual(path.pathString, #"\\hostname\mountname\path\name"#)
 #endif
+    }
+
+    func testPathRepresentableSplitingUNCHostWithNoPath() {
+#if os(Windows)
+        let (drive, path) = Path(#"\\hostname\mountname"#).splitDrive()
+        XCTAssertEqual(drive.pathString, #"\\hostname\mountname"#)
+        XCTAssertEqual(path.pathString, "")
+#else
+        let (drive, path) = Path(#"\\hostname\mountname"#).splitDrive()
+        XCTAssertEqual(drive.pathString, "")
+        XCTAssertEqual(path.pathString, #"\\hostname\mountname"#)
+#endif
+    }
+
+    func testPathRepresentableSplitingUNCHostLookAlike() {
+        // this is actually not valid host because the 3rd \ must not be followed by another \
+        let (drive, path) = Path(#"\\hostname\\mountname\a"#).splitDrive()
+        XCTAssertEqual(drive.pathString, "")
+        XCTAssertEqual(path.pathString, #"\\hostname\\mountname\a"#)
     }
 }
