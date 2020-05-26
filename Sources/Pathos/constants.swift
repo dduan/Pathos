@@ -2,6 +2,8 @@
 import Glibc
 #elseif os(macOS)
 import Darwin
+#elseif os(Windows)
+import WinSDK
 #endif
 
 let kCurrentDirectory = "."
@@ -16,7 +18,7 @@ public let pathSeparator = String(pathSeparatorCharacter)
 #if PATH_MAX
 let kMaxPathNameLength = Int(PATH_MAX)
 #elseif os(Windows)
-let kMaxPathNameLength = 256
+let kMaxPathNameLength = Int(MAX_PATH)
 #else
 let kMaxPathNameLength = 1024
 #endif
