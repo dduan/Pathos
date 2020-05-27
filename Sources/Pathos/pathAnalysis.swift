@@ -11,10 +11,9 @@ public func normalize(path: String) -> String {
 #if os(Windows)
     let initialSlashes = path.starts(with: "/") || path.starts(with: "\\") ? 1 : 0
     var components = path.split(separator: "/")
-        .map { segment in
+        .flatMap { segment in
             segment.split(separator: "\\")
         }
-        .flatMap { $0 }
         .map(String.init)
 #else
     var initialSlashes = path.starts(with: "/") ? 1 : 0
