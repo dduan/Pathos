@@ -39,7 +39,7 @@ public func readBytes(atPath path: String) throws -> [UInt8] {
     }
 
     let fileSize = Int(status.st_size)
-    var buffer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: fileSize)
+    let buffer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: fileSize)
     defer { buffer.deallocate() }
     read(fd, buffer.baseAddress!, fileSize)
     return [UInt8](buffer)

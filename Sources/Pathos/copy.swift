@@ -44,7 +44,7 @@ public func copyFile(fromPath source: String, toPath destination: String, follow
     }
     defer { close(destinationFD) }
 
-    var buffer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: chunkSize)
+    let buffer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: chunkSize)
     defer { buffer.deallocate() }
 
     defer {
