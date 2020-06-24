@@ -1,6 +1,11 @@
 ## master
 
+### Fixes
+
+- Warnings in Swift 5.3
+
 ### New
+
 - Added a new type `Metadata`, which represents information from `stat` (Darwin,
   Linux).
 - Added API to retrieve `Metadata`.
