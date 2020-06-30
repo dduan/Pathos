@@ -20,8 +20,7 @@ test-codegen: update-linux-test-manifest docs
 
 xcode: clean-xcodeproj-gen
 	@echo "Generating Xcode project…"
-	@swift package generate-xcodeproj --xcconfig-overrides Resources/release.xcconfig
-	@cp Resources/Info.plist Pathos.xcodeproj/Pathos_info.plist
+	@swift package generate-xcodeproj
 	@echo "Done."
 
 build: update-linux-test-manifest
