@@ -5,7 +5,7 @@ raw_version=$(jazzy --version)
 version=${raw_version#"jazzy version: "}
 
 if [ ${expected_version} != ${version} ]; then
-    sudo gem install jazzy -v "${expected_version}"
+    gem install --user-install jazzy -v "${expected_version}"
 else
     echo "Found expecetd Jazzy ${expected_version}!"
 fi
