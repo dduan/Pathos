@@ -1,5 +1,7 @@
 ## master
 
+## 0.3.0
+
 ### Fixes
 
 - Warnings in Swift 5.3
