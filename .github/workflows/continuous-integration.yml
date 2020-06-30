@@ -11,7 +11,6 @@ jobs:
         xcode:
           - 11.4
         action:
-          - Carthage
           - CocoaPods
           - SwiftPM
           - codegen
@@ -19,7 +18,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Xcode version
       run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
-    - name: Prepare And Test
+    - name: Test
       run: make test-${{ matrix.action }}
 
   ubuntu:

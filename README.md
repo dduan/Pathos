@@ -51,12 +51,6 @@ use_frameworks!
 pod "Pathos"
 ```
 
-#### With [Carthage](https://github.com/Carthage/Carthage)
-
-```
-github "dduan/Pathos"
-```
-
 #### With [SwiftPM](https://swift.org/package-manager)
 
 ```swift

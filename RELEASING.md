@@ -4,7 +4,6 @@
 - Bump version in `README.md`.
 - In `CHANGELOG.md`, create a section for the new version and move changes from
   the master section there.
-- Run `make carthage-archive` to generate a `Pathos.framework.zip`.
 - Run `pod lib lint` and make sure it succeeds without errors or wannings.
 - Check in all changes in git.
 - Make a new tag for the version number.
