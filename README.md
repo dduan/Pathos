@@ -51,12 +51,6 @@ use_frameworks!
 pod "Pathos"
 ```
 
-#### With [Carthage](https://github.com/Carthage/Carthage)
-
-```
-github "dduan/Pathos"
-```
-
 #### With [SwiftPM](https://swift.org/package-manager)
 
 ```swift
@@ -126,9 +120,6 @@ Use `make` targets for development.
 - `develop-linux-docker` launches a docker container with Swift. The project is
   mirrored at `/Pathos`. You can edit from the host and run/test in the
   container.
-- `make carthage-archive` generates a Xcode project and a `Pathos.framework.zip`
-  that can be uploaded for releases to support Carthage. This only works on
-  macOS.
 
 Also, see "Testing".
 

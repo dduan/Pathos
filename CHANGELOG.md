@@ -44,6 +44,8 @@ in the following changes:
 - `PathRepresentable.readSymbolicLink()` -> `PathRepresentable.readSymlink()`
 - `FileType.symbolicLink` -> `FileType.symlink`
 
+Carthage is no longer supported.
+
 ### Breaking changes
 
 Previously symbolic links were referred to as "symbol" or "symbolic link" in

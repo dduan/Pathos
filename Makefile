@@ -31,18 +31,10 @@ clean-xcodeproj-gen:
 	@echo "Deleting generated Xcode project…"
 	@rm -rf Pathos.xcodeproj
 
-clean-carthage: clean-xcodeproj-gen
-	@echo "Deleting Carthage artifacts…"
-	@rm -rf Carthage
-	@rm -rf Pathos.framework.zip
-
-clean: clean-carthage
+clean:
 	@echo "Deleting build artifacts…"
 	@rm -rf .build tmp build
 	@echo "Done."
-
-carthage-archive: clean-carthage xcode ensure-carthage
-	@carthage build --archive
 
 ensure-jazzy:
 	Scripts/ensure-jazzy.sh
@@ -52,18 +44,6 @@ docs: xcode ensure-jazzy
 
 test-SwiftPM:
 	swift test -Xswiftc -warnings-as-errors
-
-ensure-carthage:
-	brew update
-	brew outdated carthage || brew upgrade carthage
-
-test-Carthage: clean-carthage xcode ensure-carthage
-	set -o pipefail && \
-		carthage build \
-		--no-skip-current \
-		--configuration Release \
-		--verbose
-	ls Carthage/build/Mac/Pathos.framework
 
 ensure-CocoaPods:
 	sudo gem install cocoapods -v 1.6.0
