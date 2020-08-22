@@ -9,10 +9,10 @@ action=$2
 swift=$3
 ubuntu=$4
 dockerfile=$(mktemp)
-echo "FROM swift:$swift-$ubuntu"    >  $dockerfile
-echo "ADD . $project"               >> $dockerfile
-echo "WORKDIR $project"             >> $dockerfile
-echo "RUN make $action"             >> $dockerfile
+echo "FROM swift:$swift-$ubuntu" >  $dockerfile
+echo "ADD . $project"            >> $dockerfile
+echo "WORKDIR $project"          >> $dockerfile
+echo "RUN $action"               >> $dockerfile
 image=$(echo $project | tr '[:upper:]' '[:lower:]')
 docker image rm -f $image &> /dev/null
 docker build -t $image -f $dockerfile .

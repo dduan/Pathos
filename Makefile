@@ -13,7 +13,7 @@ test: clean
 	@swift test -Xswiftc -warnings-as-errors
 
 test-docker:
-	@Scripts/ubuntu.sh Pathos test 5.2 bionic
+	@Scripts/docker.sh Pathos 'swift test -Xswiftc -warnings-as-errors' 5.2.5 bionic
 
 test-codegen: update-linux-test-manifest docs
 	@git diff --exit-code
@@ -42,7 +42,7 @@ docs: xcode ensure-jazzy
 	@Scripts/generate-docs.sh
 
 test-SwiftPM:
-	swift test -Xswiftc -warnings-as-errors
+	@swift test -Xswiftc -warnings-as-errors
 
 ensure-CocoaPods:
 	sudo gem install cocoapods -v 1.6.0
