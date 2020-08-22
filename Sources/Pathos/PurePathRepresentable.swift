@@ -1,0 +1,40 @@
+#if DEBUG
+protocol PurePathRepresentable {
+    var bytes: Bytes { get }
+
+    /// Creates a path from a C String.
+    ///
+    /// - Parameter cString: a nul-terminated C String.
+    init(cString: UnsafePointer<CChar>)
+
+    /// Creates a path from a `String`. The string will be interpreted as UTF-8 bytes.
+    ///
+    /// - Parameter string: The string that represents a path.
+    init(_ string: String)
+
+    /// The drive for the path. For POSIX, this is always empty.
+    ///
+    /// This value is lazily computed when it's accessed for the first time. To manually trigger
+    /// its computation, use `parse()`.
+    var drive: Bytes { get }
+
+    /// The bytes for the root, if it's present in `bytes`. For example, on POSIX this would be "/".
+    ///
+    /// This value is lazily computed when it's accessed for the first time. To manually trigger
+    /// its computation, use `parse()`.
+    var root: Bytes { get }
+
+    /// The segments in the path separated by `Path.separatorByte`. Root is not included.
+    ///
+    /// This value is lazily computed when it's accessed for the first time. To manually trigger
+    /// its computation, use `parse()`.
+    var segments: Array<Bytes> { get }
+
+    /// Analyze the content of the path. This will result in a cached value for `drive`, `root`,
+    /// `segments`, etc.
+    func parse()
+}
+
+extension PureWindowsPath: PurePathRepresentable {}
+extension PurePOSIXPath: PurePathRepresentable {}
+#endif
