@@ -12,18 +12,18 @@ public struct PureWindowsPath {
     }
 
     public var drive: Bytes {
-        parts.getOrCreateParts(from: bytes).drive
+        parts.getOrCreateParts(from: bytes, isWindows: true).drive
     }
 
     public var root: Bytes {
-        parts.getOrCreateParts(from: bytes).root
+        parts.getOrCreateParts(from: bytes, isWindows: true).root
     }
 
     public var segments: Array<Bytes> {
-        parts.getOrCreateParts(from: bytes).segments
+        parts.getOrCreateParts(from: bytes, isWindows: true).segments
     }
 
     public func parse() {
-        _ = parts.getOrCreateParts(from: bytes)
+        _ = parts.getOrCreateParts(from: bytes, isWindows: true)
     }
 }
