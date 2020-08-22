@@ -12,18 +12,18 @@ public struct PurePOSIXPath {
     }
 
     public var drive: Bytes {
-        parts.getOrCreateParts(from: bytes).drive
+        parts.getOrCreateParts(from: bytes, isWindows: false).drive
     }
 
     public var root: Bytes {
-        parts.getOrCreateParts(from: bytes).root
+        parts.getOrCreateParts(from: bytes, isWindows: false).root
     }
 
     public var segments: Array<Bytes> {
-        parts.getOrCreateParts(from: bytes).segments
+        parts.getOrCreateParts(from: bytes, isWindows: false).segments
     }
 
     public func parse() {
-        _ = parts.getOrCreateParts(from: bytes)
+        _ = parts.getOrCreateParts(from: bytes, isWindows: false)
     }
 }
