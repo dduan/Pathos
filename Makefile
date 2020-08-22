@@ -21,7 +21,6 @@ test-codegen: update-linux-test-manifest
 build: update-linux-test-manifest
 	@swift build -c release -Xswiftc -warnings-as-errors > /dev/null
 
-
 clean:
 	@echo "Deleting build artifacts…"
 	@rm -rf .build tmp build
