@@ -11,7 +11,6 @@ jobs:
         xcode:
           - 11.4
         action:
-          - CocoaPods
           - SwiftPM
           - codegen
     steps:
@@ -21,16 +20,19 @@ jobs:
     - name: Test
       run: make test-${{ matrix.action }}
 
-  ubuntu:
-    name: Ubuntu
+  linux:
+    name: Linux
     runs-on: ubuntu-latest
     strategy:
       matrix:
         swift:
-          - 5.2
-        ubuntu:
+          - 5.2.5
+        distro:
           - bionic
+          - focal
+          - amazonlinux2
+          - centos8
     steps:
     - uses: actions/checkout@v1
     - name: Test
-      run: Scripts/ubuntu.sh Pathos test ${{ matrix.swift }} ${{ matrix.ubuntu }}
+      run: Scripts/docker.sh Pathos 'swift test -Xswiftc -warnings-as-errors' ${{ matrix.swift }} ${{ matrix.distro }}
