@@ -1,15 +1,15 @@
-import Pathos
+@testable import Pathos
 import XCTest
 
 final class WindowsPartsParsingTests: XCTestCase {
     func testRootIsParsed() {
-        let p = PureWindowsPath(cString: #"\"#)
+        let p = PureWindowsPath(#"\"#)
         XCTAssertEqual(p.root, [WindowsConstants.separatorByte])
     }
 
     func test2SlashRoot() {
         let p = PureWindowsPath(#"\\a\b"#)
-        XCTAssertEqual(p.drive, Bytes(#"\\a\b"#.utf8CString.dropLast()))
+        XCTAssertEqual(p.drive, WindowsBinaryString(#"\\a\b"#))
         XCTAssert(p.root.isEmpty)
     }
 
@@ -25,22 +25,22 @@ final class WindowsPartsParsingTests: XCTestCase {
 
     func testParsingDriveOnWindows() {
         let p = PureWindowsPath(#"C:\a\b"#)
-        XCTAssertEqual(p.drive, Bytes("C:".utf8CString.dropLast()))
+        XCTAssertEqual(p.drive, WindowsBinaryString("C:"))
     }
 
     func testParsingDriveOnWindows2() {
         let p = PureWindowsPath(#"C:"#)
-        XCTAssertEqual(p.drive, Bytes("C:".utf8CString.dropLast()))
+        XCTAssertEqual(p.drive, WindowsBinaryString("C:"))
     }
 
     func testParsingParts() {
         let p = PureWindowsPath(#"\a\b\c.swift"#)
         XCTAssertEqual(
             p.segments,
-            Array<Bytes>([
-                .init("a".utf8CString.dropLast()),
-                .init("b".utf8CString.dropLast()),
-                .init("c.swift".utf8CString.dropLast()),
+            Array<WindowsBinaryString>([
+                .init("a"),
+                .init("b"),
+                .init("c.swift"),
             ])
         )
     }
@@ -49,10 +49,10 @@ final class WindowsPartsParsingTests: XCTestCase {
         let p = PureWindowsPath(#"\a\b\.\c.swift"#)
         XCTAssertEqual(
             p.segments,
-            Array<Bytes>([
-                .init("a".utf8CString.dropLast()),
-                .init("b".utf8CString.dropLast()),
-                .init("c.swift".utf8CString.dropLast()),
+            Array<WindowsBinaryString>([
+                .init("a"),
+                .init("b"),
+                .init("c.swift"),
             ])
         )
     }
