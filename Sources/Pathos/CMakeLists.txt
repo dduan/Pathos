@@ -8,7 +8,7 @@ add_library(Pathos
   Windows/WindowsConstants.swift
   POSIX/POSIXConstants.swift
   POSIX/PurePOSIXPath.swift
-  Bytes.swift)
+  BinaryString.swift)
 # NOTE: workaround for CMake not setting up include flags yet
 set_target_properties(Pathos PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_Swift_MODULE_DIRECTORY})
