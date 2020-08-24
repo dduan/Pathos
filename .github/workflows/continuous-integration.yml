@@ -31,6 +31,7 @@ jobs:
         distro:
           - bionic
           - focal
+          - amazonlinux2
           - centos8
     steps:
     - uses: actions/checkout@v1
