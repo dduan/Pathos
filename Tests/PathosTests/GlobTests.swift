@@ -12,13 +12,14 @@ final class GlobTests: XCTestCase {
     }
 
     func testGlobWithResult() throws {
-        XCTAssertEqual(
-            Set(try Pathos.glob("*_symbol")),
-            Set([
-                FixturePath.badSymbol.rawValue,
-                FixturePath.goodFileSymbol.rawValue,
-                FixturePath.goodDirectorySymbol.rawValue,
-            ])
+        let result = try Pathos.glob("*_symbol")
+        let expectation = Set([
+            FixturePath.goodFileSymbol.rawValue,
+            FixturePath.goodDirectorySymbol.rawValue,
+        ])
+        XCTAssert(
+            expectation.isSubset(of: result),
+            "\(expectation) is not a subset of \(result)"
         )
     }
 
@@ -49,13 +50,14 @@ final class GlobTests: XCTestCase {
     }
 
     func testPathRepresentableGlobWithResult() {
-        XCTAssertEqual(
-            Set(Path.glob("*_symbol").map { $0.pathString }),
-            Set([
-                FixturePath.badSymbol.rawValue,
-                FixturePath.goodFileSymbol.rawValue,
-                FixturePath.goodDirectorySymbol.rawValue,
-            ])
+        let result = Path.glob("*_symbol").map { $0.pathString }
+        let expectation = Set([
+            FixturePath.goodFileSymbol.rawValue,
+            FixturePath.goodDirectorySymbol.rawValue,
+        ])
+        XCTAssert(
+            expectation.isSubset(of: result),
+            "\(expectation) is not a subset of \(result)"
         )
     }
 
