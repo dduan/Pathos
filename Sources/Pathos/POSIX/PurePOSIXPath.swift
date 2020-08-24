@@ -1,29 +1,29 @@
 public struct PurePOSIXPath {
-    private let parts = Box<Optional<PathParts>>(nil)
+    private let parts = Box<Optional<PathParts<POSIXEncodingUnit>>>(nil)
 
-    public let bytes: Bytes
+    public let binaryString: POSIXBinaryString
 
-    public init(cString: UnsafePointer<CChar>) {
-        bytes = Bytes(cString: cString)
+    public init(cString: UnsafePointer<POSIXEncodingUnit>) {
+        binaryString = POSIXBinaryString(cString: cString)
     }
 
     public init(_ string: String) {
-        bytes = Bytes(string)
+        binaryString = POSIXBinaryString(string)
     }
 
-    public var drive: Bytes {
-        parts.getOrCreateParts(from: bytes, isWindows: false).drive
+    public var drive: POSIXBinaryString {
+        parts.getOrCreateParts(forPOSIXFrom: binaryString).drive
     }
 
-    public var root: Bytes {
-        parts.getOrCreateParts(from: bytes, isWindows: false).root
+    public var root: POSIXBinaryString {
+        parts.getOrCreateParts(forPOSIXFrom: binaryString).root
     }
 
-    public var segments: Array<Bytes> {
-        parts.getOrCreateParts(from: bytes, isWindows: false).segments
+    public var segments: Array<POSIXBinaryString> {
+        parts.getOrCreateParts(forPOSIXFrom: binaryString).segments
     }
 
     public func parse() {
-        _ = parts.getOrCreateParts(from: bytes, isWindows: false)
+        _ = parts.getOrCreateParts(forPOSIXFrom: binaryString)
     }
 }
