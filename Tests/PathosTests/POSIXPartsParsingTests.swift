@@ -1,4 +1,4 @@
-import Pathos
+@testable import Pathos
 import XCTest
 
 final class POSIXPartsParsingTests: XCTestCase {
@@ -31,10 +31,10 @@ final class POSIXPartsParsingTests: XCTestCase {
         let p = PurePOSIXPath("/a/b/c.swift")
         XCTAssertEqual(
             p.segments,
-            Array<Bytes>([
-                .init("a".utf8CString.dropLast()),
-                .init("b".utf8CString.dropLast()),
-                .init("c.swift".utf8CString.dropLast()),
+            Array<POSIXBinaryString>([
+                .init("a"),
+                .init("b"),
+                .init("c.swift"),
             ])
         )
     }
@@ -43,10 +43,10 @@ final class POSIXPartsParsingTests: XCTestCase {
         let p = PurePOSIXPath("/a/b/./c.swift")
         XCTAssertEqual(
             p.segments,
-            Array<Bytes>([
-                .init("a".utf8CString.dropLast()),
-                .init("b".utf8CString.dropLast()),
-                .init("c.swift".utf8CString.dropLast()),
+            Array<POSIXBinaryString>([
+                .init("a"),
+                .init("b"),
+                .init("c.swift"),
             ])
         )
     }
