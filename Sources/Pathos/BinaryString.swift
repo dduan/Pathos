@@ -29,13 +29,21 @@ extension ContiguousArray where Element: BinaryInteger {
 }
 
 extension POSIXBinaryString {
-    init(_ string: String) {
+    public init(_ string: String) {
         self = ContiguousArray(string.utf8CString.dropLast())
+    }
+
+    public var string: String {
+        String(cString: Array(self) + [0])
     }
 }
 
 extension WindowsBinaryString {
-    init(_ string: String) {
+    public init(_ string: String) {
         self = ContiguousArray(string.utf16)
+    }
+
+    public var string: String {
+        String(decodingCString: Array(self) + [0], as: UTF16.self)
     }
 }
