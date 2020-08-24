@@ -7,12 +7,12 @@ struct Path {
 
     /// Raw representation of the path. This could be a value from the operating system API. It's
     /// agnostic to character encoding.
-    public var bytes: Bytes { pure.bytes }
+    public var binaryString: BinaryString { pure.binaryString }
 
     /// Creates a path from a C String.
     ///
     /// - Parameter cString: a nul-terminated C String.
-    public init(cString: UnsafePointer<CChar>) {
+    public init(cString: UnsafePointer<NativeEncodingUnit>) {
         pure = .init(cString: cString)
     }
 
@@ -27,19 +27,19 @@ struct Path {
     ///
     /// This value is lazily computed when it's accessed for the first time. To manually trigger
     /// its computation, use `parse()`.
-    public var drive: Bytes { pure.drive }
+    public var drive: BinaryString { pure.drive }
 
     /// The bytes for the root, if it's present in `bytes`. For example, on POSIX this would be "/".
     ///
     /// This value is lazily computed when it's accessed for the first time. To manually trigger
     /// its computation, use `parse()`.
-    public var root: Bytes { pure.root }
+    public var root: BinaryString { pure.root }
 
     /// The segments in the path separated by `Path.separatorByte`. Root is not included.
     ///
     /// This value is lazily computed when it's accessed for the first time. To manually trigger
     /// its computation, use `parse()`.
-    public var segments: Array<Bytes> { pure.segments }
+    public var segments: Array<BinaryString> { pure.segments }
 
     /// Analyze the content of the path. This will result in a cached value for `drive`, `root`,
     /// `segments`, etc.
