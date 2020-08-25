@@ -5,9 +5,10 @@ export LC_CTYPE     = en_US.UTF-8
 .DEFAULT_GOAL := build
 
 .PHONY: codegen
-codegen: update-test-manifest update-cmake-lists
+codegen: update-cmake-lists update-test-manifest format
 
 update-test-manifest:
+	@echo "Updating SwiftPM test manifests"
 ifeq ($(shell uname),Darwin)
 	@rm Tests/PathosTests/XCTestManifests.swift
 	@touch Tests/PathosTests/XCTestManifests.swift
@@ -17,6 +18,7 @@ else
 endif
 
 update-cmake-lists:
+	@echo "Updating cmake config files"
 	@python3 Scripts/update-cmake.py Scripts/cmake_root
 
 test: clean
@@ -38,3 +40,13 @@ clean:
 
 test-SwiftPM:
 	@swift test -Xswiftc -warnings-as-errors
+
+format: ensure-swiftformat
+ifeq ($(shell uname),Darwin)
+	@./tmp/swiftformat --swiftversion 5.3 .
+else
+	@echo "Skiping formatting: only works on macOS."
+endif
+
+ensure-swiftformat:
+	@Scripts/ensure-swiftformat.sh

@@ -1,0 +1,4 @@
+--exclude **/XCTestManifests.swift
+--disable typeSugar
+--disable andOperator
+--ifdef no-indent
