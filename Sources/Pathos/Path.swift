@@ -46,4 +46,9 @@ struct Path {
     public func parse() {
         pure.parse()
     }
+
+    /// The final path component, if any.
+    public var name: BinaryString? {
+        pure.name
+    }
 }
