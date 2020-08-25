@@ -1,14 +1,17 @@
 add_library(Pathos
   "BinaryString.swift"
-  "Box+PurePath.swift"
   "Box.swift"
   "Constants.swift"
+  "POSIX/Box+PurePOSIXPath.swift"
   "POSIX/POSIXConstants.swift"
+  "POSIX/PathParts+POSIX.swift"
   "POSIX/PurePOSIXPath.swift"
   "Path.swift"
   "PathParts.swift"
   "PurePath.swift"
   "PurePathRepresentable.swift"
+  "Windows/Box+PureWindowsPath.swift"
+  "Windows/PathParts+Windows.swift"
   "Windows/PureWindowsPath.swift"
   "Windows/WindowsConstants.swift"
 )
