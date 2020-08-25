@@ -35,8 +35,12 @@ protocol PurePathRepresentable {
     /// Analyze the content of the path. This will result in a cached value for `drive`, `root`,
     /// `segments`, etc.
     func parse()
+
+    /// The final path component, if any.
+    var name: BinaryString? { get }
 }
 
 extension PureWindowsPath: PurePathRepresentable {}
 extension PurePOSIXPath: PurePathRepresentable {}
+extension Path: PurePathRepresentable {}
 #endif
