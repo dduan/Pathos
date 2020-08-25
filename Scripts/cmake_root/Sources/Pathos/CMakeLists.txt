@@ -1,16 +1,5 @@
 add_library(Pathos
-  "BinaryString.swift"
-  "Box+PurePath.swift"
-  "Box.swift"
-  "Constants.swift"
-  "POSIX/POSIXConstants.swift"
-  "POSIX/PurePOSIXPath.swift"
-  "Path.swift"
-  "PathParts.swift"
-  "PurePath.swift"
-  "PurePathRepresentable.swift"
-  "Windows/PureWindowsPath.swift"
-  "Windows/WindowsConstants.swift"
+  $source_list
 )
 # NOTE: workaround for CMake not setting up include flags yet
 set_target_properties(Pathos PROPERTIES
