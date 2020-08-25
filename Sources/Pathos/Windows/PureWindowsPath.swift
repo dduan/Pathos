@@ -1,6 +1,10 @@
 public struct PureWindowsPath {
     typealias BinaryString = WindowsBinaryString
-    private let parts = Box<Optional<PathParts<WindowsEncodingUnit>>>(nil)
+    private let partsStorage = Box<Optional<PathParts<WindowsEncodingUnit>>>(nil)
+
+    private var parts: PathParts<WindowsEncodingUnit> {
+        partsStorage.getOrCreateParts(forWindowsFrom: binaryString)
+    }
 
     public let binaryString: WindowsBinaryString
 
@@ -13,18 +17,22 @@ public struct PureWindowsPath {
     }
 
     public var drive: WindowsBinaryString {
-        parts.getOrCreateParts(forWindowsFrom: binaryString).drive
+        parts.drive
     }
 
     public var root: WindowsBinaryString {
-        parts.getOrCreateParts(forWindowsFrom: binaryString).root
+        parts.root
     }
 
     public var segments: Array<WindowsBinaryString> {
-        parts.getOrCreateParts(forWindowsFrom: binaryString).segments
+        parts.segments
     }
 
     public func parse() {
-        _ = parts.getOrCreateParts(forWindowsFrom: binaryString)
+        _ = partsStorage.getOrCreateParts(forWindowsFrom: binaryString)
+    }
+
+    public var name: WindowsBinaryString? {
+        parts.segments.last
     }
 }
