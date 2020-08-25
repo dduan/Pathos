@@ -8,8 +8,7 @@ struct PathParts<NativeEncodingUnit: BinaryInteger> {
         _ bytes: BinaryString,
         separator: NativeEncodingUnit,
         currentDirectory: NativeEncodingUnit
-    ) -> (BinaryString, [BinaryString])
-    {
+    ) -> (BinaryString, [BinaryString]) {
         let rest: BinaryString.SubSequence
         let root: BinaryString
         if !bytes.isEmpty && bytes[0] == separator {
@@ -60,8 +59,7 @@ struct PathParts<NativeEncodingUnit: BinaryInteger> {
 
             guard path.count > nextSlashIndex + 1,
                 let nextNextSlashIndex = path[(nextSlashIndex + 1)...].firstIndex(of: windowsSeparatorByte)
-                else
-            {
+            else {
                 return (WindowsBinaryString(path), [])
             }
 

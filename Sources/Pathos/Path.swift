@@ -1,9 +1,9 @@
 struct Path {
-#if os(Windows)
+    #if os(Windows)
     let pure: PureWindowsPath
-#else
+    #else
     let pure: PurePOSIXPath
-#endif
+    #endif
 
     /// Raw representation of the path. This could be a value from the operating system API. It's
     /// agnostic to character encoding.
