@@ -93,7 +93,7 @@ private let alternativeSeparatorByte = "/".utf16.first!
 private let colonByte = ":".utf16.first!
 
 extension PathParts where NativeEncodingUnit == WindowsEncodingUnit {
-    init(forWindowsWithBytes bytes: WindowsBinaryString){
+    init(forWindowsWithBytes bytes: WindowsBinaryString) {
         let bytes = WindowsBinaryString(bytes.map { $0 == alternativeSeparatorByte ? windowsSeparatorByte : $0 })
         let (drive, rest) = Self.splitDrive(path: bytes)
         self.drive = drive
@@ -103,11 +103,10 @@ extension PathParts where NativeEncodingUnit == WindowsEncodingUnit {
             currentDirectory: WindowsConstants.currentDirectoryByte
         )
     }
-
 }
 
 extension PathParts where NativeEncodingUnit == POSIXEncodingUnit {
-    init(forPOSIXWithBytes bytes: POSIXBinaryString){
+    init(forPOSIXWithBytes bytes: POSIXBinaryString) {
         drive = []
         (root, segments) = Self.parse(
             bytes,
