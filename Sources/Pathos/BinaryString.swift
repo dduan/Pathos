@@ -19,7 +19,7 @@ extension ContiguousArray where Element: BinaryInteger {
         }
 
         self = ContiguousArray(unsafeUninitializedCapacity: length) { buffer, count in
-            for offset in 0..<length {
+            for offset in 0 ..< length {
                 buffer[offset] = cString.advanced(by: offset).pointee
             }
 
