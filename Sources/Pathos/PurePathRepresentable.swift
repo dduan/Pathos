@@ -1,7 +1,9 @@
 #if DEBUG
-protocol PurePathRepresentable {
+protocol PurePathRepresentable: Hashable {
     associatedtype NativeEncodingUnit
     associatedtype BinaryString
+    associatedtype PathConvertible
+
     var binaryString: BinaryString { get }
 
     /// Creates a path from a C String.
@@ -9,10 +11,15 @@ protocol PurePathRepresentable {
     /// - Parameter cString: a nul-terminated C String.
     init(cString: UnsafePointer<NativeEncodingUnit>)
 
-    /// Creates a path from a `String`. The string will be interpreted as UTF-8 bytes.
+    /// Creates a path from a `String`.
     ///
     /// - Parameter string: The string that represents a path.
     init(_ string: String)
+
+    /// Creates a path from a `BinaryString`.
+    ///
+    /// - Parameter string: The string that represents a path.
+    init(_ string: BinaryString)
 
     /// The drive for the path. For POSIX, this is always empty.
     ///
@@ -38,6 +45,26 @@ protocol PurePathRepresentable {
 
     /// The final path component, if any.
     var name: BinaryString? { get }
+
+    /// Join with other paths. Absolute path will override existing value.
+    /// For example:
+    ///   Path("/a/b").joined(with: "c") => Path("/a/b/c")
+    ///   Path("/a/b").joined(with: "/c") => Path("/c")
+    ///
+    /// - Parameter paths: Other values that represents a path.
+    ///
+    /// - Returns: Result of joining paths.
+    func joined(with paths: PathConvertible...) -> Self
+
+    /// Join with other paths. Absolute path will override existing value.
+    /// For example:
+    ///   Path("/a/b").joined(with: "c") => Path("/a/b/c")
+    ///   Path("/a/b").joined(with: "/c") => Path("/c")
+    ///
+    /// - Parameter paths: Other values that represents a path.
+    ///
+    /// - Returns: Result of joining paths.
+    func joined(with paths: [PathConvertible]) -> Self
 }
 
 extension PureWindowsPath: PurePathRepresentable {}
