@@ -42,6 +42,7 @@ extension POSIXPathJoiningTests {
     static let __allTests__POSIXPathJoiningTests = [
         ("testJoiningMixedTypes", testJoiningMixedTypes),
         ("testJoiningWithExsitingSeparator", testJoiningWithExsitingSeparator),
+        ("testOperator", testOperator),
         ("testSimpleJoining", testSimpleJoining),
         ("testSimpleJoiningEndingWithAbsolutePath", testSimpleJoiningEndingWithAbsolutePath),
         ("testSimpleJoiningStartingAndEndingWithAbsolutePath", testSimpleJoiningStartingAndEndingWithAbsolutePath),
@@ -101,6 +102,7 @@ extension WindowsPathJoiningTests {
         ("testJoiningStartingWithDriveAndEndingWithRoot", testJoiningStartingWithDriveAndEndingWithRoot),
         ("testJoiningStartingWithRootAndEndingWithDrive", testJoiningStartingWithRootAndEndingWithDrive),
         ("testJoiningWithExsitingSeparator", testJoiningWithExsitingSeparator),
+        ("testOperator", testOperator),
         ("testSimpleJoining", testSimpleJoining),
         ("testSimpleJoiningEndingWithAbsolutePath", testSimpleJoiningEndingWithAbsolutePath),
         ("testSimpleJoiningEndingWithDrive", testSimpleJoiningEndingWithDrive),

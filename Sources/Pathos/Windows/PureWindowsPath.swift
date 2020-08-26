@@ -69,6 +69,10 @@ public struct PureWindowsPath {
             + ContiguousArray(segments.joined(separator: [WindowsConstants.separatorByte]))
         return PureWindowsPath(result)
     }
+
+    public static func + (lhs: Self, rhs: WindowsPathConvertible) -> Self {
+        lhs.joined(with: rhs)
+    }
 }
 
 extension PureWindowsPath: Equatable {

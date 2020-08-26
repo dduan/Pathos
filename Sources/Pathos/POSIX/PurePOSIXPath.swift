@@ -57,6 +57,10 @@ public struct PurePOSIXPath {
 
         return Self(resultString)
     }
+
+    public static func + (lhs: Self, rhs: POSIXPathConvertible) -> Self {
+        lhs.joined(with: rhs)
+    }
 }
 
 extension PurePOSIXPath: Equatable {
