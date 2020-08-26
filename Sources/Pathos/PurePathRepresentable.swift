@@ -65,6 +65,8 @@ protocol PurePathRepresentable: Hashable {
     ///
     /// - Returns: Result of joining paths.
     func joined(with paths: [PathConvertible]) -> Self
+
+    static func + (lhs: Self, rhs: PathConvertible) -> Self
 }
 
 extension PureWindowsPath: PurePathRepresentable {}

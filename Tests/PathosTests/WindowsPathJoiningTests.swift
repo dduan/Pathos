@@ -115,4 +115,9 @@ final class WindowsPathJoiningTests: XCTestCase {
         let d = "d"
         XCTAssertEqual(a.joined(with: b, c, d), PureWindowsPath(#"a\b\c\d"#))
     }
+
+    func testOperator() {
+        let result = PurePOSIXPath("/") + "a" + PurePOSIXPath("b") + "c"
+        XCTAssertEqual(result, PurePOSIXPath("/a/b/c"))
+    }
 }
