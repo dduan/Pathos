@@ -16,6 +16,10 @@ public struct PureWindowsPath {
         binaryString = WindowsBinaryString(string)
     }
 
+    public init(_ binary: WindowsBinaryString) {
+        binaryString = binary
+    }
+
     public var drive: WindowsBinaryString {
         parts.drive
     }
@@ -34,5 +38,47 @@ public struct PureWindowsPath {
 
     public var name: WindowsBinaryString? {
         parts.segments.last
+    }
+
+    public func joined(with others: WindowsPathConvertible...) -> Self {
+        joined(with: others)
+    }
+
+    public func joined(with paths: [WindowsPathConvertible]) -> Self {
+        let paths = [self] + paths.map(\.asWindowsPath)
+
+        var drive = WindowsBinaryString()
+        var root = WindowsBinaryString()
+        var segments = [WindowsBinaryString]()
+
+        for path in paths {
+            if !path.drive.isEmpty {
+                drive = path.drive
+                root = path.root
+                segments = path.segments
+            } else if !path.root.isEmpty {
+                root = path.root
+                segments = path.segments
+            } else {
+                segments += path.segments
+            }
+        }
+
+        let result = drive
+            + root
+            + ContiguousArray(segments.joined(separator: [WindowsConstants.separatorByte]))
+        return PureWindowsPath(result)
+    }
+}
+
+extension PureWindowsPath: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.binaryString == rhs.binaryString
+    }
+}
+
+extension PureWindowsPath: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(binaryString)
     }
 }
