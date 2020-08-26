@@ -21,7 +21,7 @@ update-cmake-lists:
 	@echo "Updating cmake config files"
 	@python3 Scripts/update-cmake.py Scripts/cmake_root
 
-test: clean
+test:
 	@swift test -Xswiftc -warnings-as-errors
 
 test-docker:
@@ -30,7 +30,7 @@ test-docker:
 test-codegen: codegen
 	@git diff --exit-code
 
-build: update-linux-test-manifest
+build: update-test-manifest
 	@swift build -c release -Xswiftc -warnings-as-errors > /dev/null
 
 clean:
