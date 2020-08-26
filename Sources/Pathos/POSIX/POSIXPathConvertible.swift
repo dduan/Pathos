@@ -12,7 +12,7 @@ extension String: POSIXPathConvertible {
 
 #if !os(Windows)
 extension Path: POSIXPathConvertible {
-    public var asPOSIXPath: PurePOSIXPath { self.pure }
+    public var asPOSIXPath: PurePOSIXPath { pure }
 }
 
 public typealias PathConvertible = POSIXPathConvertible

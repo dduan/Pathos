@@ -14,6 +14,10 @@ public struct PurePOSIXPath {
         binaryString = POSIXBinaryString(string)
     }
 
+    public init(_ binary: POSIXBinaryString) {
+        binaryString = binary
+    }
+
     public var drive: POSIXBinaryString {
         parts.drive
     }
@@ -32,5 +36,37 @@ public struct PurePOSIXPath {
 
     public var name: POSIXBinaryString? {
         parts.segments.last
+    }
+
+    public func joined(with paths: POSIXPathConvertible...) -> Self {
+        joined(with: paths)
+    }
+
+    public func joined(with paths: [POSIXPathConvertible]) -> Self {
+        let paths = [self] + paths.map(\.asPOSIXPath)
+        var resultString = ContiguousArray<POSIXEncodingUnit>()
+        for path in paths {
+            if path.binaryString.first == POSIXConstants.separatorByte {
+                resultString = path.binaryString
+            } else if resultString.isEmpty || resultString.last == POSIXConstants.separatorByte {
+                resultString += path.binaryString
+            } else {
+                resultString += [POSIXConstants.separatorByte] + path.binaryString
+            }
+        }
+
+        return Self(resultString)
+    }
+}
+
+extension PurePOSIXPath: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.binaryString == rhs.binaryString
+    }
+}
+
+extension PurePOSIXPath: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(binaryString)
     }
 }

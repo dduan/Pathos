@@ -2,10 +2,12 @@ add_library("PathosTests"
   "PathosTests/POSIXBinaryStringTests.swift"
   "PathosTests/POSIXPartsParsingTests.swift"
   "PathosTests/POSIXPathInitializationTests.swift"
+  "PathosTests/POSIXPathJoiningTests.swift"
   "PathosTests/PurePOSIXPathTests.swift"
   "PathosTests/PureWindowsPathTests.swift"
   "PathosTests/WindowsBinaryStringTests.swift"
   "PathosTests/WindowsPartsParsingTests.swift"
+  "PathosTests/WindowsPathJoiningTests.swift"
   "PathosTests/XCTestManifests.swift"
 )
 

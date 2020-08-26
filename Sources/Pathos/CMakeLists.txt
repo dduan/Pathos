@@ -4,6 +4,7 @@ add_library(Pathos
   "Constants.swift"
   "POSIX/Box+PurePOSIXPath.swift"
   "POSIX/POSIXConstants.swift"
+  "POSIX/POSIXPathConvertible.swift"
   "POSIX/PathParts+POSIX.swift"
   "POSIX/PurePOSIXPath.swift"
   "Path.swift"
@@ -14,6 +15,7 @@ add_library(Pathos
   "Windows/PathParts+Windows.swift"
   "Windows/PureWindowsPath.swift"
   "Windows/WindowsConstants.swift"
+  "Windows/WindowsPathConvertible.swift"
 )
 # NOTE: workaround for CMake not setting up include flags yet
 set_target_properties(Pathos PROPERTIES
