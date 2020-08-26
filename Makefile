@@ -4,6 +4,10 @@ export LC_CTYPE     = en_US.UTF-8
 
 .DEFAULT_GOAL := build
 
+.PHONY: test
+test:
+	@swift test -Xswiftc -warnings-as-errors
+
 .PHONY: codegen
 codegen: update-cmake-lists update-test-manifest format
 
@@ -21,8 +25,6 @@ update-cmake-lists:
 	@echo "Updating cmake config files"
 	@python3 Scripts/update-cmake.py Scripts/cmake_root
 
-test:
-	@swift test -Xswiftc -warnings-as-errors
 
 test-docker:
 	@Scripts/docker.sh Pathos 'swift test -Xswiftc -warnings-as-errors' 5.2.5 bionic

@@ -44,4 +44,8 @@ public struct Path: Equatable, Hashable {
     public func joined(with others: [PathConvertible]) -> Self {
         Path(pure.joined(with: others))
     }
+
+    public static func + (lhs: Self, rhs: PathConvertible) -> Self {
+        lhs.joined(with: rhs)
+    }
 }
