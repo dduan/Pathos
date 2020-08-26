@@ -33,6 +33,11 @@ final class WindowsPartsParsingTests: XCTestCase {
         XCTAssertEqual(p.drive, WindowsBinaryString("C:"))
     }
 
+    func testParsingUNCDriveOnWindows() {
+        let p = PureWindowsPath(#"\\drive\name\a\b"#)
+        XCTAssertEqual(p.drive, WindowsBinaryString(#"\\drive\name"#))
+    }
+
     func testParsingParts() {
         let p = PureWindowsPath(#"\a\b\c.swift"#)
         XCTAssertEqual(
