@@ -49,3 +49,9 @@ public struct Path: Equatable, Hashable {
         lhs.joined(with: rhs)
     }
 }
+
+extension Path: CustomStringConvertible {
+    public var description: String {
+        binaryString.description
+    }
+}

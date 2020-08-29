@@ -75,6 +75,12 @@ public struct PureWindowsPath {
     }
 }
 
+extension PureWindowsPath: CustomStringConvertible {
+    public var description: String {
+        binaryString.description
+    }
+}
+
 extension PureWindowsPath: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.binaryString == rhs.binaryString
