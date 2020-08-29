@@ -4,6 +4,6 @@ import XCTest
 final class POSIXBinaryStringTests: XCTestCase {
     func testDecodingAndEncodingIsCommunitive() {
         let content = "A 🎭 二 production"
-        XCTAssertEqual(POSIXBinaryString(content).string, content)
+        XCTAssertEqual(POSIXBinaryString(content).description, content)
     }
 }

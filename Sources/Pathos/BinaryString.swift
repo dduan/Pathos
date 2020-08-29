@@ -33,7 +33,7 @@ extension POSIXBinaryString {
         self = ContiguousArray(string.utf8CString.dropLast())
     }
 
-    public var string: String {
+    public var description: String {
         String(cString: Array(self) + [0])
     }
 }
@@ -43,7 +43,7 @@ extension WindowsBinaryString {
         self = ContiguousArray(string.utf16)
     }
 
-    public var string: String {
+    public var description: String {
         String(decodingCString: Array(self) + [0], as: UTF16.self)
     }
 }
