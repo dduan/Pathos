@@ -63,6 +63,12 @@ public struct PurePOSIXPath {
     }
 }
 
+extension PurePOSIXPath: CustomStringConvertible {
+    public var description: String {
+        binaryString.description
+    }
+}
+
 extension PurePOSIXPath: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.binaryString == rhs.binaryString
