@@ -1,8 +1,8 @@
 #if DEBUG
-protocol PurePathRepresentable: Hashable {
+protocol PurePathRepresentable: Hashable, CustomStringConvertible {
     associatedtype NativeEncodingUnit
     associatedtype BinaryString
-    associatedtype PathConvertible
+    associatedtype PathLike
 
     var binaryString: BinaryString { get }
 
@@ -54,7 +54,7 @@ protocol PurePathRepresentable: Hashable {
     /// - Parameter paths: Other values that represents a path.
     ///
     /// - Returns: Result of joining paths.
-    func joined(with paths: PathConvertible...) -> Self
+    func joined(with paths: PathLike...) -> Self
 
     /// Join with other paths. Absolute path will override existing value.
     /// For example:
@@ -64,9 +64,10 @@ protocol PurePathRepresentable: Hashable {
     /// - Parameter paths: Other values that represents a path.
     ///
     /// - Returns: Result of joining paths.
-    func joined(with paths: [PathConvertible]) -> Self
+    func joined(with paths: [PathLike]) -> Self
 
-    static func + (lhs: Self, rhs: PathConvertible) -> Self
+    /// Custom operator for joining a path and path-like value.
+    static func + (lhs: Self, rhs: PathLike) -> Self
 }
 
 extension PureWindowsPath: PurePathRepresentable {}
