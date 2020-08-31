@@ -10,6 +10,10 @@ extension String: WindowsPathConvertible {
     public var asWindowsPath: PureWindowsPath { PureWindowsPath(self) }
 }
 
+extension WindowsBinaryString: WindowsPathConvertible {
+    public var asWindowsPath: PureWindowsPath { PureWindowsPath(self) }
+}
+
 #if os(Windows)
 extension Path: WindowsPathConvertible {
     public var asWindowsPath: PureWindowsPath { pure }

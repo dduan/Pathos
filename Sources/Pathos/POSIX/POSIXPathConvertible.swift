@@ -10,6 +10,10 @@ extension String: POSIXPathConvertible {
     public var asPOSIXPath: PurePOSIXPath { PurePOSIXPath(self) }
 }
 
+extension POSIXBinaryString: POSIXPathConvertible {
+    public var asPOSIXPath: PurePOSIXPath { PurePOSIXPath(self) }
+}
+
 #if !os(Windows)
 extension Path: POSIXPathConvertible {
     public var asPOSIXPath: PurePOSIXPath { pure }
