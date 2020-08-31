@@ -70,8 +70,16 @@ public struct PureWindowsPath {
         return PureWindowsPath(result)
     }
 
+    public static func + (lhs: Self, rhs: Self) -> Self {
+        lhs.joined(with: rhs)
+    }
+
     public static func + (lhs: Self, rhs: WindowsPathConvertible) -> Self {
         lhs.joined(with: rhs)
+    }
+
+    public static func + (lhs: WindowsPathConvertible, rhs: Self) -> Self {
+        lhs.asWindowsPath.joined(with: rhs)
     }
 }
 
