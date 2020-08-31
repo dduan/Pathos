@@ -55,9 +55,4 @@ final class POSIXPathJoiningTests: XCTestCase {
         let d = "d"
         XCTAssertEqual(a.joined(with: b, c, d), PurePOSIXPath("a/b/c/d"))
     }
-
-    func testOperator() {
-        let result = PurePOSIXPath("/") + "a" + PurePOSIXPath("b") + "c"
-        XCTAssertEqual(result, PurePOSIXPath("/a/b/c"))
-    }
 }
