@@ -25,14 +25,13 @@ update-cmake-lists:
 	@echo "Updating cmake config files"
 	@python3 Scripts/update-cmake.py Scripts/cmake_root
 
-
 test-docker:
 	@Scripts/docker.sh Pathos 'swift test -Xswiftc -warnings-as-errors' 5.2.5 bionic
 
 test-codegen: codegen
 	@git diff --exit-code
 
-build: update-test-manifest
+build: codegen
 	@swift build -c release -Xswiftc -warnings-as-errors > /dev/null
 
 clean:
