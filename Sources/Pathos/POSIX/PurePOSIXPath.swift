@@ -58,8 +58,16 @@ public struct PurePOSIXPath {
         return Self(resultString)
     }
 
+    public static func + (lhs: Self, rhs: Self) -> Self {
+        lhs.joined(with: rhs)
+    }
+
     public static func + (lhs: Self, rhs: POSIXPathConvertible) -> Self {
         lhs.joined(with: rhs)
+    }
+
+    public static func + (lhs: POSIXPathConvertible, rhs: Self) -> Self {
+        lhs.asPOSIXPath.joined(with: rhs)
     }
 }
 
