@@ -3,8 +3,8 @@ public enum SystemError: Error {
     /// Unspecified error returned by the OS.
     case unspecified(errorCode: Code)
 
-    public init(errorCode: Code) {
-        self = .unspecified(errorCode: errorCode)
+    public init(code: Code) {
+        self = .unspecified(errorCode: code)
     }
 
     #if os(Windows)
