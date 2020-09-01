@@ -1,20 +1,20 @@
 /// OS agnostic information about a file, besides the file itself.
-struct Metadata {
+public struct Metadata {
     /// What kind of file is it.
-    let fileType: FileType
+    public let fileType: FileType
 
     /// What permission does current process has regarding the file.
-    let permissions: Permissions
+    public let permissions: Permissions
 
     /// Length of the file in bytes.
-    let size: Int
+    public let size: Int64
 
     /// Last time the file was accessed.
-    let accessed: FileTime
+    public let accessed: FileTime
 
     /// Last time the file was modified.
-    let modified: FileTime
+    public let modified: FileTime
 
     /// Time of creation for the file.
-    let created: FileTime
+    public let created: FileTime
 }
