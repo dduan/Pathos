@@ -14,6 +14,10 @@ extension Path {
 
         throw SystemError.unspecified(errorCode: errno)
     }
+
+    public func metadata(followSymlink: Bool = false) throws -> Metadata? {
+        try Metadata(followSymlink ? _stat(at: binaryString) : _lstat(at: binaryString))
+    }
 }
 
 #endif // !os(Windows)
