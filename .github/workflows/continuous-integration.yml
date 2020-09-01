@@ -121,7 +121,7 @@ jobs:
         export PATH="/c/Library/Developer/Platforms/Windows.platform/Developer/Library/XCTest-development/usr/bin:${PATH}"
         echo "::set-env name=PATH::${PATH}"
         swift --version
-    - name: Install Linux
+    - name: Download Linux
       if: steps.cache-setup.outputs.cache-hit != 'true'
       shell: bash
       run: |
@@ -131,9 +131,16 @@ jobs:
           'https://aka.ms/wsl-ubuntu-1804' \
           --output '.build/tmp/wsl-ubuntu-1804'
         7z x .build/tmp/wsl-ubuntu-1804 -o.build/Linux/Ubuntu
+    - name: Set Linux Path
+      shell: bash
+      run: |
+        set -x
         export PATH="$(pwd)/.build/Linux/Ubuntu:${PATH}"
         echo "::set-env name=PATH::${PATH}"
-        ubuntu1804 install --root
+    - name: Install Linux
+      if: steps.cache-setup.outputs.cache-hit != 'true'
+      shell: bash
+      run: ubuntu1804 install --root
     - name: Install SwiftPM dependencies
       if: steps.cache-setup.outputs.cache-hit != 'true'
       shell: bash
