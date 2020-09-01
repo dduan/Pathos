@@ -50,7 +50,6 @@ jobs:
         key: Windows‐${{ hashFiles('.github/workflows/**') }}
         path: |
             C:/Library
-            .build/Linux/Ubuntu
     - name: Set Visual Studio up
       shell: bash
       run: |
@@ -92,6 +91,9 @@ jobs:
           --output '/tmp/icu.msi'
         cd /tmp
         msiexec //i icu.msi
+    - name: Set ICU Path
+      shell: bash
+      run: |
         export PATH="/c/Library/icu-64/usr/bin:${PATH}"
         echo "::set-env name=PATH::${PATH}"
     - name: Install Swift
@@ -114,6 +116,9 @@ jobs:
           --output '/tmp/runtime.msi'
         cd /tmp
         msiexec //i runtime.msi
+    - name: Set Swift Path
+      shell: bash
+      run: |
         export PATH="/c/Library/Developer/Toolchains/unknown-Asserts-development.xctoolchain/usr/bin:${PATH}"
         echo "::set-env name=PATH::${PATH}"
         export PATH="/c/Library/Swift-development/bin:${PATH}"
@@ -138,7 +143,6 @@ jobs:
         export PATH="$(pwd)/.build/Linux/Ubuntu:${PATH}"
         echo "::set-env name=PATH::${PATH}"
     - name: Install Linux
-      if: steps.cache-setup.outputs.cache-hit != 'true'
       shell: bash
       run: ubuntu1804 install --root
     - name: Install SwiftPM dependencies
