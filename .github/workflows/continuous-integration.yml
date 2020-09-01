@@ -127,7 +127,6 @@ jobs:
         echo "::set-env name=PATH::${PATH}"
         swift --version
     - name: Download Linux
-      if: steps.cache-setup.outputs.cache-hit != 'true'
       shell: bash
       run: |
         set -x
