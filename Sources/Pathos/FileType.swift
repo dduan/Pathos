@@ -1,5 +1,5 @@
 /// OS agnostic information regarding type of the file.
-protocol FileType {
+public protocol FileType {
     /// Whether the path is a file.
     var isFile: Bool { get }
 
