@@ -43,6 +43,13 @@ jobs:
     steps:
     - name: Check out
       uses: actions/checkout@v2
+    - name: Cache Library
+      uses: actions/cache@v2
+      with:
+        key: Windows‐${{ hashFiles('.github/workflows/**') }}
+        path: |
+            C:/Library
+            .build/Linux/Ubuntu
     - name: Set Visual Studio up
       shell: bash
       run: |
