@@ -43,7 +43,8 @@ jobs:
     steps:
     - name: Check out
       uses: actions/checkout@v2
-    - name: Cache Library
+    - name: Cache Setup
+      id: cache-setup
       uses: actions/cache@v2
       with:
         key: Windows‐${{ hashFiles('.github/workflows/**') }}
@@ -82,6 +83,7 @@ jobs:
           'https://raw.githubusercontent.com/apple/swift/swift-5.2.1-RELEASE/stdlib/public/Platform/winsdk.modulemap' \
           --output "${UniversalCRTSdkDir}/Include/${UCRTVersion}/um/module.modulemap"
     - name: Install ICU
+      if: steps.cache-setup.outputs.cache-hit != 'true'
       shell: bash
       run: |
         set -x
@@ -93,6 +95,7 @@ jobs:
         export PATH="/c/Library/icu-64/usr/bin:${PATH}"
         echo "::set-env name=PATH::${PATH}"
     - name: Install Swift
+      if: steps.cache-setup.outputs.cache-hit != 'true'
       shell: bash
       run: |
         set -x
@@ -119,6 +122,7 @@ jobs:
         echo "::set-env name=PATH::${PATH}"
         swift --version
     - name: Install Linux
+      if: steps.cache-setup.outputs.cache-hit != 'true'
       shell: bash
       run: |
         set -x
@@ -131,6 +135,7 @@ jobs:
         echo "::set-env name=PATH::${PATH}"
         ubuntu1804 install --root
     - name: Install SwiftPM dependencies
+      if: steps.cache-setup.outputs.cache-hit != 'true'
       shell: bash
       run: |
         set -x
@@ -158,6 +163,7 @@ jobs:
         ubuntu1804 run \
           ln -s //usr/bin/lld-link-6.0 //usr/bin/lld-link
     - name: Install SwiftPM
+      if: steps.cache-setup.outputs.cache-hit != 'true'
       shell: bash
       run: |
         set -x
