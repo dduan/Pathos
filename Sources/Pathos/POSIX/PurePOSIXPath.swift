@@ -1,21 +1,20 @@
 public struct PurePOSIXPath {
-    private let partsStorage = Box<Optional<PathParts<POSIXEncodingUnit>>>(nil)
-    private var parts: PathParts<POSIXEncodingUnit> {
-        partsStorage.getOrCreateParts(binaryString)
-    }
+    @LazyBoxed
+    private var parts: PathParts<POSIXEncodingUnit>
 
     public let binaryString: POSIXBinaryString
 
+    public init(_ binary: POSIXBinaryString) {
+        binaryString = binary
+        _parts = .init { PathParts(forPOSIXWithBinary: binary) }
+    }
+
     public init(cString: UnsafePointer<POSIXEncodingUnit>) {
-        binaryString = POSIXBinaryString(cString: cString)
+        self.init(POSIXBinaryString(cString: cString))
     }
 
     public init(_ string: String) {
-        binaryString = POSIXBinaryString(string)
-    }
-
-    public init(_ binary: POSIXBinaryString) {
-        binaryString = binary
+        self.init(POSIXBinaryString(string))
     }
 
     public var drive: POSIXBinaryString {
@@ -31,7 +30,7 @@ public struct PurePOSIXPath {
     }
 
     public func parse() {
-        _ = partsStorage.getOrCreateParts(binaryString)
+        _ = parts
     }
 
     public var name: POSIXBinaryString? {
