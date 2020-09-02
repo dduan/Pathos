@@ -1,5 +1,4 @@
 #if __linux__
-// required for statx() system call
 #include <fcntl.h>
 #include <linux/stat.h>
 #include <sys/stat.h>
