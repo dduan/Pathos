@@ -1,24 +1,18 @@
 #if canImport(Darwin)
+import Darwin
 
-@inlinable
-private func _ifmt(_ status: stat) -> mode_t {
-    status.st_mode & S_IFMT
-}
-
-@inlinable
 private func _stat(at path: POSIXBinaryString) throws -> stat {
     var status = stat()
-    if stat(path.withUnsafeBufferPointer { $0.baseAddress }, &status) != 0 {
+    if stat((path + [0]).withUnsafeBufferPointer { $0.baseAddress }, &status) != 0 {
         throw SystemError(code: errno)
     }
 
     return status
 }
 
-@inlinable
 private func _lstat(at path: POSIXBinaryString) throws -> stat {
     var status = stat()
-    if lstat(path.withUnsafeBufferPointer { $0.baseAddress }, &status) != 0 {
+    if lstat((path + [0]).withUnsafeBufferPointer { $0.baseAddress }, &status) != 0 {
         throw SystemError(code: errno)
     }
 
@@ -27,7 +21,13 @@ private func _lstat(at path: POSIXBinaryString) throws -> stat {
 
 extension Path {
     public func metadata(followSymlink: Bool = false) throws -> Metadata? {
-        try Metadata(followSymlink ? _stat(at: binaryString) : _lstat(at: binaryString))
+        var status = stat()
+        let correctStat = followSymlink ? stat : lstat
+        if correctStat(binaryString.cString, &status) != 0 {
+            throw SystemError(code: errno)
+        }
+
+        return Metadata(status)
     }
 }
 #endif // canImport(Darwin)
