@@ -5,6 +5,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 project(Pathos
   LANGUAGES Swift)
 
+option(BUILD_EXAMPLES "Build Example Programs" YES)
 option(BUILD_SHARED_LIBS "Build shared libraries by default" YES)
 
 include(CTest)
@@ -18,6 +19,9 @@ set(CMAKE_Swift_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/swift)
 find_package(XCTest QUIET)
 
 add_subdirectory(Sources)
+if(BUILD_EXAMPLES)
+  add_subdirectory(Examples)
+endif()
 if(BUILD_TESTING)
   add_subdirectory(Tests)
 endif()
