@@ -6,7 +6,7 @@ extension Path {
         { buffer, count in
             let length = GetCurrentDirectoryW(DWORD(MAX_PATH), buffer.baseAddress)
             if length == 0 {
-                throw SystemError(errorCode: GetLastError())
+                throw SystemError(code: GetLastError())
             } else {
                 count = Int(length)
             }
