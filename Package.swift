@@ -15,6 +15,10 @@ let package = Package(
             name: "Pathos",
             dependencies: []
         ),
+        .target(
+            name: "LinuxHelpers",
+            dependencies: []
+        ),
         .testTarget(
             name: "PathosTests",
             dependencies: ["Pathos"],
