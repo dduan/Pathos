@@ -1,7 +1,9 @@
 import Pathos
 
+let followSymlink = CommandLine.arguments.count > 2 && CommandLine.arguments[2] == "-f"
+
 do {
-    let metadata = try Path(CommandLine.arguments[1]).metadata()
+    let metadata = try Path(CommandLine.arguments[1]).metadata(followSymlink: followSymlink)
     print("is file      | \(metadata.fileType.isFile)")
     print("is directory | \(metadata.fileType.isDirectory)")
     print("is symlink   | \(metadata.fileType.isSymlink)")
