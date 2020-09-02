@@ -20,7 +20,7 @@ private func _lstat(at path: POSIXBinaryString) throws -> stat {
 }
 
 extension Path {
-    public func metadata(followSymlink: Bool = false) throws -> Metadata? {
+    public func metadata(followSymlink: Bool = false) throws -> Metadata {
         var status = stat()
         let correctStat = followSymlink ? stat : lstat
         if correctStat(binaryString.cString, &status) != 0 {

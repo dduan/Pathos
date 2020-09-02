@@ -3,7 +3,7 @@ import Glibc
 import LinuxHelpers
 
 extension Path {
-    public func metadata(followSymlink: Bool = false) throws -> Metadata? {
+    public func metadata(followSymlink: Bool = false) throws -> Metadata {
         guard let pathBaseAddress = binaryString.cString else {
             return nil
         }
