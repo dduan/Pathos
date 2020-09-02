@@ -25,10 +25,14 @@ add_library(Pathos
   "PurePath.swift"
   "PurePathRepresentable.swift"
   "SystemError.swift"
+  "Windows/FileTime+Windows.swift"
+  "Windows/Metadata+Windows.swift"
   "Windows/Path+Windows.swift"
   "Windows/PathParts+Windows.swift"
   "Windows/PureWindowsPath.swift"
+  "Windows/WindowsAttributes.swift"
   "Windows/WindowsConstants.swift"
+  "Windows/WindowsFileType.swift"
   "Windows/WindowsPathConvertible.swift"
 )
 # NOTE: workaround for CMake not setting up include flags yet
