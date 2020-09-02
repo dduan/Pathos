@@ -19,6 +19,11 @@ let package = Package(
             name: "LinuxHelpers",
             dependencies: []
         ),
+        .target(
+            name: "metadata",
+            dependencies: ["Pathos"],
+            path: "Examples/metadata"
+        ),
         .testTarget(
             name: "PathosTests",
             dependencies: ["Pathos"],
