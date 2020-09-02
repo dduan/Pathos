@@ -26,7 +26,7 @@ update-cmake-lists:
 	@python3 Scripts/update-cmake.py Scripts/cmake_root
 
 test-docker:
-	@Scripts/docker.sh Pathos 'swift test -Xswiftc -warnings-as-errors' 5.2.5 bionic
+	@Scripts/docker.sh Pathos 'swift test -Xswiftc -warnings-as-errors' 5.2.5 focal
 
 test-codegen: codegen
 	@git diff --exit-code
