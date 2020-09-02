@@ -1,10 +1,10 @@
 #if DEBUG
 protocol PurePathRepresentable: Hashable, CustomStringConvertible {
     associatedtype NativeEncodingUnit
-    associatedtype BinaryString
+    associatedtype BinaryStringLike
     associatedtype PathLike
 
-    var binaryString: BinaryString { get }
+    var binaryString: BinaryStringLike { get }
 
     /// Creates a path from a C String.
     ///
@@ -19,32 +19,32 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible {
     /// Creates a path from a `BinaryString`.
     ///
     /// - Parameter string: The string that represents a path.
-    init(_ string: BinaryString)
+    init(_ string: BinaryStringLike)
 
     /// The drive for the path. For POSIX, this is always empty.
     ///
     /// This value is lazily computed when it's accessed for the first time. To manually trigger
     /// its computation, use `parse()`.
-    var drive: BinaryString { get }
+    var drive: BinaryStringLike { get }
 
     /// The bytes for the root, if it's present in `bytes`. For example, on POSIX this would be "/".
     ///
     /// This value is lazily computed when it's accessed for the first time. To manually trigger
     /// its computation, use `parse()`.
-    var root: BinaryString { get }
+    var root: BinaryStringLike { get }
 
     /// The segments in the path separated by `Path.separatorByte`. Root is not included.
     ///
     /// This value is lazily computed when it's accessed for the first time. To manually trigger
     /// its computation, use `parse()`.
-    var segments: Array<BinaryString> { get }
+    var segments: Array<BinaryStringLike> { get }
 
     /// Analyze the content of the path. This will result in a cached value for `drive`, `root`,
     /// `segments`, etc.
     func parse()
 
     /// The final path component, if any.
-    var name: BinaryString? { get }
+    var name: BinaryStringLike? { get }
 
     /// Join with other paths. Absolute path will override existing value.
     /// For example:

@@ -33,6 +33,10 @@ extension POSIXBinaryString {
         self = ContiguousArray(string.utf8CString.dropLast())
     }
 
+    public var cString: UnsafePointer<POSIXEncodingUnit>? {
+        (self + [0]).withUnsafeBufferPointer { $0.baseAddress }
+    }
+
     public var description: String {
         String(cString: Array(self) + [0])
     }
@@ -41,6 +45,10 @@ extension POSIXBinaryString {
 extension WindowsBinaryString {
     public init(_ string: String) {
         self = ContiguousArray(string.utf16)
+    }
+
+    public var cString: UnsafePointer<WindowsEncodingUnit>? {
+        (self + [0]).withUnsafeBufferPointer { $0.baseAddress }
     }
 
     public var description: String {
