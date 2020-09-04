@@ -1,5 +1,7 @@
 import Pathos
 
+let recursive = CommandLine.arguments.count > 2 && CommandLine.arguments[2] == "-r"
+
 extension String {
     func withLeftPad(_ n: Int) -> String {
         String(repeating: " ", count: max(0, n - count)) + self
@@ -7,7 +9,7 @@ extension String {
 }
 
 do {
-    for (child, type) in try Path(CommandLine.arguments[1]).children() {
+    for (child, type) in try Path(CommandLine.arguments[1]).children(recursive: recursive) {
         let meta = try child.metadata()
         let permission = (meta.permissions.isReadOnly ? "ReadOnly" : "ReadWrite").withLeftPad("ReadWrite".count)
         let size = "\(meta.size)".withLeftPad(10)
