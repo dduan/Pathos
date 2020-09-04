@@ -26,6 +26,53 @@ extension Path {
         return Metadata(data)
     }
 
+    public func children(recursive: Bool = false) throws -> [(Path, FileType)] {
+        var result = [(Path, FileType)]()
+        var data = WIN32_FIND_DATAW()
+        let handle = FindFirstFileW((self + "*").binaryString.cString, &data)
+        if handle == INVALID_HANDLE_VALUE {
+            throw SystemError(code: GetLastError())
+        }
+
+        defer {
+            CloseHandle(handle)
+        }
+
+        func addResultIfNecessary(_ data: inout WIN32_FIND_DATAW) throws {
+            if data.cFileName.0 == Constants.currentDirectoryByte {
+                if data.cFileName.1 == Constants.currentDirectoryByte || data.cFileName.1 == 0 {
+                    return
+                }
+            }
+
+            let binary = withUnsafePointer(
+                to: data.cFileName,
+                { $0.withMemoryRebound(
+                    to: WindowsEncodingUnit.self,
+                    capacity: Int(MAX_PATH)
+                ) { WindowsBinaryString(cString: $0) }
+                }
+            )
+
+            let path = joined(with: binary)
+            let meta = Metadata(data)
+
+            if recursive && meta.fileType.isDirectory {
+                result += try path.children(recursive: true)
+            }
+
+            result.append((path, meta.fileType))
+        }
+
+        try addResultIfNecessary(&data)
+
+        while FindNextFileW(handle, &data) {
+            try addResultIfNecessary(&data)
+        }
+
+        return result
+    }
+
     private func realPath() throws -> Path {
         let handle = CreateFileW(
             binaryString.cString,
