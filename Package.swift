@@ -20,11 +20,6 @@ let package = Package(
             dependencies: []
         ),
         .target(
-            name: "metadata",
-            dependencies: ["Pathos"],
-            path: "Examples/metadata"
-        ),
-        .target(
             name: "ls",
             dependencies: ["Pathos"],
             path: "Examples/ls"
