@@ -29,10 +29,10 @@ extension Path {
             let entry = entryPtr.pointee
             guard let name = withUnsafeBytes(
                 of: entry.d_name,
-                { $0.bindMemory(to: POSIXEncodingUnit.self).baseAddress.map(String.init(cString:))
+                { $0.bindMemory(to: POSIXEncodingUnit.self).baseAddress.map(POSIXBinaryString.init(cString:))
                 }
             ),
-                name != ".." && name != "."
+                name != [Constants.currentDirectoryByte, Constants.currentDirectoryByte] && name != [Constants.currentDirectoryByte]
             else {
                 continue
             }
