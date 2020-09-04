@@ -24,6 +24,11 @@ let package = Package(
             dependencies: ["Pathos"],
             path: "Examples/metadata"
         ),
+        .target(
+            name: "ls",
+            dependencies: ["Pathos"],
+            path: "Examples/ls"
+        ),
         .testTarget(
             name: "PathosTests",
             dependencies: ["Pathos"],
