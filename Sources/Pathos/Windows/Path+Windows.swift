@@ -15,6 +15,12 @@ extension Path {
         return Path(binary)
     }
 
+    public static func setWorkingDirectory(_ path: Path) throws {
+        if !SetCurrentDirectoryW(path.binaryString.cString) {
+            throw SystemError(code: GetLastError())
+        }
+    }
+
     public func metadata(followSymlink: Bool = false) throws -> Metadata {
         let binary = try followSymlink ? realPath().binaryString : binaryString
         var data = WIN32_FIND_DATAW()
