@@ -17,7 +17,7 @@ extension Path {
 
     public func children(recursive: Bool = false) throws -> [(Path, FileType)] {
         var result = [(Path, FileType)]()
-        guard let streamPtr = opendir(binaryString.cString) else {
+        guard let cString = binaryString.cString, let streamPtr = opendir(cString) else {
             throw SystemError(code: errno)
         }
 
