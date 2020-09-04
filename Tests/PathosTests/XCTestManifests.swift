@@ -204,7 +204,9 @@ extension WorkingDirectoryTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__WorkingDirectoryTests = [
+        ("testAsWorkingDirectory", testAsWorkingDirectory),
         ("testGettingWorkingDirecotry", testGettingWorkingDirecotry),
+        ("testSettingWorkingDirecotry", testSettingWorkingDirecotry),
     ]
 }
 
