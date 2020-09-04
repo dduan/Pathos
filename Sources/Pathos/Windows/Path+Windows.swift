@@ -23,6 +23,10 @@ extension Path {
             throw SystemError(code: GetLastError())
         }
 
+        defer {
+            CloseHandle(handle)
+        }
+
         return Metadata(data)
     }
 
@@ -88,6 +92,10 @@ extension Path {
 
         if handle == INVALID_HANDLE_VALUE {
             throw SystemError(code: GetLastError())
+        }
+
+        defer {
+            CloseHandle(handle)
         }
 
         let binary = try ContiguousArray<WindowsEncodingUnit>(unsafeUninitializedCapacity: Int(MAX_PATH))
