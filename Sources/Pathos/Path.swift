@@ -34,6 +34,16 @@ public struct Path {
     public func parse() {
         pure.parse()
     }
+
+    public func asWorkingDirectory(execute action: @escaping () throws -> Void) throws {
+        let currentDirectory = try Path.workingDirectory()
+        defer {
+            try? Path.setWorkingDirectory(currentDirectory)
+        }
+
+        try Path.setWorkingDirectory(self)
+        try action()
+    }
 }
 
 extension Path: CustomStringConvertible {

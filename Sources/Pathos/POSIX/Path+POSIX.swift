@@ -15,6 +15,12 @@ extension Path {
         throw SystemError.unspecified(errorCode: errno)
     }
 
+    public static func setWorkingDirectory(_ path: Path) throws {
+        if let cString = path.binaryString.cString, chdir(cString) != 0 {
+            throw SystemError(code: errno)
+        }
+    }
+
     public func children(recursive: Bool = false) throws -> [(Path, FileType)] {
         var result = [(Path, FileType)]()
         guard let cString = binaryString.cString, let streamPtr = opendir(cString) else {
