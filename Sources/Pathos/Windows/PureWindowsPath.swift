@@ -2,13 +2,13 @@ public struct PureWindowsPath {
     // public typealias BinaryString = WindowsBinaryString
 
     @LazyBoxed
-    private var parts: PathParts
+    private var parts: Path.Parts
 
     public let binaryString: WindowsBinaryString
 
     public init(_ binary: WindowsBinaryString) {
         binaryString = binary
-        _parts = .init { PathParts(forWindowsWithBinary: binary) }
+        _parts = .init { Path.Parts(forWindowsWithBinary: binary) }
     }
 
     public init(cString: UnsafePointer<WindowsEncodingUnit>) {

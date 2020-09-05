@@ -46,6 +46,12 @@ public struct Path {
         try Path.setWorkingDirectory(self)
         try action()
     }
+
+    struct Parts {
+        let drive: String?
+        let root: String?
+        let segments: Array<String>
+    }
 }
 
 extension Path: CustomStringConvertible {
