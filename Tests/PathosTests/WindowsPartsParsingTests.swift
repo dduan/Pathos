@@ -4,49 +4,49 @@ import XCTest
 final class WindowsPartsParsingTests: XCTestCase {
     func testRootIsParsed() {
         let p = PureWindowsPath(#"\"#)
-        XCTAssertEqual(p.root, [WindowsConstants.pathSeparator])
+        XCTAssertEqual(p.root, #"\"#)
     }
 
     func test2SlashRoot() {
         let p = PureWindowsPath(#"\\a\b"#)
-        XCTAssertEqual(p.drive, WindowsBinaryString(#"\\a\b"#))
-        XCTAssert(p.root.isEmpty)
+        XCTAssertEqual(p.drive, #"\\a\b"#)
+        XCTAssertNil(p.root)
     }
 
     func test3SlashRoot() {
         let p = PureWindowsPath(#"\\\a\b"#)
-        XCTAssertEqual(p.root, [WindowsConstants.pathSeparator])
+        XCTAssertEqual(p.root, #"\"#)
     }
 
     func testNoRootIsParsedCorrectly() {
         let p = PureWindowsPath(#"a\b\c"#)
-        XCTAssert(p.root.isEmpty)
+        XCTAssertNil(p.root)
     }
 
     func testParsingDriveOnWindows() {
         let p = PureWindowsPath(#"C:\a\b"#)
-        XCTAssertEqual(p.drive, WindowsBinaryString("C:"))
+        XCTAssertEqual(p.drive, "C:")
     }
 
     func testParsingDriveOnWindows2() {
         let p = PureWindowsPath(#"C:"#)
-        XCTAssertEqual(p.drive, WindowsBinaryString("C:"))
+        XCTAssertEqual(p.drive, "C:")
     }
 
     func testParsingUNCDriveOnWindows() {
         let p = PureWindowsPath(#"\\drive\name\a\b"#)
-        XCTAssertEqual(p.drive, WindowsBinaryString(#"\\drive\name"#))
+        XCTAssertEqual(p.drive, #"\\drive\name"#)
     }
 
     func testParsingParts() {
         let p = PureWindowsPath(#"\a\b\c.swift"#)
         XCTAssertEqual(
             p.segments,
-            Array<WindowsBinaryString>([
-                .init("a"),
-                .init("b"),
-                .init("c.swift"),
-            ])
+            [
+                "a",
+                "b",
+                "c.swift",
+            ]
         )
     }
 
@@ -54,11 +54,11 @@ final class WindowsPartsParsingTests: XCTestCase {
         let p = PureWindowsPath(#"\a\b\.\c.swift"#)
         XCTAssertEqual(
             p.segments,
-            Array<WindowsBinaryString>([
-                .init("a"),
-                .init("b"),
-                .init("c.swift"),
-            ])
+            [
+                "a",
+                "b",
+                "c.swift",
+            ]
         )
     }
 }

@@ -1,6 +1,6 @@
 public struct PurePOSIXPath {
     @LazyBoxed
-    private var parts: PathParts<POSIXEncodingUnit>
+    private var parts: PathParts
 
     public let binaryString: POSIXBinaryString
 
@@ -17,15 +17,15 @@ public struct PurePOSIXPath {
         self.init(POSIXBinaryString(string))
     }
 
-    public var drive: POSIXBinaryString {
+    public var drive: String? {
         parts.drive
     }
 
-    public var root: POSIXBinaryString {
+    public var root: String? {
         parts.root
     }
 
-    public var segments: Array<POSIXBinaryString> {
+    public var segments: Array<String> {
         parts.segments
     }
 
@@ -33,7 +33,7 @@ public struct PurePOSIXPath {
         _ = parts
     }
 
-    public var name: POSIXBinaryString? {
+    public var name: String? {
         parts.segments.last
     }
 
@@ -45,12 +45,12 @@ public struct PurePOSIXPath {
         let paths = [self] + paths.map(\.asPOSIXPath)
         var resultString = ContiguousArray<POSIXEncodingUnit>()
         for path in paths {
-            if path.binaryString.first == POSIXConstants.pathSeparator {
+            if path.binaryString.first == POSIXConstants.binaryPathSeparator {
                 resultString = path.binaryString
-            } else if resultString.isEmpty || resultString.last == POSIXConstants.pathSeparator {
+            } else if resultString.isEmpty || resultString.last == POSIXConstants.binaryPathSeparator {
                 resultString += path.binaryString
             } else {
-                resultString += [POSIXConstants.pathSeparator] + path.binaryString
+                resultString += [POSIXConstants.binaryPathSeparator] + path.binaryString
             }
         }
 
@@ -58,7 +58,7 @@ public struct PurePOSIXPath {
     }
 
     public var isAbsolute: Bool {
-        !root.isEmpty
+        root != nil
     }
 
     public static func + (lhs: Self, rhs: Self) -> Self {
