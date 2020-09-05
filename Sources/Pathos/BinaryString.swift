@@ -1,14 +1,14 @@
-public typealias WindowsEncodingUnit = UInt16
-public typealias WindowsBinaryString = ContiguousArray<UInt16>
-public typealias POSIXEncodingUnit = CChar
-public typealias POSIXBinaryString = ContiguousArray<CChar>
+typealias WindowsEncodingUnit = UInt16
+typealias WindowsBinaryString = ContiguousArray<UInt16>
+typealias POSIXEncodingUnit = CChar
+typealias POSIXBinaryString = ContiguousArray<CChar>
 
 #if os(Windows)
-public typealias BinaryString = WindowsBinaryString
-public typealias NativeEncodingUnit = WindowsEncodingUnit
+typealias BinaryString = WindowsBinaryString
+public typealias NativeEncodingUnit = UInt16
 #else
-public typealias BinaryString = POSIXBinaryString
-public typealias NativeEncodingUnit = POSIXEncodingUnit
+typealias BinaryString = POSIXBinaryString
+public typealias NativeEncodingUnit = CChar
 #endif
 
 extension ContiguousArray where Element: BinaryInteger {
@@ -33,7 +33,7 @@ extension POSIXBinaryString {
         self = ContiguousArray(string.utf8CString.dropLast())
     }
 
-    public var cString: UnsafePointer<POSIXEncodingUnit>? {
+    public var cString: UnsafePointer<CChar>? {
         (self + [0]).withUnsafeBufferPointer { $0.baseAddress }
     }
 
@@ -47,7 +47,7 @@ extension WindowsBinaryString {
         self = ContiguousArray(string.utf16)
     }
 
-    public var cString: UnsafePointer<WindowsEncodingUnit>? {
+    public var cString: UnsafePointer<UInt16>? {
         (self + [0]).withUnsafeBufferPointer { $0.baseAddress }
     }
 
