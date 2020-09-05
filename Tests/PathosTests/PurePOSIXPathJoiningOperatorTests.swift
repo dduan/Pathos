@@ -1,4 +1,4 @@
-import Pathos
+@testable import Pathos
 import XCTest
 
 final class PurePOSIXPathJoiningOperatorTests: XCTestCase {
