@@ -1,8 +1,4 @@
-struct PathParts {
-    let drive: String?
-    let root: String?
-    let segments: Array<String>
-
+extension Path.Parts {
     static func parse<C, Encoding>(
         _ binary: C,
         as _: Encoding.Type,
