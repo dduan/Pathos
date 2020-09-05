@@ -37,6 +37,14 @@ public struct PurePOSIXPath {
         parts.segments.last
     }
 
+    public var `extension`: String? {
+        parts.extension
+    }
+
+    public var extensions: [String] {
+        parts.extensions
+    }
+
     public func joined(with paths: POSIXPathConvertible...) -> Self {
         joined(with: paths)
     }

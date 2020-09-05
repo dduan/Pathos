@@ -33,4 +33,33 @@ extension Path.Parts {
 
         return (root, segments)
     }
+
+    var `extension`: String? {
+        segments.last.flatMap { Self.findExtension(s: $0[...])?.0 }
+    }
+
+    var extensions: [String] {
+        guard let name = segments.last else {
+            return []
+        }
+
+        var result = [String]()
+        var rest = name[...]
+        while let (suffix, dotIndex) = Self.findExtension(s: rest) {
+            rest = name[..<dotIndex]
+            result.insert(suffix, at: 0)
+        }
+
+        return result
+    }
+
+    private static func findExtension(s: String.SubSequence) -> (String, String.Index)? {
+        guard let dotIndex = s.lastIndex(of: Constants.currentContext),
+            dotIndex != s.startIndex
+        else {
+            return nil
+        }
+
+        return (String(s[dotIndex...]), dotIndex)
+    }
 }

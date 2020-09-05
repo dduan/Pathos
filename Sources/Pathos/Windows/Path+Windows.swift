@@ -49,9 +49,9 @@ extension Path {
         }
 
         func addResultIfNecessary(_ data: inout WIN32_FIND_DATAW) throws {
-            if data.cFileName.0 == Constants.currentContext {
+            if data.cFileName.0 == WindowsConstants.binaryCurrentContext {
                 if data.cFileName.1 == 0
-                    || data.cFileName.1 == Constants.currentContext && data.cFileName.2 == 0
+                    || data.cFileName.1 == WindowsConstants.binaryCurrentContext && data.cFileName.2 == 0
                 {
                     return
                 }
