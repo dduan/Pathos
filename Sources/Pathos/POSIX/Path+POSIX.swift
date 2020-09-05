@@ -16,14 +16,14 @@ extension Path {
     }
 
     public static func setWorkingDirectory(_ path: Path) throws {
-        if let cString = path.binaryString.cString, chdir(cString) != 0 {
+        if chdir(path.binaryString.cString) != 0 {
             throw SystemError(code: errno)
         }
     }
 
     public func children(recursive: Bool = false) throws -> [(Path, FileType)] {
         var result = [(Path, FileType)]()
-        guard let cString = binaryString.cString, let streamPtr = opendir(cString) else {
+        guard let streamPtr = opendir(binaryString.cString) else {
             throw SystemError(code: errno)
         }
 
