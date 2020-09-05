@@ -5,7 +5,7 @@ public struct Path {
     let pure: PurePOSIXPath
     #endif
 
-    public var binaryString: BinaryString { pure.binaryString }
+    var binaryString: BinaryString { pure.binaryString }
 
     public init(_ pure: PurePath) {
         self.pure = pure
@@ -19,7 +19,7 @@ public struct Path {
         self.init(PurePath(string))
     }
 
-    public init(_ binary: BinaryString) {
+    init(_ binary: BinaryString) {
         self.init(PurePath(binary))
     }
 
