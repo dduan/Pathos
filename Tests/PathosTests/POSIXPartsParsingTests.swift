@@ -4,17 +4,17 @@ import XCTest
 final class POSIXPartsParsingTests: XCTestCase {
     func testRootIsParsed() {
         let p = PurePOSIXPath(cString: "/")
-        XCTAssertEqual(p.root, [POSIXConstants.separatorByte])
+        XCTAssertEqual(p.root, [POSIXConstants.pathSeparator])
     }
 
     func test2SlashRoot() {
         let p = PurePOSIXPath("//a/b")
-        XCTAssertEqual(p.root, [POSIXConstants.separatorByte, POSIXConstants.separatorByte])
+        XCTAssertEqual(p.root, [POSIXConstants.pathSeparator, POSIXConstants.pathSeparator])
     }
 
     func test3SlashRoot() {
         let p = PurePOSIXPath("///a/b")
-        XCTAssertEqual(p.root, [POSIXConstants.separatorByte])
+        XCTAssertEqual(p.root, [POSIXConstants.pathSeparator])
     }
 
     func testNoRootIsParsedCorrectly() {
