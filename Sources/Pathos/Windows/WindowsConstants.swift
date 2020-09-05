@@ -1,5 +1,5 @@
 public enum WindowsConstants {
     /// Appropriate path separator native to the current operating system.
-    public static let separatorByte: UInt16 = "\\".utf16.first!
-    static let currentDirectoryByte: UInt16 = ".".utf16.first!
+    public static let pathSeparator: UInt16 = "\\".utf16.first!
+    static let currentContext: UInt16 = ".".utf16.first!
 }

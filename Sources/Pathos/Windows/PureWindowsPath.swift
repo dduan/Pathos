@@ -65,7 +65,7 @@ public struct PureWindowsPath {
 
         let result = drive
             + root
-            + ContiguousArray(segments.joined(separator: [WindowsConstants.separatorByte]))
+            + ContiguousArray(segments.joined(separator: [WindowsConstants.pathSeparator]))
         return PureWindowsPath(result)
     }
 
