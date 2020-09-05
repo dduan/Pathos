@@ -33,8 +33,8 @@ extension POSIXBinaryString {
         self = ContiguousArray(string.utf8CString.dropLast())
     }
 
-    public var cString: UnsafePointer<CChar>? {
-        (self + [0]).withUnsafeBufferPointer { $0.baseAddress }
+    public var cString: UnsafePointer<CChar> {
+        (self + [0]).withUnsafeBufferPointer { $0.baseAddress! }
     }
 
     public var description: String {
@@ -47,8 +47,8 @@ extension WindowsBinaryString {
         self = ContiguousArray(string.utf16)
     }
 
-    public var cString: UnsafePointer<UInt16>? {
-        (self + [0]).withUnsafeBufferPointer { $0.baseAddress }
+    public var cString: UnsafePointer<UInt16> {
+        (self + [0]).withUnsafeBufferPointer { $0.baseAddress! }
     }
 
     public var description: String {
