@@ -1,10 +1,12 @@
-extension PathParts where NativeEncodingUnit == POSIXEncodingUnit {
+extension PathParts {
     init(forPOSIXWithBinary binary: POSIXBinaryString) {
-        drive = []
+        drive = nil
+
         (root, segments) = Self.parse(
-            binary,
-            separator: POSIXConstants.pathSeparator,
-            currentDirectory: POSIXConstants.currentContext
+            binary.withUnsafeBytes { $0 },
+            as: UTF8.self,
+            separator: UTF8.CodeUnit(POSIXConstants.binaryPathSeparator),
+            currentContext: UTF8.CodeUnit(POSIXConstants.currentContext)
         )
     }
 }
