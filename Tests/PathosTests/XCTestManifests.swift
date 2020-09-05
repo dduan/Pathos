@@ -88,8 +88,6 @@ extension PathJoiningOperatorTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__PathJoiningOperatorTests = [
-        ("testAddingBinaryStringAndPath", testAddingBinaryStringAndPath),
-        ("testAddingPathAndBinaryString", testAddingPathAndBinaryString),
         ("testAddingPathAndPurePath", testAddingPathAndPurePath),
         ("testAddingPathAndString", testAddingPathAndString),
         ("testAddingPaths", testAddingPaths),
