@@ -65,6 +65,11 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible {
     ///
     /// - Returns: Result of joining paths.
     func joined(with paths: [PathLike]) -> Self
+
+    /// Wether this path is absolute.
+    ///
+    /// An absolute path is one that has a root and, if applicable, a drive.
+    var isAbsolute: Bool { get }
 }
 
 extension PureWindowsPath: PurePathRepresentable {}
