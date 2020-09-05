@@ -57,6 +57,10 @@ public struct PurePOSIXPath {
         return Self(resultString)
     }
 
+    public var isAbsolute: Bool {
+        !root.isEmpty
+    }
+
     public static func + (lhs: Self, rhs: Self) -> Self {
         lhs.joined(with: rhs)
     }
