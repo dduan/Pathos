@@ -1,4 +1,4 @@
-extension PathParts {
+extension Path.Parts {
     init(forPOSIXWithBinary binary: POSIXBinaryString) {
         drive = nil
 

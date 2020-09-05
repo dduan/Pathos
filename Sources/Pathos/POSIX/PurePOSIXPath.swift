@@ -1,12 +1,12 @@
 public struct PurePOSIXPath {
     @LazyBoxed
-    private var parts: PathParts
+    private var parts: Path.Parts
 
     public let binaryString: POSIXBinaryString
 
     public init(_ binary: POSIXBinaryString) {
         binaryString = binary
-        _parts = .init { PathParts(forPOSIXWithBinary: binary) }
+        _parts = .init { Path.Parts(forPOSIXWithBinary: binary) }
     }
 
     public init(cString: UnsafePointer<POSIXEncodingUnit>) {
