@@ -11,7 +11,7 @@ extension Path.Parts {
             rest,
             as: UTF16.self,
             separator: WindowsConstants.binaryPathSeparator,
-            currentContext: WindowsConstants.currentContext
+            currentContext: WindowsConstants.binaryCurrentContext
         )
     }
 

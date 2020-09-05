@@ -37,6 +37,14 @@ public struct PureWindowsPath {
         parts.segments.last
     }
 
+    public var `extension`: String? {
+        parts.extension
+    }
+
+    public var extensions: [String] {
+        parts.extensions
+    }
+
     public func joined(with others: WindowsPathConvertible...) -> Self {
         joined(with: others)
     }
