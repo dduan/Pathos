@@ -33,6 +33,10 @@ public struct Path {
 
     public var isAbsolute: Bool { pure.isAbsolute }
 
+    public var `extension`: String? { pure.extension }
+
+    public var extensions: [String] { pure.extensions }
+
     public func parse() {
         pure.parse()
     }
