@@ -2,11 +2,11 @@
 
 import WinSDK
 
-public struct WindowsAttributes {
-    var rawAttributes: DWORD
+public struct WindowsAttributes: OptionSet {
+    var rawValue: DWORD
 
     public var isReadOnly: Bool {
-        rawAttributes & UInt32(bitPattern: FILE_ATTRIBUTE_READONLY) != 0
+        rawValue & UInt32(bitPattern: FILE_ATTRIBUTE_READONLY) != 0
     }
 }
 
