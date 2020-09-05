@@ -23,24 +23,13 @@ extension Path {
         lhs.joined(with: rhs)
     }
 
-    static func + (lhs: Self, rhs: BinaryString) -> Self {
-        lhs.joined(with: rhs)
-    }
-
     #if os(Windows)
     public static func + (lhs: String, rhs: Self) -> Self {
         Path(lhs.asWindowsPath.joined(with: rhs.pure))
     }
 
-    static func + (lhs: BinaryString, rhs: Self) -> Self {
-        Path(lhs.asWindowsPath.joined(with: rhs.pure))
-    }
     #else
     public static func + (lhs: String, rhs: Self) -> Self {
-        Path(lhs.asPOSIXPath.joined(with: rhs.pure))
-    }
-
-    static func + (lhs: BinaryString, rhs: Self) -> Self {
         Path(lhs.asPOSIXPath.joined(with: rhs.pure))
     }
     #endif // os(Windows)

@@ -26,14 +26,4 @@ final class PathJoiningOperatorTests: XCTestCase {
         let result = "a" + Path("b")
         XCTAssertEqual(result, Path("a").joined(with: "b"))
     }
-
-    func testAddingPathAndBinaryString() {
-        let result = Path("a") + BinaryString("b")
-        XCTAssertEqual(result, Path("a").joined(with: "b"))
-    }
-
-    func testAddingBinaryStringAndPath() {
-        let result = BinaryString("a") + Path("b")
-        XCTAssertEqual(result, Path("a").joined(with: "b"))
-    }
 }
