@@ -4,38 +4,38 @@ import XCTest
 final class POSIXPartsParsingTests: XCTestCase {
     func testRootIsParsed() {
         let p = PurePOSIXPath(cString: "/")
-        XCTAssertEqual(p.root, [POSIXConstants.pathSeparator])
+        XCTAssertEqual(p.root, "/")
     }
 
     func test2SlashRoot() {
         let p = PurePOSIXPath("//a/b")
-        XCTAssertEqual(p.root, [POSIXConstants.pathSeparator, POSIXConstants.pathSeparator])
+        XCTAssertEqual(p.root, "//")
     }
 
     func test3SlashRoot() {
         let p = PurePOSIXPath("///a/b")
-        XCTAssertEqual(p.root, [POSIXConstants.pathSeparator])
+        XCTAssertEqual(p.root, "/")
     }
 
     func testNoRootIsParsedCorrectly() {
         let p = PurePOSIXPath("a/b/c")
-        XCTAssert(p.root.isEmpty)
+        XCTAssertNil(p.root)
     }
 
     func testParsingDriveOnPOSIX() {
         let p = PurePOSIXPath("C:/a/b")
-        XCTAssert(p.drive.isEmpty)
+        XCTAssertNil(p.drive)
     }
 
     func testParsingParts() {
         let p = PurePOSIXPath("/a/b/c.swift")
         XCTAssertEqual(
             p.segments,
-            Array<POSIXBinaryString>([
-                .init("a"),
-                .init("b"),
-                .init("c.swift"),
-            ])
+            [
+                "a",
+                "b",
+                "c.swift",
+            ]
         )
     }
 
@@ -43,11 +43,11 @@ final class POSIXPartsParsingTests: XCTestCase {
         let p = PurePOSIXPath("/a/b/./c.swift")
         XCTAssertEqual(
             p.segments,
-            Array<POSIXBinaryString>([
-                .init("a"),
-                .init("b"),
-                .init("c.swift"),
-            ])
+            [
+                "a",
+                "b",
+                "c.swift",
+            ]
         )
     }
 }

@@ -2,7 +2,7 @@ public struct PureWindowsPath {
     // public typealias BinaryString = WindowsBinaryString
 
     @LazyBoxed
-    private var parts: PathParts<WindowsEncodingUnit>
+    private var parts: PathParts
 
     public let binaryString: WindowsBinaryString
 
@@ -19,15 +19,15 @@ public struct PureWindowsPath {
         self.init(WindowsBinaryString(string))
     }
 
-    public var drive: WindowsBinaryString {
+    public var drive: String? {
         parts.drive
     }
 
-    public var root: WindowsBinaryString {
+    public var root: String? {
         parts.root
     }
 
-    public var segments: Array<WindowsBinaryString> {
+    public var segments: Array<String> {
         parts.segments
     }
 
@@ -35,7 +35,7 @@ public struct PureWindowsPath {
         _ = parts
     }
 
-    public var name: WindowsBinaryString? {
+    public var name: String? {
         parts.segments.last
     }
 
@@ -46,31 +46,31 @@ public struct PureWindowsPath {
     public func joined(with paths: [WindowsPathConvertible]) -> Self {
         let paths = [self] + paths.map(\.asWindowsPath)
 
-        var drive = WindowsBinaryString()
-        var root = WindowsBinaryString()
-        var segments = [WindowsBinaryString]()
+        var drive: String?
+        var root: String?
+        var segments = [String]()
 
         for path in paths {
-            if !path.drive.isEmpty {
-                drive = path.drive
+            if let pathDrive = path.drive {
+                drive = pathDrive
                 root = path.root
                 segments = path.segments
-            } else if !path.root.isEmpty {
-                root = path.root
+            } else if let pathRoot = path.root {
+                root = pathRoot
                 segments = path.segments
             } else {
                 segments += path.segments
             }
         }
 
-        let result = drive
-            + root
-            + ContiguousArray(segments.joined(separator: [WindowsConstants.pathSeparator]))
+        let result = (drive ?? "")
+            + (root ?? "")
+            + segments.joined(separator: [WindowsConstants.pathSeparator])
         return PureWindowsPath(result)
     }
 
     public var isAbsolute: Bool {
-        !root.isEmpty && !drive.isEmpty
+        root != nil && drive != nil
     }
 
     public static func + (lhs: Self, rhs: Self) -> Self {
