@@ -1,5 +1,4 @@
 // swift-tools-version:5.0
-
 import PackageDescription
 
 let package = Package(
@@ -23,6 +22,11 @@ let package = Package(
             name: "ls",
             dependencies: ["Pathos"],
             path: "Examples/ls"
+        ),
+        .target(
+            name: "readonly",
+            dependencies: ["Pathos"],
+            path: "Examples/readonly"
         ),
         .testTarget(
             name: "PathosTests",

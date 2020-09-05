@@ -85,6 +85,19 @@ extension Path {
         return result
     }
 
+    /// Set new permissions for a file path.
+    ///
+    /// - Parameter permissions: The new file permission.
+    public func set(_ permissions: Permissions) throws {
+        guard let windowsAttributes = permissions as? WindowsAttributes else {
+            fatalError("Attempting to set incompatable permissions")
+        }
+
+        if !SetFileAttributesW(binaryString.cString, windowsAttributes.rawValue) {
+            throw SystemError(code: GetLastError())
+        }
+    }
+
     private func realPath() throws -> Path {
         let handle = CreateFileW(
             binaryString.cString,
