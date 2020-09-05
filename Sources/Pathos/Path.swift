@@ -23,13 +23,13 @@ public struct Path {
         self.init(PurePath(binary))
     }
 
-    public var drive: BinaryString { pure.drive }
+    public var drive: String? { pure.drive }
 
-    public var root: BinaryString { pure.root }
+    public var root: String? { pure.root }
 
-    public var segments: Array<BinaryString> { pure.segments }
+    public var segments: Array<String> { pure.segments }
 
-    public var name: BinaryString? { pure.name }
+    public var name: String? { pure.name }
 
     public var isAbsolute: Bool { pure.isAbsolute }
 
