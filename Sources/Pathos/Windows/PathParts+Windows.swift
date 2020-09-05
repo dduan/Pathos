@@ -9,8 +9,8 @@ extension PathParts where NativeEncodingUnit == WindowsEncodingUnit {
         self.drive = drive
         (root, segments) = Self.parse(
             rest,
-            separator: WindowsConstants.separatorByte,
-            currentDirectory: WindowsConstants.currentDirectoryByte
+            separator: WindowsConstants.pathSeparator,
+            currentDirectory: WindowsConstants.currentContext
         )
     }
 

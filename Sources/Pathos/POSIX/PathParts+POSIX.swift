@@ -3,8 +3,8 @@ extension PathParts where NativeEncodingUnit == POSIXEncodingUnit {
         drive = []
         (root, segments) = Self.parse(
             binary,
-            separator: POSIXConstants.separatorByte,
-            currentDirectory: POSIXConstants.currentDirectoryByte
+            separator: POSIXConstants.pathSeparator,
+            currentDirectory: POSIXConstants.currentContext
         )
     }
 }
