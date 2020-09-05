@@ -45,12 +45,12 @@ public struct PurePOSIXPath {
         let paths = [self] + paths.map(\.asPOSIXPath)
         var resultString = ContiguousArray<POSIXEncodingUnit>()
         for path in paths {
-            if path.binaryString.first == POSIXConstants.separatorByte {
+            if path.binaryString.first == POSIXConstants.pathSeparator {
                 resultString = path.binaryString
-            } else if resultString.isEmpty || resultString.last == POSIXConstants.separatorByte {
+            } else if resultString.isEmpty || resultString.last == POSIXConstants.pathSeparator {
                 resultString += path.binaryString
             } else {
-                resultString += [POSIXConstants.separatorByte] + path.binaryString
+                resultString += [POSIXConstants.pathSeparator] + path.binaryString
             }
         }
 

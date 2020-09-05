@@ -38,7 +38,7 @@ extension Path {
                 { $0.bindMemory(to: POSIXEncodingUnit.self).baseAddress.map(POSIXBinaryString.init(cString:))
                 }
             ),
-                name != [Constants.currentDirectoryByte, Constants.currentDirectoryByte] && name != [Constants.currentDirectoryByte]
+                name != [Constants.currentContext, Constants.currentContext] && name != [Constants.currentContext]
             else {
                 continue
             }

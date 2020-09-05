@@ -4,7 +4,7 @@ import XCTest
 final class WindowsPartsParsingTests: XCTestCase {
     func testRootIsParsed() {
         let p = PureWindowsPath(#"\"#)
-        XCTAssertEqual(p.root, [WindowsConstants.separatorByte])
+        XCTAssertEqual(p.root, [WindowsConstants.pathSeparator])
     }
 
     func test2SlashRoot() {
@@ -15,7 +15,7 @@ final class WindowsPartsParsingTests: XCTestCase {
 
     func test3SlashRoot() {
         let p = PureWindowsPath(#"\\\a\b"#)
-        XCTAssertEqual(p.root, [WindowsConstants.separatorByte])
+        XCTAssertEqual(p.root, [WindowsConstants.pathSeparator])
     }
 
     func testNoRootIsParsedCorrectly() {
