@@ -3,7 +3,11 @@
 import WinSDK
 
 public struct WindowsAttributes: OptionSet {
-    var rawValue: DWORD
+    public var rawValue: DWORD
+
+    public init(rawValue: DWORD) {
+        self.rawValue = rawValue
+    }
 
     public var isReadOnly: Bool {
         rawValue & UInt32(bitPattern: FILE_ATTRIBUTE_READONLY) != 0
