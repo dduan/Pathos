@@ -51,3 +51,9 @@ endif
 
 ensure-swiftformat:
 	@Scripts/ensure-swiftformat.sh
+
+ensure-swiftdoc:
+	@Scripts/ensure-swiftdoc.sh
+
+docs: ensure-swiftdoc
+	@Scripts/generate-docs.sh
