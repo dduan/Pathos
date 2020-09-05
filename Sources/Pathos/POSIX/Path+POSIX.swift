@@ -54,6 +54,19 @@ extension Path {
 
         return result
     }
+
+    /// Set new permissions for a file path.
+    ///
+    /// - Parameter permissions: The new file permission.
+    public func set(_ permissions: Permissions) throws {
+        guard let posixPermissions = permissions as? POSIXPermissions else {
+            fatalError("Attempting to set incompatable permissions")
+        }
+
+        if chmod(binaryString.cString, posixPermissions.rawValue) != 0 {
+            throw SystemError(code: errno)
+        }
+    }
 }
 
 #endif // !os(Windows)
