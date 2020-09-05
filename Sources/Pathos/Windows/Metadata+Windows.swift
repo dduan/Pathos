@@ -7,7 +7,7 @@ extension Metadata {
         modified = FileTime(data.ftLastWriteTime)
         created = FileTime(data.ftCreationTime)
         size = Int64(UInt64(data.nFileSizeHigh << 32) | UInt64(data.nFileSizeLow))
-        permissions = WindowsAttributes(isReadOnly: data.dwFileAttributes & UInt32(bitPattern: FILE_ATTRIBUTE_READONLY) != 0)
+        permissions = WindowsAttributes(rawAttributes: data.dwFileAttributes)
         if data.dwFileAttributes & UInt32(bitPattern: FILE_ATTRIBUTE_DIRECTORY) != 0 {
             fileType = WindowsFileType.directory
         } else if data.dwFileAttributes & UInt32(bitPattern: FILE_ATTRIBUTE_REPARSE_POINT) != 0 && data.dwReserved0 & 0x2000_0000 != 0 {
