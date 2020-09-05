@@ -70,6 +70,14 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible {
     ///
     /// An absolute path is one that has a root and, if applicable, a drive.
     var isAbsolute: Bool { get }
+
+    /// Final suffix that begins with a `.` in the `name` the path. Leading `.` in the name does not
+    /// count.
+    var `extension`: String? { get }
+
+    /// Suffixes that begin with a `.` in the `name` the path, in the order they appear.
+    /// Leading `.` in the name does not count.
+    var extensions: [String] { get }
 }
 
 extension PureWindowsPath: PurePathRepresentable {}
