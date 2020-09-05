@@ -23,7 +23,7 @@ extension Path {
         lhs.joined(with: rhs)
     }
 
-    public static func + (lhs: Self, rhs: BinaryString) -> Self {
+    static func + (lhs: Self, rhs: BinaryString) -> Self {
         lhs.joined(with: rhs)
     }
 
@@ -32,7 +32,7 @@ extension Path {
         Path(lhs.asWindowsPath.joined(with: rhs.pure))
     }
 
-    public static func + (lhs: BinaryString, rhs: Self) -> Self {
+    static func + (lhs: BinaryString, rhs: Self) -> Self {
         Path(lhs.asWindowsPath.joined(with: rhs.pure))
     }
     #else
@@ -40,7 +40,7 @@ extension Path {
         Path(lhs.asPOSIXPath.joined(with: rhs.pure))
     }
 
-    public static func + (lhs: BinaryString, rhs: Self) -> Self {
+    static func + (lhs: BinaryString, rhs: Self) -> Self {
         Path(lhs.asPOSIXPath.joined(with: rhs.pure))
     }
     #endif // os(Windows)
