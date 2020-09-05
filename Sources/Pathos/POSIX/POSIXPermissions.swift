@@ -10,7 +10,7 @@ import Glibc
 /// well as some miscellaneous information.
 public struct POSIXPermissions: OptionSet {
     /// The file permission as the native `mode_t` type. A de-abstraction to help interact with POSIX APIs directly.
-    public let rawValue: mode_t
+    public var rawValue: mode_t
 
     /// Creates a `FilePermission` from native `mode_t`.
     public init(rawValue: mode_t) {
@@ -83,7 +83,17 @@ extension POSIXPermissions: ExpressibleByIntegerLiteral {
 
 extension POSIXPermissions: Permissions {
     public var isReadOnly: Bool {
-        !contains(.ownerWrite)
+        get {
+            !contains(.ownerWrite)
+        }
+
+        set {
+            if newValue {
+                remove(.ownerWrite)
+            } else {
+                insert(.ownerWrite)
+            }
+        }
     }
 }
 
