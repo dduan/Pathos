@@ -1,6 +1,4 @@
 public struct PureWindowsPath {
-    // public typealias BinaryString = WindowsBinaryString
-
     @LazyBoxed
     private var parts: Path.Parts
 
