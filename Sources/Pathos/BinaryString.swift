@@ -52,6 +52,6 @@ extension WindowsBinaryString {
     }
 
     public var description: String {
-        String(decodingCString: Array(self) + [0], as: UTF16.self)
+        String(decoding: self, as: UTF16.self)
     }
 }
