@@ -31,6 +31,8 @@ public struct Path {
 
     public var name: BinaryString? { pure.name }
 
+    public var isAbsolute: Bool { pure.isAbsolute }
+
     public func parse() {
         pure.parse()
     }

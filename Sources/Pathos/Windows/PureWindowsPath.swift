@@ -69,6 +69,10 @@ public struct PureWindowsPath {
         return PureWindowsPath(result)
     }
 
+    public var isAbsolute: Bool {
+        !root.isEmpty && !drive.isEmpty
+    }
+
     public static func + (lhs: Self, rhs: Self) -> Self {
         lhs.joined(with: rhs)
     }
