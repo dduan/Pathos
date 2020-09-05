@@ -25,26 +25,26 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible {
     ///
     /// This value is lazily computed when it's accessed for the first time. To manually trigger
     /// its computation, use `parse()`.
-    var drive: BinaryStringLike { get }
+    var drive: String? { get }
 
     /// The bytes for the root, if it's present in `bytes`. For example, on POSIX this would be "/".
     ///
     /// This value is lazily computed when it's accessed for the first time. To manually trigger
     /// its computation, use `parse()`.
-    var root: BinaryStringLike { get }
+    var root: String? { get }
 
     /// The segments in the path separated by `Path.separatorByte`. Root is not included.
     ///
     /// This value is lazily computed when it's accessed for the first time. To manually trigger
     /// its computation, use `parse()`.
-    var segments: Array<BinaryStringLike> { get }
+    var segments: Array<String> { get }
 
     /// Analyze the content of the path. This will result in a cached value for `drive`, `root`,
     /// `segments`, etc.
     func parse()
 
     /// The final path component, if any.
-    var name: BinaryStringLike? { get }
+    var name: String? { get }
 
     /// Join with other paths. Absolute path will override existing value.
     /// For example:
