@@ -53,14 +53,6 @@ extension Path.Parts {
         return result
     }
 
-    var parentParts: Self {
-        if drive == nil && root == nil && (segments.count == 1 && segments.first == Constants.currentContext || segments.count <= 1) {
-            return Self(drive: nil, root: nil, segments: [Constants.currentContext])
-        }
-
-        return Self(drive: drive, root: root, segments: segments.dropLast())
-    }
-
     private static func findExtension(s: String.SubSequence) -> (String, String.Index)? {
         guard let dotIndex = s.lastIndex(of: Constants.currentContextCharacter),
             dotIndex != s.startIndex
@@ -69,5 +61,21 @@ extension Path.Parts {
         }
 
         return (String(s[dotIndex...]), dotIndex)
+    }
+
+    func parentParts(terminated: Bool) -> Self? {
+        if drive == nil && root == nil && (segments.count == 1 && segments.first == Constants.currentContext || segments.count <= 1) {
+            if terminated {
+                return nil
+            }
+
+            return Self(drive: nil, root: nil, segments: [Constants.currentContext])
+        }
+
+        if terminated && segments.isEmpty {
+            return nil
+        }
+
+        return Self(drive: drive, root: root, segments: segments.dropLast())
     }
 }

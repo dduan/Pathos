@@ -97,7 +97,7 @@ public struct PurePOSIXPath {
     }
 
     public var parent: PurePOSIXPath {
-        let newParts = parts.parentParts
+        let newParts = parts.parentParts(terminated: false)!
         return .init(root: newParts.root, segments: newParts.segments)
     }
 }

@@ -105,7 +105,7 @@ public struct PureWindowsPath {
     }
 
     public var parent: PureWindowsPath {
-        let newParts = parts.parentParts
+        let newParts = parts.parentParts(terminated: false)!
         return .init(drive: newParts.drive, root: newParts.root, segments: newParts.segments)
     }
 }
