@@ -100,6 +100,15 @@ public struct PurePOSIXPath {
         let newParts = parts.parentParts
         return .init(root: newParts.root, segments: newParts.segments)
     }
+
+    public var parents: AnySequence<PurePOSIXPath> {
+        var parents = Path.Parts.Parents(initialParts: parts)
+        return AnySequence<PurePOSIXPath> {
+            AnyIterator {
+                parents.next().map { PurePOSIXPath(root: $0.root, segments: $0.segments) }
+            }
+        }
+    }
 }
 
 extension PurePOSIXPath: CustomStringConvertible {

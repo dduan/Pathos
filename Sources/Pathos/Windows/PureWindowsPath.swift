@@ -108,6 +108,15 @@ public struct PureWindowsPath {
         let newParts = parts.parentParts
         return .init(drive: newParts.drive, root: newParts.root, segments: newParts.segments)
     }
+
+    public var parents: AnySequence<PureWindowsPath> {
+        var parents = Path.Parts.Parents(initialParts: parts)
+        return AnySequence<PureWindowsPath> {
+            AnyIterator {
+                parents.next().map { PureWindowsPath(drive: $0.drive, root: $0.root, segments: $0.segments) }
+            }
+        }
+    }
 }
 
 extension PureWindowsPath: CustomStringConvertible {
