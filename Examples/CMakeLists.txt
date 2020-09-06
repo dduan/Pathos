@@ -12,3 +12,8 @@ add_executable(findfile
   findfile/main.swift)
 target_link_libraries(findfile PRIVATE
   Pathos)
+
+add_executable(mkdir
+  mkdir/main.swift)
+target_link_libraries(mkdir PRIVATE
+  Pathos)
