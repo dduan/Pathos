@@ -88,6 +88,10 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible {
     /// - Parameter other: The path, through the return value, can be reached from this path.
     /// - Returns: The path through which other can be reached from this branch.
     func relative(to other: PathLike) -> Self
+
+    /// The logical parent of the path. The parent of an anchor is the anchor itself.
+    /// The parent of `.` is `.`. The parent of `/a/b/c` is `/a/b`.
+    var parent: Self { get }
 }
 
 extension PureWindowsPath: PurePathRepresentable {}

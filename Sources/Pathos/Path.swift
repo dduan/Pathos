@@ -51,8 +51,12 @@ public struct Path {
         try action()
     }
 
-    func relative(to other: PathConvertible) -> Path {
+    public func relative(to other: PathConvertible) -> Path {
         Path(pure.relative(to: other))
+    }
+
+    public var parent: Path {
+        Path(pure.parent)
     }
 
     struct Parts {

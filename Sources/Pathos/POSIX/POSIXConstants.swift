@@ -3,5 +3,6 @@ public enum POSIXConstants {
     public static let binaryPathSeparator: CChar = "/".utf8CString[0]
     public static let pathSeparator: Character = "/"
     static let binaryCurrentContext: CChar = ".".utf8CString[0]
-    static var currentContext: Character = "."
+    static var currentContextCharacter: Character = "."
+    static var currentContext = "."
 }
