@@ -28,6 +28,11 @@ let package = Package(
             dependencies: ["Pathos"],
             path: "Examples/readonly"
         ),
+        .target(
+            name: "findfile",
+            dependencies: ["Pathos"],
+            path: "Examples/findfile"
+        ),
         .testTarget(
             name: "PathosTests",
             dependencies: ["Pathos"],
