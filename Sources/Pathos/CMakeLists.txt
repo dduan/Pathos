@@ -1,4 +1,5 @@
 add_library(Pathos
+  "Algorithms.swift"
   "BinaryString.swift"
   "Box.swift"
   "Constants.swift"
