@@ -9,6 +9,10 @@ public struct PurePOSIXPath {
         _parts = .init { Path.Parts(forPOSIXWithBinary: binary) }
     }
 
+    init(root: String?, segments: [String]) {
+        self.init((root ?? "") + segments.joined(separator: [POSIXConstants.pathSeparator]))
+    }
+
     public init(cString: UnsafePointer<CChar>) {
         self.init(POSIXBinaryString(cString: cString))
     }
@@ -90,6 +94,11 @@ public struct PurePOSIXPath {
         } else {
             return PurePOSIXPath(all.joined(separator: "\(POSIXConstants.pathSeparator)"))
         }
+    }
+
+    public var parent: PurePOSIXPath {
+        let newParts = parts.parentParts
+        return .init(root: newParts.root, segments: newParts.segments)
     }
 }
 
