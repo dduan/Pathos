@@ -33,6 +33,11 @@ let package = Package(
             dependencies: ["Pathos"],
             path: "Examples/findfile"
         ),
+        .target(
+            name: "mkdir",
+            dependencies: ["Pathos"],
+            path: "Examples/mkdir"
+        ),
         .testTarget(
             name: "PathosTests",
             dependencies: ["Pathos"],
