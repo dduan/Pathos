@@ -78,6 +78,16 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible {
     /// Suffixes that begin with a `.` in the `name` the path, in the order they appear.
     /// Leading `.` in the name does not count.
     var extensions: [String] { get }
+
+    /// Returns a path that connects this location and another.
+    ///
+    /// This is a pure computation: the file system is not accessed to confirm the existence or
+    /// nature of this path or `other`.
+    /// Example: the relative path of `/` to `/Users/dan` is `../..`.
+    ///
+    /// - Parameter other: The path, through the return value, can be reached from this path.
+    /// - Returns: The path through which other can be reached from this branch.
+    func relative(to other: PathLike) -> Self
 }
 
 extension PureWindowsPath: PurePathRepresentable {}

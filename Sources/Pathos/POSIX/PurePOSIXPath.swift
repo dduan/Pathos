@@ -80,6 +80,17 @@ public struct PurePOSIXPath {
     public static func + (lhs: POSIXPathConvertible, rhs: Self) -> Self {
         lhs.asPOSIXPath.joined(with: rhs)
     }
+
+    public func relative(to other: POSIXPathConvertible) -> PurePOSIXPath {
+        let other = other.asPOSIXPath
+        let all = relativeSegments(from: segments, to: other.segments)
+
+        if all.isEmpty {
+            return PurePOSIXPath(".")
+        } else {
+            return PurePOSIXPath(all.joined(separator: "\(POSIXConstants.pathSeparator)"))
+        }
+    }
 }
 
 extension PurePOSIXPath: CustomStringConvertible {
@@ -97,5 +108,17 @@ extension PurePOSIXPath: Equatable {
 extension PurePOSIXPath: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(binaryString)
+    }
+}
+
+extension Collection where Element: Equatable {
+    func commonPrefix(with other: Self) -> Self.SubSequence {
+        let limit = Swift.min(endIndex, other.endIndex)
+        var end = startIndex
+        while end < limit && self[end] == other[end] {
+            end = index(after: end)
+        }
+
+        return self[startIndex ..< end]
     }
 }

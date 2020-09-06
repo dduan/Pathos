@@ -51,6 +51,10 @@ public struct Path {
         try action()
     }
 
+    func relative(to other: PathConvertible) -> Path {
+        Path(pure.relative(to: other))
+    }
+
     struct Parts {
         let drive: String?
         let root: String?
