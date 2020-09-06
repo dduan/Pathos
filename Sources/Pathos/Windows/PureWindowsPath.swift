@@ -90,6 +90,17 @@ public struct PureWindowsPath {
     public static func + (lhs: WindowsPathConvertible, rhs: Self) -> Self {
         lhs.asWindowsPath.joined(with: rhs)
     }
+
+    public func relative(to other: WindowsPathConvertible) -> PureWindowsPath {
+        let other = other.asWindowsPath
+        let all = relativeSegments(from: segments, to: other.segments)
+
+        if all.isEmpty {
+            return PureWindowsPath(".")
+        } else {
+            return PureWindowsPath(all.joined(separator: "\(WindowsConstants.pathSeparator)"))
+        }
+    }
 }
 
 extension PureWindowsPath: CustomStringConvertible {
