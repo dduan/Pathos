@@ -68,6 +68,17 @@ public struct Path {
         }
     }
 
+    /// Return `true` if path refers to an existing path.
+    /// On some platforms, this function may return `false` if permission is not
+    /// granted to retrieve metadata on the requested file, even if the path physically exists.
+    ///
+    /// - Parameter followSymlink: whether to follow symbolic links. If `true`, return `false` for
+    ///                            broken symbolic links.
+    /// - Returns: whether path refers to an existing path or an open file descriptor.
+    public func exists(followSymlink: Bool = false) -> Bool {
+        (try? metadata(followSymlink: followSymlink)) != nil
+    }
+
     struct Parts: Equatable {
         let drive: String?
         let root: String?
