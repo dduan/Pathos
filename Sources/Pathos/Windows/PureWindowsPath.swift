@@ -9,6 +9,11 @@ public struct PureWindowsPath {
         _parts = .init { Path.Parts(forWindowsWithBinary: binary) }
     }
 
+    init(drive: String?, root: String?, segments: [String]) {
+        self.init(
+            (drive ?? "") + (root ?? "") + segments.joined(separator: [WindowsConstants.pathSeparator]))
+    }
+
     public init(cString: UnsafePointer<UInt16>) {
         self.init(WindowsBinaryString(cString: cString))
     }
@@ -69,10 +74,7 @@ public struct PureWindowsPath {
             }
         }
 
-        let result = (drive ?? "")
-            + (root ?? "")
-            + segments.joined(separator: [WindowsConstants.pathSeparator])
-        return PureWindowsPath(result)
+        return PureWindowsPath(drive: drive, root: root, segments: segments)
     }
 
     public var isAbsolute: Bool {
@@ -100,6 +102,11 @@ public struct PureWindowsPath {
         } else {
             return PureWindowsPath(all.joined(separator: "\(WindowsConstants.pathSeparator)"))
         }
+    }
+
+    public var parent: PureWindowsPath {
+        let newParts = parts.parentParts
+        return .init(drive: newParts.drive, root: newParts.root, segments: newParts.segments)
     }
 }
 
