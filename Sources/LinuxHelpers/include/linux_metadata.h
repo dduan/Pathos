@@ -14,20 +14,30 @@ _statx(int dfd, const char *filename, unsigned int flags, unsigned int mask, str
     return syscall(__NR_statx, dfd, filename, flags, mask, buffer);
 }
 
-static inline ssize_t
-_stat_with_btime(const char *filename, unsigned int flags, struct stat *buffer, struct timespec *btime) {
+static inline ssize_t linux_metadata
+(
+    const char *filename,
+    unsigned int flags,
+    __u16 *mode,
+    __u64 *size,
+    struct timespec *atime,
+    struct timespec *mtime,
+    struct timespec *btime
+) {
     struct statx statx_buffer = {0};
     *btime = (struct timespec) {0};
 
     ssize_t ret = _statx(AT_FDCWD, filename, flags | AT_STATX_SYNC_AS_STAT, STATX_ALL, &statx_buffer);
     if (ret == 0) {
-        *buffer = (struct stat) {
-            .st_ino = statx_buffer.stx_ino,
-            .st_mode = statx_buffer.stx_mode,
-            .st_size = statx_buffer.stx_size,
-            .st_atim = { .tv_sec = statx_buffer.stx_atime.tv_sec, .tv_nsec = statx_buffer.stx_atime.tv_nsec },
-            .st_mtim = { .tv_sec = statx_buffer.stx_mtime.tv_sec, .tv_nsec = statx_buffer.stx_mtime.tv_nsec },
-            .st_ctim = { .tv_sec = statx_buffer.stx_ctime.tv_sec, .tv_nsec = statx_buffer.stx_ctime.tv_nsec },
+        *mode = statx_buffer.stx_mode;
+        *size = statx_buffer.stx_size;
+        *atime = (struct timespec) {
+            .tv_sec = statx_buffer.stx_atime.tv_sec,
+            .tv_nsec = statx_buffer.stx_atime.tv_nsec
+        };
+        *mtime = (struct timespec) {
+            .tv_sec = statx_buffer.stx_mtime.tv_sec,
+            .tv_nsec = statx_buffer.stx_mtime.tv_nsec
         };
         // Check that stx_btime was set in the response, not all filesystems support it.
         if (statx_buffer.stx_mask & STATX_BTIME) {
