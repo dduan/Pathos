@@ -2,12 +2,13 @@
 import Glibc
 
 extension Metadata {
-    public init(_ stat: stat, _ btime: timespec) {
-        fileType = POSIXFileType(rawMode: stat.st_mode & S_IFMT)
-        permissions = POSIXPermissions(rawValue: stat.st_mode)
-        size = Int64(stat.st_size)
-        accessed = FileTime(stat.st_atim)
-        modified = FileTime(stat.st_mtim)
+    public init(mode: UInt16, size: UInt64, atime: timespec, mtime: timespec, btime: timespec) {
+        let mode = mode_t(mode)
+        fileType = POSIXFileType(rawMode: mode & S_IFMT)
+        permissions = POSIXPermissions(rawValue: mode)
+        self.size = Int64(size)
+        accessed = FileTime(atime)
+        modified = FileTime(mtime)
         created = FileTime(btime)
     }
 }
