@@ -67,6 +67,28 @@ extension Path {
             throw SystemError(code: errno)
         }
     }
+
+    public func makeDirectory(createParents: Bool = false) throws {
+        func _makeDirectory() throws {
+            if mkdir(binaryString.cString, 0o755) != 0 {
+                let error = SystemError(code: errno)
+                // Cannot rely on checking for EEXIST, since the operating system
+                // could give priority to other errors like EACCES or EROFS
+                if !exists() || error == .fileExists && !createParents {
+                    throw error
+                }
+            }
+        }
+
+        if !createParents {
+            try _makeDirectory()
+        } else if !pure.segments.isEmpty {
+            let parents = self.parents.makeIterator()
+            try parents.next()?.makeDirectory(createParents: true)
+        }
+
+        try _makeDirectory()
+    }
 }
 
 #endif // !os(Windows)

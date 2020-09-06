@@ -98,6 +98,26 @@ extension Path {
         }
     }
 
+    public func makeDirectory(createParents: Bool = false) throws {
+        func _makeDirectory() throws {
+            if !CreateDirectoryW(binaryString.cString, nil) {
+                let error = SystemError(code: GetLastError())
+                if !exists() || error == .fileExists && !createParents {
+                    throw error
+                }
+            }
+        }
+
+        if !createParents {
+            try _makeDirectory()
+        } else if !pure.segments.isEmpty {
+            let parents = self.parents.makeIterator()
+            try parents.next()?.makeDirectory(createParents: true)
+        }
+
+        try _makeDirectory()
+    }
+
     private func realPath() throws -> Path {
         let handle = CreateFileW(
             binaryString.cString,
