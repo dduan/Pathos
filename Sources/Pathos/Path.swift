@@ -59,10 +59,43 @@ public struct Path {
         Path(pure.parent)
     }
 
-    struct Parts {
+    public var parents: AnySequence<Path> {
+        let parents = pure.parents.makeIterator()
+        return AnySequence<Path> {
+            AnyIterator<Path> {
+                parents.next().map { Path($0) }
+            }
+        }
+    }
+
+    struct Parts: Equatable {
         let drive: String?
         let root: String?
         let segments: Array<String>
+
+        struct Parents: Sequence, IteratorProtocol {
+            var parts: Path.Parts
+            var terminated: Bool = false
+
+            init(initialParts: Path.Parts) {
+                parts = initialParts
+            }
+
+            mutating func next() -> Path.Parts? {
+                if terminated {
+                    return nil
+                }
+
+                let parentParts = parts.parentParts
+                if parentParts == parts && !terminated {
+                    terminated = true
+                    return nil
+                } else {
+                    parts = parentParts
+                    return parts
+                }
+            }
+        }
     }
 }
 
