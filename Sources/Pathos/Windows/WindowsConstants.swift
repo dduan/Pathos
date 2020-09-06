@@ -3,5 +3,6 @@ public enum WindowsConstants {
     public static let binaryPathSeparator: UInt16 = "\\".utf16.first!
     public static let pathSeparator: Character = "\\"
     static let binaryCurrentContext: UInt16 = ".".utf16.first!
-    static var currentContext: Character = "."
+    static var currentContextCharacter: Character = "."
+    static var currentContext = "."
 }
