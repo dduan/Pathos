@@ -1,7 +1,7 @@
 extension Path.Parts {
     static func parse<C, Encoding>(
         _ binary: C,
-        as _: Encoding.Type,
+        as encoding: Encoding.Type,
         separator: Encoding.CodeUnit,
         currentContext: Encoding.CodeUnit
     ) -> (String?, [String])
@@ -15,7 +15,7 @@ extension Path.Parts {
         let root: String?
         if !binary.isEmpty && binary[0] == separator {
             let stop = binary.firstIndex(where: { $0 != separator }) ?? 0
-            if stop == 2 {
+            if stop == 2 || binary.count == 2 && stop == 0 && encoding == UTF8.self {
                 root = String(decoding: [separator, separator], as: Encoding.self)
             } else {
                 root = String(decoding: [separator], as: Encoding.self)
@@ -53,12 +53,32 @@ extension Path.Parts {
         return result
     }
 
-    var parentParts: Self {
+    var parentParts: Path.Parts {
         if drive == nil && root == nil && (segments.count == 1 && segments.first == Constants.currentContext || segments.count <= 1) {
             return Self(drive: nil, root: nil, segments: [Constants.currentContext])
         }
 
         return Self(drive: drive, root: root, segments: segments.dropLast())
+    }
+
+    var normalized: Path.Parts {
+        var newSegments = [String]()
+
+        for segment in segments {
+            if segment == ".." {
+                if !newSegments.isEmpty {
+                    newSegments.removeLast()
+                }
+            } else {
+                newSegments.append(segment)
+            }
+        }
+
+        if drive == nil && root == nil && segments.isEmpty {
+            return Path.Parts(drive: nil, root: nil, segments: [Constants.currentContext])
+        }
+
+        return Path.Parts(drive: drive, root: root, segments: newSegments)
     }
 
     private static func findExtension(s: String.SubSequence) -> (String, String.Index)? {
