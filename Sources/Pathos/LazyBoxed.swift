@@ -8,12 +8,18 @@ struct LazyBoxed<Value> {
     }
 
     var wrappedValue: Value {
-        if let cachedValue = storage.content {
-            return cachedValue
+        get {
+            if let cachedValue = storage.content {
+                return cachedValue
+            }
+
+            let value = build()
+            storage.content = value
+            return value
         }
 
-        let value = build()
-        storage.content = value
-        return value
+        set {
+            storage.content = newValue
+        }
     }
 }
