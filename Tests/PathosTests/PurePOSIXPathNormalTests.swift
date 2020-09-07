@@ -13,8 +13,8 @@ final class PurePOSIXPathNormalTests: XCTestCase {
     }
 
     func testNormalization() {
-        XCTAssertEqual(Path("///foo/.//bar//").normal, Path("/foo/bar"))
-        XCTAssertEqual(Path("///foo/.//bar//.//..//.//baz").normal, Path("/foo/baz"))
-        XCTAssertEqual(Path("///..//./foo/.//bar").normal, Path("/foo/bar"))
+        XCTAssertEqual(PurePOSIXPath("///foo/.//bar//").normal, PurePOSIXPath("/foo/bar"))
+        XCTAssertEqual(PurePOSIXPath("///foo/.//bar//.//..//.//baz").normal, PurePOSIXPath("/foo/baz"))
+        XCTAssertEqual(PurePOSIXPath("///..//./foo/.//bar").normal, PurePOSIXPath("/foo/bar"))
     }
 }
