@@ -42,7 +42,7 @@ extension Path {
     ///                        result, recursively.
     ///
     /// - Returns: A sequence containing pair of path and the file type from the content of the directory.
-    public func children(recursive: Bool = false) throws -> [(Path, FileType)] {
+    public func children(recursive: Bool = false) throws -> AnySequence<(Path, FileType)> {
         var result = [(Path, FileType)]()
         var data = WIN32_FIND_DATAW()
         let handle = FindFirstFileW((self + "*").binaryString.cString, &data)
@@ -88,7 +88,7 @@ extension Path {
             try addResultIfNecessary(&data)
         }
 
-        return result
+        return AnySequence(result)
     }
 
     /// Set new permissions for a file path.
