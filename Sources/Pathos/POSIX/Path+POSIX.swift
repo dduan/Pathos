@@ -21,7 +21,7 @@ extension Path {
         }
     }
 
-    public func children(recursive: Bool = false) throws -> [(Path, FileType)] {
+    public func children(recursive: Bool = false) throws -> AnySequence<(Path, FileType)> {
         var result = [(Path, FileType)]()
         guard let streamPtr = opendir(binaryString.cString) else {
             throw SystemError(code: errno)
@@ -52,7 +52,7 @@ extension Path {
             }
         }
 
-        return result
+        return AnySequence(result)
     }
 
     /// Set new permissions for a file path.
