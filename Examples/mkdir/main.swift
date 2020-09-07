@@ -10,7 +10,7 @@ if args.contains("-p") {
 }
 
 do {
-    try Path(args.first!).makeDirectory(createParents: makeParents)
+    try Path(args.first!).makeDirectory(withParents: makeParents)
 } catch {
     print(error)
 }
