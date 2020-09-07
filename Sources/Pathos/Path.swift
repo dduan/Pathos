@@ -68,6 +68,10 @@ public struct Path {
         }
     }
 
+    public var normal: Path {
+        Path(pure.normal)
+    }
+
     /// Return `true` if path refers to an existing path.
     /// On some platforms, this function may return `false` if permission is not
     /// granted to retrieve metadata on the requested file, even if the path physically exists.

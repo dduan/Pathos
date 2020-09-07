@@ -6,11 +6,19 @@ public struct PurePOSIXPath {
 
     init(_ binary: POSIXBinaryString) {
         binaryString = binary
-        _parts = .init { Path.Parts(forPOSIXWithBinary: binary) }
+        _parts = LazyBoxed { Path.Parts(forPOSIXWithBinary: binary) }
     }
 
     init(root: String?, segments: [String]) {
         self.init((root ?? "") + segments.joined(separator: [POSIXConstants.pathSeparator]))
+    }
+
+    init(parts: Path.Parts) {
+        self.init(
+            root: parts.root,
+            segments: parts.segments
+        )
+        _parts.wrappedValue = parts
     }
 
     public init(cString: UnsafePointer<CChar>) {
@@ -98,7 +106,7 @@ public struct PurePOSIXPath {
 
     public var parent: PurePOSIXPath {
         let newParts = parts.parentParts
-        return .init(root: newParts.root, segments: newParts.segments)
+        return PurePOSIXPath(root: newParts.root, segments: newParts.segments)
     }
 
     public var parents: AnySequence<PurePOSIXPath> {
@@ -108,6 +116,10 @@ public struct PurePOSIXPath {
                 parents.next().map { PurePOSIXPath(root: $0.root, segments: $0.segments) }
             }
         }
+    }
+
+    public var normal: PurePOSIXPath {
+        PurePOSIXPath(parts: parts.normalized)
     }
 }
 
