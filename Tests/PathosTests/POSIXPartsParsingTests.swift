@@ -7,7 +7,12 @@ final class POSIXPartsParsingTests: XCTestCase {
         XCTAssertEqual(p.root, "/")
     }
 
-    func test2SlashRoot() {
+    func testJust2SlashRoot() {
+        let p = PurePOSIXPath("//")
+        XCTAssertEqual(p.root, "//")
+    }
+
+    func test2SlashRootAndSegments() {
         let p = PurePOSIXPath("//a/b")
         XCTAssertEqual(p.root, "//")
     }
