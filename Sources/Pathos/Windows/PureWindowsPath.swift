@@ -14,6 +14,15 @@ public struct PureWindowsPath {
             (drive ?? "") + (root ?? "") + segments.joined(separator: [WindowsConstants.pathSeparator]))
     }
 
+    init(parts: Path.Parts) {
+        self.init(
+            drive: parts.drive,
+            root: parts.root,
+            segments: parts.segments
+        )
+        _parts.wrappedValue = parts
+    }
+
     public init(cString: UnsafePointer<UInt16>) {
         self.init(WindowsBinaryString(cString: cString))
     }
@@ -105,8 +114,7 @@ public struct PureWindowsPath {
     }
 
     public var parent: PureWindowsPath {
-        let newParts = parts.parentParts
-        return .init(drive: newParts.drive, root: newParts.root, segments: newParts.segments)
+        PureWindowsPath(parts: parts.parentParts)
     }
 
     public var parents: AnySequence<PureWindowsPath> {
@@ -116,6 +124,10 @@ public struct PureWindowsPath {
                 parents.next().map { PureWindowsPath(drive: $0.drive, root: $0.root, segments: $0.segments) }
             }
         }
+    }
+
+    public var normal: PureWindowsPath {
+        PureWindowsPath(parts: parts.normalized)
     }
 }
 

@@ -9,4 +9,8 @@ final class PurePOSIXPathIsAbsoluteTests: XCTestCase {
     func testNoDriveIsAbsolute() {
         XCTAssert(PurePOSIXPath("/a/b").isAbsolute)
     }
+
+    func testNoDriveTwoSlashesIsAbsolute() {
+        XCTAssert(PurePOSIXPath("//a/b").isAbsolute)
+    }
 }
