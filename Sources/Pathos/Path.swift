@@ -79,6 +79,17 @@ public struct Path {
         (try? metadata(followSymlink: followSymlink)) != nil
     }
 
+    /// Return the absolute path for this path.
+    ///
+    /// - Returns: the absolute path.
+    public func absolute() throws -> Path {
+        if !isAbsolute {
+            return try Path.workingDirectory().joined(with: self)
+        } else {
+            return self
+        }
+    }
+
     struct Parts: Equatable {
         let drive: String?
         let root: String?
