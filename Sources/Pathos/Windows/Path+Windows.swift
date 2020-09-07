@@ -36,6 +36,12 @@ extension Path {
         return Metadata(data)
     }
 
+    /// List the content of the directory, recursively if required.
+    ///
+    /// - Parameter recursive: Require content of the directories inside the directory to be included in the
+    ///                        result, recursively.
+    ///
+    /// - Returns: A sequence containing pair of path and the file type from the content of the directory.
     public func children(recursive: Bool = false) throws -> [(Path, FileType)] {
         var result = [(Path, FileType)]()
         var data = WIN32_FIND_DATAW()
@@ -98,21 +104,28 @@ extension Path {
         }
     }
 
-    public func makeDirectory(createParents: Bool = false) throws {
+    /// Create a directory, and, optionally, any intermediate directories that leads to it, if they don't
+    /// exist yet.
+    ///
+    /// - Parameter withParents: Create intermediate directories as required. If this option is not specified,
+    ///                          the full path prefix of each operand must already exist.
+    ///                          On the other hand, with this option specified, no error will be reported if a
+    ///                          directory given as an operand already exists.
+    public func makeDirectory(withParents: Bool = false) throws {
         func _makeDirectory() throws {
             if !CreateDirectoryW(binaryString.cString, nil) {
                 let error = SystemError(code: GetLastError())
-                if !exists() || error == .fileExists && !createParents {
+                if !exists() || error == .fileExists && !withParents {
                     throw error
                 }
             }
         }
 
-        if !createParents {
+        if !withParents {
             try _makeDirectory()
         } else if !pure.segments.isEmpty {
             let parents = self.parents.makeIterator()
-            try parents.next()?.makeDirectory(createParents: true)
+            try parents.next()?.makeDirectory(withParents: true)
         }
 
         try _makeDirectory()
