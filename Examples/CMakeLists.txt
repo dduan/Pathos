@@ -8,9 +8,9 @@ add_executable(readonly
 target_link_libraries(readonly PRIVATE
   Pathos)
 
-add_executable(findfile
-  findfile/main.swift)
-target_link_libraries(findfile PRIVATE
+add_executable(lookup
+  lookup/main.swift)
+target_link_libraries(lookup PRIVATE
   Pathos)
 
 add_executable(mkdir

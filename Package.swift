@@ -29,9 +29,9 @@ let package = Package(
             path: "Examples/readonly"
         ),
         .target(
-            name: "findfile",
+            name: "lookup",
             dependencies: ["Pathos"],
-            path: "Examples/findfile"
+            path: "Examples/lookup"
         ),
         .target(
             name: "mkdir",
