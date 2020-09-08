@@ -131,6 +131,60 @@ extension Path {
         try _makeDirectory()
     }
 
+    public func delete(recursive: Bool = true) throws {
+        let meta = try metadata()
+        if meta.permissions.isReadOnly {
+            var newPermission = meta.permissions
+            newPermission.isReadOnly = false
+            try set(newPermission)
+        }
+
+        if meta.fileType.isDirectory {
+            if recursive {
+                for child in try children(recursive: false) {
+                    try child.delete(recursive: true)
+                }
+            }
+
+            let temp = try tempPath().binaryString.cString
+            if !MoveFileW(binaryString.cString, temp) {
+                throw SystemError(code: GetLastError())
+            }
+
+            if !RemoveDirectoryW(temp) {
+                throw SystemError(code: GetLastError())
+            }
+        } else {
+            let temp = try tempPath().binaryString.cString
+            if !MoveFileW(binaryString.cString, temp) {
+                throw SystemError(code: GetLastError())
+            }
+            if !DeleteFileW(temp) {
+                throw SystemError(code: GetLastError())
+            }
+        }
+    }
+
+    private func tempPath() throws -> Path {
+        try defaultTemp() + "\(UInt64.random(in: 0 ... .max))"
+    }
+
+    // TODO: this is wrong because `GetTempPathW` does not ganrantee write/delete access to its result.
+    private func defaultTemp() throws -> Path {
+        try Path(ContiguousArray(unsafeUninitializedCapacity: Int(MAX_PATH)) { buffer, count in
+            let length = GetTempPathW(
+                DWORD(MAX_PATH),
+                buffer.baseAddress
+            )
+
+            if length == 0 {
+                throw SystemError(code: GetLastError())
+            }
+
+            count = Int(length)
+        })
+    }
+
     private func realPath() throws -> Path {
         let handle = CreateFileW(
             binaryString.cString,
