@@ -38,6 +38,11 @@ let package = Package(
             dependencies: ["Pathos"],
             path: "Examples/mkdir"
         ),
+        .target(
+            name: "rm",
+            dependencies: ["Pathos"],
+            path: "Examples/rm"
+        ),
         .testTarget(
             name: "PathosTests",
             dependencies: ["Pathos"],

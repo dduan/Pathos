@@ -89,6 +89,25 @@ extension Path {
 
         try _makeDirectory()
     }
+
+    public func delete(recursive: Bool = true) throws {
+        let meta = try metadata()
+        if meta.fileType.isDirectory {
+            if recursive {
+                for child in try children(recursive: false) {
+                    try child.delete(recursive: true)
+                }
+            }
+
+            if rmdir(binaryString.cString) != 0 {
+                throw SystemError(code: errno)
+            }
+        } else {
+            if unlink(binaryString.cString) != 0 {
+                throw SystemError(code: errno)
+            }
+        }
+    }
 }
 
 #endif // !os(Windows)
