@@ -9,16 +9,16 @@ extension String {
 }
 
 do {
-    for (child, type) in try Path(CommandLine.arguments[1]).children(recursive: recursive) {
+    for child in try Path(CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : ".").children(recursive: recursive) {
         let meta = try child.metadata()
         let permission = (meta.permissions.isReadOnly ? "ReadOnly" : "ReadWrite").withLeftPad("ReadWrite".count)
         let size = "\(meta.size)".withLeftPad(10)
         let modified = "\(meta.modified.seconds).\(meta.modified.nanoseconds)".withLeftPad(24)
         let fileType: String
         let fileTypeLength = "directory".count
-        if type.isDirectory {
+        if meta.fileType.isDirectory {
             fileType = "directory"
-        } else if type.isSymlink {
+        } else if meta.fileType.isSymlink {
             fileType = "symlink".withLeftPad(fileTypeLength)
         } else {
             fileType = "file".withLeftPad(fileTypeLength)
