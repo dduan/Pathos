@@ -144,16 +144,21 @@ extension Path {
                 for child in try children(recursive: false) {
                     try child.delete(recursive: true)
                 }
+
+                let temp = try tempPath().binaryString.cString
+                if !MoveFileW(binaryString.cString, temp) {
+                    throw SystemError(code: GetLastError())
+                }
+
+                if !RemoveDirectoryW(temp) {
+                    throw SystemError(code: GetLastError())
+                }
+            } else {
+                if !RemoveDirectoryW(binaryString.cString) {
+                    throw SystemError(code: GetLastError())
+                }
             }
 
-            let temp = try tempPath().binaryString.cString
-            if !MoveFileW(binaryString.cString, temp) {
-                throw SystemError(code: GetLastError())
-            }
-
-            if !RemoveDirectoryW(temp) {
-                throw SystemError(code: GetLastError())
-            }
         } else {
             let temp = try tempPath().binaryString.cString
             if !MoveFileW(binaryString.cString, temp) {
