@@ -16,23 +16,24 @@ extension Path {
     }
 
     public static func setWorkingDirectory(_ path: Path) throws {
-        if !SetCurrentDirectoryW(path.binaryString.cString) {
-            throw SystemError(code: GetLastError())
+        try path.binaryString.cString { cString in
+            if !SetCurrentDirectoryW(cString) {
+                throw SystemError(code: GetLastError())
+            }
         }
     }
 
     public func metadata(followSymlink: Bool = false) throws -> Metadata {
         let binary = try followSymlink ? realPath().binaryString : binaryString
         var data = WIN32_FIND_DATAW()
-        let handle = FindFirstFileW(binary.cString, &data)
-        if handle == INVALID_HANDLE_VALUE {
-            throw SystemError(code: GetLastError())
-        }
+        try binary.cString { cString in
+            let handle = FindFirstFileW(cString, &data)
+            if handle == INVALID_HANDLE_VALUE {
+                throw SystemError(code: GetLastError())
+            }
 
-        defer {
             CloseHandle(handle)
         }
-
         return Metadata(data)
     }
 
@@ -45,49 +46,50 @@ extension Path {
     public func children(recursive: Bool = false) throws -> AnySequence<Path> {
         var result = [Path]()
         var data = WIN32_FIND_DATAW()
-        let handle = FindFirstFileW((self + "*").binaryString.cString, &data)
-        if handle == INVALID_HANDLE_VALUE {
-            throw SystemError(code: GetLastError())
-        }
-
-        defer {
-            CloseHandle(handle)
-        }
-
-        func addResultIfNecessary(_ data: inout WIN32_FIND_DATAW) throws {
-            if data.cFileName.0 == WindowsConstants.binaryCurrentContext {
-                if data.cFileName.1 == 0
-                    || data.cFileName.1 == WindowsConstants.binaryCurrentContext && data.cFileName.2 == 0
-                {
-                    return
-                }
+        try (self + "*").binaryString.cString { pathCString in
+            let handle = FindFirstFileW(pathCString, &data)
+            if handle == INVALID_HANDLE_VALUE {
+                throw SystemError(code: GetLastError())
             }
 
-            let binary = withUnsafePointer(
-                to: data.cFileName,
-                { $0.withMemoryRebound(
-                    to: WindowsEncodingUnit.self,
-                    capacity: Int(MAX_PATH)
-                ) { WindowsBinaryString(cString: $0) }
-                }
-            )
-
-            let path = joined(with: binary)
-            let meta = Metadata(data)
-
-            if recursive && meta.fileType.isDirectory {
-                result += try path.children(recursive: true)
+            defer {
+                CloseHandle(handle)
             }
 
-            result.append(path)
-        }
+            func addResultIfNecessary(_ data: inout WIN32_FIND_DATAW) throws {
+                if data.cFileName.0 == WindowsConstants.binaryCurrentContext {
+                    if data.cFileName.1 == 0
+                        || data.cFileName.1 == WindowsConstants.binaryCurrentContext && data.cFileName.2 == 0
+                    {
+                        return
+                    }
+                }
 
-        try addResultIfNecessary(&data)
+                let binary = withUnsafePointer(
+                    to: data.cFileName,
+                    { $0.withMemoryRebound(
+                        to: WindowsEncodingUnit.self,
+                        capacity: Int(MAX_PATH)
+                    ) { WindowsBinaryString(cString: $0) }
+                    }
+                )
 
-        while FindNextFileW(handle, &data) {
+                let path = joined(with: binary)
+                let meta = Metadata(data)
+
+                if recursive && meta.fileType.isDirectory {
+                    result += try path.children(recursive: true)
+                }
+
+                result.append(path)
+            }
+
             try addResultIfNecessary(&data)
-        }
 
+            while FindNextFileW(handle, &data) {
+                try addResultIfNecessary(&data)
+            }
+        }
         return AnySequence(result)
     }
 
@@ -99,8 +101,10 @@ extension Path {
             fatalError("Attempting to set incompatable permissions")
         }
 
-        if !SetFileAttributesW(binaryString.cString, windowsAttributes.rawValue) {
-            throw SystemError(code: GetLastError())
+        try binaryString.cString { cString in
+            if !SetFileAttributesW(cString, windowsAttributes.rawValue) {
+                throw SystemError(code: GetLastError())
+            }
         }
     }
 
@@ -113,10 +117,12 @@ extension Path {
     ///                          directory given as an operand already exists.
     public func makeDirectory(withParents: Bool = false) throws {
         func _makeDirectory() throws {
-            if !CreateDirectoryW(binaryString.cString, nil) {
-                let error = SystemError(code: GetLastError())
-                if !exists() || error == .fileExists && !withParents {
-                    throw error
+            try binaryString.cString { cString in
+                if !CreateDirectoryW(cString, nil) {
+                    let error = SystemError(code: GetLastError())
+                    if !exists() || error == .fileExists && !withParents {
+                        throw error
+                    }
                 }
             }
         }
@@ -145,27 +151,35 @@ extension Path {
                     try child.delete(recursive: true)
                 }
 
-                let temp = try tempPath().binaryString.cString
-                if !MoveFileW(binaryString.cString, temp) {
-                    throw SystemError(code: GetLastError())
-                }
+                try tempPath().binaryString.cString { tempCString in
+                    try binaryString.cString { fromCString in
+                        if !MoveFileW(fromCString, tempCString) {
+                            throw SystemError(code: GetLastError())
+                        }
 
-                if !RemoveDirectoryW(temp) {
-                    throw SystemError(code: GetLastError())
+                        if !RemoveDirectoryW(tempCString) {
+                            throw SystemError(code: GetLastError())
+                        }
+                    }
                 }
             } else {
-                if !RemoveDirectoryW(binaryString.cString) {
-                    throw SystemError(code: GetLastError())
+                try binaryString.cString { fromCString in
+                    if !RemoveDirectoryW(fromCString) {
+                        throw SystemError(code: GetLastError())
+                    }
                 }
             }
 
         } else {
-            let temp = try tempPath().binaryString.cString
-            if !MoveFileW(binaryString.cString, temp) {
-                throw SystemError(code: GetLastError())
-            }
-            if !DeleteFileW(temp) {
-                throw SystemError(code: GetLastError())
+            try tempPath().binaryString.cString { tempCString in
+                try binaryString.cString { fromCString in
+                    if !MoveFileW(fromCString, tempCString) {
+                        throw SystemError(code: GetLastError())
+                    }
+                    if !DeleteFileW(tempCString) {
+                        throw SystemError(code: GetLastError())
+                    }
+                }
             }
         }
     }
@@ -191,36 +205,38 @@ extension Path {
     }
 
     private func realPath() throws -> Path {
-        let handle = CreateFileW(
-            binaryString.cString,
-            0,
-            0,
-            nil,
-            DWORD(OPEN_EXISTING),
-            DWORD(FILE_FLAG_BACKUP_SEMANTICS),
-            nil
-        )
+        try binaryString.cString { cString in
+            let handle = CreateFileW(
+                cString,
+                0,
+                0,
+                nil,
+                DWORD(OPEN_EXISTING),
+                DWORD(FILE_FLAG_BACKUP_SEMANTICS),
+                nil
+            )
 
-        if handle == INVALID_HANDLE_VALUE {
-            throw SystemError(code: GetLastError())
-        }
-
-        defer {
-            CloseHandle(handle)
-        }
-
-        let binary = try ContiguousArray<WindowsEncodingUnit>(unsafeUninitializedCapacity: Int(MAX_PATH))
-        { buffer, count in
-            let length = GetFinalPathNameByHandleW(handle, buffer.baseAddress, DWORD(MAX_PATH), DWORD(FILE_NAME_OPENED))
-
-            if length == 0 {
+            if handle == INVALID_HANDLE_VALUE {
                 throw SystemError(code: GetLastError())
             }
 
-            count = Int(length)
-        }
+            defer {
+                CloseHandle(handle)
+            }
 
-        return Path(binary)
+            let binary = try ContiguousArray<WindowsEncodingUnit>(unsafeUninitializedCapacity: Int(MAX_PATH))
+            { buffer, count in
+                let length = GetFinalPathNameByHandleW(handle, buffer.baseAddress, DWORD(MAX_PATH), DWORD(FILE_NAME_OPENED))
+
+                if length == 0 {
+                    throw SystemError(code: GetLastError())
+                }
+
+                count = Int(length)
+            }
+
+            return Path(binary)
+        }
     }
 }
 #endif // os(Windows)
