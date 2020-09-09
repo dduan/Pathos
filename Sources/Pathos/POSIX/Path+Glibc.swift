@@ -4,7 +4,7 @@ import LinuxHelpers
 
 extension Path {
     public func metadata(followSymlink: Bool = false) throws -> Metadata {
-        try binaryString.cString { cString in
+        try binaryString.c { cString in
             let flags: UInt32 = UInt32(followSymlink ? 0 : AT_SYMLINK_NOFOLLOW)
             var mode: UInt16 = 0
             var size: UInt64 = 0

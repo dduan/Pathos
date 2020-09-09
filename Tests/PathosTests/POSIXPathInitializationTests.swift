@@ -5,7 +5,7 @@ final class POSIXPathInitializationTests: XCTestCase {
     func testInitializingFromCString() {
         let expectedPath = "/a/b/c"
         XCTAssertEqual(
-            PurePOSIXPath(cString: expectedPath).binaryString[...],
+            PurePOSIXPath(cString: expectedPath).binaryString.content[...],
             expectedPath.utf8CString.dropLast()
         )
     }
@@ -13,7 +13,7 @@ final class POSIXPathInitializationTests: XCTestCase {
     func testInitializationFromString() {
         let expectedPath = "/a/b/c"
         XCTAssertEqual(
-            PurePOSIXPath(expectedPath).binaryString[...],
+            PurePOSIXPath(expectedPath).binaryString.content[...],
             expectedPath.utf8CString.dropLast()
         )
     }
