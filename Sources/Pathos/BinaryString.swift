@@ -1,7 +1,7 @@
 typealias WindowsEncodingUnit = UInt16
-typealias WindowsBinaryString = ContiguousArray<UInt16>
+typealias WindowsBinaryString = CString<UInt16>
 typealias POSIXEncodingUnit = CChar
-typealias POSIXBinaryString = ContiguousArray<CChar>
+typealias POSIXBinaryString = CString<CChar>
 
 #if os(Windows)
 typealias BinaryString = WindowsBinaryString
@@ -11,51 +11,55 @@ typealias BinaryString = POSIXBinaryString
 public typealias NativeEncodingUnit = CChar
 #endif
 
-extension ContiguousArray where Element: BinaryInteger {
-    init(cString: UnsafePointer<Element>) {
+struct CString<Unit: BinaryInteger>: Equatable, Hashable {
+    var storage: ContiguousArray<Unit>
+    var content: ContiguousArray<Unit>.SubSequence {
+        storage[0 ..< storage.count - 1]
+    }
+
+    public func c<T>(action: (UnsafePointer<Unit>) throws -> T) throws -> T {
+        try content.withUnsafeBufferPointer {
+            try action($0.baseAddress!)
+        }
+    }
+
+    init(cString: UnsafePointer<Unit>) {
         var length = 0
         while cString.advanced(by: length).pointee != 0 {
             length += 1
         }
 
-        self = ContiguousArray(unsafeUninitializedCapacity: length) { buffer, count in
+        storage = ContiguousArray(unsafeUninitializedCapacity: length + 1) { buffer, count in
             for offset in 0 ..< length {
                 buffer[offset] = cString.advanced(by: offset).pointee
             }
 
-            count = length
+            buffer[length] = 0
+            count = length + 1
         }
+    }
+
+    init(nulTerminatingStorage: ContiguousArray<Unit>) {
+        self.storage = nulTerminatingStorage
     }
 }
 
-extension POSIXBinaryString {
-    public init(_ string: String) {
-        self = ContiguousArray(string.utf8CString.dropLast())
+extension CString where Unit == WindowsEncodingUnit {
+    init(_ string: String) {
+        storage = ContiguousArray(string.utf16) + [0]
     }
 
-    public func cString<T>(action: (UnsafePointer<CChar>) throws -> T) throws -> T {
-        try (self + [0]).withUnsafeBufferPointer {
-            try action($0.baseAddress!)
-        }
-    }
-
-    public var description: String {
-        String(cString: Array(self) + [0])
+    var description: String {
+        String(decoding: content, as: UTF16.self)
     }
 }
 
-extension WindowsBinaryString {
-    public init(_ string: String) {
-        self = ContiguousArray(string.utf16)
+extension CString where Unit == POSIXEncodingUnit {
+    init(_ string: String) {
+        storage = ContiguousArray(string.utf8CString)
     }
 
-    public func cString<T>(action: (UnsafePointer<UInt16>) throws -> T) throws -> T {
-        try (self + [0]).withUnsafeBufferPointer {
-            try action($0.baseAddress!)
-        }
-    }
-
-    public var description: String {
-        String(decoding: self, as: UTF16.self)
+    var description: String {
+        (try? c { String(cString: $0) }) ?? "<UTF8 Decoding Error>"
     }
 }

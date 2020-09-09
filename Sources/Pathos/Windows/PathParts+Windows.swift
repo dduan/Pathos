@@ -4,7 +4,7 @@ private let colonByte = ":".utf16.first!
 
 extension Path.Parts {
     init(forWindowsWithBinary binary: WindowsBinaryString) {
-        let binary = WindowsBinaryString(binary.map { $0 == alternativeSeparatorByte ? windowsSeparatorByte : $0 })
+        let binary = ContiguousArray(binary.content.map { $0 == alternativeSeparatorByte ? windowsSeparatorByte : $0 })
         let (drive, rest) = Self.splitDrive(path: binary)
         self.drive = drive.isEmpty ? nil : String(decoding: drive, as: UTF16.self)
         (root, segments) = Self.parse(
@@ -32,28 +32,28 @@ extension Path.Parts {
     /// - Parameter path: The path to split.
     /// - Returns: A tuple with the first part being the drive or UNC host, the
     ///            second part being the rest of the path.
-    static func splitDrive(path: WindowsBinaryString) -> (WindowsBinaryString, WindowsBinaryString) {
+    static func splitDrive(path: ContiguousArray<WindowsEncodingUnit>) -> (ContiguousArray<WindowsEncodingUnit>, ContiguousArray<WindowsEncodingUnit>) {
         if path.count > 2 && path.starts(with: [windowsSeparatorByte, windowsSeparatorByte])
             && path[2] != windowsSeparatorByte
         {
             // UNC path
             guard let nextSlashIndex = path[2...].firstIndex(of: windowsSeparatorByte) else {
-                return ([], WindowsBinaryString(path))
+                return ([], ContiguousArray(path))
             }
 
             guard path.count > nextSlashIndex + 1,
                 let nextNextSlashIndex = path[(nextSlashIndex + 1)...].firstIndex(of: windowsSeparatorByte)
             else {
-                return (WindowsBinaryString(path), [])
+                return (ContiguousArray(path), [])
             }
 
             if nextNextSlashIndex == nextSlashIndex + 1 {
-                return ([], WindowsBinaryString(path))
+                return ([], ContiguousArray(path))
             }
 
             return (
-                WindowsBinaryString(path.prefix(nextNextSlashIndex)),
-                WindowsBinaryString(path.dropFirst(nextNextSlashIndex))
+                ContiguousArray(path.prefix(nextNextSlashIndex)),
+                ContiguousArray(path.dropFirst(nextNextSlashIndex))
             )
         }
 
@@ -61,11 +61,11 @@ extension Path.Parts {
 
         if path.count > 1 && path[colonIndex] == colonByte {
             return (
-                WindowsBinaryString(path[...colonIndex]),
-                WindowsBinaryString(path.dropFirst(2))
+                ContiguousArray(path[...colonIndex]),
+                ContiguousArray(path.dropFirst(2))
             )
         }
 
-        return ([], WindowsBinaryString(path))
+        return ([], ContiguousArray(path))
     }
 }
