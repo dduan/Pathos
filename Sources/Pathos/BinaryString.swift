@@ -39,8 +39,8 @@ struct CString<Unit: BinaryInteger>: Equatable, Hashable {
         }
     }
 
-    init(nulTerminatingStorage: ContiguousArray<Unit>) {
-        self.storage = nulTerminatingStorage
+    init(nulTerminatedStorage: ContiguousArray<Unit>) {
+        self.storage = nulTerminatedStorage
     }
 }
 

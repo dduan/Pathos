@@ -74,7 +74,7 @@ public struct PurePOSIXPath {
             }
         }
 
-        return Self(CString(nulTerminatingStorage: resultString + [0]))
+        return Self(CString(nulTerminatedStorage: resultString + [0]))
     }
 
     public var isAbsolute: Bool {

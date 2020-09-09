@@ -4,15 +4,17 @@ extension Path {
     public static func workingDirectory() throws -> Path {
         let binary = try ContiguousArray<WindowsEncodingUnit>(unsafeUninitializedCapacity: Int(MAX_PATH))
         { buffer, count in
-            let length = GetCurrentDirectoryW(DWORD(MAX_PATH), buffer.baseAddress)
+            let length = Int(GetCurrentDirectoryW(DWORD(MAX_PATH), buffer.baseAddress))
             if length == 0 {
                 throw SystemError(code: GetLastError())
             } else {
-                count = Int(length)
+                count = length + 1
             }
+
+            buffer[length] = 0
         }
 
-        return Path(binary)
+        return Path(WindowsBinaryString(nulTerminatedStorage: binary))
     }
 
     public static func setWorkingDirectory(_ path: Path) throws {
@@ -200,18 +202,23 @@ extension Path {
 
     // TODO: this is wrong because `GetTempPathW` does not ganrantee write/delete access to its result.
     private func defaultTemp() throws -> Path {
-        try Path(ContiguousArray(unsafeUninitializedCapacity: Int(MAX_PATH)) { buffer, count in
-            let length = GetTempPathW(
-                DWORD(MAX_PATH),
-                buffer.baseAddress
+        let storage = try ContiguousArray<WindowsEncodingUnit>(unsafeUninitializedCapacity: Int(MAX_PATH) + 1) { buffer, count in
+            let length = Int(
+                GetTempPathW(
+                    DWORD(MAX_PATH),
+                    buffer.baseAddress
+                )
             )
 
             if length == 0 {
                 throw SystemError(code: GetLastError())
             }
 
-            count = Int(length)
-        })
+            buffer[length] = 0
+            count = length + 1
+        }
+
+        return try Path(WindowsBinaryString(nulTerminatedStorage: storage))
     }
 
     private func realPath() throws -> Path {
@@ -236,16 +243,17 @@ extension Path {
 
             let binary = try ContiguousArray<WindowsEncodingUnit>(unsafeUninitializedCapacity: Int(MAX_PATH))
             { buffer, count in
-                let length = GetFinalPathNameByHandleW(handle, buffer.baseAddress, DWORD(MAX_PATH), DWORD(FILE_NAME_OPENED))
+                let length = Int(GetFinalPathNameByHandleW(handle, buffer.baseAddress, DWORD(MAX_PATH), DWORD(FILE_NAME_OPENED)))
 
                 if length == 0 {
                     throw SystemError(code: GetLastError())
                 }
 
-                count = Int(length)
+                buffer[length] = 0
+                count = length + 1
             }
 
-            return Path(binary)
+            return Path(WindowsBinaryString(nulTerminatedStorage: binary))
         }
     }
 }
