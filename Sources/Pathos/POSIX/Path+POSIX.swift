@@ -16,7 +16,7 @@ extension Path {
     }
 
     public static func setWorkingDirectory(_ path: Path) throws {
-        try path.binaryString.cString { cString in
+        try path.binaryString.c { cString in
             if chdir(cString) != 0 {
                 throw SystemError(code: errno)
             }
@@ -25,7 +25,7 @@ extension Path {
 
     public func children(recursive: Bool = false) throws -> AnySequence<Path> {
         var result = [Path]()
-        try binaryString.cString { cString in
+        try binaryString.c { cString in
             guard let streamPtr = opendir(cString) else {
                 throw SystemError(code: errno)
             }
@@ -41,7 +41,7 @@ extension Path {
                     { $0.bindMemory(to: POSIXEncodingUnit.self).baseAddress.map(POSIXBinaryString.init(cString:))
                     }
                 ),
-                    name != [POSIXConstants.binaryCurrentContext, POSIXConstants.binaryCurrentContext] && name != [POSIXConstants.binaryCurrentContext]
+                    name.content != [POSIXConstants.binaryCurrentContext, POSIXConstants.binaryCurrentContext] && name.content != [POSIXConstants.binaryCurrentContext]
                 else {
                     continue
                 }
@@ -67,7 +67,7 @@ extension Path {
             fatalError("Attempting to set incompatable permissions")
         }
 
-        try binaryString.cString { cString in
+        try binaryString.c { cString in
             if chmod(cString, posixPermissions.rawValue) != 0 {
                 throw SystemError(code: errno)
             }
@@ -76,7 +76,7 @@ extension Path {
 
     public func makeDirectory(withParents: Bool = false) throws {
         func _makeDirectory() throws {
-            try binaryString.cString { cString in
+            try binaryString.c { cString in
                 if mkdir(cString, 0o755) != 0 {
                     let error = SystemError(code: errno)
                     // Cannot rely on checking for EEXIST, since the operating system
@@ -106,13 +106,13 @@ extension Path {
                     try child.delete(recursive: true)
                 }
             }
-            try binaryString.cString { cString in
+            try binaryString.c { cString in
                 if rmdir(cString) != 0 {
                     throw SystemError(code: errno)
                 }
             }
         } else {
-            try binaryString.cString { cString in
+            try binaryString.c { cString in
                 if unlink(cString) != 0 {
                     throw SystemError(code: errno)
                 }
@@ -124,9 +124,9 @@ extension Path {
     ///
     /// - Parameter newPath: New path for the content at the current path.
     public func move(to newPath: Path) throws {
-        try (binaryString + [0]).withUnsafeBufferPointer { fromBuffer in
-            try (newPath.binaryString + [0]).withUnsafeBufferPointer { toBuffer in
-                if rename(fromBuffer.baseAddress, toBuffer.baseAddress) != 0 {
+        try binaryString.c { fromBuffer in
+            try newPath.binaryString.c { toBuffer in
+                if rename(fromBuffer, toBuffer) != 0 {
                     throw SystemError(code: errno)
                 }
             }

@@ -65,16 +65,16 @@ public struct PurePOSIXPath {
         let paths = [self] + paths.map(\.asPOSIXPath)
         var resultString = ContiguousArray<POSIXEncodingUnit>()
         for path in paths {
-            if path.binaryString.first == POSIXConstants.binaryPathSeparator {
-                resultString = path.binaryString
+            if path.binaryString.content.first == POSIXConstants.binaryPathSeparator {
+                resultString = .init(path.binaryString.content)
             } else if resultString.isEmpty || resultString.last == POSIXConstants.binaryPathSeparator {
-                resultString += path.binaryString
+                resultString += path.binaryString.content
             } else {
-                resultString += [POSIXConstants.binaryPathSeparator] + path.binaryString
+                resultString += [POSIXConstants.binaryPathSeparator] + path.binaryString.content
             }
         }
 
-        return Self(resultString)
+        return Self(CString(nulTerminatedStorage: resultString + [0]))
     }
 
     public var isAbsolute: Bool {
