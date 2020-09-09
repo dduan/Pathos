@@ -184,6 +184,16 @@ extension Path {
         }
     }
 
+    public func move(to newPath: Path) throws {
+        try binaryString.cString { fromCString in
+            try newPath.binaryString.cString { toCString in
+                if !MoveFileW(fromCString, toCString) {
+                    throw SystemError(code: GetLastError())
+                }
+            }
+        }
+    }
+
     private func tempPath() throws -> Path {
         try defaultTemp() + "\(UInt64.random(in: 0 ... .max))"
     }
