@@ -33,8 +33,10 @@ extension POSIXBinaryString {
         self = ContiguousArray(string.utf8CString.dropLast())
     }
 
-    public var cString: UnsafePointer<CChar> {
-        (self + [0]).withUnsafeBufferPointer { $0.baseAddress! }
+    public func cString<T>(action: (UnsafePointer<CChar>) throws -> T) throws -> T {
+        try (self + [0]).withUnsafeBufferPointer {
+            try action($0.baseAddress!)
+        }
     }
 
     public var description: String {
@@ -47,8 +49,10 @@ extension WindowsBinaryString {
         self = ContiguousArray(string.utf16)
     }
 
-    public var cString: UnsafePointer<UInt16> {
-        (self + [0]).withUnsafeBufferPointer { $0.baseAddress! }
+    public func cString<T>(action: (UnsafePointer<UInt16>) throws -> T) throws -> T {
+        try (self + [0]).withUnsafeBufferPointer {
+            try action($0.baseAddress!)
+        }
     }
 
     public var description: String {
