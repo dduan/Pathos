@@ -3,7 +3,7 @@ extension Path.Parts {
         drive = nil
 
         (root, segments) = Self.parse(
-            binary.withUnsafeBytes { $0 },
+            binary.content.withUnsafeBytes { $0 },
             as: UTF8.self,
             separator: UTF8.CodeUnit(POSIXConstants.binaryPathSeparator),
             currentContext: UTF8.CodeUnit(POSIXConstants.binaryCurrentContext)
