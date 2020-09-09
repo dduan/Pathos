@@ -119,6 +119,19 @@ extension Path {
             }
         }
     }
+
+    /// Move a file or direcotry to a new path. If the destination already exist, write over it.
+    ///
+    /// - Parameter newPath: New path for the content at the current path.
+    public func move(to newPath: Path) throws {
+        try (binaryString + [0]).withUnsafeBufferPointer { fromBuffer in
+            try (newPath.binaryString + [0]).withUnsafeBufferPointer { toBuffer in
+                if rename(fromBuffer.baseAddress, toBuffer.baseAddress) != 0 {
+                    throw SystemError(code: errno)
+                }
+            }
+        }
+    }
 }
 
 #endif // !os(Windows)
