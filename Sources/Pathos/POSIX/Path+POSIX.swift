@@ -88,9 +88,7 @@ extension Path {
             }
         }
 
-        if !withParents {
-            try _makeDirectory()
-        } else if !pure.segments.isEmpty {
+        if withParents && !pure.segments.isEmpty {
             let parents = self.parents.makeIterator()
             try parents.next()?.makeDirectory(withParents: true)
         }
