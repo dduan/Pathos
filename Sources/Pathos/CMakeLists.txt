@@ -20,6 +20,7 @@ add_library(Pathos
   "POSIX/PathParts+POSIX.swift"
   "POSIX/PurePOSIXPath.swift"
   "Path+Joining.swift"
+  "Path+Temporary.swift"
   "Path.swift"
   "PathParts.swift"
   "Permissions.swift"

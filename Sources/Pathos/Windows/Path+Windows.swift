@@ -129,9 +129,7 @@ extension Path {
             }
         }
 
-        if !withParents {
-            try _makeDirectory()
-        } else if !pure.segments.isEmpty {
+        if withParents && !pure.segments.isEmpty {
             let parents = self.parents.makeIterator()
             try parents.next()?.makeDirectory(withParents: true)
         }
@@ -218,7 +216,7 @@ extension Path {
             count = length + 1
         }
 
-        return try Path(WindowsBinaryString(nulTerminatedStorage: storage))
+        return Path(WindowsBinaryString(nulTerminatedStorage: storage))
     }
 
     private func realPath() throws -> Path {
