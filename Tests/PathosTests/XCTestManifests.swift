@@ -391,6 +391,7 @@ extension WindowsPartsParsingTests {
         ("testNoRootIsParsedCorrectly", testNoRootIsParsedCorrectly),
         ("testParsingDriveOnWindows", testParsingDriveOnWindows),
         ("testParsingDriveOnWindows2", testParsingDriveOnWindows2),
+        ("testParsingDriveOnWindows3", testParsingDriveOnWindows3),
         ("testParsingParts", testParsingParts),
         ("testParsingUNCDriveOnWindows", testParsingUNCDriveOnWindows),
         ("testRootIsParsed", testRootIsParsed),
