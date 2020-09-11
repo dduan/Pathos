@@ -138,6 +138,10 @@ extension Path {
     }
 
     public func delete(recursive: Bool = true) throws {
+        func temporaryName() -> Path {
+            Path.defaultTemporaryDirectory.joined(with: "\(UInt64.random(in: 0 ... .max))")
+        }
+
         let meta = try metadata()
         if meta.permissions.isReadOnly {
             var newPermission = meta.permissions
@@ -151,7 +155,7 @@ extension Path {
                     try child.delete(recursive: true)
                 }
 
-                try Path.makeTemporaryDirectory().binaryString.c { tempCString in
+                try temporaryName().binaryString.c { tempCString in
                     try binaryString.c { fromCString in
                         if !MoveFileW(fromCString, tempCString) {
                             throw SystemError(code: GetLastError())
@@ -171,7 +175,7 @@ extension Path {
             }
 
         } else {
-            try Path.makeTemporaryDirectory().binaryString.c { tempCString in
+            try temporaryName().binaryString.c { tempCString in
                 try binaryString.c { fromCString in
                     if !MoveFileW(fromCString, tempCString) {
                         throw SystemError(code: GetLastError())
