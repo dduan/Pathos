@@ -12,7 +12,7 @@ public typealias NativeEncodingUnit = CChar
 #endif
 
 struct CString<Unit: BinaryInteger>: Equatable, Hashable {
-    var storage: ContiguousArray<Unit>
+    private var storage: ContiguousArray<Unit>
     var content: ContiguousArray<Unit>.SubSequence {
         storage[0 ..< storage.count - 1]
     }
