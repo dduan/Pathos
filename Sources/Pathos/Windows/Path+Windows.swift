@@ -151,7 +151,7 @@ extension Path {
                     try child.delete(recursive: true)
                 }
 
-                try tempPath().binaryString.c { tempCString in
+                try Path.makeTemporaryDirectory().binaryString.c { tempCString in
                     try binaryString.c { fromCString in
                         if !MoveFileW(fromCString, tempCString) {
                             throw SystemError(code: GetLastError())
@@ -171,7 +171,7 @@ extension Path {
             }
 
         } else {
-            try tempPath().binaryString.c { tempCString in
+            try Path.makeTemporaryDirectory().binaryString.c { tempCString in
                 try binaryString.c { fromCString in
                     if !MoveFileW(fromCString, tempCString) {
                         throw SystemError(code: GetLastError())
@@ -192,31 +192,6 @@ extension Path {
                 }
             }
         }
-    }
-
-    private func tempPath() throws -> Path {
-        try defaultTemp() + "\(UInt64.random(in: 0 ... .max))"
-    }
-
-    // TODO: this is wrong because `GetTempPathW` does not ganrantee write/delete access to its result.
-    private func defaultTemp() throws -> Path {
-        let storage = try ContiguousArray<WindowsEncodingUnit>(unsafeUninitializedCapacity: Int(MAX_PATH) + 1) { buffer, count in
-            let length = Int(
-                GetTempPathW(
-                    DWORD(MAX_PATH),
-                    buffer.baseAddress
-                )
-            )
-
-            if length == 0 {
-                throw SystemError(code: GetLastError())
-            }
-
-            buffer[length] = 0
-            count = length + 1
-        }
-
-        return Path(WindowsBinaryString(nulTerminatedStorage: storage))
     }
 
     private func realPath() throws -> Path {
