@@ -130,6 +130,33 @@ extension Path {
             }
         }
     }
+
+    public func readSymlink() throws -> Path {
+        guard try metadata().fileType.isSymlink else {
+            return self
+        }
+
+        return try Path(
+            CString(
+                nulTerminatedStorage: ContiguousArray<POSIXEncodingUnit>(
+                    unsafeUninitializedCapacity: Constants.maxPathLength + 1
+                ) { buffer, count in
+                    try binaryString.c { cString in
+                        let length = Int(
+                            readlink(cString, buffer.baseAddress!, Constants.maxPathLength)
+                        )
+
+                        if length == -1 {
+                            throw SystemError(code: errno)
+                        }
+
+                        buffer[length] = 0
+                        count = length + 1
+                    }
+                }
+            )
+        )
+    }
 }
 
 #endif // !os(Windows)

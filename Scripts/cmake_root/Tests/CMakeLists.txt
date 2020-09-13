@@ -14,6 +14,7 @@ add_executable(WindowsMain
 
 target_link_libraries(WindowsMain PRIVATE
   "PathosTests"
+  "WindowsHelpers"
 )
 
 add_test(NAME WindowsMain COMMAND WindowsMain)

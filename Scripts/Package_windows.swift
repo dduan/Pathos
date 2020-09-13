@@ -11,14 +11,37 @@ let package = Package(
         ),
     ],
     targets: [
-        .target(
-            name: "Pathos",
-            dependencies: []
-        ),
+        .target(name: "Pathos", dependencies: ["WindowsHelpers"]),
+        .target(name: "WindowsHelpers"),
         .target(
             name: "WindowsTests",
             dependencies: ["Pathos"],
             path: "./Tests/"
+        ),
+        .target(
+            name: "ls",
+            dependencies: ["Pathos"],
+            path: "Examples/ls"
+        ),
+        .target(
+            name: "readonly",
+            dependencies: ["Pathos"],
+            path: "Examples/readonly"
+        ),
+        .target(
+            name: "lookup",
+            dependencies: ["Pathos"],
+            path: "Examples/lookup"
+        ),
+        .target(
+            name: "mkdir",
+            dependencies: ["Pathos"],
+            path: "Examples/mkdir"
+        ),
+        .target(
+            name: "rm",
+            dependencies: ["Pathos"],
+            path: "Examples/rm"
         ),
     ]
 )
