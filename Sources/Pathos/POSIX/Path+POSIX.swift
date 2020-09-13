@@ -131,6 +131,7 @@ extension Path {
         }
     }
 
+    /// Return a path to which a symbolic link points to.
     public func readSymlink() throws -> Path {
         guard try metadata().fileType.isSymlink else {
             return self
@@ -156,6 +157,19 @@ extension Path {
                 }
             )
         )
+    }
+
+    /// Create a symbolic link to this path.
+    ///
+    /// - Parameter path: The path at which to create the symlink.
+    public func makeSymlink(at path: Path) throws {
+        try binaryString.c { source in
+            try path.binaryString.c { target in
+                if symlink(source, target) != 0 {
+                    throw SystemError(code: errno)
+                }
+            }
+        }
     }
 }
 

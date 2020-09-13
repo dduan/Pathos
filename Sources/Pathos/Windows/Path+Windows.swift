@@ -288,6 +288,20 @@ extension Path {
         }
     }
 
+    /// Create a symbolic link to this path.
+    ///
+    /// - Parameter path: The path at which to create the symlink.
+    public func makeSymlink(at path: Path) throws {
+        let flag: DWORD = try metadata().fileType.isDirectory ? SYMBOLIC_LINK_FLAG_DIRECTORY : 0
+        try binaryString.c { source in
+            try path.binaryString.c { target in
+                if !CreateSymbolicLinkW(source, target, flag) {
+                    throw SystemError(code: GetLastError())
+                }
+            }
+        }
+    }
+
     private func realPath() throws -> Path {
         try binaryString.c { cString in
             let handle = CreateFileW(
