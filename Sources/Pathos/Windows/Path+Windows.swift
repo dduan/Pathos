@@ -245,7 +245,7 @@ extension Path {
                 CloseHandle(handle)
             }
 
-            var data = try ContiguousArray<CChar>(unsafeUninitializedCapacity: 16 * 1024) { buffer, count in
+            let data = try ContiguousArray<CChar>(unsafeUninitializedCapacity: 16 * 1024) { buffer, count in
                 var size: DWORD = 0
                 if !DeviceIoControl(
                     handle,
@@ -283,6 +283,22 @@ extension Path {
                             Path(cString: Array(wideData.pointee[nameStartingPoint ..< (nameStartingPoint + nameLength)]) + [0])
                         }
                     }
+                }
+            }
+        }
+    }
+
+    /// Create a symbolic link to this path.
+    ///
+    /// - Parameter path: The path at which to create the symlink.
+    public func makeSymlink(at path: Path) throws {
+        let flag: DWORD = try metadata().fileType.isDirectory
+            ? DWORD(SYMBOLIC_LINK_FLAG_DIRECTORY)
+            : 0
+        try binaryString.c { source in
+            try path.binaryString.c { target in
+                if CreateSymbolicLinkW(source, target, flag) == 0 {
+                    throw SystemError(code: GetLastError())
                 }
             }
         }
