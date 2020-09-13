@@ -32,9 +32,9 @@ let package = Package(
             path: "Examples/lookup"
         ),
         .target(
-            name: "mkdir",
+            name: "mk",
             dependencies: ["Pathos"],
-            path: "Examples/mkdir"
+            path: "Examples/mk"
         ),
         .target(
             name: "rm",

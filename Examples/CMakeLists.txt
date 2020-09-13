@@ -13,9 +13,9 @@ add_executable(lookup
 target_link_libraries(lookup PRIVATE
   Pathos)
 
-add_executable(mkdir
-  mkdir/main.swift)
-target_link_libraries(mkdir PRIVATE
+add_executable(mk
+  mk/main.swift)
+target_link_libraries(mk PRIVATE
   Pathos)
 
 add_executable(rm
