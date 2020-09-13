@@ -16,14 +16,16 @@ do {
         let modified = "\(meta.modified.seconds).\(meta.modified.nanoseconds)".withLeftPad(24)
         let fileType: String
         let fileTypeLength = "directory".count
+        var name = "\(child)"
         if meta.fileType.isDirectory {
             fileType = "directory"
         } else if meta.fileType.isSymlink {
             fileType = "symlink".withLeftPad(fileTypeLength)
+            name = "\(child) -> \(try child.readSymlink())"
         } else {
             fileType = "file".withLeftPad(fileTypeLength)
         }
-        print("\(fileType) \(permission) \(size) \(modified) \(child)")
+        print("\(fileType) \(permission) \(size) \(modified) \(name)")
     }
 } catch {
     print(error)
