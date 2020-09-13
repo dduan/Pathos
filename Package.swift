@@ -12,12 +12,10 @@ let package = Package(
     targets: [
         .target(
             name: "Pathos",
-            dependencies: []
+            dependencies: ["LinuxHelpers", "WindowsHelpers"]
         ),
-        .target(
-            name: "LinuxHelpers",
-            dependencies: []
-        ),
+        .target(name: "LinuxHelpers"),
+        .target(name: "WindowsHelpers"),
         .target(
             name: "ls",
             dependencies: ["Pathos"],
