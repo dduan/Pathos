@@ -286,10 +286,10 @@ extension Path {
                         throw SystemError(code: 0x0000_00DE)
                     }
 
-                    let pathName = Array(data[nameStartingPoint..<(nameStartingPoint + Int(reparseData.printNameLength))]) + [0, 0]
+                    let pathName = Array(data[nameStartingPoint ..< (nameStartingPoint + Int(reparseData.printNameLength))]) + [0, 0]
                     return withUnsafePointer(to: pathName) {
                         $0.withMemoryRebound(to: [UInt16].self, capacity: pathName.count / 2) { wideData in
-                            return Path(cString: wideData.pointee)
+                            Path(cString: wideData.pointee)
                         }
                     }
                 }
