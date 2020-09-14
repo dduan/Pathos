@@ -278,18 +278,18 @@ extension Path {
                     }
 
                     let nameStartingPoint: Int
-                    let nameLength = Int(reparseData.substituteNameLength) / MemoryLayout<WindowsEncodingUnit>.stride
                     if reparseData.reparseTag == IO_REPARSE_TAG_SYMLINK {
-                        nameStartingPoint = MemoryLayout<SymbolicLinkReparseBuffer>.stride - 1
+                        nameStartingPoint = 20
                     } else if reparseData.reparseTag == IO_REPARSE_TAG_MOUNT_POINT {
-                        nameStartingPoint = MemoryLayout<MountPointReparseBuffer>.stride - 1
+                        nameStartingPoint = 16
                     } else {
                         throw SystemError(code: 0x0000_00DE)
                     }
 
-                    return withUnsafePointer(to: data) {
-                        $0.withMemoryRebound(to: [UInt16].self, capacity: data.count / 2) { wideData in
-                            Path(cString: Array(wideData.pointee[nameStartingPoint ..< (nameStartingPoint + nameLength)]) + [0])
+                    let pathName = Array(data[nameStartingPoint..<(nameStartingPoint + Int(reparseData.printNameLength))]) + [0, 0]
+                    return withUnsafePointer(to: pathName) {
+                        $0.withMemoryRebound(to: [UInt16].self, capacity: pathName.count / 2) { wideData in
+                            return Path(cString: wideData.pointee)
                         }
                     }
                 }
@@ -301,9 +301,11 @@ extension Path {
     ///
     /// - Parameter path: The path at which to create the symlink.
     public func makeSymlink(at path: Path) throws {
-        let flag: DWORD = try metadata().fileType.isDirectory
-            ? DWORD(SYMBOLIC_LINK_FLAG_DIRECTORY)
-            : 0
+        var flag = DWORD(SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE)
+        if try metadata().fileType.isDirectory {
+            flag |= DWORD(SYMBOLIC_LINK_FLAG_DIRECTORY)
+        }
+
         try binaryString.c { source in
             try path.binaryString.c { target in
                 if CreateSymbolicLinkW(target, source, flag) == 0 {
