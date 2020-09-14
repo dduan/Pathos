@@ -297,7 +297,7 @@ extension Path {
             : 0
         try binaryString.c { source in
             try path.binaryString.c { target in
-                if CreateSymbolicLinkW(source, target, flag) == 0 {
+                if CreateSymbolicLinkW(target, source, flag) == 0 {
                     throw SystemError(code: GetLastError())
                 }
             }
