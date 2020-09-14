@@ -144,6 +144,10 @@ extension Path {
         }
 
         let meta = try metadata()
+
+        /// Read from raw attribute whether it's a directory. If it is, and it's a symlink, we need to delete it as if it's an directory.
+        let attributes = meta.permissions as! WindowsAttributes
+        let isDirectory = attributes.rawValue & UInt32(bitPattern: FILE_ATTRIBUTE_DIRECTORY) != 0
         if meta.permissions.isReadOnly {
             var newPermission = meta.permissions
             newPermission.isReadOnly = false
@@ -174,7 +178,12 @@ extension Path {
                     }
                 }
             }
-
+        } else if meta.fileType.isSymlink && isDirectory {
+            try binaryString.c { fromCString in
+                if !RemoveDirectoryW(fromCString) {
+                    throw SystemError(code: GetLastError())
+                }
+            }
         } else {
             try temporaryName().binaryString.c { tempCString in
                 try binaryString.c { fromCString in
