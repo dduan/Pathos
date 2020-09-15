@@ -19,7 +19,7 @@ extension Path {
     }
 
     public static func setWorkingDirectory(_ path: Path) throws {
-        try path.binaryString.c { cString in
+        try path.binaryPath.c { cString in
             if !SetCurrentDirectoryW(cString) {
                 throw SystemError(code: GetLastError())
             }
@@ -27,7 +27,7 @@ extension Path {
     }
 
     public func metadata(followSymlink: Bool = false) throws -> Metadata {
-        let binary = try followSymlink ? realPath().binaryString : binaryString
+        let binary = try followSymlink ? realPath().binaryPath : binaryPath
         var data = WIN32_FIND_DATAW()
         try binary.c { cString in
             let handle = FindFirstFileW(cString, &data)
@@ -49,7 +49,7 @@ extension Path {
     public func children(recursive: Bool = false) throws -> AnySequence<Path> {
         var result = [Path]()
         var data = WIN32_FIND_DATAW()
-        try (self + "*").binaryString.c { pathCString in
+        try (self + "*").binaryPath.c { pathCString in
             let handle = FindFirstFileW(pathCString, &data)
             if handle == INVALID_HANDLE_VALUE {
                 throw SystemError(code: GetLastError())
@@ -104,7 +104,7 @@ extension Path {
             fatalError("Attempting to set incompatable permissions")
         }
 
-        try binaryString.c { cString in
+        try binaryPath.c { cString in
             if !SetFileAttributesW(cString, windowsAttributes.rawValue) {
                 throw SystemError(code: GetLastError())
             }
@@ -120,7 +120,7 @@ extension Path {
     ///                          directory given as an operand already exists.
     public func makeDirectory(withParents: Bool = false) throws {
         func _makeDirectory() throws {
-            try binaryString.c { cString in
+            try binaryPath.c { cString in
                 if !CreateDirectoryW(cString, nil) {
                     let error = SystemError(code: GetLastError())
                     if !exists() || error == .fileExists && !withParents {
@@ -156,8 +156,8 @@ extension Path {
                     try child.delete(recursive: true)
                 }
 
-                try temporaryName().binaryString.c { tempCString in
-                    try binaryString.c { fromCString in
+                try temporaryName().binaryPath.c { tempCString in
+                    try binaryPath.c { fromCString in
                         if !MoveFileW(fromCString, tempCString) {
                             throw SystemError(code: GetLastError())
                         }
@@ -168,7 +168,7 @@ extension Path {
                     }
                 }
             } else {
-                try binaryString.c { fromCString in
+                try binaryPath.c { fromCString in
                     if !RemoveDirectoryW(fromCString) {
                         throw SystemError(code: GetLastError())
                     }
@@ -176,8 +176,8 @@ extension Path {
             }
 
         } else {
-            try temporaryName().binaryString.c { tempCString in
-                try binaryString.c { fromCString in
+            try temporaryName().binaryPath.c { tempCString in
+                try binaryPath.c { fromCString in
                     if !MoveFileW(fromCString, tempCString) {
                         throw SystemError(code: GetLastError())
                     }
@@ -190,8 +190,8 @@ extension Path {
     }
 
     public func move(to newPath: Path) throws {
-        try binaryString.c { fromCString in
-            try newPath.binaryString.c { toCString in
+        try binaryPath.c { fromCString in
+            try newPath.binaryPath.c { toCString in
                 if !MoveFileW(fromCString, toCString) {
                     throw SystemError(code: GetLastError())
                 }
@@ -226,7 +226,7 @@ extension Path {
         //
         // Each of the union member in `REPARSE_DATA_BUFFER` also contains content size of the flexible array.
         // We use that information as well when reading from it.
-        try binaryString.c { cString -> Path in
+        try binaryPath.c { cString -> Path in
             let handle = CreateFileW(
                 cString,
                 0,
@@ -295,8 +295,8 @@ extension Path {
         let flag: DWORD = try metadata().fileType.isDirectory
             ? DWORD(SYMBOLIC_LINK_FLAG_DIRECTORY)
             : 0
-        try binaryString.c { source in
-            try path.binaryString.c { target in
+        try binaryPath.c { source in
+            try path.binaryPath.c { target in
                 if CreateSymbolicLinkW(source, target, flag) == 0 {
                     throw SystemError(code: GetLastError())
                 }
@@ -305,7 +305,7 @@ extension Path {
     }
 
     private func realPath() throws -> Path {
-        try binaryString.c { cString in
+        try binaryPath.c { cString in
             let handle = CreateFileW(
                 cString,
                 0,

@@ -4,7 +4,7 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible {
     associatedtype BinaryStringLike
     associatedtype PathLike
 
-    var binaryString: BinaryStringLike { get }
+    var binaryPath: BinaryStringLike { get }
 
     /// Creates a path from a C String.
     ///

@@ -2,10 +2,10 @@ public struct PureWindowsPath {
     @LazyBoxed
     private var parts: Path.Parts
 
-    let binaryString: WindowsBinaryString
+    let binaryPath: WindowsBinaryString
 
     init(_ binary: WindowsBinaryString) {
-        binaryString = binary
+        binaryPath = binary
         _parts = .init { Path.Parts(forWindowsWithBinary: binary) }
     }
 
@@ -133,18 +133,18 @@ public struct PureWindowsPath {
 
 extension PureWindowsPath: CustomStringConvertible {
     public var description: String {
-        binaryString.description
+        binaryPath.description
     }
 }
 
 extension PureWindowsPath: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.binaryString == rhs.binaryString
+        lhs.binaryPath == rhs.binaryPath
     }
 }
 
 extension PureWindowsPath: Hashable {
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(binaryString)
+        hasher.combine(binaryPath)
     }
 }
