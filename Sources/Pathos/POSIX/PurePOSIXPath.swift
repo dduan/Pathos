@@ -2,10 +2,10 @@ public struct PurePOSIXPath {
     @LazyBoxed
     private var parts: Path.Parts
 
-    let binaryString: POSIXBinaryString
+    let binaryPath: POSIXBinaryString
 
     init(_ binary: POSIXBinaryString) {
-        binaryString = binary
+        binaryPath = binary
         _parts = LazyBoxed { Path.Parts(forPOSIXWithBinary: binary) }
     }
 
@@ -65,12 +65,12 @@ public struct PurePOSIXPath {
         let paths = [self] + paths.map(\.asPOSIXPath)
         var resultString = ContiguousArray<POSIXEncodingUnit>()
         for path in paths {
-            if path.binaryString.content.first == POSIXConstants.binaryPathSeparator {
-                resultString = .init(path.binaryString.content)
+            if path.binaryPath.content.first == POSIXConstants.binaryPathSeparator {
+                resultString = .init(path.binaryPath.content)
             } else if resultString.isEmpty || resultString.last == POSIXConstants.binaryPathSeparator {
-                resultString += path.binaryString.content
+                resultString += path.binaryPath.content
             } else {
-                resultString += [POSIXConstants.binaryPathSeparator] + path.binaryString.content
+                resultString += [POSIXConstants.binaryPathSeparator] + path.binaryPath.content
             }
         }
 
@@ -125,19 +125,19 @@ public struct PurePOSIXPath {
 
 extension PurePOSIXPath: CustomStringConvertible {
     public var description: String {
-        binaryString.description
+        binaryPath.description
     }
 }
 
 extension PurePOSIXPath: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.binaryString == rhs.binaryString
+        lhs.binaryPath == rhs.binaryPath
     }
 }
 
 extension PurePOSIXPath: Hashable {
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(binaryString)
+        hasher.combine(binaryPath)
     }
 }
 
