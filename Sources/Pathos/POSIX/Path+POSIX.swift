@@ -16,7 +16,7 @@ extension Path {
     }
 
     public static func setWorkingDirectory(_ path: Path) throws {
-        try path.binaryString.c { cString in
+        try path.binaryPath.c { cString in
             if chdir(cString) != 0 {
                 throw SystemError(code: errno)
             }
@@ -25,7 +25,7 @@ extension Path {
 
     public func children(recursive: Bool = false) throws -> AnySequence<Path> {
         var result = [Path]()
-        try binaryString.c { cString in
+        try binaryPath.c { cString in
             guard let streamPtr = opendir(cString) else {
                 throw SystemError(code: errno)
             }
@@ -67,7 +67,7 @@ extension Path {
             fatalError("Attempting to set incompatable permissions")
         }
 
-        try binaryString.c { cString in
+        try binaryPath.c { cString in
             if chmod(cString, posixPermissions.rawValue) != 0 {
                 throw SystemError(code: errno)
             }
@@ -76,7 +76,7 @@ extension Path {
 
     public func makeDirectory(withParents: Bool = false) throws {
         func _makeDirectory() throws {
-            try binaryString.c { cString in
+            try binaryPath.c { cString in
                 if mkdir(cString, 0o755) != 0 {
                     let error = SystemError(code: errno)
                     // Cannot rely on checking for EEXIST, since the operating system
@@ -104,13 +104,13 @@ extension Path {
                     try child.delete(recursive: true)
                 }
             }
-            try binaryString.c { cString in
+            try binaryPath.c { cString in
                 if rmdir(cString) != 0 {
                     throw SystemError(code: errno)
                 }
             }
         } else {
-            try binaryString.c { cString in
+            try binaryPath.c { cString in
                 if unlink(cString) != 0 {
                     throw SystemError(code: errno)
                 }
@@ -122,8 +122,8 @@ extension Path {
     ///
     /// - Parameter newPath: New path for the content at the current path.
     public func move(to newPath: Path) throws {
-        try binaryString.c { fromBuffer in
-            try newPath.binaryString.c { toBuffer in
+        try binaryPath.c { fromBuffer in
+            try newPath.binaryPath.c { toBuffer in
                 if rename(fromBuffer, toBuffer) != 0 {
                     throw SystemError(code: errno)
                 }
@@ -142,7 +142,7 @@ extension Path {
                 nulTerminatedStorage: ContiguousArray<POSIXEncodingUnit>(
                     unsafeUninitializedCapacity: Constants.maxPathLength + 1
                 ) { buffer, count in
-                    try binaryString.c { cString in
+                    try binaryPath.c { cString in
                         let length = Int(
                             readlink(cString, buffer.baseAddress!, Constants.maxPathLength)
                         )
@@ -163,8 +163,8 @@ extension Path {
     ///
     /// - Parameter path: The path at which to create the symlink.
     public func makeSymlink(at path: Path) throws {
-        try binaryString.c { source in
-            try path.binaryString.c { target in
+        try binaryPath.c { source in
+            try path.binaryPath.c { target in
                 if symlink(source, target) != 0 {
                     throw SystemError(code: errno)
                 }
