@@ -17,7 +17,7 @@ struct CString<Unit: BinaryInteger>: Equatable, Hashable {
         storage[0 ..< storage.count - 1]
     }
 
-    public func c<T>(action: (UnsafePointer<Unit>) throws -> T) throws -> T {
+    func c<T>(action: (UnsafePointer<Unit>) throws -> T) throws -> T {
         try content.withUnsafeBufferPointer {
             try action($0.baseAddress!)
         }
