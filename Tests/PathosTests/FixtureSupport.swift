@@ -5,11 +5,16 @@ enum FixturePath: String {
     case fileThatExists = "hello"
     case noneExistence = "hello_not"
     case directoryThatExists = "world"
+    case secondDirectoryThatExists = "earth"
+    case thirdDirectoryThatExists = "another_world"
     case goodFileSymbol = "hello_symbol"
     case goodDirectorySymbol = "world_symbol"
     case badSymbol = "broken_symbol"
     case fileInDirectory = "world/world_hello"
+    case secondFileInDirectory = "another_world/me"
+    case secondFileViaSymlink = "earth/portal/me"
     case symbolInDirectory = "world/world_symbol"
+    case secondSymbolInDirectory = "earth/portal"
     case directoryInDirectory = "world/world_world"
     case fileInNestedDirectory = "world/world_world/hello"
     case fileInNestedDirectoryViaDirectorySymbol = "world_symbol/world_world/hello"
@@ -58,7 +63,11 @@ extension XCTestCase {
     }
 
     var childDirectoryFixture: Set<String> {
-        return [self.fixture(.directoryThatExists)]
+        return [
+            self.fixture(.directoryThatExists),
+            self.fixture(.secondDirectoryThatExists),
+            self.fixture(.thirdDirectoryThatExists),
+        ]
     }
 
     var childSymlinkFixture: Set<String> {
@@ -74,6 +83,7 @@ extension XCTestCase {
             self.fixture(.fileThatExists),
             self.fixture(.fileInDirectory),
             self.fixture(.fileInNestedDirectory),
+            self.fixture(.secondFileInDirectory),
         ]
     }
 
@@ -81,6 +91,8 @@ extension XCTestCase {
         return [
             self.fixture(.directoryThatExists),
             self.fixture(.directoryInDirectory),
+            self.fixture(.secondDirectoryThatExists),
+            self.fixture(.thirdDirectoryThatExists)
         ]
     }
 
@@ -90,6 +102,7 @@ extension XCTestCase {
             self.fixture(.goodDirectorySymbol),
             self.fixture(.badSymbol),
             self.fixture(.symbolInDirectory),
+            self.fixture(.secondSymbolInDirectory),
         ]
     }
 }
