@@ -54,7 +54,7 @@ pod "Pathos"
 #### With [SwiftPM](https://swift.org/package-manager)
 
 ```swift
-.package(url: "http://github.com/dduan/Pathos", from: "0.3.0")
+.package(url: "http://github.com/dduan/Pathos", from: "0.3.1")
 ```
 ## Overview
 

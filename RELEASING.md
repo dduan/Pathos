@@ -1,6 +1,5 @@
 ## Steps for a new release
 - Bump version in `Pathos.podspec`.
-- Bump version in `Resources/Info.plist`.
 - Bump version in `README.md`.
 - In `CHANGELOG.md`, create a section for the new version and move changes from
   the master section there.
