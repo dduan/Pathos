@@ -1,5 +1,7 @@
 ## master
 
+## 0.3.1
+
 - children() can follow symlinks found in the content if `followSymlink`
   parameter is set to `True`.
 - expand Linux distro support to match that of Swift's.
