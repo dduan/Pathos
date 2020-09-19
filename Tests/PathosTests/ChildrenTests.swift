@@ -84,6 +84,23 @@ final class ChildrenTests: XCTestCase {
         )
     }
 
+    func testNotFollowingSymlinks() throws {
+        XCTAssertEqual(
+            Set(try children(inPath: self.fixture(.secondDirectoryThatExists)).map { $0.0 }),
+            [self.fixture(.secondSymbolInDirectory)]
+        )
+    }
+
+    func testFollowingSymlinks() throws {
+        XCTAssertEqual(
+            Set(try children(inPath: self.fixture(.secondDirectoryThatExists), followSymlink: true).map { $0.0 }),
+            [
+                self.fixture(.secondSymbolInDirectory),
+                self.fixture(.secondFileViaSymlink),
+            ]
+        )
+    }
+
     func testPathRepresentableChildrenInPath() {
         XCTAssertEqual(
             Set(Path(self.fixtureRoot).children().map { $0.0.pathString }),
@@ -259,6 +276,23 @@ final class ChildrenTests: XCTestCase {
         XCTAssertEqual(
             Set(Path(self.fixtureRoot).children(ofType: .socket, recursive: true).map { $0.pathString }),
             []
+        )
+    }
+
+    func testPathRepresentableNotFollowingSymlinks() throws {
+        XCTAssertEqual(
+            Set(self.fixturePath(.secondDirectoryThatExists).children().map { $0.0 }),
+            [self.fixturePath(.secondSymbolInDirectory)]
+        )
+    }
+
+    func testPathRepresentableFollowingSymlinks() throws {
+        XCTAssertEqual(
+            Set(self.fixturePath(.secondDirectoryThatExists).children(followSymlink: true).map { $0.0 }),
+            [
+                self.fixturePath(.secondSymbolInDirectory),
+                self.fixturePath(.secondFileViaSymlink),
+            ]
         )
     }
 }

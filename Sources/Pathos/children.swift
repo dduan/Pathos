@@ -10,12 +10,15 @@ import Darwin
 ///   - path: the path whose children will be returned.
 ///   - recursive: set to `true` to include results from child directories in addition to that from `path`.
 ///                Defaults to `false`.
+///   - followSymlink: include content of a directroy, if it's pointed at by a symlink in the result.
 ///
 /// - Returns: path to directories and files of all types in `path`, and their types, in pairs.
 /// - Throws: A `SystemError` if path cannot be opened as a directory or there's not enough memory to hold all
 ///           data for the results.
 /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.children(recursive:)`.
-public func children(inPath path: String, recursive: Bool = false) throws -> [(String, FileType)] {
+public func children(inPath path: String, recursive: Bool = false, followSymlink: Bool = false) throws
+    -> [(String, FileType)]
+{
     var result = [(String, FileType)]()
     guard let streamPtr = opendir(path) else {
         throw SystemError(posixErrorCode: errno)
@@ -40,7 +43,13 @@ public func children(inPath path: String, recursive: Bool = false) throws -> [(S
         let fullName = join(paths: path, name)
         result.append((fullName, pathType))
 
-        if recursive && pathType == .directory {
+        if pathType == .symlink,
+           followSymlink,
+           let realName = try? realPath(ofPath: fullName),
+           (try? isA(.directory, atPath: realName)) == true
+        {
+            result += try children(inPath: fullName, recursive: true)
+        } else if recursive && pathType == .directory {
             result += try children(inPath: fullName, recursive: true)
         }
     }
@@ -72,13 +81,15 @@ extension PathRepresentable {
     /// Result will be empty if this path cannot be opened or there's not enough memory to hold all data for
     /// the results.
     ///
-    /// - Parameter recursive: set to `true` to include results from child directories in addition to that
-    ///                        in this path. Defaults to `false`.
+    /// - Parameters:
+    ///   - recursive: set to `true` to include results from child directories in addition to that
+    ///                in this path. Defaults to `false`.
+    ///   - followSymlink: include content of a directroy, if it's pointed at by a symlink in the result.
     ///
     /// - Returns: paths to directories and files of all types in `path`, and their types, in pairs.
     /// - SeeAlso: `children(inPath:recursive:)`.
-    public func children(recursive: Bool = false) -> [(Self, FileType)] {
-        return ((try? children(inPath:recursive:)(self.pathString, recursive)) ?? [])
+    public func children(recursive: Bool = false, followSymlink: Bool = false) -> [(Self, FileType)] {
+        return ((try? children(inPath:recursive:followSymlink:)(self.pathString, recursive, followSymlink)) ?? [])
             .map { (.init($0), $1) }
     }
 
@@ -87,15 +98,18 @@ extension PathRepresentable {
     /// Result will be empty if this path cannot be opened or there's not enough memory to hold all data for
     /// the results.
     ///
-    /// - Parameters
+    /// - Parameters:
     ///   - type: The file type in question.
     ///   - recursive: set to `true` to include results from child directories in addition to that
     ///                in this path. Defaults to `false`.
+    ///   - followSymlink: include content of a directroy, if it's pointed at by a symlink in the result.
     ///
     /// - Returns: paths to directories and files of all types in `path`, and their types, in pairs.
     /// - SeeAlso: `children(inPath:recursive:)`.
-    public func children(ofType type: FileType, recursive: Bool = false) -> [Self] {
-        return ((try? children(inPath:recursive:)(self.pathString, recursive)) ?? [])
+    public func children(ofType type: FileType, recursive: Bool = false, followSymlink: Bool = false)
+        -> [Self]
+    {
+        return ((try? children(inPath:recursive:followSymlink:)(self.pathString, recursive, followSymlink)) ?? [])
             .filter { $1 == type }
             .map { .init($0.0) }
     }
