@@ -6,6 +6,8 @@ import Darwin
 import Glibc
 #endif // canImport(Darwin)
 
+let kDefaultWritePermission: POSIXPermissions = [.ownerRead, .ownerWrite, .groupRead, .otherRead]
+
 extension Path {
     public static func workingDirectory() throws -> Path {
         if let buffer = getcwd(nil, 0) {
@@ -168,6 +170,20 @@ extension Path {
                 if symlink(source, target) != 0 {
                     throw SystemError(code: errno)
                 }
+            }
+        }
+    }
+
+    func _write(bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool = true, truncate: Bool = true) throws {
+        let oflag = O_WRONLY | (createIfNecessary ? O_CREAT : 0) | (truncate ? O_TRUNC : 0)
+        try binaryPath.c { path in
+            let fd = open(path, oflag, kDefaultWritePermission.rawValue)
+            defer { close(fd) }
+            if fd == -1 {
+                throw SystemError(code: errno)
+            }
+            if pwrite(fd, bytes, byteCount, 0) == -1 {
+                throw SystemError(code: errno)
             }
         }
     }

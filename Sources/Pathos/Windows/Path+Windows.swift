@@ -304,6 +304,53 @@ extension Path {
         }
     }
 
+    func _write(bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool = true, truncate: Bool = true) throws {
+        let deposition: DWORD
+
+        switch (createIfNecessary, truncate) {
+        case (false, false):
+            deposition = DWORD(OPEN_EXISTING)
+        case (true, false):
+            deposition = DWORD(OPEN_ALWAYS)
+        case (false, true):
+            deposition = DWORD(TRUNCATE_EXISTING)
+        case (true, true):
+            deposition = DWORD(CREATE_ALWAYS)
+        }
+
+        try binaryPath.c { cString in
+            let handle = CreateFileW(
+                cString,
+                DWORD(GENERIC_WRITE),
+                0,
+                nil,
+                deposition,
+                DWORD(FILE_ATTRIBUTE_NORMAL),
+                nil
+            )
+
+            if handle == INVALID_HANDLE_VALUE {
+                throw SystemError(code: GetLastError())
+            }
+
+            defer {
+                CloseHandle(handle)
+            }
+
+            var bytesWritten: DWORD = 0
+
+            if !WriteFile(
+                handle,
+                bytes,
+                DWORD(byteCount),
+                &bytesWritten,
+                nil
+            ) {
+                throw SystemError(code: GetLastError())
+            }
+        }
+    }
+
     private func realPath() throws -> Path {
         try binaryPath.c { cString in
             let handle = CreateFileW(
