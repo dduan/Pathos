@@ -34,6 +34,7 @@ add_library("PathosTests"
   "PathosTests/WindowsPartsParsingTests.swift"
   "PathosTests/WindowsPathJoiningTests.swift"
   "PathosTests/WorkingDirectoryTests.swift"
+  "PathosTests/WriteTests.swift"
   "PathosTests/XCTestManifests.swift"
 )
 
