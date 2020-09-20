@@ -324,7 +324,27 @@ extension Path {
                 CloseHandle(handle)
             }
 
-            fatalError()
+            let binary = try ContiguousArray<WindowsEncodingUnit>(
+                unsafeUninitializedCapacity: Int(MAX_PATH)
+            ) { buffer, count in
+                let length = Int(
+                    GetFinalPathNameByHandleW(
+                        handle,
+                        buffer.baseAddress,
+                        DWORD(MAX_PATH),
+                        DWORD(FILE_NAME_OPENED)
+                    )
+                )
+
+                if length == 0 {
+                    throw SystemError(code: GetLastError())
+                }
+
+                buffer[length] = 0
+                count = length + 1
+            }
+
+            return Path(WindowsBinaryString(nulTerminatedStorage: binary))
         }
     }
 }
