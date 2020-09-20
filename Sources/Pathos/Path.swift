@@ -94,6 +94,78 @@ public struct Path {
         }
     }
 
+    public func write<Bytes>(
+        bytes: Bytes,
+        byteCount: Int,
+        createIfNecessary: Bool = true,
+        truncate: Bool = true
+    ) throws where Bytes: Sequence, Bytes.Element == UInt8 {
+        try ContiguousArray(bytes).withUnsafeBytes { bytes in
+            try _write(
+                bytes: bytes.baseAddress!,
+                byteCount: byteCount,
+                createIfNecessary: createIfNecessary,
+                truncate: truncate
+            )
+        }
+    }
+
+    public func write<Bytes>(
+        bytes: Bytes,
+        byteCount: Int,
+        createIfNecessary: Bool = true,
+        truncate: Bool = true
+    ) throws where Bytes: Sequence, Bytes.Element == Int8 {
+        try write(
+            bytes: ContiguousArray(bytes.map(UInt8.init(bitPattern:))),
+            byteCount: byteCount,
+            createIfNecessary: createIfNecessary,
+            truncate: truncate
+        )
+    }
+
+    public func write<Encoding>(
+        _ string: String,
+        encoding: Encoding.Type,
+        createIfNecessary: Bool = true,
+        truncate: Bool = true
+    ) throws where Encoding: _UnicodeEncoding {
+        try string.withCString(encodedAs: encoding) { encodedBuffer in
+            var data = [Encoding.CodeUnit]()
+            data.reserveCapacity(string.count)
+            var length = 0
+            while case let datum = encodedBuffer.advanced(by: length).pointee, datum != 0 {
+                data.append(datum)
+                length += 1
+            }
+
+            try data.withUnsafeBytes { byteBuffer in
+                print(">>>", byteBuffer.count)
+                try _write(
+                    bytes: byteBuffer.baseAddress!,
+                    byteCount: byteBuffer.count,
+                    createIfNecessary: createIfNecessary,
+                    truncate: truncate
+                )
+            }
+        }
+    }
+
+    public func write(
+        _ string: String,
+        createIfNecessary: Bool = true,
+        truncate: Bool = true
+    ) throws {
+        try string.withCString { buffer in
+            try _write(
+                bytes: UnsafeRawPointer(buffer),
+                byteCount: string.utf8.count,
+                createIfNecessary: createIfNecessary,
+                truncate: truncate
+            )
+        }
+    }
+
     struct Parts: Equatable {
         let drive: String?
         let root: String?
