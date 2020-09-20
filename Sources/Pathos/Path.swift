@@ -140,7 +140,6 @@ public struct Path {
             }
 
             try data.withUnsafeBytes { byteBuffer in
-                print(">>>", byteBuffer.count)
                 try _write(
                     bytes: byteBuffer.baseAddress!,
                     byteCount: byteBuffer.count,

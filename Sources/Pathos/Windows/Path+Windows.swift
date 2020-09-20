@@ -321,11 +321,11 @@ extension Path {
         try binaryPath.c { cString in
             let handle = CreateFileW(
                 cString,
-                0,
+                DWORD(GENERIC_WRITE),
                 0,
                 nil,
                 deposition,
-                DWORD(FILE_FLAG_BACKUP_SEMANTICS),
+                DWORD(FILE_ATTRIBUTE_NORMAL),
                 nil
             )
 
