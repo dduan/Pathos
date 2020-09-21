@@ -1,5 +1,7 @@
 ## master
 
+## 0.3.2
+
 - Fix a bug where `children` always recusively visit its content when following symlinks.
 
 ## 0.3.1
