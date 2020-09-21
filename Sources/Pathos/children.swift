@@ -48,7 +48,7 @@ public func children(inPath path: String, recursive: Bool = false, followSymlink
            let realName = try? realPath(ofPath: fullName),
            (try? isA(.directory, atPath: realName)) == true
         {
-            result += try children(inPath: fullName, recursive: true)
+            result += try children(inPath: fullName, recursive: recursive)
         } else if recursive && pathType == .directory {
             result += try children(inPath: fullName, recursive: true)
         }
