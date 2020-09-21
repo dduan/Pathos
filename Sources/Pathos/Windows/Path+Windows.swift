@@ -351,7 +351,7 @@ extension Path {
         }
     }
 
-    public func readBytes(atPath path: String) throws -> [CChar] {
+    public func readBytes() throws -> [CChar] {
         try binaryPath.c { cString in
             let handle = CreateFileW(
                 cString,

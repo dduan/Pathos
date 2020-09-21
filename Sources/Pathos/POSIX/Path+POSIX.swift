@@ -190,26 +190,27 @@ extension Path {
 
     /// Read content of a file at `path` as bytes. If the path is a directory, no bytes will be read.
     ///
-    /// - Parameter path: the path to the file that will be read. If the path is a directory, no bytes will be read.
     /// - Throws: System error encountered while opening the file.
     /// - SeeAlso: To work with `Path` or `PathRepresentable`, use `PathRepresentable.readBytes()`.
-    public func readBytes(atPath path: String) throws -> [UInt8] {
-        guard case let fd = open(path, O_RDONLY), fd != -1 else {
-            throw SystemError(code: errno)
-        }
+    public func readBytes() throws -> [UInt8] {
+        try binaryPath.c { path in
+            guard case let fd = open(path, O_RDONLY), fd != -1 else {
+                throw SystemError(code: errno)
+            }
 
-        defer { close(fd) }
-        var status = stat()
-        fstat(fd, &status)
-        if status.st_mode & S_IFMT == S_IFDIR {
-            return []
-        }
+            defer { close(fd) }
+            var status = stat()
+            fstat(fd, &status)
+            if status.st_mode & S_IFMT == S_IFDIR {
+                return []
+            }
 
-        let fileSize = Int(status.st_size)
+            let fileSize = Int(status.st_size)
 
-        return Array(unsafeUninitializedCapacity: fileSize) { buffer, count in
-            read(fd, buffer.baseAddress!, fileSize)
-            count = fileSize
+            return Array(unsafeUninitializedCapacity: fileSize) { buffer, count in
+                read(fd, buffer.baseAddress!, fileSize)
+                count = fileSize
+            }
         }
     }
 }
