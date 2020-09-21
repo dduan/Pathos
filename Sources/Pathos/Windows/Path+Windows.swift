@@ -400,19 +400,19 @@ extension Path {
             throw SystemError(code: 1) // Operation is not permitted
         }
 
-        // some question from Python's standard library: What about other special files? (sockets, devices...)
+
         let isLink = sourceMeta.fileType.isSymlink
         if !followSymlink && isLink {
             try readSymlink().makeSymlink(at: destination)
             return
         }
 
-        let source = isLink ? self : try readSymlink()
+        let source = isLink ? try readSymlink() : self
         let attributes = try source.metadata().permissions as! WindowsAttributes
 
         try source.binaryPath.c { sourcePath in
             try destination.binaryPath.c { destinationPath in
-                if !CopyFile(
+                if !CopyFileW(
                     sourcePath,
                     destinationPath,
                     false
@@ -422,7 +422,7 @@ extension Path {
 
                 if !SetFileAttributesW(
                     destinationPath,
-                    attributes
+                    attributes.rawValue
                 ) {
                     throw SystemError(code: GetLastError())
                 }
