@@ -295,9 +295,9 @@ extension Path {
         let flag: DWORD = try metadata().fileType.isDirectory
             ? DWORD(SYMBOLIC_LINK_FLAG_DIRECTORY)
             : 0
-        try binaryPath.c { source in
-            try path.binaryPath.c { target in
-                if CreateSymbolicLinkW(source, target, flag) == 0 {
+        try binaryPath.c { thisPath in
+            try path.binaryPath.c { link in
+                if CreateSymbolicLinkW(link, thisPath, flag) == 0 {
                     throw SystemError(code: GetLastError())
                 }
             }
