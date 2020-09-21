@@ -400,7 +400,6 @@ extension Path {
             throw SystemError(code: 1) // Operation is not permitted
         }
 
-
         let isLink = sourceMeta.fileType.isSymlink
         if !followSymlink && isLink {
             try readSymlink().makeSymlink(at: destination)
