@@ -1,5 +1,7 @@
 ## master
 
+- Fix a bug where `children` always recusively visit its content when following symlinks.
+
 ## 0.3.1
 
 - children() can follow symlinks found in the content if `followSymlink`
