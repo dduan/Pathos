@@ -351,6 +351,48 @@ extension Path {
         }
     }
 
+    public func readBytes() throws -> [CChar] {
+        try binaryPath.c { cString in
+            let handle = CreateFileW(
+                cString,
+                DWORD(FILE_SHARE_READ),
+                0,
+                nil,
+                DWORD(OPEN_EXISTING),
+                DWORD(FILE_FLAG_BACKUP_SEMANTICS),
+                nil
+            )
+
+            if handle == INVALID_HANDLE_VALUE {
+                throw SystemError(code: GetLastError())
+            }
+
+            defer {
+                CloseHandle(handle)
+            }
+
+            let meta = try metadata()
+            if meta.fileType.isDirectory {
+                return []
+            }
+
+            return try Array(unsafeUninitializedCapacity: Int(meta.size)) { buffer, count in
+                var read: DWORD = 0
+                if !ReadFile(
+                    handle,
+                    buffer.baseAddress,
+                    DWORD(meta.size),
+                    &read,
+                    nil
+                ) {
+                    throw SystemError(code: GetLastError())
+                }
+
+                count = Int(read)
+            }
+        }
+    }
+
     private func realPath() throws -> Path {
         try binaryPath.c { cString in
             let handle = CreateFileW(
