@@ -376,7 +376,7 @@ extension Path {
                 return []
             }
 
-            return try Array(unsafeUninitializedCapacity: meta.size) { buffer, count in
+            return try Array(unsafeUninitializedCapacity: Int(meta.size)) { buffer, count in
                 var read: DWORD = 0
                 if !ReadFile(
                     handle,
@@ -388,7 +388,7 @@ extension Path {
                     throw SystemError(code: GetLastError())
                 }
 
-                count = read
+                count = Int(read)
             }
         }
     }
