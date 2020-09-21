@@ -393,6 +393,43 @@ extension Path {
         }
     }
 
+    public func copy(to destination: Path, followSymlink: Bool = true) throws {
+        let sourceMeta = try metadata()
+
+        if !sourceMeta.fileType.isFile && !sourceMeta.fileType.isSymlink {
+            throw SystemError(code: 1) // Operation is not permitted
+        }
+
+        // some question from Python's standard library: What about other special files? (sockets, devices...)
+        let isLink = sourceMeta.fileType.isSymlink
+        if !followSymlink && isLink {
+            try readSymlink().makeSymlink(at: destination)
+            return
+        }
+
+        let source = isLink ? self : try readSymlink()
+        let attributes = try source.metadata().permissions as! WindowsAttributes
+
+        try source.binaryPath.c { sourcePath in
+            try destination.binaryPath.c { destinationPath in
+                if !CopyFile(
+                    sourcePath,
+                    destinationPath,
+                    false
+                ) {
+                    throw SystemError(code: GetLastError())
+                }
+
+                if !SetFileAttributesW(
+                    destinationPath,
+                    attributes
+                ) {
+                    throw SystemError(code: GetLastError())
+                }
+            }
+        }
+    }
+
     private func realPath() throws -> Path {
         try binaryPath.c { cString in
             let handle = CreateFileW(

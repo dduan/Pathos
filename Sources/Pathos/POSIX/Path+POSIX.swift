@@ -7,6 +7,7 @@ import Glibc
 #endif // canImport(Darwin)
 
 let kDefaultWritePermission: POSIXPermissions = [.ownerRead, .ownerWrite, .groupRead, .otherRead]
+let kCopyChunkSize = 16 * 1024
 
 extension Path {
     public static func workingDirectory() throws -> Path {
@@ -210,6 +211,57 @@ extension Path {
             return Array(unsafeUninitializedCapacity: fileSize) { buffer, count in
                 read(fd, buffer.baseAddress!, fileSize)
                 count = fileSize
+            }
+        }
+    }
+
+    public func copy(to destination: Path, followSymlink: Bool = true) throws {
+        let sourceMeta = try metadata()
+
+        if !sourceMeta.fileType.isFile && !sourceMeta.fileType.isSymlink {
+            throw SystemError(code: 1) // Operation is not permitted
+        }
+
+        // some question from Python's standard library: What about other special files? (sockets, devices...)
+        let isLink = sourceMeta.fileType.isSymlink
+        if !followSymlink && isLink {
+            try readSymlink().makeSymlink(at: destination)
+            return
+        }
+
+        let source = isLink ? self : try readSymlink()
+        let permissions = try source.metadata().permissions as! POSIXPermissions
+
+        try source.binaryPath.c { sourcePath in
+            try destination.binaryPath.c { destinationPath in
+                let sourceFD = open(sourcePath, O_RDONLY)
+                if sourceFD == -1 {
+                    throw SystemError(code: errno)
+                }
+                defer { close(sourceFD) }
+
+                let destinationFD = open(destinationPath, O_WRONLY | O_CREAT)
+                if destinationFD == -1 {
+                    throw SystemError(code: errno)
+                }
+                defer { close(destinationFD) }
+
+                let buffer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: kCopyChunkSize)
+                defer { buffer.deallocate() }
+
+                defer {
+                    chmod(destinationPath, permissions.rawValue)
+                }
+
+                var position: off_t = 0
+                while true {
+                    let length = pread(sourceFD, buffer.baseAddress!, kCopyChunkSize, position)
+                    if length == 0 {
+                        break
+                    }
+                    pwrite(destinationFD, buffer.baseAddress!, length, position)
+                    position = position + off_t(length)
+                }
             }
         }
     }
