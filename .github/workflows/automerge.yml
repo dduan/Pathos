@@ -26,4 +26,5 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           MERGE_METHOD: "rebase"
-          MERGE_METHOD_LABEL_REQUIRED: "true"
+          MERGE_RETRY_SLEEP: 15000
+          MERGE_RETRIES: 120

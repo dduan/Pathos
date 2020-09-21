@@ -503,6 +503,42 @@ extension Path {
         }
     }
 
+    public func copy(to destination: Path, followSymlink: Bool = true) throws {
+        let sourceMeta = try metadata()
+
+        if !sourceMeta.fileType.isFile && !sourceMeta.fileType.isSymlink {
+            throw SystemError(code: 1) // Operation is not permitted
+        }
+
+        let isLink = sourceMeta.fileType.isSymlink
+        if !followSymlink && isLink {
+            try readSymlink().makeSymlink(at: destination)
+            return
+        }
+
+        let source = isLink ? try readSymlink() : self
+        let attributes = try source.metadata().permissions as! WindowsAttributes
+
+        try source.binaryPath.c { sourcePath in
+            try destination.binaryPath.c { destinationPath in
+                if !CopyFileW(
+                    sourcePath,
+                    destinationPath,
+                    false
+                ) {
+                    throw SystemError(code: GetLastError())
+                }
+
+                if !SetFileAttributesW(
+                    destinationPath,
+                    attributes.rawValue
+                ) {
+                    throw SystemError(code: GetLastError())
+                }
+            }
+        }
+    }
+
     func matches(pattern: Path) -> Bool {
         pattern.binaryPath.c { cPattern in
             binaryPath.c { cPath in
