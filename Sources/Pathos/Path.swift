@@ -96,14 +96,13 @@ public struct Path {
 
     public func write<Bytes>(
         bytes: Bytes,
-        byteCount: Int,
         createIfNecessary: Bool = true,
         truncate: Bool = true
-    ) throws where Bytes: Sequence, Bytes.Element == UInt8 {
+    ) throws where Bytes: Collection, Bytes.Element == UInt8 {
         try ContiguousArray(bytes).withUnsafeBytes { bytes in
             try _write(
                 bytes: bytes.baseAddress!,
-                byteCount: byteCount,
+                byteCount: bytes.count,
                 createIfNecessary: createIfNecessary,
                 truncate: truncate
             )
@@ -112,13 +111,11 @@ public struct Path {
 
     public func write<Bytes>(
         bytes: Bytes,
-        byteCount: Int,
         createIfNecessary: Bool = true,
         truncate: Bool = true
-    ) throws where Bytes: Sequence, Bytes.Element == Int8 {
+    ) throws where Bytes: Collection, Bytes.Element == Int8 {
         try write(
             bytes: ContiguousArray(bytes.map(UInt8.init(bitPattern:))),
-            byteCount: byteCount,
             createIfNecessary: createIfNecessary,
             truncate: truncate
         )
@@ -163,6 +160,16 @@ public struct Path {
                 truncate: truncate
             )
         }
+    }
+
+    public func readString<Encoding>(encoding: Encoding.Type) throws -> String where Encoding: _UnicodeEncoding {
+        try readBytes().withUnsafeBytes { rawBytes in
+            String(decoding: rawBytes.bindMemory(to: Encoding.CodeUnit.self), as: encoding)
+        }
+    }
+
+    public func readString() throws -> String {
+        try readString(encoding: UTF8.self)
     }
 
     struct Parts: Equatable {
