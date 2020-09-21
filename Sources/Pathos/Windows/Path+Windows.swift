@@ -271,9 +271,9 @@ extension Path {
                     let nameStartingPoint: Int
                     let nameLength = Int(reparseData.substituteNameLength) / MemoryLayout<WindowsEncodingUnit>.stride
                     if reparseData.reparseTag == IO_REPARSE_TAG_SYMLINK {
-                        nameStartingPoint = MemoryLayout<SymbolicLinkReparseBuffer>.stride - 1
+                        nameStartingPoint = (MemoryLayout<SymbolicLinkReparseBuffer>.stride - 4) / 2
                     } else if reparseData.reparseTag == IO_REPARSE_TAG_MOUNT_POINT {
-                        nameStartingPoint = MemoryLayout<MountPointReparseBuffer>.stride - 1
+                        nameStartingPoint = (MemoryLayout<MountPointReparseBuffer>.stride - 4) / 2
                     } else {
                         throw SystemError(code: 0x0000_00DE)
                     }
@@ -295,9 +295,9 @@ extension Path {
         let flag: DWORD = try metadata().fileType.isDirectory
             ? DWORD(SYMBOLIC_LINK_FLAG_DIRECTORY)
             : 0
-        try binaryPath.c { source in
-            try path.binaryPath.c { target in
-                if CreateSymbolicLinkW(source, target, flag) == 0 {
+        try binaryPath.c { thisPath in
+            try path.binaryPath.c { link in
+                if CreateSymbolicLinkW(link, thisPath, flag) == 0 {
                     throw SystemError(code: GetLastError())
                 }
             }
