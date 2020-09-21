@@ -271,9 +271,9 @@ extension Path {
                     let nameStartingPoint: Int
                     let nameLength = Int(reparseData.substituteNameLength) / MemoryLayout<WindowsEncodingUnit>.stride
                     if reparseData.reparseTag == IO_REPARSE_TAG_SYMLINK {
-                        nameStartingPoint = MemoryLayout<SymbolicLinkReparseBuffer>.stride - 1
+                        nameStartingPoint = (MemoryLayout<SymbolicLinkReparseBuffer>.stride - 4) / 2
                     } else if reparseData.reparseTag == IO_REPARSE_TAG_MOUNT_POINT {
-                        nameStartingPoint = MemoryLayout<MountPointReparseBuffer>.stride - 1
+                        nameStartingPoint = (MemoryLayout<MountPointReparseBuffer>.stride - 4) / 2
                     } else {
                         throw SystemError(code: 0x0000_00DE)
                     }
