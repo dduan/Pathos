@@ -20,7 +20,11 @@ location it represents
 * could turn out to be nothing at all.
 
 Pathos does offer functionality to manipulate actual content of the file system. But it is user's
-responsibility to ensure that the path is valid, or handle errors originated from the OS otherwise.
+responsibility to ensure that the path points to the thing they expect, or handle errors originated
+from the OS otherwise.
+
+Paths themselves, when analyzed, are validated according to the OS convention (On Windows, UNC drive
+are recognized properly, path segments are connected by `\`, for example.)
 
 This separation of "address" and "memory" means operations such as creating a path value, or telling
 whether a path is absolute, does not require access to the hard drive at all. A subset of
