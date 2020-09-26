@@ -48,7 +48,7 @@ In addition, it uses the following naming scheme to indicate some implementation
    the file system, have a noun or an adjective as function names¹. For example, `Path.metadata()`.
 3. Operations that make changes to the file system have a verb in their function names. For example,
    `Path.makeDirectory()`.
-4. Functions that starts with "with" or "as" all accepts a closure as its final argument. Theses
+4. Functions that starts with "with" or "as" all accept a closure as its final argument. These
    functions set up a environment for the current process, executes the closure in the new
    environment, and restores the process to the previous environment afterwards. For example,
    `Path.withTemporaryDirectory` creates a temporary directory, sets it as the working directory,
@@ -70,11 +70,11 @@ reasons:
    don't spend time decoding and encoding between path and strings. Although one could argue whether
    the saving here is meaningful, since calling the C API often means hitting the hard drive.
 
-However, a users doesn't need to deal with binary values directly. They may use Swift strings to
-create a path. When they inspect parts of the path, they get string values (`var drive: String`).
-They may join paths and strings together. A path in string interpolation looks like a normal path…
-the encoding and decoding is handled transparently in the native format the operating system
-supports. The user doesn't have to care about this implementation detail unless they want to do.
+A users doesn't need to deal with binary values directly. They may use Swift strings to create
+a path. When they inspect parts of the path, they get string values (`var drive: String`).  They may
+join paths and strings together. A path in string interpolation looks like a normal path… the
+encoding and decoding is handled transparently in the native format the operating system supports.
+The user doesn't have to care about this implementation detail unless they want to do.
 
 ## Beyond the common denominator
 
