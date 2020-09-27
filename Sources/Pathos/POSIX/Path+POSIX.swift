@@ -25,40 +25,18 @@ extension Path {
         }
     }
 
-    public func children(recursive: Bool = false) throws -> AnySequence<(Path, FileType)> {
-        var result = [(Path, FileType)]()
-        try binaryPath.c { cString in
-            guard let streamPtr = opendir(cString) else {
-                throw SystemError(code: errno)
-            }
-
-            defer {
-                closedir(streamPtr)
-            }
-
-            while let entryPtr = readdir(streamPtr) {
-                let entry = entryPtr.pointee
-                guard let name = withUnsafeBytes(
-                    of: entry.d_name,
-                    { $0.bindMemory(to: POSIXEncodingUnit.self).baseAddress.map(POSIXBinaryString.init(cString:))
-                    }
-                ),
-                    name.content != [POSIXConstants.binaryCurrentContext, POSIXConstants.binaryCurrentContext] && name.content != [POSIXConstants.binaryCurrentContext]
-                else {
-                    continue
-                }
-
-                let pathType: FileType = POSIXFileType(rawFileType: Int32(entry.d_type))
-                let child = joined(with: name)
-                result.append((child, pathType))
-
-                if recursive && pathType.isDirectory {
-                    result += try child.children(recursive: true)
-                }
-            }
-        }
-
-        return AnySequence(result)
+    /// List the content of the directory, recursively if required.
+    /// - Parameters:
+    ///   - recursive: Require content of the directories inside the directory to be included in the
+    ///                result, recursively.
+    ///   - followSymlink: If a child is a symlink to a directory, include it, and the directory's
+    ///                    children. This option has no effect when `recursive` is `false`.
+    /// - Returns: A sequence containing pair of path and the file type from the content of the
+    ///            directory.
+    public func children(recursive: Bool = false, followSymlink: Bool = false) throws
+        -> AnySequence<(Path, FileType)>
+    {
+        try childrenImpl(logicalParent: nil, recursive: recursive, followSymlink: followSymlink)
     }
 
     /// Set new permissions for a file path.
@@ -225,6 +203,58 @@ extension Path {
         var cache = [Path: Path]()
         let (result, _) = try resolve(path: empty, rest: self, seen: &cache)
         return try result.absolute()
+    }
+
+    func childrenImpl(logicalParent: Path?, recursive: Bool = false, followSymlink: Bool = false) throws
+        -> AnySequence<(Path, FileType)>
+    {
+        var result = [(Path, FileType)]()
+        try binaryPath.c { cString in
+            guard let streamPtr = opendir(cString) else {
+                throw SystemError(code: errno)
+            }
+
+            defer {
+                closedir(streamPtr)
+            }
+
+            while let entryPtr = readdir(streamPtr) {
+                let entry = entryPtr.pointee
+                guard let name = withUnsafeBytes(
+                    of: entry.d_name,
+                    { $0.bindMemory(to: POSIXEncodingUnit.self)
+                        .baseAddress
+                        .map(POSIXBinaryString.init(cString:))
+                    }
+                ),
+                    name.content != [
+                        POSIXConstants.binaryCurrentContext,
+                        POSIXConstants.binaryCurrentContext,
+                    ] && name.content != [POSIXConstants.binaryCurrentContext]
+                else {
+                    continue
+                }
+
+                let pathType: FileType = POSIXFileType(rawFileType: Int32(entry.d_type))
+                let child = (logicalParent ?? self).joined(with: name)
+                result.append((child, pathType))
+
+                if recursive {
+                    if pathType.isDirectory {
+                        result += try child.childrenImpl(logicalParent: nil, recursive: true, followSymlink: followSymlink)
+                    } else if pathType.isSymlink,
+                        followSymlink,
+                        let linkTarget = try? child.readSymlink(),
+                        case let link = joined(with: linkTarget),
+                        try link.metadata().fileType.isDirectory
+                    {
+                        result += try link.childrenImpl(logicalParent: joined(with: name), recursive: recursive, followSymlink: true)
+                    }
+                }
+            }
+        }
+
+        return AnySequence(result)
     }
 
     func write(bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool = true, truncate: Bool = true) throws {

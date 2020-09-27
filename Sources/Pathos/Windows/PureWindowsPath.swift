@@ -65,7 +65,6 @@ public struct PureWindowsPath {
 
     public func joined(with paths: [WindowsPathConvertible]) -> Self {
         let paths = [self] + paths.map(\.asWindowsPath)
-
         var drive: String?
         var root: String?
         var segments = [String]()
