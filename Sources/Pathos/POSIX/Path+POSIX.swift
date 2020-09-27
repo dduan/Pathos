@@ -25,8 +25,8 @@ extension Path {
         }
     }
 
-    public func children(recursive: Bool = false) throws -> AnySequence<Path> {
-        var result = [Path]()
+    public func children(recursive: Bool = false) throws -> AnySequence<(Path, FileType)> {
+        var result = [(Path, FileType)]()
         try binaryPath.c { cString in
             guard let streamPtr = opendir(cString) else {
                 throw SystemError(code: errno)
@@ -50,7 +50,7 @@ extension Path {
 
                 let pathType: FileType = POSIXFileType(rawFileType: Int32(entry.d_type))
                 let child = joined(with: name)
-                result.append(child)
+                result.append((child, pathType))
 
                 if recursive && pathType.isDirectory {
                     result += try child.children(recursive: true)
@@ -103,7 +103,7 @@ extension Path {
         if meta.fileType.isDirectory {
             if recursive {
                 for child in try children(recursive: false) {
-                    try child.delete(recursive: true)
+                    try child.0.delete(recursive: true)
                 }
             }
             try binaryPath.c { cString in
