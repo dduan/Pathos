@@ -153,7 +153,7 @@ extension Path {
         if meta.fileType.isDirectory {
             if recursive {
                 for child in try children(recursive: false) {
-                    try child.delete(recursive: true)
+                    try child.0.delete(recursive: true)
                 }
 
                 try temporaryName().binaryPath.c { tempCString in
