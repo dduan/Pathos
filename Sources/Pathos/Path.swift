@@ -165,10 +165,18 @@ public struct Path {
         }
     }
 
+    var isEmpty: Bool {
+        pure.isEmpty
+    }
+
     struct Parts: Equatable {
         let drive: String?
         let root: String?
         let segments: Array<String>
+
+        var isEmpty: Bool {
+            drive == nil && root == nil && segments.isEmpty
+        }
 
         struct Parents: Sequence, IteratorProtocol {
             var parts: Path.Parts
