@@ -121,6 +121,10 @@ public struct PurePOSIXPath {
     public var normal: PurePOSIXPath {
         PurePOSIXPath(parts: parts.normalized)
     }
+
+    var isEmpty: Bool {
+        parts.isEmpty
+    }
 }
 
 extension PurePOSIXPath: CustomStringConvertible {
