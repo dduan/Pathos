@@ -304,7 +304,7 @@ extension Path {
         }
     }
 
-    func _write(bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool = true, truncate: Bool = true) throws {
+    func write(bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool = true, truncate: Bool = true) throws {
         let deposition: DWORD
 
         switch (createIfNecessary, truncate) {
