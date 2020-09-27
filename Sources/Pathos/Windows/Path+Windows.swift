@@ -226,25 +226,11 @@ extension Path {
         //
         // Each of the union member in `REPARSE_DATA_BUFFER` also contains content size of the flexible array.
         // We use that information as well when reading from it.
-        try binaryPath.c { cString -> Path in
-            let handle = CreateFileW(
-                cString,
-                0,
-                0,
-                nil,
-                DWORD(OPEN_EXISTING),
-                DWORD(FILE_FLAG_OPEN_REPARSE_POINT | FILE_FLAG_BACKUP_SEMANTICS),
-                nil
-            )
-
-            if handle == INVALID_HANDLE_VALUE {
-                throw SystemError(code: GetLastError())
-            }
-
-            defer {
-                CloseHandle(handle)
-            }
-
+        try withHandle(
+            access: 0,
+            diposition: OPEN_EXISTING,
+            attributes: FILE_FLAG_OPEN_REPARSE_POINT | FILE_FLAG_BACKUP_SEMANTICS
+        ) { handle in
             let data = try ContiguousArray<CChar>(unsafeUninitializedCapacity: 16 * 1024) { buffer, count in
                 var size: DWORD = 0
                 if !DeviceIoControl(
@@ -305,38 +291,24 @@ extension Path {
     }
 
     func write(bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool = true, truncate: Bool = true) throws {
-        let deposition: DWORD
+        let diposition: Int32
 
         switch (createIfNecessary, truncate) {
         case (false, false):
-            deposition = DWORD(OPEN_EXISTING)
+            diposition = OPEN_EXISTING
         case (true, false):
-            deposition = DWORD(OPEN_ALWAYS)
+            diposition = OPEN_ALWAYS
         case (false, true):
-            deposition = DWORD(TRUNCATE_EXISTING)
+            diposition = TRUNCATE_EXISTING
         case (true, true):
-            deposition = DWORD(CREATE_ALWAYS)
+            diposition = CREATE_ALWAYS
         }
 
-        try binaryPath.c { cString in
-            let handle = CreateFileW(
-                cString,
-                DWORD(GENERIC_WRITE),
-                0,
-                nil,
-                deposition,
-                DWORD(FILE_ATTRIBUTE_NORMAL),
-                nil
-            )
-
-            if handle == INVALID_HANDLE_VALUE {
-                throw SystemError(code: GetLastError())
-            }
-
-            defer {
-                CloseHandle(handle)
-            }
-
+        try withHandle(
+            access: GENERIC_WRITE,
+            diposition: diposition,
+            attributes: FILE_ATTRIBUTE_NORMAL
+        ) { handle in
             var bytesWritten: DWORD = 0
 
             if !WriteFile(
@@ -352,25 +324,11 @@ extension Path {
     }
 
     private func realPath() throws -> Path {
-        try binaryPath.c { cString in
-            let handle = CreateFileW(
-                cString,
-                0,
-                0,
-                nil,
-                DWORD(OPEN_EXISTING),
-                DWORD(FILE_FLAG_BACKUP_SEMANTICS),
-                nil
-            )
-
-            if handle == INVALID_HANDLE_VALUE {
-                throw SystemError(code: GetLastError())
-            }
-
-            defer {
-                CloseHandle(handle)
-            }
-
+        try withHandle(
+            access: 0,
+            diposition: OPEN_EXISTING,
+            attributes: FILE_FLAG_BACKUP_SEMANTICS
+        ) { handle in
             let binary = try ContiguousArray<WindowsEncodingUnit>(
                 unsafeUninitializedCapacity: Int(MAX_PATH)
             ) { buffer, count in
@@ -392,6 +350,30 @@ extension Path {
             }
 
             return Path(WindowsBinaryString(nulTerminatedStorage: binary))
+        }
+    }
+
+    func withHandle<Output>(access: Int32, diposition: Int32, attributes: Int32, run action: (HANDLE?) throws -> Output) throws -> Output {
+        try binaryPath.c { cString in
+            let handle = CreateFileW(
+                cString,
+                DWORD(access),
+                0,
+                nil,
+                DWORD(diposition),
+                DWORD(attributes),
+                nil
+            )
+
+            if handle == INVALID_HANDLE_VALUE {
+                throw SystemError(code: GetLastError())
+            }
+
+            defer {
+                CloseHandle(handle)
+            }
+
+            return try action(handle)
         }
     }
 }
