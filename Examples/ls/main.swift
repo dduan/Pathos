@@ -10,7 +10,7 @@ extension String {
 
 do {
     for child in try Path(CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : ".").children(recursive: recursive) {
-        let meta = try child.metadata()
+        let meta = try child.0.metadata()
         let permission = (meta.permissions.isReadOnly ? "ReadOnly" : "ReadWrite").withLeftPad("ReadWrite".count)
         let size = "\(meta.size)".withLeftPad(10)
         let modified = "\(meta.modified.seconds).\(meta.modified.nanoseconds)".withLeftPad(24)
@@ -21,7 +21,7 @@ do {
             fileType = "directory"
         } else if meta.fileType.isSymlink {
             fileType = "symlink".withLeftPad(fileTypeLength)
-            name = "\(child) -> \(try child.readSymlink())"
+            name = "\(child) -> \(try child.0.readSymlink())"
         } else {
             fileType = "file".withLeftPad(fileTypeLength)
         }
