@@ -11,8 +11,13 @@ typealias BinaryString = POSIXBinaryString
 public typealias NativeEncodingUnit = CChar
 #endif
 
-struct CString<Unit: BinaryInteger>: Equatable, Hashable {
+struct CString<Unit: BinaryInteger>: Equatable, Hashable, Comparable {
     private var storage: ContiguousArray<Unit>
+
+    static func < (lhs: CString<Unit>, rhs: CString<Unit>) -> Bool {
+        zip(lhs.storage, rhs.storage).contains { $0 < $1 }
+    }
+
     var content: ContiguousArray<Unit>.SubSequence {
         storage[0 ..< storage.count - 1]
     }

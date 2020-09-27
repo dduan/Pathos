@@ -28,8 +28,9 @@ extension Path.Parts {
 
         let segments = rest
             .split(separator: separator)
-            .filter { $0.count != 1 || $0.first != currentContext }
-            .map { String(decoding: $0, as: Encoding.self) }
+            .enumerated()
+            .filter { $1.count != 1 || !($0 > 0 && $1.first == currentContext) }
+            .map { String(decoding: $0.1, as: Encoding.self) }
 
         return (root, segments)
     }

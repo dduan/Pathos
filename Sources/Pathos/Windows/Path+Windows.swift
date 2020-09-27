@@ -40,13 +40,53 @@ extension Path {
         return Metadata(data)
     }
 
-    /// List the content of the directory, recursively if required.
-    ///
-    /// - Parameter recursive: Require content of the directories inside the directory to be included in the
-    ///                        result, recursively.
-    ///
-    /// - Returns: A sequence containing pair of path and the file type from the content of the directory.
-    public func children(recursive: Bool = false) throws -> AnySequence<(Path, FileType)> {
+    public func children(recursive: Bool = false, followSymlink: Bool = false) throws
+        -> AnySequence<(Path, FileType)>
+    {
+        try childrenImpl(logicalParent: nil, recursive: recursive, followSymlink: followSymlink)
+    }
+
+    func childrenImpl(logicalParent: Path?, recursive: Bool = false, followSymlink: Bool = false) throws
+        -> AnySequence<(Path, FileType)>
+    {
+        func addResultIfNecessary(_ data: inout WIN32_FIND_DATAW) throws {
+            if data.cFileName.0 == WindowsConstants.binaryCurrentContext {
+                if data.cFileName.1 == 0
+                    || data.cFileName.1 == WindowsConstants.binaryCurrentContext && data.cFileName.2 == 0
+                {
+                    return
+                }
+            }
+
+            let binary = withUnsafePointer(
+                to: data.cFileName,
+                { $0.withMemoryRebound(
+                    to: WindowsEncodingUnit.self,
+                    capacity: Int(MAX_PATH)
+                ) { WindowsBinaryString(cString: $0) }
+                }
+            )
+
+            let path = joined(with: binary)
+            let meta = Metadata(data)
+            let logicalPath = (logicalParent ?? self).joined(with: binary)
+
+            if recursive {
+                if meta.fileType.isDirectory {
+                    result += try path.childrenImpl(logicalParent: nil, recursive: true, followSymlink: followSymlink)
+                } else if meta.fileType.isSymlink,
+                    followSymlink,
+                    let linkTarget = try? path.readSymlink(),
+                    case let real = joined(with: linkTarget),
+                    try real.metadata().fileType.isDirectory
+                {
+                    result += try real.childrenImpl(logicalParent: joined(with: logicalPath), recursive: recursive, followSymlink: true)
+                }
+            }
+
+            result.append((logicalPath, meta.fileType))
+        }
+
         var result = [(Path, FileType)]()
         var data = WIN32_FIND_DATAW()
         try (self + "*").binaryPath.c { pathCString in
@@ -57,34 +97,6 @@ extension Path {
 
             defer {
                 CloseHandle(handle)
-            }
-
-            func addResultIfNecessary(_ data: inout WIN32_FIND_DATAW) throws {
-                if data.cFileName.0 == WindowsConstants.binaryCurrentContext {
-                    if data.cFileName.1 == 0
-                        || data.cFileName.1 == WindowsConstants.binaryCurrentContext && data.cFileName.2 == 0
-                    {
-                        return
-                    }
-                }
-
-                let binary = withUnsafePointer(
-                    to: data.cFileName,
-                    { $0.withMemoryRebound(
-                        to: WindowsEncodingUnit.self,
-                        capacity: Int(MAX_PATH)
-                    ) { WindowsBinaryString(cString: $0) }
-                    }
-                )
-
-                let path = joined(with: binary)
-                let meta = Metadata(data)
-
-                if recursive && meta.fileType.isDirectory {
-                    result += try path.children(recursive: true)
-                }
-
-                result.append((path, meta.fileType))
             }
 
             try addResultIfNecessary(&data)
@@ -143,46 +155,53 @@ extension Path {
             Path.defaultTemporaryDirectory.joined(with: "\(UInt64.random(in: 0 ... .max))")
         }
 
+        func error() throws {
+            let errorCode = GetLastError()
+            if errorCode != ERROR_PATH_NOT_FOUND {
+                throw SystemError(code: GetLastError())
+            }
+        }
+
         let meta = try metadata()
         if meta.permissions.isReadOnly {
             var newPermission = meta.permissions
             newPermission.isReadOnly = false
             try set(newPermission)
         }
-
         if meta.fileType.isDirectory {
             if recursive {
-                for child in try children(recursive: false) {
-                    try child.0.delete(recursive: true)
+                if !meta.fileType.isSymlink {
+                    for child in try children(recursive: false) {
+                        try child.0.delete(recursive: true)
+                    }
                 }
 
                 try temporaryName().binaryPath.c { tempCString in
                     try binaryPath.c { fromCString in
                         if !MoveFileW(fromCString, tempCString) {
-                            throw SystemError(code: GetLastError())
+                            try error()
                         }
 
                         if !RemoveDirectoryW(tempCString) {
-                            throw SystemError(code: GetLastError())
+                            try error()
                         }
                     }
                 }
             } else {
                 try binaryPath.c { fromCString in
                     if !RemoveDirectoryW(fromCString) {
-                        throw SystemError(code: GetLastError())
+                        try error()
                     }
                 }
             }
-
         } else {
             try temporaryName().binaryPath.c { tempCString in
                 try binaryPath.c { fromCString in
                     if !MoveFileW(fromCString, tempCString) {
-                        throw SystemError(code: GetLastError())
+                        try error()
                     }
                     if !DeleteFileW(tempCString) {
-                        throw SystemError(code: GetLastError())
+                        try error()
                     }
                 }
             }
