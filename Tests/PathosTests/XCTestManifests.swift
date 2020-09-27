@@ -15,8 +15,9 @@ extension ChildrenTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__ChildrenTests = [
-        ("testChildrenOfCurrentDirectory", testChildrenOfCurrentDirectory),
-        ("testChildrenOfCurrentDirectoryRecursive", testChildrenOfCurrentDirectoryRecursive),
+        ("testListingChildrenNonRecursively", testListingChildrenNonRecursively),
+        ("testListingChildrenRecursively", testListingChildrenRecursively),
+        ("testListingChildrenRecursivelyFollowingSymlink", testListingChildrenRecursivelyFollowingSymlink),
     ]
 }
 
@@ -45,6 +46,8 @@ extension POSIXPartsParsingTests {
     static let __allTests__POSIXPartsParsingTests = [
         ("test2SlashRootAndSegments", test2SlashRootAndSegments),
         ("test3SlashRoot", test3SlashRoot),
+        ("testInitialContextIsPreserved", testInitialContextIsPreserved),
+        ("testInitialContextWithFollowUpIsPreserved", testInitialContextWithFollowUpIsPreserved),
         ("testIntermediateCurrentDirectoryIsRemoved", testIntermediateCurrentDirectoryIsRemoved),
         ("testJust2SlashRoot", testJust2SlashRoot),
         ("testNoRootIsParsedCorrectly", testNoRootIsParsedCorrectly),
@@ -407,6 +410,8 @@ extension WindowsPartsParsingTests {
     static let __allTests__WindowsPartsParsingTests = [
         ("test2SlashRoot", test2SlashRoot),
         ("test3SlashRoot", test3SlashRoot),
+        ("testInitialContextIsPreserved", testInitialContextIsPreserved),
+        ("testInitialContextWithFollowUpIsPreserved", testInitialContextWithFollowUpIsPreserved),
         ("testIntermediateCurrentDirectoryIsRemoved", testIntermediateCurrentDirectoryIsRemoved),
         ("testNoRootIsParsedCorrectly", testNoRootIsParsedCorrectly),
         ("testParsingDriveOnWindows", testParsingDriveOnWindows),

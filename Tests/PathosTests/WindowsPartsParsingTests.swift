@@ -66,4 +66,14 @@ final class WindowsPartsParsingTests: XCTestCase {
             ]
         )
     }
+
+    func testInitialContextIsPreserved() {
+        let p = PureWindowsPath(#"."#)
+        XCTAssertEqual(p.segments, ["."])
+    }
+
+    func testInitialContextWithFollowUpIsPreserved() {
+        let p = PureWindowsPath(#".\a"#)
+        XCTAssertEqual(p.segments, [".", "a"])
+    }
 }

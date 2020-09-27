@@ -219,3 +219,9 @@ extension Path: Equatable, Hashable {
         hasher.combine(pure)
     }
 }
+
+extension Path: Comparable {
+    public static func < (lhs: Path, rhs: Path) -> Bool {
+        lhs.binaryPath < rhs.binaryPath
+    }
+}
