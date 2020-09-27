@@ -101,7 +101,7 @@ public struct Path {
         truncate: Bool = true
     ) throws where Bytes: Sequence, Bytes.Element == UInt8 {
         try ContiguousArray(bytes).withUnsafeBytes { bytes in
-            try _write(
+            try write(
                 bytes: bytes.baseAddress!,
                 byteCount: byteCount,
                 createIfNecessary: createIfNecessary,
@@ -140,7 +140,7 @@ public struct Path {
             }
 
             try data.withUnsafeBytes { byteBuffer in
-                try _write(
+                try write(
                     bytes: byteBuffer.baseAddress!,
                     byteCount: byteBuffer.count,
                     createIfNecessary: createIfNecessary,
@@ -156,7 +156,7 @@ public struct Path {
         truncate: Bool = true
     ) throws {
         try string.withCString { buffer in
-            try _write(
+            try write(
                 bytes: UnsafeRawPointer(buffer),
                 byteCount: string.utf8.count,
                 createIfNecessary: createIfNecessary,

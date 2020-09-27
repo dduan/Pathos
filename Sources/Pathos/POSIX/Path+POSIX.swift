@@ -174,7 +174,7 @@ extension Path {
         }
     }
 
-    func _write(bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool = true, truncate: Bool = true) throws {
+    func write(bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool = true, truncate: Bool = true) throws {
         let oflag = O_WRONLY | (createIfNecessary ? O_CREAT : 0) | (truncate ? O_TRUNC : 0)
         try binaryPath.c { path in
             let fd = open(path, oflag, kDefaultWritePermission.rawValue)
