@@ -27,7 +27,7 @@ extension Path {
     }
 
     public func metadata(followSymlink: Bool = false) throws -> Metadata {
-        let binary = try followSymlink ? realPath().binaryPath : binaryPath
+        let binary = try followSymlink ? finalName().binaryPath : binaryPath
         var data = WIN32_FIND_DATAW()
         try binary.c { cString in
             let handle = FindFirstFileW(cString, &data)
@@ -290,6 +290,146 @@ extension Path {
         }
     }
 
+    public func real() throws -> Path {
+        func readLink(_ path: Path) throws -> Path {
+            var path = path
+            // These error codes indicate that we should stop reading links and
+            // return the path we currently have.
+            // 1: ERROR_INVALID_FUNCTION
+            // 2: ERROR_FILE_NOT_FOUND
+            // 3: ERROR_DIRECTORY_NOT_FOUND
+            // 5: ERROR_ACCESS_DENIED
+            // 21: ERROR_NOT_READY (implies drive with no media)
+            // 32: ERROR_SHARING_VIOLATION (probably an NTFS paging file)
+            // 50: ERROR_NOT_SUPPORTED (implies no support for reparse points)
+            // 67: ERROR_BAD_NET_NAME (implies remote server unavailable)
+            // 87: ERROR_INVALID_PARAMETER
+            // 4390: ERROR_NOT_A_REPARSE_POINT
+            // 4392: ERROR_INVALID_REPARSE_DATA
+            // 4393: ERROR_REPARSE_TAG_INVALID
+            let allowedErrors: Set<SystemError.Code> = [1, 2, 3, 5, 21, 32, 50, 67, 87, 4390, 4392, 4393]
+
+            var seen = Set<Path>()
+
+            while !seen.contains(path) {
+                seen.insert(path)
+                let oldPath = path
+                do {
+                    path = try path.readSymlink()
+                    if !path.isAbsolute {
+                        if (try? oldPath.metadata().fileType.isSymlink) != true {
+                            path = oldPath
+                            break
+                        }
+
+                        path = oldPath.parent + path
+                    }
+                } catch let error as SystemError {
+                    if allowedErrors.contains(error.rawValue) {
+                        break
+                    } else {
+                        throw error
+                    }
+                } catch {
+                    throw error
+                }
+            }
+
+            return path
+        }
+
+        func getFinalPathName(_ path: Path) throws -> Path {
+            var path = path
+            // These error codes indicate that we should stop resolving the path
+            // and return the value we currently have.
+            // 1: ERROR_INVALID_FUNCTION
+            // 2: ERROR_FILE_NOT_FOUND
+            // 3: ERROR_DIRECTORY_NOT_FOUND
+            // 5: ERROR_ACCESS_DENIED
+            // 21: ERROR_NOT_READY (implies drive with no media)
+            // 32: ERROR_SHARING_VIOLATION (probably an NTFS paging file)
+            // 50: ERROR_NOT_SUPPORTED
+            // 67: ERROR_BAD_NET_NAME (implies remote server unavailable)
+            // 87: ERROR_INVALID_PARAMETER
+            // 123: ERROR_INVALID_NAME
+            // 1920: ERROR_CANT_ACCESS_FILE
+            // 1921: ERROR_CANT_RESOLVE_FILENAME (implies unfollowable symlink)
+            let allowedErrors: Set<SystemError.Code> = [1, 2, 3, 5, 21, 32, 50, 67, 87, 123, 1920, 1921]
+            var tail = Path(PureWindowsPath(parts: Path.Parts(drive: nil, root: nil, segments: [])))
+
+            while !path.isEmpty {
+                do {
+                    path = try finalName()
+                    return tail.isEmpty ? path : path + tail
+                } catch let error as SystemError {
+                    if allowedErrors.contains(error.rawValue) {
+                        if let newPath = try? readLink(path) {
+                            if newPath != path {
+                                return tail.isEmpty ? newPath : newPath + tail
+                            }
+                        }
+                    } else {
+                        throw error
+                    }
+                    let name = path.name ?? ""
+                    path = path.parent
+
+                    if !path.isEmpty && name.isEmpty {
+                        return path + tail
+                    }
+
+                    tail = tail.isEmpty ? Path(name) : name + tail
+                } catch {
+                    throw error
+                }
+            }
+
+            return path
+        }
+
+        var path = self
+        let prefix = #"\\?\"#
+        let uncPrefix = #"\\?\UNC\"#
+        let newUNCPrefix = #"\\"#
+        let hadPrefix = hasPrefix(prefix)
+        if !hadPrefix && !path.isAbsolute {
+            path = try path.absolute()
+        }
+
+        var initialError: SystemError?
+        do {
+            path = try finalName()
+        } catch let error as SystemError {
+            initialError = error
+            path = try getFinalPathName(path)
+        } catch {
+            throw error
+        }
+
+        if !hadPrefix && path.hasPrefix(prefix) {
+            let sPath: Path
+            if path.hasPrefix(uncPrefix) {
+                sPath = path.replacing(prefix: uncPrefix, with: newUNCPrefix)
+            } else {
+                sPath = path.replacing(prefix: prefix, with: "")
+            }
+
+            do {
+                if try sPath.finalName() == path {
+                    path = sPath
+                }
+            } catch let error as SystemError {
+                if error.rawValue == initialError?.rawValue {
+                    path = sPath
+                }
+            } catch {
+                throw error
+            }
+        }
+
+        return path
+    }
+
     func write(bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool = true, truncate: Bool = true) throws {
         let diposition: Int32
 
@@ -323,7 +463,7 @@ extension Path {
         }
     }
 
-    private func realPath() throws -> Path {
+    private func finalName() throws -> Path {
         try withHandle(
             access: 0,
             diposition: OPEN_EXISTING,
@@ -374,6 +514,22 @@ extension Path {
             }
 
             return try action(handle)
+        }
+    }
+
+    private func hasPrefix(_ prefix: String) -> Bool {
+        drive?.hasPrefix(prefix) == true || root?.hasPrefix(prefix) == true
+    }
+
+    private func replacing(prefix: String, with newPrefix: String) -> Path {
+        if let drive = drive, drive.hasPrefix(prefix) {
+            let newDrive = newPrefix + drive.suffix(drive.count - prefix.count)
+            return Path(PureWindowsPath(parts: .init(drive: newDrive, root: root, segments: segments)))
+        } else if let root = root, root.hasPrefix(prefix) {
+            let newRoot = newPrefix + root.suffix(root.count - prefix.count)
+            return Path(PureWindowsPath(parts: .init(drive: drive, root: newRoot, segments: segments)))
+        } else {
+            return self
         }
     }
 }

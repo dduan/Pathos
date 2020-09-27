@@ -35,4 +35,23 @@ public enum SystemError: Error, Equatable {
     #else
     public typealias Code = Int32
     #endif
+
+    var rawValue: Code {
+        #if os(Windows)
+        switch self {
+        case .fileExists:
+            return Code(ERROR_ALREADY_EXISTS)
+        case let .unspecified(code):
+            return code
+        }
+        #else
+
+        switch self {
+        case .fileExists:
+            return EEXIST
+        case let .unspecified(code):
+            return code
+        }
+        #endif
+    }
 }
