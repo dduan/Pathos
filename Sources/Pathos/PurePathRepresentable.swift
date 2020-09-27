@@ -92,6 +92,8 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible {
     /// The logical parent of the path. The parent of an anchor is the anchor itself.
     /// The parent of `.` is `.`. The parent of `/a/b/c` is `/a/b`.
     var parent: Self { get }
+
+    var isEmpty: Bool { get }
 }
 
 extension PureWindowsPath: PurePathRepresentable {}

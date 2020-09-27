@@ -129,6 +129,10 @@ public struct PureWindowsPath {
     public var normal: PureWindowsPath {
         PureWindowsPath(parts: parts.normalized)
     }
+
+    var isEmpty: Bool {
+        parts.isEmpty
+    }
 }
 
 extension PureWindowsPath: CustomStringConvertible {
