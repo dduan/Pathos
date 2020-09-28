@@ -1,0 +1,18 @@
+name: Ubuntu Focal
+
+on: [push, pull_request]
+
+jobs:
+  linux:
+    name: Ubuntu Focal
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        swift:
+          - 5.3
+        distro:
+          - focal
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test
+      run: Scripts/docker.sh Pathos 'swift test -Xswiftc -warnings-as-errors' ${{ matrix.swift }} ${{ matrix.distro }}
