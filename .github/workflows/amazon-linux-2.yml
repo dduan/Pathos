@@ -1,0 +1,18 @@
+name: Amazon Linux 2
+
+on: [push, pull_request]
+
+jobs:
+  linux:
+    name: Amazon Linux 2
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        swift:
+          - 5.3
+        distro:
+          - amazonlinux2
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test
+      run: Scripts/docker.sh Pathos 'swift test -Xswiftc -warnings-as-errors' ${{ matrix.swift }} ${{ matrix.distro }}
