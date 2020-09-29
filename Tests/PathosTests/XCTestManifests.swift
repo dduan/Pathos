@@ -142,6 +142,7 @@ extension PathNormalTests {
     // to regenerate.
     static let __allTests__PathNormalTests = [
         ("testEmptyPathBecomesCurrent", testEmptyPathBecomesCurrent),
+        ("testParentDirectoryGetsRemoved", testParentDirectoryGetsRemoved),
     ]
 }
 
