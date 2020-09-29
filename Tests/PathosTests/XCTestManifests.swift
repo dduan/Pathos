@@ -26,7 +26,9 @@ extension MetadataTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__MetadataTests = [
-        ("testRetrievingMetadata", testRetrievingMetadata),
+        ("testRetrievingDirectoryMetadata", testRetrievingDirectoryMetadata),
+        ("testRetrievingFileMetadata", testRetrievingFileMetadata),
+        ("testRetrievingSymlinkMetadata", testRetrievingSymlinkMetadata),
     ]
 }
 
