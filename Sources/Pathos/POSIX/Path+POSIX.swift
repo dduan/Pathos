@@ -2,8 +2,10 @@
 
 #if canImport(Darwin)
 import Darwin
+private let systemGlob = Darwin.glob
 #else
 import Glibc
+private let systemGlob = Glibc.glob
 #endif // canImport(Darwin)
 
 let kDefaultWritePermission: POSIXPermissions = [.ownerRead, .ownerWrite, .groupRead, .otherRead]
@@ -203,6 +205,33 @@ extension Path {
         var cache = [Path: Path]()
         let (result, _) = try resolve(path: empty, rest: self, seen: &cache)
         return try result.absolute()
+    }
+
+    func matches(pattern: Path) -> Bool {
+        pattern.binaryPath.c { cPattern in
+            binaryPath.c { cPath in
+                fnmatch(cPattern, cPath, 0) == 0
+            }
+        }
+    }
+
+    func simpleGlobImpl() -> [Path] {
+        var gt = glob_t()
+        defer {
+            globfree(&gt)
+        }
+
+        let flags = GLOB_TILDE | GLOB_BRACE
+        return binaryPath.c { pattern -> [Path] in
+            guard systemGlob(pattern, flags, nil, &gt) == 0 else {
+                return []
+            }
+
+            let count = Int(gt.gl_pathc)
+            return (0 ..< count)
+                .compactMap { gt.gl_pathv[$0] }
+                .compactMap { Path(cString: $0) }
+        }
     }
 
     func childrenImpl(logicalParent: Path?, recursive: Bool = false, followSymlink: Bool = false) throws

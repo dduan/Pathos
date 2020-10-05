@@ -1,6 +1,7 @@
 add_library("PathosTests"
   "PathosTests/AbsoluteTests.swift"
   "PathosTests/ChildrenTests.swift"
+  "PathosTests/GlobTests.swift"
   "PathosTests/MetadataTests.swift"
   "PathosTests/POSIXBinaryStringTests.swift"
   "PathosTests/POSIXPartsParsingTests.swift"
