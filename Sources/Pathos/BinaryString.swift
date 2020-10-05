@@ -22,7 +22,7 @@ struct CString<Unit: BinaryInteger>: Equatable, Hashable, Comparable {
         storage[0 ..< storage.count - 1]
     }
 
-    func c<T>(action: (UnsafePointer<Unit>) throws -> T) throws -> T {
+    func c<T>(action: (UnsafePointer<Unit>) throws -> T) rethrows -> T {
         try content.withUnsafeBufferPointer {
             try action($0.baseAddress!)
         }
@@ -65,6 +65,6 @@ extension CString where Unit == POSIXEncodingUnit {
     }
 
     var description: String {
-        (try? c { String(cString: $0) }) ?? "<UTF8 Decoding Error>"
+        c { String(cString: $0) }
     }
 }

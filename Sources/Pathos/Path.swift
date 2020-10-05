@@ -165,6 +165,46 @@ public struct Path {
         }
     }
 
+    /// Find all the path names matching a specified pattern according to the rules used by the native OS shells.
+    /// On POSIX, home directory (tilde, `~`) gets expanded. "Globstar" (`**`) can be included as part of the pattern
+    /// to represent all intermediary directories, making the search recursive, similar¹ to pattern expansion on Zsh,
+    /// Fish and Bash 4+.
+    ///
+    /// ¹ globstar expansion has many quirks and differences among different implementations. Pathos use the
+    /// following algorithm:
+    ///   - find the leftmost occurance of `**` (ignore the rest of occurances).
+    ///   - split the pattern by middle of the globstar. So `a/**/c/*.swift`, for example, would become `a/*` and
+    ///     `*/c/*.swift`.
+    ///   - perform a non-recursive, system glob with the first half (`a/*` from previous example).
+    ///   - for each result from previous glob that is a directory, recursively find all of its children.
+    ///   - perform an `fnmatch` or `PathMatchSpecW` with the *full* pattern with each child, return the ones that
+    ///     match.
+    ///
+    /// ² due to libc implementation, there are subtle behaviral differences among platforms. Specifically, broken
+    /// symbolic links will not be found on Linux, but it will be included on Darwin.
+    ///
+    /// - Returns: paths in current working directory that matches the pattern.
+    public func glob() throws -> [Path] {
+        guard var globStarPosition = binaryPath.content.firstIndex(of: [42, 42]) else {
+            return simpleGlobImpl()
+        }
+
+        func recursiveFNMatch(_ path: Path) throws -> [Path] {
+            try path.children(recursive: true)
+                .map(\.0)
+                .filter { $0.matches(pattern: self) }
+        }
+
+        while binaryPath.content[globStarPosition - 1] == 92 {
+            globStarPosition -= 1
+        }
+
+        return try Path(BinaryString(nulTerminatedStorage: binaryPath.content.prefix(globStarPosition) + [0]))
+            .simpleGlobImpl()
+            .filter { try $0.metadata().fileType.isDirectory }
+            .flatMap(recursiveFNMatch)
+    }
+
     var isEmpty: Bool {
         pure.isEmpty
     }
