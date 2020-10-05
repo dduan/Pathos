@@ -449,6 +449,63 @@ extension Path {
         return path
     }
 
+    func matches(pattern: Path) -> Bool {
+        pattern.binaryPath.c { cPattern in
+            binaryPath.c { cPath in
+                PathMatchSpecW(cPath, cPattern)
+            }
+        }
+    }
+
+    func simpleGlobImpl() -> [Path] {
+        var result = [Path]()
+        if (try? metadata().fileType.isDirectory) == true {
+            result.append(self)
+        }
+
+        var data = WIN32_FIND_DATAW()
+
+        func addResultIfNecessary(_ data: inout WIN32_FIND_DATAW) {
+            if data.cFileName.0 == WindowsConstants.binaryCurrentContext {
+                if data.cFileName.1 == 0
+                    || data.cFileName.1 == WindowsConstants.binaryCurrentContext && data.cFileName.2 == 0
+                {
+                    return
+                }
+            }
+
+            let binary = withUnsafePointer(
+                to: data.cFileName,
+                { $0.withMemoryRebound(
+                    to: WindowsEncodingUnit.self,
+                    capacity: Int(MAX_PATH)
+                ) { WindowsBinaryString(cString: $0) }
+                }
+            )
+
+            result.append(Path(binary))
+        }
+
+        binaryPath.c { pathCString in
+            let handle = FindFirstFileW(pathCString, &data)
+            if handle == INVALID_HANDLE_VALUE {
+                return
+            }
+
+            defer {
+                CloseHandle(handle)
+            }
+
+            addResultIfNecessary(&data)
+
+            while FindNextFileW(handle, &data) {
+                addResultIfNecessary(&data)
+            }
+        }
+
+        return result
+    }
+
     func write(bytes: UnsafeRawPointer, byteCount: Int, createIfNecessary: Bool = true, truncate: Bool = true) throws {
         let diposition: Int32
 
