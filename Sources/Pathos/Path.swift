@@ -72,6 +72,10 @@ public struct Path {
         Path(pure.normal)
     }
 
+    public var base: Self {
+        Path(pure.base)
+    }
+
     /// Return `true` if path refers to an existing path.
     /// On some platforms, this function may return `false` if permission is not
     /// granted to retrieve metadata on the requested file, even if the path physically exists.
@@ -210,9 +214,9 @@ public struct Path {
     }
 
     struct Parts: Equatable {
-        let drive: String?
-        let root: String?
-        let segments: Array<String>
+        var drive: String?
+        var root: String?
+        var segments: Array<String>
 
         var isEmpty: Bool {
             drive == nil && root == nil && segments.isEmpty
