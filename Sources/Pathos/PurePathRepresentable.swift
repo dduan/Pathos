@@ -1,5 +1,5 @@
 #if DEBUG
-protocol PurePathRepresentable: Hashable, CustomStringConvertible {
+protocol PurePathRepresentable: Hashable, CustomStringConvertible, ExpressibleByStringLiteral {
     associatedtype NativeEncodingUnit
     associatedtype BinaryStringLike
     associatedtype PathLike

@@ -134,6 +134,12 @@ public struct PureWindowsPath {
     }
 }
 
+extension PureWindowsPath: ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        self.init(value)
+    }
+}
+
 extension PureWindowsPath: CustomStringConvertible {
     public var description: String {
         binaryPath.description
