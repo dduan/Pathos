@@ -59,6 +59,10 @@ public struct PureWindowsPath {
         parts.extensions
     }
 
+    public var base: Self {
+        Self(parts: parts.base)
+    }
+
     public func joined(with others: WindowsPathConvertible...) -> Self {
         joined(with: others)
     }

@@ -57,6 +57,10 @@ public struct PurePOSIXPath {
         parts.extensions
     }
 
+    public var base: Self {
+        Self(parts: parts.base)
+    }
+
     public func joined(with paths: POSIXPathConvertible...) -> Self {
         joined(with: paths)
     }

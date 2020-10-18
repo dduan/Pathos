@@ -54,6 +54,15 @@ extension Path.Parts {
         return result
     }
 
+    var base: Path.Parts {
+        var copy = self
+        if let ext = `extension` {
+            copy.segments = copy.segments.dropLast() + [String(segments.last!.dropLast(ext.count))]
+        }
+
+        return copy
+    }
+
     var parentParts: Path.Parts {
         if drive == nil && root == nil && (segments.count == 1 && segments.first == Constants.currentContext || segments.count <= 1) {
             return Self(drive: nil, root: nil, segments: [Constants.currentContext])
