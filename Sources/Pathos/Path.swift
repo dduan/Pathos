@@ -244,6 +244,12 @@ public struct Path {
     }
 }
 
+extension Path: ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        self.init(value)
+    }
+}
+
 extension Path: CustomStringConvertible {
     public var description: String {
         binaryPath.description
