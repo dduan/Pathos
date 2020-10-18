@@ -127,6 +127,12 @@ public struct PurePOSIXPath {
     }
 }
 
+extension PurePOSIXPath: ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        self.init(value)
+    }
+}
+
 extension PurePOSIXPath: CustomStringConvertible {
     public var description: String {
         binaryPath.description
