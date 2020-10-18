@@ -449,6 +449,30 @@ extension Path {
         return path
     }
 
+    public static func home() -> Path {
+        let binary = ContiguousArray<WindowsEncodingUnit>(unsafeUninitializedCapacity: Int(MAX_PATH)) { buffer, count in
+            let returnedSize = Int(ExpandEnvironmentStringsW(Array(#"%USERPROFILE%\"# .utf16), buffer.baseAddress, DWORD(MAX_PATH)))
+            if returnedSize == 0 {
+                buffer[0] = 92
+                buffer[1] = 0
+                count = 2
+            } else {
+                // for some reason `ExpandEnvironmentStringsW` returns the wrong size sometimes. So we find
+                // the last `\`, which we requested as part of the variable expansion, and replace it with
+                // NUL.
+                var end = returnedSize - 1
+                while buffer[end] != 92 {
+                    end -= 1
+                }
+
+                buffer[end] = 0
+                count = end + 1
+            }
+        }
+
+        return Path(BinaryString(nulTerminatedStorage: binary))
+    }
+
     func matches(pattern: Path) -> Bool {
         pattern.binaryPath.c { cPattern in
             binaryPath.c { cPath in

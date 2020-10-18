@@ -207,6 +207,18 @@ extension Path {
         return try result.absolute()
     }
 
+    public static func home() -> Path {
+        if let home = getenv("HOME") {
+            return Path(cString: home)
+        }
+
+        if let passwd = getpwuid(getuid()), let home = passwd.pointee.pw_dir {
+            return Path(cString: home)
+        }
+
+        return Path("/")
+    }
+
     func matches(pattern: Path) -> Bool {
         pattern.binaryPath.c { cPattern in
             binaryPath.c { cPath in
