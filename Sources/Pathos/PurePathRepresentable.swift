@@ -79,6 +79,9 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible, ExpressibleBy
     /// Leading `.` in the name does not count.
     var extensions: [String] { get }
 
+    /// Path value without the `extension`. `path.base + path.extension` should be equal to `path`.
+    var base: Self { get }
+
     /// Returns a path that connects this location and another.
     ///
     /// This is a pure computation: the file system is not accessed to confirm the existence or
