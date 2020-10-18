@@ -205,7 +205,7 @@ public struct Path {
             .flatMap(recursiveFNMatch)
     }
 
-    var isEmpty: Bool {
+    public var isEmpty: Bool {
         pure.isEmpty
     }
 
