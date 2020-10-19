@@ -6,8 +6,9 @@ final class WriteTests: XCTestCase {
         try Path.withTemporaryDirectory { _ in
             let path = Path("a")
             let data: [UInt8] = [65]
-            try path.write(bytes: data, byteCount: 1, createIfNecessary: true)
+            try path.write(bytes: data, createIfNecessary: true)
             XCTAssert(path.exists())
+            XCTAssertEqual(try path.readBytes(), [65])
         }
     }
 
@@ -15,16 +16,18 @@ final class WriteTests: XCTestCase {
         try Path.withTemporaryDirectory { _ in
             let path = Path("a")
             let data: [Int8] = [65]
-            try path.write(bytes: data, byteCount: 1, createIfNecessary: true)
+            try path.write(bytes: data, createIfNecessary: true)
             XCTAssert(path.exists())
+            XCTAssertEqual(try path.readBytes(), [65])
         }
     }
 
     func testWritingString() throws {
         try Path.withTemporaryDirectory { _ in
             let path = Path("a.txt")
-            try path.write("a", createIfNecessary: true)
+            try path.write("axx", createIfNecessary: true)
             XCTAssert(path.exists())
+            XCTAssertEqual(try path.readBytes(), [97, 120, 120])
         }
     }
 
@@ -33,6 +36,7 @@ final class WriteTests: XCTestCase {
             let path = Path("a.txt")
             try path.write("a", encoding: UTF16.self, createIfNecessary: true)
             XCTAssert(path.exists())
+            XCTAssertEqual(try path.readBytes(), [97, 0])
         }
     }
 }
