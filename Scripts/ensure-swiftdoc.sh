@@ -2,7 +2,7 @@
 
 set -e
 
-version=1.0.0-beta.3
+version=1.0.0-beta.5
 tmp=tmp
 bin=$tmp/swift-doc
 
