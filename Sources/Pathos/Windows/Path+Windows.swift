@@ -473,6 +473,36 @@ extension Path {
         return Path(BinaryString(nulTerminatedStorage: binary))
     }
 
+    public func readBytes() throws -> [CChar] {
+        let meta = try metadata()
+        if meta.fileType.isDirectory {
+            return []
+        }
+
+        let size = Int(meta.size)
+
+        return try withHandle(
+            access: FILE_SHARE_READ,
+            diposition: OPEN_EXISTING,
+            attributes: FILE_FLAG_BACKUP_SEMANTICS
+        ) { handle in
+            var bytesRead: DWORD = 0
+            return try Array<CChar>(unsafeUninitializedCapacity: size) { buffer, count in
+                if !ReadFile(
+                    handle,
+                    buffer.baseAddress,
+                    DWORD(size),
+                    &bytesRead,
+                    nil
+                ) {
+                    throw SystemError(code: GetLastError())
+                }
+
+                count = Int(bytesRead)
+            }
+        }
+    }
+
     func matches(pattern: Path) -> Bool {
         pattern.binaryPath.c { cPattern in
             binaryPath.c { cPath in
