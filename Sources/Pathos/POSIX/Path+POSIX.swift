@@ -219,6 +219,29 @@ extension Path {
         return Path("/")
     }
 
+    public func readBytes() throws -> [UInt8] {
+        try binaryPath.c { cPath in
+            let feed = open(cPath, O_RDONLY)
+            if feed == -1 {
+                throw SystemError(code: errno)
+            }
+
+            defer {
+                close(feed)
+            }
+
+            let meta = try metadata()
+            if meta.fileType.isDirectory {
+                return []
+            }
+
+            let size = Int(meta.size)
+            return Array(unsafeUninitializedCapacity: size) { buffer, count in
+                count = Int(read(feed, buffer.baseAddress, size))
+            }
+        }
+    }
+
     func matches(pattern: Path) -> Bool {
         pattern.binaryPath.c { cPattern in
             binaryPath.c { cPath in
