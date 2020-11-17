@@ -20,30 +20,32 @@ jobs:
         set +x
         source ./exported_environment.sh
         set -x
-        echo "::set-env name=PATH::${PATH}"
-        echo "::set-env name=UniversalCRTSdkDir::${UniversalCRTSdkDir}"
-        echo "::set-env name=UCRTVersion::${UCRTVersion}"
-        echo "::set-env name=VCToolsInstallDir::${VCToolsInstallDir}"
+        echo "PATH=${PATH}" >> $GITHUB_ENV
+        echo "UniversalCRTSdkDir=${UniversalCRTSdkDir}" >> $GITHUB_ENV
+        echo "UCRTVersion=${UCRTVersion}" >> $GITHUB_ENV
+        echo "VCToolsInstallDir=${VCToolsInstallDir}" >> $GITHUB_ENV
     - name: Install Swift
       shell: bash
       run: |
         set -x
         curl --location \
-          'https://github.com/compnerd/swift-build/releases/download/v5.3/installer.exe' \
-          --output '/tmp/installer.exe'
-        /tmp/installer.exe //passive
-        cp "/c/Library/Developer/Platforms/Windows.platform/Developer/SDKs/Windows.sdk/usr/share/ucrt.modulemap" "${UniversalCRTSdkDir}/Include/${UCRTVersion}/ucrt/module.modulemap"
-        cp "/c/Library/Developer/Platforms/Windows.platform/Developer/SDKs/Windows.sdk/usr/share/visualc.modulemap" "${VCToolsInstallDir}/include/module.modulemap"
-        cp "/c/Library/Developer/Platforms/Windows.platform/Developer/SDKs/Windows.sdk/usr/share/visualc.apinotes" "${VCToolsInstallDir}/include/visualc.apinotes"
-        cp "/c/Library/Developer/Platforms/Windows.platform/Developer/SDKs/Windows.sdk/usr/share/winsdk.modulemap" "${UniversalCRTSdkDir}/Include/${UCRTVersion}/um/module.modulemap"
+          'https://swift.org/builds/swift-5.3-release/windows10/swift-5.3-RELEASE/swift-5.3-RELEASE-windows10.exe' \
+          --output '/tmp/swift-5.3-RELEASE-windows10.exe'
+        /tmp/swift-5.3-RELEASE-windows10.exe //passive
+        export SDKROOT="/c/Library/Developer/Platforms/Windows.platform/Developer/SDKs/Windows.sdk"
+        echo "SDKROOT=${SDKROOT}" >> $GITHUB_ENV
+        cp "${SDKROOT}/usr/share/ucrt.modulemap" "${UniversalCRTSdkDir}/Include/${UCRTVersion}/ucrt/module.modulemap"
+        cp "${SDKROOT}/usr/share/visualc.modulemap" "${VCToolsInstallDir}/include/module.modulemap"
+        cp "${SDKROOT}/usr/share/visualc.apinotes" "${VCToolsInstallDir}/include/visualc.apinotes"
+        cp "${SDKROOT}/usr/share/winsdk.modulemap" "${UniversalCRTSdkDir}/Include/${UCRTVersion}/um/module.modulemap"
         export PATH="/c/Library/icu-67/usr/bin:${PATH}"
-        echo "::set-env name=PATH::${PATH}"
+        echo "PATH=${PATH}" >> $GITHUB_ENV
         export PATH="/c/Library/Developer/Toolchains/unknown-Asserts-development.xctoolchain/usr/bin:${PATH}"
-        echo "::set-env name=PATH::${PATH}"
+        echo "PATH=${PATH}" >> $GITHUB_ENV
         export PATH="/c/Library/Swift-development/bin:${PATH}"
-        echo "::set-env name=PATH::${PATH}"
+        echo "PATH=${PATH}" >> $GITHUB_ENV
         export PATH="/c/Library/Developer/Platforms/Windows.platform/Developer/Library/XCTest-development/usr/bin:${PATH}"
-        echo "::set-env name=PATH::${PATH}"
+        echo "PATH=${PATH}" >> $GITHUB_ENV
         swift --version
     - name: Install Linux
       shell: bash
@@ -51,58 +53,57 @@ jobs:
         set -x
         mkdir -p .build/tmp
         curl --location \
-          'https://aka.ms/wsl-ubuntu-1804' \
-          --output '.build/tmp/wsl-ubuntu-1804'
-        7z x .build/tmp/wsl-ubuntu-1804 -o.build/Linux/Ubuntu
+          'https://aka.ms/wslubuntu2004' \
+          --output '.build/tmp/wslubuntu2004'
+        7z x .build/tmp/wslubuntu2004 -o.build/Linux/Ubuntu
         export PATH="$(pwd)/.build/Linux/Ubuntu:${PATH}"
-        echo "::set-env name=PATH::${PATH}"
-        ubuntu1804 install --root
+        echo "PATH=${PATH}" >> $GITHUB_ENV
+        ubuntu2004 install --root
     - name: Install SwiftPM dependencies
       shell: bash
       run: |
         set -x
-        ubuntu1804 run \
+        ubuntu2004 run \
           apt-get update --assume-yes
-        ubuntu1804 run \
+        ubuntu2004 run \
           UCF_FORCE_CONFOLD=1 DEBIAN_FRONTEND=noninteractive \
           apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" \
             install --assume-yes \
               binutils \
-              clang-9 \
               git \
+              gnupg2 \
               libc6-dev \
               libcurl4 \
               libedit2 \
-              libgcc-5-dev \
+              libgcc-9-dev \
               libpython2.7 \
               libsqlite3-0 \
-              libstdc++-5-dev \
+              libstdc++-9-dev \
               libxml2 \
-              lld-6.0 \
+              libz3-dev \
+              lld-10 \
               pkg-config \
               tzdata \
               zlib1g-dev
-        ubuntu1804 run \
-          ln -s //usr/bin/lld-link-6.0 //usr/bin/lld-link
+        ubuntu2004 run \
+          ln -s //usr/bin/lld-link-10 //usr/bin/lld-link
     - name: Install SwiftPM
       shell: bash
       run: |
         set -x
-        ubuntu1804 run \
+        ubuntu2004 run \
           mkdir -p /tmp
-        ubuntu1804 run \
+        ubuntu2004 run \
           curl --location \
-            'https://swift.org/builds/swift-5.3-release/ubuntu1804/swift-5.3-RELEASE/swift-5.3-RELEASE-ubuntu18.04.tar.gz' \
-            --output '/tmp/swift-5.3-RELEASE-ubuntu18.04.tar.gz'
-        ubuntu1804 run \
-          tar --extract --force-local --file /tmp/swift-5.3-RELEASE-ubuntu18.04.tar.gz --directory /tmp
-        ubuntu1804 run \
+            'https://swift.org/builds/swift-5.3-release/ubuntu2004/swift-5.3-RELEASE/swift-5.3-RELEASE-ubuntu20.04.tar.gz' \
+            --output '/tmp/swift-5.3-RELEASE-ubuntu20.04.tar.gz'
+        ubuntu2004 run \
+          tar --extract --force-local --file /tmp/swift-5.3-RELEASE-ubuntu20.04.tar.gz --directory /tmp
+        ubuntu2004 run \
           mkdir -p /
-        ubuntu1804 run \
-          cp -R /tmp/swift-5.3-RELEASE-ubuntu18.04/usr //
-        ubuntu1804 run \
-          ln -fs //usr/bin/clang-9 //usr/bin/clang
-        ubuntu1804 run \
+        ubuntu2004 run \
+          cp -R /tmp/swift-5.3-RELEASE-ubuntu20.04/usr //
+        ubuntu2004 run \
           swift --version
     - name: Prepare project for Windows CI
       shell: bash
@@ -115,7 +116,7 @@ jobs:
       run: |
         set -x
         export WSLENV=UniversalCRTSdkDir/p:UCRTVersion:VCToolsInstallDir/p
-        ubuntu1804 run \
+        ubuntu2004 run \
           TARGETING_WINDOWS='true' \
           swift build --destination .github/workflows/sdk.json \
             --configuration release -Xswiftc -enable-testing \
