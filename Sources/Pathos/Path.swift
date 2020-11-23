@@ -1,3 +1,6 @@
+// `Path` is the primary access point for Pathos APIs. It stores a path's value in binary format.
+// A `Path` points to a theoretical location in the virtual file system. It does not represent what
+// does or does not actually resides at the location.
 public struct Path {
     #if os(Windows)
     let pure: PureWindowsPath
@@ -11,7 +14,7 @@ public struct Path {
         self.pure = pure
     }
 
-    public init(cString: UnsafePointer<NativeEncodingUnit>) {
+    init(cString: UnsafePointer<NativeEncodingUnit>) {
         self.init(PurePath(cString: cString))
     }
 

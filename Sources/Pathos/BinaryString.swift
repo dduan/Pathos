@@ -5,10 +5,10 @@ typealias POSIXBinaryString = CString<CChar>
 
 #if os(Windows)
 typealias BinaryString = WindowsBinaryString
-public typealias NativeEncodingUnit = UInt16
+typealias NativeEncodingUnit = UInt16
 #else
 typealias BinaryString = POSIXBinaryString
-public typealias NativeEncodingUnit = CChar
+typealias NativeEncodingUnit = CChar
 #endif
 
 struct CString<Unit: BinaryInteger>: Equatable, Hashable, Comparable {
