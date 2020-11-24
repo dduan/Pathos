@@ -106,9 +106,7 @@ extension Path {
     ///
     /// - Parameter action: The closure to execute in the temporary environment. The temporary directory is
     ///                     sent as a parameter for the action closure.
-    public static func withTemporaryDirectory(
-        performAction action: @escaping (Path) throws -> Void
-    ) throws {
+    public static func withTemporaryDirectory(run action: @escaping (Path) throws -> Void) throws {
         let temporaryDirectory = try makeTemporaryDirectory()
         try temporaryDirectory.asWorkingDirectory {
             try action(temporaryDirectory)

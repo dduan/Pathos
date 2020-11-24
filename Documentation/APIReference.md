@@ -240,7 +240,7 @@ public static func makeTemporaryDirectory(
 
 ```swift
 public static func withTemporaryDirectory(
-    performAction action: @escaping (Path) throws -> Void
+    run action: @escaping (Path) throws -> Void
 ) throws
 ```
 
@@ -262,7 +262,7 @@ public static func setWorkingDirectory(_ path: Path) throws
 ***
 
 ```swift
-public func asWorkingDirectory(execute action: @escaping () throws -> Void) throws
+public func asWorkingDirectory(run action: @escaping () throws -> Void) throws
 ```
 
 
