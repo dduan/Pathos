@@ -4,9 +4,9 @@ import XCTest
 final class ChildrenTests: XCTestCase {
     func testListingChildrenNonRecursively() throws {
         try Path.withTemporaryDirectory { container in
-            try Path("a").write("")
+            try Path("a").write(utf8: "")
             try Path("b").makeDirectory()
-            try (Path("b") + "c").write("")
+            try (Path("b") + "c").write(utf8: "")
             try Path("a").makeSymlink(at: Path("d"))
             var children = try container.children()
                 .map { ($0.name ?? "", $1.isDirectory, $1.isSymlink, $1.isFile) }
@@ -29,9 +29,9 @@ final class ChildrenTests: XCTestCase {
 
     func testListingChildrenRecursively() throws {
         try Path.withTemporaryDirectory { _ in
-            try Path("a").write("")
+            try Path("a").write(utf8: "")
             try Path("b").makeDirectory()
-            try (Path("b") + "c").write("")
+            try (Path("b") + "c").write(utf8: "")
             try Path("a").makeSymlink(at: Path("d"))
             var children = try Path(".").children(recursive: true)
                 .map { ($0.name ?? "", $1.isDirectory, $1.isSymlink, $1.isFile) }
@@ -58,11 +58,11 @@ final class ChildrenTests: XCTestCase {
 
     func testListingChildrenRecursivelyFollowingSymlink() throws {
         try Path.withTemporaryDirectory { _ in
-            try Path("a").write("")
+            try Path("a").write(utf8: "")
             try Path("b").makeDirectory()
             try (Path("b") + "e").makeDirectory()
-            try (Path("b") + "e" + "f").write("")
-            try (Path("b") + "c").write("")
+            try (Path("b") + "e" + "f").write(utf8: "")
+            try (Path("b") + "c").write(utf8: "")
             try Path("b").makeSymlink(at: Path("d"))
             let children = try Path(".").children(recursive: true, followSymlink: true)
             let names = Set(children.map(\.0))

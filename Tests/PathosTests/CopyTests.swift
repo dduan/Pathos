@@ -6,7 +6,7 @@ final class CopyTests: XCTestCase {
         try Path.withTemporaryDirectory { _ in
             let content = "xyyyzz"
             let sourceFile = Path("a")
-            try sourceFile.write(content)
+            try sourceFile.write(utf8: content)
             let destinationFile = Path("b")
             try sourceFile.copy(to: destinationFile)
             XCTAssertEqual(try destinationFile.readUTF8String(), content)
@@ -17,7 +17,7 @@ final class CopyTests: XCTestCase {
         try Path.withTemporaryDirectory { _ in
             let content = "aoesubaoesurcaoheu"
             let sourceFile = Path("a")
-            try sourceFile.write(content)
+            try sourceFile.write(utf8: content)
             let link = Path("b")
             try sourceFile.makeSymlink(at: link)
             let destinationFile = Path("c")
@@ -30,7 +30,7 @@ final class CopyTests: XCTestCase {
         try Path.withTemporaryDirectory { _ in
             let content = "aoesubaoesurcaoheu"
             let sourceFile = Path("a")
-            try sourceFile.write(content)
+            try sourceFile.write(utf8: content)
             let link = Path("b")
             try sourceFile.makeSymlink(at: link)
             let destinationFile = Path("c")
@@ -45,8 +45,8 @@ final class CopyTests: XCTestCase {
             let sourceFile = Path("a")
             let destinationFile = Path("b")
 
-            try sourceFile.write(sourceContent)
-            try destinationFile.write("bbb")
+            try sourceFile.write(utf8: sourceContent)
+            try destinationFile.write(utf8: "bbb")
 
             try sourceFile.copy(to: destinationFile)
             XCTAssertEqual(try destinationFile.readUTF8String(), sourceContent)
