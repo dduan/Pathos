@@ -12,7 +12,7 @@ final class MetadataTests: XCTestCase {
     func testRetrievingFileMetadata() throws {
         try Path.withTemporaryDirectory { _ in
             let path = Path("a")
-            try path.write("")
+            try path.write(utf8: "")
             let meta = try path.metadata()
             XCTAssertTrue(meta.fileType.isFile)
         }
@@ -21,7 +21,7 @@ final class MetadataTests: XCTestCase {
     func testRetrievingSymlinkMetadata() throws {
         try Path.withTemporaryDirectory { _ in
             let path = Path("a")
-            try path.write("")
+            try path.write(utf8: "")
             let link = Path("b")
             try path.makeSymlink(at: link)
             let meta = try link.metadata()

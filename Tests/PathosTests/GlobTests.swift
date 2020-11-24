@@ -7,9 +7,9 @@ final class GlobTests: XCTestCase {
             let path0 = Path("1.swift")
             let path1 = Path("b.swift")
             let path2 = Path("3.py")
-            try path0.write("")
-            try path1.write("")
-            try path2.write("")
+            try path0.write(utf8: "")
+            try path1.write(utf8: "")
+            try path2.write(utf8: "")
 
             XCTAssertEqual(
                 Set(try Path("*.swift").glob()),
@@ -44,7 +44,7 @@ final class GlobTests: XCTestCase {
             }
 
             for file in files {
-                try file.write("")
+                try file.write(utf8: "")
             }
 
             XCTAssertEqual(

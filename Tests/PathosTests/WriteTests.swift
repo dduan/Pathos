@@ -25,7 +25,7 @@ final class WriteTests: XCTestCase {
     func testWritingString() throws {
         try Path.withTemporaryDirectory { _ in
             let path = Path("a.txt")
-            try path.write("axx", createIfNecessary: true)
+            try path.write(utf8: "axx", createIfNecessary: true)
             XCTAssert(path.exists())
             XCTAssertEqual(try path.readBytes(), [97, 120, 120])
         }
