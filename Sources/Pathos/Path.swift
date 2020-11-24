@@ -40,10 +40,6 @@ public struct Path {
 
     public var extensions: [String] { pure.extensions }
 
-    public func parse() {
-        pure.parse()
-    }
-
     public func asWorkingDirectory(run action: @escaping () throws -> Void) throws {
         let currentDirectory = try Path.workingDirectory()
         defer {
