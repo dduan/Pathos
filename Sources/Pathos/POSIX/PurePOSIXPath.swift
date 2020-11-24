@@ -41,10 +41,6 @@ public struct PurePOSIXPath {
         parts.segments
     }
 
-    public func parse() {
-        _ = parts
-    }
-
     public var name: String? {
         parts.segments.last
     }

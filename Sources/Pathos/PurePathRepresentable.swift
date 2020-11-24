@@ -39,10 +39,6 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible, ExpressibleBy
     /// its computation, use `parse()`.
     var segments: Array<String> { get }
 
-    /// Analyze the content of the path. This will result in a cached value for `drive`, `root`,
-    /// `segments`, etc.
-    func parse()
-
     /// The final path component, if any.
     var name: String? { get }
 
