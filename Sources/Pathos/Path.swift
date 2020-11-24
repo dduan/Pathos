@@ -44,7 +44,7 @@ public struct Path {
         pure.parse()
     }
 
-    public func asWorkingDirectory(execute action: @escaping () throws -> Void) throws {
+    public func asWorkingDirectory(run action: @escaping () throws -> Void) throws {
         let currentDirectory = try Path.workingDirectory()
         defer {
             try? Path.setWorkingDirectory(currentDirectory)
