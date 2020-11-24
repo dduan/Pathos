@@ -155,7 +155,7 @@ public struct Path {
     }
 
     public func write(
-        _ string: String,
+        utf8 string: String,
         createIfNecessary: Bool = true,
         truncate: Bool = true
     ) throws {
