@@ -12,6 +12,9 @@ let kDefaultWritePermission: POSIXPermissions = [.ownerRead, .ownerWrite, .group
 let kCopyChunkSize = 16 * 1024
 
 extension Path {
+    /// Returns the current working directory.
+    ///
+    /// - Returns: the path representing the current working directory.
     public static func workingDirectory() throws -> Path {
         if let buffer = getcwd(nil, 0) {
             return Path(cString: buffer)
@@ -20,6 +23,9 @@ extension Path {
         throw SystemError.unspecified(errorCode: errno)
     }
 
+    /// Set the current working directory.
+    ///
+    /// - Parameter path: the new working directory.
     public static func setWorkingDirectory(_ path: Path) throws {
         try path.binaryPath.c { cString in
             if chdir(cString) != 0 {
@@ -79,6 +85,11 @@ extension Path {
         try _makeDirectory()
     }
 
+    /// Delete content at `self`.
+    /// Content of directory is deleted alongside the directory itself, unless specified otherwise.
+    ///
+    /// - Parameter recursive: `true` means content of non-empty direcotry will be deleted along
+    ///                        with the directory itself. `true` is the default value.
     public func delete(recursive: Bool = true) throws {
         let meta = try metadata()
         if meta.fileType.isDirectory {
@@ -115,6 +126,8 @@ extension Path {
     }
 
     /// Return a path to which a symbolic link points to.
+    ///
+    /// - Returns: The target path of the symlink.
     public func readSymlink() throws -> Path {
         guard try metadata().fileType.isSymlink else {
             return self
@@ -142,7 +155,7 @@ extension Path {
         )
     }
 
-    /// Create a symbolic link to this path.
+    /// Create a symbolic link to `self`.
     ///
     /// - Parameter path: The path at which to create the symlink.
     public func makeSymlink(at path: Path) throws {
@@ -155,6 +168,12 @@ extension Path {
         }
     }
 
+    /// Return the canonical path of `self`, eliminating any symbolic links encountered in the path.
+    ///
+    /// When symbolic link cycles occur, the returned path will be one member of the cycle, but no
+    /// guarantee is made about which member that will be.
+    ///
+    /// - Returns: The canonical path of `self` with all symlinks eliminated.
     public func real() throws -> Path {
         func resolve(path: Path, rest: Path, seen: inout [Path: Path]) throws -> (Path, Bool) {
             var path = path
@@ -208,6 +227,11 @@ extension Path {
         return try result.absolute()
     }
 
+    /// Returns current user's home directory. Pathos will attempt to retrieve this information via
+    /// environment variables first. If that's not sufficient, it'll try to infer from other
+    /// methods.
+    ///
+    /// - Returns: The home directory of the current user.
     public static func home() -> Path {
         if let home = getenv("HOME") {
             return Path(cString: home)
@@ -220,6 +244,9 @@ extension Path {
         return Path("/")
     }
 
+    /// Read from a normal file.
+    ///
+    /// - Returns: binary content of the normal file.
     public func readBytes() throws -> [UInt8] {
         try binaryPath.c { cPath in
             let feed = open(cPath, O_RDONLY)
@@ -336,6 +363,12 @@ extension Path {
         }
     }
 
+    /// Copy content of `self` to `destination`.
+    ///
+    /// - Parameters:
+    ///   - destination: The target location for the copied content.
+    ///   - followSymlink: If the content is a symlink, `true` means the target of the symlink will
+    ///                    get copied. Otherwise, the symlink itself gets copied.
     public func copy(to destination: Path, followSymlink: Bool = true) throws {
         let sourceMeta = try metadata()
 

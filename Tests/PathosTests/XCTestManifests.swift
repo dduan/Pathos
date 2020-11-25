@@ -184,6 +184,7 @@ extension PathNormalTests {
     static let __allTests__PathNormalTests = [
         ("testEmptyPathBecomesCurrent", testEmptyPathBecomesCurrent),
         ("testParentDirectoryGetsRemoved", testParentDirectoryGetsRemoved),
+        ("testRedundantSeparatorsAreRemoved", testRedundantSeparatorsAreRemoved),
     ]
 }
 
@@ -192,6 +193,7 @@ extension PathParentsTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__PathParentsTests = [
+        ("testAbsolutePathArrayParents", testAbsolutePathArrayParents),
         ("testRelativePathArrayParents", testRelativePathArrayParents),
         ("testRelativePathIteratingOverParents", testRelativePathIteratingOverParents),
     ]

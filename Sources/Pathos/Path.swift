@@ -40,6 +40,11 @@ public struct Path {
 
     public var extensions: [String] { pure.extensions }
 
+    /// Set `self` as the current working directory (cwd), run `action`, and
+    /// restore the original current working directory after `action` finishes.
+    ///
+    /// - Parameter action: A closure that runs with `self` being the current
+    ///                     working directory.
     public func asWorkingDirectory(run action: @escaping () throws -> Void) throws {
         let currentDirectory = try Path.workingDirectory()
         defer {
@@ -50,6 +55,17 @@ public struct Path {
         try action()
     }
 
+    /// Return a relative path to `self` from `other`. This is a pure computatian.
+    /// File system is not accessed to confirm the existence or nature of `self`
+    /// or `other`.
+    ///
+    /// For example, `Path("a/b/c").relative(to: Path("a/b"))` evaluates to
+    /// `Path("c")`. That is to say, to get to "a/b/c" from "a/b", one go through
+    /// "c".
+    ///
+    /// - Parameter other: the path to start from.
+    ///
+    /// - Returns: the path that leads from `other` to `self`.
     public func relative(to other: PathConvertible) -> Path {
         Path(pure.relative(to: other))
     }
@@ -67,6 +83,10 @@ public struct Path {
         }
     }
 
+    /// Normalize a path by removing redundant separators and up-level
+    /// references (`..`). This is a pure computation. It does not access the
+    /// file system. Therefore, it may change the meaning of a path that
+    /// contains symbolic links.
     public var normal: Path {
         Path(pure.normal)
     }
@@ -97,6 +117,15 @@ public struct Path {
         }
     }
 
+    /// Write bytes (`UInt8`s) to a normal file.
+    ///
+    /// - Parameters:
+    ///   - bytes: A collection of bytes.
+    ///   - createIfNecessary: `true` means when `self` is not a normal file,
+    ///                        attempt to create it, as opposed to throwing an
+    ///                        error.
+    ///   - truncate: delete existing content of the file and write from the
+    ///               start.
     public func write<Bytes>(
         bytes: Bytes,
         createIfNecessary: Bool = true,
@@ -112,6 +141,15 @@ public struct Path {
         }
     }
 
+    /// Write bytes (`Int8`s) to a normal file.
+    ///
+    /// - Parameters:
+    ///   - bytes: A collection of bytes.
+    ///   - createIfNecessary: `true` means when `self` is not a normal file,
+    ///                        attempt to create it, as opposed to throwing an
+    ///                        error.
+    ///   - truncate: delete existing content of the file and write from the
+    ///               start.
     public func write<Bytes>(
         bytes: Bytes,
         createIfNecessary: Bool = true,
@@ -124,6 +162,16 @@ public struct Path {
         )
     }
 
+    /// Write content of `string` encoded using `encoding`.
+    ///
+    /// - Parameters:
+    ///   - string: The string to write.
+    ///   - encoding: The encoding to use for the string.
+    ///   - createIfNecessary: `true` means when `self` is not a normal file,
+    ///                        attempt to create it, as opposed to throwing an
+    ///                        error.
+    ///   - truncate: delete existing content of the file and write from the
+    ///               start.
     public func write<Encoding>(
         _ string: String,
         encoding: Encoding.Type,
@@ -150,6 +198,15 @@ public struct Path {
         }
     }
 
+    /// Write content of `string` encoded using UTF-8 encoding.
+    ///
+    /// - Parameters:
+    ///   - string: The string to write.
+    ///   - createIfNecessary: `true` means when `self` is not a normal file,
+    ///                        attempt to create it, as opposed to throwing an
+    ///                        error.
+    ///   - truncate: delete existing content of the file and write from the
+    ///               start.
     public func write(
         utf8 string: String,
         createIfNecessary: Bool = true,
@@ -209,7 +266,14 @@ public struct Path {
         pure.isEmpty
     }
 
-    public func readString<Encoding>(as _: Encoding.Type) throws -> String
+    // swiftformat:disable unusedArguments
+
+    /// Read string from a normal file.
+    ///
+    /// - Parameter encoding: The encoding to use to decode the file's content.
+    ///
+    /// - Returns: The file's content decoded using `encoding`.
+    public func readString<Encoding>(as encoding: Encoding.Type) throws -> String
         where Encoding: _UnicodeEncoding
     {
         try readBytes().withUnsafeBytes { rawBytes in
@@ -217,6 +281,11 @@ public struct Path {
         }
     }
 
+    // swiftformat:enable unusedArguments
+
+    /// Read string from a normal file decoded using UTF-8.
+    ///
+    /// - Returns: The file's content decoded using `encoding`.
     public func readUTF8String() throws -> String {
         try readString(as: UTF8.self)
     }
