@@ -1,4 +1,5 @@
 # Pathos API Documentation for `NativeEncodingUnit`
+
 ```swift
 public typealias NativeEncodingUnit
 ```

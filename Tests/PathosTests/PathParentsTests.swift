@@ -29,4 +29,16 @@ final class PathParentsTests: XCTestCase {
             ]
         )
     }
+
+    func testAbsolutePathArrayParents() {
+        let root = Path("\(Constants.pathSeparator)")
+        XCTAssertEqual(
+            Array((root + "a" + "b" + "c").parents),
+            [
+                root + "a" + "b",
+                root + "a",
+                root,
+            ]
+        )
+    }
 }

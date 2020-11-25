@@ -65,10 +65,20 @@ There are more [Examples](./Examples) for the curious.
 
 ## Documentation
 
-1. [The Design of Pathos](./Documentation/design.md)
-2. [API References](./Documentation/api.md)
-3. [Example apps](./Examples)
+1. [User Guide][] - A tour of Pathos for introduction purposes.
+2. [API Refererence][] - Complete reference to Pathos public APIs.
+3. [Design][] - Answers for why an API is designed as such.
+4. [Change Log][] - Change logs for all Pathos versions.
+
+You may also checkout the [Example apps][].
 
 ## License
 
 Pathos is released under the MIT license. See [LICENSE.md](./LICENSE.md)
+
+
+[Design]: Documentation/design.md
+[Change Log]: CHANGELOG.md
+[User Guide]: Documentation/UserGuide.md
+[API Refererence]: Documentation/APIs/README.md
+[Example apps]: ./Examples

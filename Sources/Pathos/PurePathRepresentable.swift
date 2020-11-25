@@ -22,24 +22,20 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible, ExpressibleBy
     init(_ string: BinaryStringLike)
 
     /// The drive for the path. For POSIX, this is always empty.
-    ///
-    /// This value is lazily computed when it's accessed for the first time. To manually trigger
-    /// its computation, use `parse()`.
     var drive: String? { get }
 
-    /// The bytes for the root, if it's present in `bytes`. For example, on POSIX this would be "/".
-    ///
-    /// This value is lazily computed when it's accessed for the first time. To manually trigger
-    /// its computation, use `parse()`.
+    /// Root component of the path. For example, on POSIX this is typically "/".
     var root: String? { get }
 
-    /// The segments in the path separated by `Path.separatorByte`. Root is not included.
+    /// The segments in the path separated by `Constants.binaryPathSeparator`.
+    /// Root is not included.
     ///
-    /// This value is lazily computed when it's accessed for the first time. To manually trigger
-    /// its computation, use `parse()`.
+    /// Example: `Path("/usr/bin/env").segments` is `["usr", "bin", "env"]`.
     var segments: Array<String> { get }
 
     /// The final path component, if any.
+    ///
+    /// Example: `Path("src/Pathos/README.md").name` is `"README.md"`.
     var name: String? { get }
 
     /// Join with other paths. Absolute path will override existing value.
@@ -62,17 +58,21 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible, ExpressibleBy
     /// - Returns: Result of joining paths.
     func joined(with paths: [PathLike]) -> Self
 
-    /// Wether this path is absolute.
+    /// Indicates whether this path is absolute.
     ///
     /// An absolute path is one that has a root and, if applicable, a drive.
     var isAbsolute: Bool { get }
 
-    /// Final suffix that begins with a `.` in the `name` the path. Leading `.` in the name does not
-    /// count.
+    /// Final suffix that begins with a `.` in the `name` the path. Leading `.`
+    /// in the name does not count.
+    ///
+    /// Example: `Path("archive/Pathos.tar.gz").extension` is `"gz"`.
     var `extension`: String? { get }
 
     /// Suffixes that begin with a `.` in the `name` the path, in the order they appear.
     /// Leading `.` in the name does not count.
+    ///
+    /// Example: `Path("archive/Pathos.tar.gz").extension` is `["tar", "gz"]`.
     var extensions: [String] { get }
 
     /// Path value without the `extension`. `path.base + path.extension` should be equal to `path`.
@@ -92,6 +92,13 @@ protocol PurePathRepresentable: Hashable, CustomStringConvertible, ExpressibleBy
     /// The parent of `.` is `.`. The parent of `/a/b/c` is `/a/b`.
     var parent: Self { get }
 
+    /// A sequence composed of the `self.parent`, `self.parent.parent`, etc. The
+    /// final value is either the current context (`Path(".")`) or the root.
+    ///
+    /// Example: `Array(Path("a/b/c")` is `[Path("a/b"), Path("a"), Path(".")]`.
+    var parents: AnySequence<Self> { get }
+
+    /// The path does not have a drive nor a root, and its `segments` is empty.
     var isEmpty: Bool { get }
 }
 
