@@ -15,7 +15,7 @@ Appropriate path separator native to Windows.
 ***
 
 ```swift
-let pathSeparator: Character
+public static let pathSeparator: Character
 ```
 
 Appropriate path separator character.
