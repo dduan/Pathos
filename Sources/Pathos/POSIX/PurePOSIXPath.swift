@@ -128,8 +128,12 @@ public struct PurePOSIXPath {
 }
 
 extension PurePOSIXPath: ExpressibleByStringLiteral {
-    public init(stringLiteral value: String) {
-        self.init(value)
+    public init(stringLiteral value: StaticString) {
+        self.init(
+            value.withUTF8Buffer {
+                String(decoding: $0, as: UTF8.self)
+            }
+        )
     }
 }
 
