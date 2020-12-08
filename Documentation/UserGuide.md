@@ -9,7 +9,7 @@ Foundation).
 Pathos includes enough APIs to for writing a typical file manager application. Or, if you prefer,
 "coreutils" on Unix systems. One can perform the basic [CRUD][] actions on files, directories,
 symlinks, etc. There's also conveniences such as `glob` with support for recursive patterns,
-analysis for the file extensions... Pathos should meet most applications's needs for interacting
+analysis for the file extensions... Pathos should meet most applications' needs for interacting
 with the file system. Its API selection is comparable to Python's `os.path`.
 
 ## A brief tour
