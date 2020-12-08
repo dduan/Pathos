@@ -1,5 +1,16 @@
 ## master
 
+## BREAKING CHANGES
+
+While the functionality of this library remain compatible with previous release, its public API has gone
+through a major re-design, making this release significantly source-breaking.
+
+The goals for the redesign are
+
+1. Be more conventional in the Swift ecosystem by eliminating the "free functions".
+2. Make the selection of APIs **cross-platform**, including macOS, Linux, Windows 10, and future platforms
+   Swift runs on.
+
 ## 0.3.2
 
 - Fix a bug where `children` always recusively visit its content when following symlinks.
