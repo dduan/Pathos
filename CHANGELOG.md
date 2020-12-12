@@ -1,15 +1,21 @@
 ## master
 
-## BREAKING CHANGES
+### BREAKING CHANGES
 
-While the functionality of this library remain compatible with previous release, its public API has gone
-through a major re-design, making this release significantly source-breaking.
+While the functionality of this library remain compatible with previous release, its public API has
+gone through a major re-design, making this release significantly source-breaking.
 
 The goals for the redesign are
 
 1. Be more conventional in the Swift ecosystem by eliminating the "free functions".
-2. Make the selection of APIs **cross-platform**, including macOS, Linux, Windows 10, and future platforms
-   Swift runs on.
+2. Make the selection of APIs **cross-platform**, including macOS, Linux, Windows 10, and future
+   platforms Swift runs on.
+3. Use un-decoded, aka binary representation for the path value internally for efficiency and
+   correctness reasons.
+
+### New
+
+Documentation rewritten in Markdown format replaces the previously generated documentation.
 
 ## 0.3.2
 
