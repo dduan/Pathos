@@ -162,7 +162,10 @@ extension Path {
             }
         }
 
-        let meta = try metadata()
+        guard let meta = try? metadata() else {
+            return
+        }
+
         if meta.permissions.isReadOnly {
             var newPermission = meta.permissions
             newPermission.isReadOnly = false
