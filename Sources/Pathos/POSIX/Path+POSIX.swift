@@ -91,7 +91,10 @@ extension Path {
     /// - Parameter recursive: `true` means content of non-empty direcotry will be deleted along
     ///                        with the directory itself. `true` is the default value.
     public func delete(recursive: Bool = true) throws {
-        let meta = try metadata()
+        guard let meta = try? metadata() else {
+            return // file doesn't exist
+        }
+
         if meta.fileType.isDirectory {
             if recursive {
                 for child in try children(recursive: false) {
