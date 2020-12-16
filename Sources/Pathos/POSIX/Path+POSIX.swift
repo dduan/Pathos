@@ -261,7 +261,7 @@ extension Path {
                 close(feed)
             }
 
-            let meta = try metadata()
+            let meta = try metadata(followSymlink: true)
             if meta.fileType.isDirectory {
                 return []
             }
