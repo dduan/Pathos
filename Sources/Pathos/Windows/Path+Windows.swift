@@ -477,7 +477,7 @@ extension Path {
     }
 
     public func readBytes() throws -> [CChar] {
-        let meta = try metadata()
+        let meta = try metadata(followSymlink: true)
         if meta.fileType.isDirectory {
             return []
         }
