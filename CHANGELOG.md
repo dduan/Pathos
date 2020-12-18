@@ -13,6 +13,13 @@ The goals for the redesign are
 3. Use un-decoded, aka binary representation for the path value internally for efficiency and
    correctness reasons.
 
+### Experimental Windows 10 Support
+
+This release includes implementation of all APIs for Windows 10. As Swift on Windows 10 is still
+at early stage, Pathos consider its current Windows support experimental. All unit tests pass on
+Windows. Pathos includes CMake builds as well as SwiftPM builds (as of this release, SwiftPM support
+is tested with WSL).
+
 ### New
 
 Documentation rewritten in Markdown format replaces the previously generated documentation.
