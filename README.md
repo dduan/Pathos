@@ -11,7 +11,7 @@ Pathos is implement from ground-up with on each OS's native API. It has zero dep
 |[![macOS 11.15](https://github.com/dduan/Pathos/workflows/macOS%2011.15/badge.svg)](https://github.com/dduan/Pathos/actions?query=workflow%3A%22macOS+11.15%22)|
 |[![Ubuntu Bionic](https://github.com/dduan/Pathos/workflows/Ubuntu%20Bionic/badge.svg)](https://github.com/dduan/Pathos/actions?query=workflow%3A%22Ubuntu+Bionic%22)|
 |[![Ubuntu Focal](https://github.com/dduan/Pathos/workflows/Ubuntu%20Focal/badge.svg)](https://github.com/dduan/Pathos/actions?query=workflow%3A%22Ubuntu+Focal%22)|
-|[![Windows 2019](https://github.com/dduan/Pathos/workflows/Windows%202019/badge.svg)](https://github.com/dduan/Pathos/actions?query=workflow%3A%22Windows+2019%22)
+|[![Windows 2019](https://github.com/dduan/Pathos/workflows/Windows%202019/badge.svg) (Experimental)](https://github.com/dduan/Pathos/actions?query=workflow%3A%22Windows+2019%22)
 
 For a taste of Pathos, let's generate a static site from Markdown!
 
