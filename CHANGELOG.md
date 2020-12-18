@@ -1,5 +1,7 @@
 ## master
 
+## 0.4.0
+
 ### BREAKING CHANGES
 
 While the functionality of this library remain compatible with previous release, its public API has

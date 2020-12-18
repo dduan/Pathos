@@ -60,7 +60,7 @@ There are more [Examples](./Examples) for the curious.
 #### With [SwiftPM](https://swift.org/package-manager)
 
 ```swift
-.package(url: "http://github.com/dduan/Pathos", from: "1.0")
+.package(url: "http://github.com/dduan/Pathos", from: "0.4.0")
 ```
 
 ## Documentation
