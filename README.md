@@ -4,6 +4,8 @@ Pathos offers cross-platform virtual file system APIs for Swift.
 
 Pathos is implement from ground-up with on each OS's native API. It has zero dependencies.
 
+Windows support is currently considered *experimental*.
+
 | Swift 5.3 & 5.3.1 |
 |-|
 |[![Amazon Linux 2](https://github.com/dduan/Pathos/workflows/Amazon%20Linux%202/badge.svg)](https://github.com/dduan/Pathos/actions?query=workflow%3A%22Amazon+Linux+2%22)|
