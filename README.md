@@ -44,7 +44,7 @@ try Path("markdown-source-dir").asWorkingDirectory {
         let source = try markdown.readUTF8String()
         
         // write out the html, imagine `markdown2html` exists
-        try (htmlDirectory + "index.html").write(markdown2html(source))
+        try (htmlDirectory + "index.html").write(utf8: markdown2html(source))
     }
 
     // all done! move the built site to output directory
