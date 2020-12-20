@@ -12,7 +12,7 @@ symlinks, etc. There's also conveniences such as `glob` with support for recursi
 analysis for the file extensions... Pathos should meet most applications' needs for interacting
 with the file system. Its API selection is comparable to Python's `os.path`.
 
-## A brief tour
+## A Brief Tour
 
 Pathos organizes its APIs around the type `Path` (surprise!). A `Path` is a address to some content
 on the disk. This line creates a directory with all parent paths leading to it:
@@ -118,7 +118,8 @@ try doc.write("寿司", encoding: UTF16.self, truncate: true) // replace the fil
 ```
 
 That's a brief introduction to what Pathos has to offer. Many more APIs aren't covered here. You
-can find them in API references.
+can find them in [API references][].
 
 [CRUD]: https://en.wikipedia.org/wiki/Create,_read,_update_and_delete
 [design]: design.md
+[API references]: APIs/
