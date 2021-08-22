@@ -1,5 +1,9 @@
 ## master
 
+## 0.4.1
+
+Add support for Swift 5.4
+
 ## 0.4.0
 
 ### BREAKING CHANGES
