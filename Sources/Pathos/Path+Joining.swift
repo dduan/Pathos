@@ -11,10 +11,12 @@ extension Path {
         lhs.joined(with: rhs)
     }
 
+    @_disfavoredOverload
     public static func + (lhs: Self, rhs: PurePath) -> Self {
         lhs.joined(with: rhs)
     }
 
+    @_disfavoredOverload
     public static func + (lhs: PurePath, rhs: Path) -> Self {
         Path(lhs.joined(with: rhs.pure))
     }

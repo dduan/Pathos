@@ -85,10 +85,12 @@ public struct PurePOSIXPath {
         lhs.joined(with: rhs)
     }
 
+    @_disfavoredOverload
     public static func + (lhs: Self, rhs: POSIXPathConvertible) -> Self {
         lhs.joined(with: rhs)
     }
 
+    @_disfavoredOverload
     public static func + (lhs: POSIXPathConvertible, rhs: Self) -> Self {
         lhs.asPOSIXPath.joined(with: rhs)
     }

@@ -93,10 +93,12 @@ public struct PureWindowsPath {
         lhs.joined(with: rhs)
     }
 
+    @_disfavoredOverload
     public static func + (lhs: Self, rhs: WindowsPathConvertible) -> Self {
         lhs.joined(with: rhs)
     }
 
+    @_disfavoredOverload
     public static func + (lhs: WindowsPathConvertible, rhs: Self) -> Self {
         lhs.asWindowsPath.joined(with: rhs)
     }
