@@ -10,7 +10,7 @@ jobs:
       matrix:
         swift:
           - 5.3
-          - 5.3.1
+          - 5.4.2
         distro:
           - focal
     steps:

@@ -26,7 +26,7 @@ update-cmake-lists:
 	@python3 Scripts/update-cmake.py Scripts/cmake_root
 
 test-docker:
-	@Scripts/docker.sh Pathos 'swift test -Xswiftc -warnings-as-errors' 5.2.5 focal
+	@Scripts/docker.sh Pathos 'swift test -Xswiftc -warnings-as-errors' 5.4.2 focal
 
 test-codegen: codegen
 	@git diff --exit-code
@@ -44,7 +44,7 @@ test-SwiftPM:
 
 format: ensure-swiftformat
 ifeq ($(shell uname),Darwin)
-	@./tmp/swiftformat --swiftversion 5.3 .
+	@./tmp/swiftformat --swiftversion 5.4 .
 else
 	@echo "Skiping formatting: only works on macOS."
 endif
