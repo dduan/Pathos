@@ -29,9 +29,9 @@ jobs:
       run: |
         set -x
         curl --location \
-          'https://swift.org/builds/swift-5.3-release/windows10/swift-5.3-RELEASE/swift-5.3-RELEASE-windows10.exe' \
-          --output '/tmp/swift-5.3-RELEASE-windows10.exe'
-        /tmp/swift-5.3-RELEASE-windows10.exe //passive
+          'https://swift.org/builds/swift-5.4.2-release/windows10/swift-5.4.2-RELEASE/swift-5.4.2-RELEASE-windows10.exe' \
+          --output '/tmp/swift-5.4.2-RELEASE-windows10.exe'
+        /tmp/swift-5.4.2-RELEASE-windows10.exe //passive
         export SDKROOT="/c/Library/Developer/Platforms/Windows.platform/Developer/SDKs/Windows.sdk"
         echo "SDKROOT=${SDKROOT}" >> $GITHUB_ENV
         cp "${SDKROOT}/usr/share/ucrt.modulemap" "${UniversalCRTSdkDir}/Include/${UCRTVersion}/ucrt/module.modulemap"
@@ -95,14 +95,14 @@ jobs:
           mkdir -p /tmp
         ubuntu2004 run \
           curl --location \
-            'https://swift.org/builds/swift-5.3-release/ubuntu2004/swift-5.3-RELEASE/swift-5.3-RELEASE-ubuntu20.04.tar.gz' \
-            --output '/tmp/swift-5.3-RELEASE-ubuntu20.04.tar.gz'
+            'https://swift.org/builds/swift-5.4.2-release/ubuntu2004/swift-5.4.2-RELEASE/swift-5.4.2-RELEASE-ubuntu20.04.tar.gz' \
+            --output '/tmp/swift-5.4.2-RELEASE-ubuntu20.04.tar.gz'
         ubuntu2004 run \
-          tar --extract --force-local --file /tmp/swift-5.3-RELEASE-ubuntu20.04.tar.gz --directory /tmp
+          tar --extract --force-local --file /tmp/swift-5.4.2-RELEASE-ubuntu20.04.tar.gz --directory /tmp
         ubuntu2004 run \
           mkdir -p /
         ubuntu2004 run \
-          cp -R /tmp/swift-5.3-RELEASE-ubuntu20.04/usr //
+          cp -R /tmp/swift-5.4.2-RELEASE-ubuntu20.04/usr //
         ubuntu2004 run \
           swift --version
     - name: Prepare project for Windows CI
