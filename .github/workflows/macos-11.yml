@@ -10,7 +10,7 @@ jobs:
       matrix:
         xcode:
           - 11.7
-          - 12.2
+          - 12.3
           - 12.5
         action:
           - SwiftPM
