@@ -6,7 +6,7 @@ Pathos is implement from ground-up with on each OS's native API. It has zero dep
 
 Windows support is currently considered *experimental*.
 
-| Swift 5.3 & 5.3.1 |
+| Swift 5.3 & 5.4.2 |
 |-|
 |[![Amazon Linux 2](https://github.com/dduan/Pathos/workflows/Amazon%20Linux%202/badge.svg)](https://github.com/dduan/Pathos/actions?query=workflow%3A%22Amazon+Linux+2%22)|
 |[![CentOS 8](https://github.com/dduan/Pathos/workflows/CentOS%208/badge.svg)](https://github.com/dduan/Pathos/actions?query=workflow%3A%22CentOS+8%22)|
