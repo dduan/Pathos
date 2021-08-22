@@ -1,16 +1,16 @@
-name: macOS 11.15
+name: macOS 10.15
 
 on: [push, pull_request]
 
 jobs:
   macos:
     name: macOS
-    runs-on: macos-latest
+    runs-on: macos-10.15
     strategy:
       matrix:
         xcode:
           - 11.7
-          - 12.5_2
+          - 12.4
         action:
           - SwiftPM
           - codegen
