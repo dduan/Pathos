@@ -10,7 +10,7 @@ jobs:
       matrix:
         xcode:
           - 11.7
-          - 12.5
+          - 12.5_2
         action:
           - SwiftPM
           - codegen
