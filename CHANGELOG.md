@@ -1,5 +1,12 @@
 ## master
 
+## master
+
+## 0.4.2
+
+* Fixed a problem where the `+` operator overload resolves in ambiguity when used on a `Path` and a string
+  literal. This problem is due to Swift 5.4's behaviral change.
+
 ## 0.4.1
 
 Add support for Swift 5.4
