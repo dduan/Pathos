@@ -1,6 +1,15 @@
 // swift-tools-version:5.0
 import PackageDescription
 
+let helpers: [Target.Dependency]
+#if os(Windows)
+helpers = ["WindowsHelpers"]
+#elseif os(macOS)
+helpers = []
+#else
+helpers = ["LinuxHelpers"]
+#endif
+
 let package = Package(
     name: "Pathos",
     products: [
@@ -12,7 +21,7 @@ let package = Package(
     targets: [
         .target(
             name: "Pathos",
-            dependencies: ["LinuxHelpers", "WindowsHelpers"]
+            dependencies: helpers
         ),
         .target(name: "LinuxHelpers"),
         .target(name: "WindowsHelpers"),
