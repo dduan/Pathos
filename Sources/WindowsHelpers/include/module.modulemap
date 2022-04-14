@@ -1,3 +1,5 @@
 module WindowsHelpers {
   header "reparsedata.h"
+  header "WindowsHelpers.h"
+  export *
 }

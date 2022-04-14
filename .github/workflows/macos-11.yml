@@ -1,6 +1,6 @@
 name: macOS 11
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   macos:
@@ -9,9 +9,7 @@ jobs:
     strategy:
       matrix:
         xcode:
-          - 11.7
-          - 12.4
-          - 12.5
+          - 13.2.1
         action:
           - SwiftPM
           - codegen

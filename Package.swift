@@ -43,8 +43,7 @@ let package = Package(
         ),
         .testTarget(
             name: "PathosTests",
-            dependencies: ["Pathos"],
-            exclude: ["Fixtures"]
+            dependencies: ["Pathos"]
         ),
     ]
 )
